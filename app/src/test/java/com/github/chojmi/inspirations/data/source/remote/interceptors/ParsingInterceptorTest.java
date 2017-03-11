@@ -12,13 +12,25 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ParsingInterceptorTest {
     @Test
-    public void responseIsParsedCorrectly() throws Exception {
-        Response response = testInterception("jsonFlickrApi({CONTENT},\"stat\":\"ok\"})");
-        assertEquals(response.body().string(), "witam");
+    public void responseIsParsedWithProperHeadline() throws Exception {
+        Response response = testInterception("jsonFlickrApi({\"photos\":{CONTENT},\"stat\":\"ok\"})");
+        assertEquals("{CONTENT}", response.body().string());
+    }
+
+    @Test
+    public void responseNotParsedWhenIsNormalJson() throws Exception {
+        Response response = testInterception("{CONTENT}");
+        assertEquals("{CONTENT}", response.body().string());
+    }
+
+    @Test
+    public void responseIsParsedWithUnProperHeadline() throws Exception {
+        Response response = testInterception("headline({CONTENT})");
+        assertEquals("{CONTENT}", response.body().string());
     }
 
     private Response testInterception(String responseBody) throws IOException {

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import butterknife.ButterKnife;
+
 public abstract class BaseRecyclerViewAdapter<VH extends RecyclerView.ViewHolder, O> extends RecyclerView.Adapter<VH> {
 
     private final List<O> mDataset;
@@ -139,6 +141,7 @@ public abstract class BaseRecyclerViewAdapter<VH extends RecyclerView.ViewHolder
 
         public ViewHolder(View itemView, final OnItemClickListener<O> onItemClickListener) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
             if (onItemClickListener == null) {
                 return;
             }
