@@ -1,0 +1,90 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.github.chojmi.inspirations"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+
+        testInstrumentationRunner rootProject.ext.testInstrumentationRunner
+
+        jackOptions {
+            enabled true
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        mock {
+
+        }
+        prod {
+
+        }
+    }
+
+    android.variantFilter { variant ->
+        if (variant.buildType.name.equals('release')
+                && variant.getFlavors().get(0).name.equals('mock')) {
+            variant.setIgnore(true);
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    mockCompile project(path: ':data', configuration: 'mockDebug')
+    prodCompile project(path: ':data', configuration: 'prodDebug')
+    compile project(":domain")
+    compile "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    compile "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}"
+    compile "com.android.support:design:${rootProject.ext.supportLibVersion}"
+    compile "com.android.support:support-v13:${rootProject.ext.supportLibVersion}"
+
+    compile "com.google.guava:guava:${rootProject.ext.guavaLibVersion}"
+
+    compile "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxAndroidLibVersion}"
+    compile "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxJavaLibVersion}"
+
+    compile "com.google.dagger:dagger:${rootProject.ext.daggerLibVersion}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${rootProject.ext.daggerLibVersion}"
+
+    //ButterKnife
+    compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeLibVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeLibVersion"
+
+    compile "com.dmitrymalkovich.android:material-design-dimens:$rootProject.ext.materialDesignDimensLibVersion"
+
+//    Glide
+    compile "com.github.bumptech.glide:glide:$rootProject.ext.glideLibVersion"
+
+    //Event logging
+    compile "com.jakewharton.timber:timber:$rootProject.ext.timberLibVersion"
+
+    testCompile "junit:junit:$rootProject.ext.junitVersion"
+    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
+    testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
+}

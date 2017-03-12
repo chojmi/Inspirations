@@ -8,3 +8,7 @@ secrets.properties
 /build
 /captures
 .externalNativeBuild
+data/build
+domain/build
+presentation/build
+
