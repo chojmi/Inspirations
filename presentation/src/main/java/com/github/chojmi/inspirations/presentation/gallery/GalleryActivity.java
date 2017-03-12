@@ -1,9 +1,10 @@
 package com.github.chojmi.inspirations.presentation.gallery;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.github.chojmi.inspirations.presentation.InspirationsApp;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
 
@@ -13,6 +14,10 @@ public class GalleryActivity extends BaseActivity {
 
     @Inject
     GalleryPresenter galleryPresenter;
+
+    public static Intent getCallingIntent(Context context) {
+        return new Intent(context, GalleryActivity.class);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,7 +30,7 @@ public class GalleryActivity extends BaseActivity {
         super.onResume();
         GalleryFragment fragment = (GalleryFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
         DaggerGalleryComponent.builder()
-                .galleryRepositoryComponent(((InspirationsApp) getApplication()).getGalleryRepositoryComponent())
+                .applicationComponent(getApplicationComponent())
                 .galleryPresenterModule(new GalleryPresenterModule(fragment))
                 .build()
                 .inject(this);

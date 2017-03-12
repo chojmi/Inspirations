@@ -1,11 +1,9 @@
 package com.github.chojmi.inspirations.presentation;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
-import com.github.chojmi.inspirations.presentation.gallery.GalleryActivity;
 
 import butterknife.OnClick;
 
@@ -19,6 +17,6 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.button)
     public void onButtonClick(Button button) {
-        startActivity(new Intent(this, GalleryActivity.class));
+        getNavigator().navigateToGallery(this);
     }
 }

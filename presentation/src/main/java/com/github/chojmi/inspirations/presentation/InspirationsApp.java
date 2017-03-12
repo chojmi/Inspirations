@@ -6,7 +6,7 @@ import timber.log.Timber;
 
 public class InspirationsApp extends Application {
 
-    private GalleryRepositoryComponent galleryRepositoryComponent;
+    private ApplicationComponent applicationComponent;
 
     @Override
     public void onCreate() {
@@ -14,13 +14,16 @@ public class InspirationsApp extends Application {
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+        this.initializeInjector();
+    }
 
-        galleryRepositoryComponent = DaggerGalleryRepositoryComponent.builder()
-                .applicationModule(new ApplicationModule(getApplicationContext()))
+    private void initializeInjector() {
+        this.applicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
                 .build();
     }
 
-    public GalleryRepositoryComponent getGalleryRepositoryComponent() {
-        return galleryRepositoryComponent;
+    public ApplicationComponent getApplicationComponent() {
+        return this.applicationComponent;
     }
 }

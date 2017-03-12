@@ -10,7 +10,7 @@ import timber.log.Timber;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class GalleryPresenter implements GalleryContract.UserActionsListener {
+public class GalleryPresenter implements GalleryContract.Presenter {
     private final GalleryRepository galleryRepository;
     private final GalleryContract.View galleryView;
 

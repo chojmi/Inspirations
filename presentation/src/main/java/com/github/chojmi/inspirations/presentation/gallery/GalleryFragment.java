@@ -24,7 +24,7 @@ public class GalleryFragment extends BaseFragment<GalleryActivity> implements Ga
     @BindView(R.id.rv_gallery)
     RecyclerView recyclerView;
     private GalleryAdapter galleryAdapter;
-    private GalleryContract.UserActionsListener userActionsListener;
+    private GalleryContract.Presenter presenter;
 
     @Nullable
     @Override
@@ -42,8 +42,8 @@ public class GalleryFragment extends BaseFragment<GalleryActivity> implements Ga
     }
 
     @Override
-    public void setPresenter(@NonNull GalleryContract.UserActionsListener presenter) {
-        this.userActionsListener = checkNotNull(presenter);
+    public void setPresenter(@NonNull GalleryContract.Presenter presenter) {
+        this.presenter = checkNotNull(presenter);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class GalleryFragment extends BaseFragment<GalleryActivity> implements Ga
     @Override
     public void onResume() {
         super.onResume();
-        userActionsListener.start();
+        presenter.start();
     }
 
     @Override
