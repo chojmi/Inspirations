@@ -85,7 +85,10 @@ dependencies {
     provided "com.google.auto.value:auto-value:$rootProject.ext.autovalueLibVersion"
     annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:$rootProject.ext.autovalueParcelLibVersion"
     annotationProcessor "com.ryanharter.auto.value:auto-value-parcel-adapter:$rootProject.ext.autovalueParcelLibVersion"
-    annotationProcessor "com.ryanharter.auto.value:auto-value-gson:$rootProject.ext.autovalueGsonLibVersion"
+    annotationProcessor "com.ryanharter.auto.value:auto-value-gson:$rootProject.autovalueGsonLibVersion"
+
+    //Stream Java 8
+    compile "com.annimon:stream:$rootProject.ext.annimonStreamLibVersion"
 
     //Event logging
     compile "com.jakewharton.timber:timber:$rootProject.ext.timberLibVersion"

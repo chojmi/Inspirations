@@ -32,6 +32,6 @@ public class GalleryPresenter implements GalleryContract.Presenter {
 
     @Override
     public void refreshPhotos(String galleryId) {
-        galleryRepository.loadGallery(galleryId).subscribe(gallery -> galleryView.showPhotos(gallery.getPhoto()), Timber::e);
+        galleryRepository.loadGallery(galleryId).subscribe(galleryView::showPhotos, Timber::e);
     }
 }

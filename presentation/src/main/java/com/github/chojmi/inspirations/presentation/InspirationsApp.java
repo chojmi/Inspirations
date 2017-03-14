@@ -1,10 +1,10 @@
 package com.github.chojmi.inspirations.presentation;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import timber.log.Timber;
 
-public class InspirationsApp extends Application {
+public class InspirationsApp extends MultiDexApplication {
 
     private ApplicationComponent applicationComponent;
 

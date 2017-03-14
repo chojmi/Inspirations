@@ -30,7 +30,7 @@ ext {
     versionName = "0.0.1"
     testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
 
-    supportLibVersion = '25.2.0'
+    supportLibVersion = '25.3.0'
     daggerLibVersion = '2.7'
     retrofitLibVersion = '2.1.0'
     guavaLibVersion = '20.0'
@@ -46,6 +46,7 @@ ext {
     materialDesignDimensLibVersion = '1.4'
     glideLibVersion = '3.7.0'
     timberLibVersion = '4.5.1'
+    annimonStreamLibVersion = '1.1.6'
 
     junitVersion = '4.12'
     mockitoVersion = '1.10.19'

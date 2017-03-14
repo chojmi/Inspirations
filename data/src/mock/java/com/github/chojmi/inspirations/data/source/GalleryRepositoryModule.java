@@ -3,10 +3,8 @@ package com.github.chojmi.inspirations.data.source;
 import android.content.Context;
 
 import com.github.chojmi.inspirations.data.source.remote.FakeRemoteGalleryDataSource;
-import com.github.chojmi.inspirations.data.source.GalleryDataSource;
-import com.github.chojmi.inspirations.data.source.Local;
-import com.github.chojmi.inspirations.data.source.Remote;
 import com.github.chojmi.inspirations.data.source.local.LocalGalleryDataSource;
+import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
 
 import javax.inject.Singleton;
 

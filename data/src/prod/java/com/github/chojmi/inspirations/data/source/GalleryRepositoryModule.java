@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.github.chojmi.inspirations.data.source.local.LocalGalleryDataSource;
 import com.github.chojmi.inspirations.data.source.remote.RemoteGalleryDataSource;
+import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
 
 import javax.inject.Singleton;
 

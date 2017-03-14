@@ -1,6 +1,6 @@
 package com.github.chojmi.inspirations.data.source.remote;
 
-import com.github.chojmi.inspirations.data.source.GalleryDataSource;
+import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
 
 import javax.inject.Singleton;
 

@@ -2,27 +2,30 @@ package com.github.chojmi.inspirations.data.source.remote;
 
 import android.support.annotation.VisibleForTesting;
 
-import com.github.chojmi.inspirations.data.model.gallery.Gallery;
-import com.github.chojmi.inspirations.data.source.GalleryDataSource;
+import com.github.chojmi.inspirations.domain.model.Photo;
+import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
+
+import java.util.Collections;
+import java.util.List;
 
 import io.reactivex.Observable;
 
 public class FakeRemoteGalleryDataSource implements GalleryDataSource {
 
-    private Gallery fakeGalleryResponse = Gallery.createEmpty();
+    private List<Photo> fakePhotoLists = Collections.emptyList();
 
     @Override
-    public Observable<Gallery> loadGallery(String galleryId) {
+    public Observable<List<Photo>> loadGallery(String galleryId) {
         return loadGallery(galleryId, 1);
     }
 
     @Override
-    public Observable<Gallery> loadGallery(String galleryId, int page) {
-        return Observable.just(fakeGalleryResponse);
+    public Observable<List<Photo>> loadGallery(String galleryId, int page) {
+        return Observable.just(fakePhotoLists);
     }
 
     @VisibleForTesting
-    public void setFakeGalleryResponse(Gallery fakeGalleryResponse) {
-        this.fakeGalleryResponse = fakeGalleryResponse;
+    public void setFakePhotoLists(List<Photo> fakePhotoLists) {
+        this.fakePhotoLists = fakePhotoLists;
     }
 }

@@ -1,6 +1,6 @@
 package com.github.chojmi.inspirations.presentation.gallery;
 
-import com.github.chojmi.inspirations.data.model.Photo;
+import com.github.chojmi.inspirations.domain.model.Photo;
 import com.github.chojmi.inspirations.presentation.blueprints.BasePresenter;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseView;
 

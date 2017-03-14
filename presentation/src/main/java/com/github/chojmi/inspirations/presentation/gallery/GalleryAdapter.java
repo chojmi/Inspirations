@@ -5,7 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.github.chojmi.inspirations.data.model.Photo;
+import com.github.chojmi.inspirations.data.entity.PhotoEntity;
+import com.github.chojmi.inspirations.domain.model.Photo;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAdapter;
 

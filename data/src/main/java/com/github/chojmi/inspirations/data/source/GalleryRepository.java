@@ -1,6 +1,9 @@
 package com.github.chojmi.inspirations.data.source;
 
-import com.github.chojmi.inspirations.data.model.gallery.Gallery;
+import com.github.chojmi.inspirations.domain.model.Photo;
+import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -20,13 +23,13 @@ public class GalleryRepository implements GalleryDataSource {
     }
 
     @Override
-    public Observable<Gallery> loadGallery(String galleryId) {
+    public Observable<List<Photo>> loadGallery(String galleryId) {
         return loadGallery(galleryId, 1);
     }
 
     @Override
-    public Observable<Gallery> loadGallery(String galleryId, int page) {
+    public Observable<List<Photo>> loadGallery(String galleryId, int page) {
         return Observable.concat(galleryLocalDataSource.loadGallery(galleryId, page),
-                galleryRemoteDataSource.loadGallery(galleryId, page)).filter(gallery -> gallery.getTotal() > 0).firstElement().toObservable();
+                galleryRemoteDataSource.loadGallery(galleryId, page)).filter(photos -> photos.size() > 0).firstElement().toObservable();
     }
 }

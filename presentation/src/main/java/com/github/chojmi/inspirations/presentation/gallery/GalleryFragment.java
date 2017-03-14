@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.chojmi.inspirations.data.model.Photo;
+import com.github.chojmi.inspirations.domain.model.Photo;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 
