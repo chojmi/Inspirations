@@ -21,6 +21,8 @@ dependencies {
     compile "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxJavaLibVersion}"
     compile "com.google.auto.value:auto-value:$rootProject.ext.autovalueLibVersion"
     apt "com.google.auto.value:auto-value:$rootProject.ext.autovalueLibVersion"
+    compile "com.google.dagger:dagger:${rootProject.ext.daggerLibVersion}"
+    apt "com.google.dagger:dagger-compiler:${rootProject.ext.daggerLibVersion}"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8

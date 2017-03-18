@@ -61,7 +61,7 @@ public class GalleryFragment extends BaseFragment<GalleryActivity> implements Ga
     @Override
     public void onResume() {
         super.onResume();
-        presenter.start();
+        presenter.resume();
     }
 
     @Override

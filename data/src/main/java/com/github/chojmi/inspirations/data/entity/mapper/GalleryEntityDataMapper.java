@@ -8,7 +8,16 @@ import com.github.chojmi.inspirations.domain.model.Photo;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class GalleryEntityDataMapper {
+
+    @Inject
+    public GalleryEntityDataMapper() {
+    }
+
     private Photo transform(PhotoEntity photoEntity) {
         return Photo.create(photoEntity.getUrl());
     }
