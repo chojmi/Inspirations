@@ -23,6 +23,9 @@ dependencies {
     apt "com.google.auto.value:auto-value:$rootProject.ext.autovalueLibVersion"
     compile "com.google.dagger:dagger:${rootProject.ext.daggerLibVersion}"
     apt "com.google.dagger:dagger-compiler:${rootProject.ext.daggerLibVersion}"
+
+    testCompile "junit:junit:$rootProject.ext.junitVersion"
+    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
