@@ -4,6 +4,7 @@ import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.model.Photo;
 import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
+import com.google.common.annotations.VisibleForTesting;
 
 import java.util.List;
 
@@ -40,6 +41,11 @@ public class GetGallery extends UseCase<List<Photo>, GetGallery.Params> {
 
         public static Params forGallery(String galleryId) {
             return new Params(galleryId);
+        }
+
+        @VisibleForTesting
+        public String getGalleryId() {
+            return galleryId;
         }
     }
 }

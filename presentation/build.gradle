@@ -84,7 +84,7 @@ dependencies {
     //Event logging
     compile "com.jakewharton.timber:timber:$rootProject.ext.timberLibVersion"
 
-    testCompile "junit:junit:$rootProject.ext.junitVersion"
-    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
-    testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
+    androidTestCompile "junit:junit:$rootProject.ext.junitVersion"
+    androidTestCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
+    androidTestCompile "com.linkedin.dexmaker:dexmaker-mockito:$rootProject.ext.mockitoDexVersion"
 }
