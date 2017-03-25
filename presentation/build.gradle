@@ -17,6 +17,9 @@ android {
         multiDexEnabled true
     }
     buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -48,6 +51,16 @@ android {
         exclude 'META-INF/rxjava.properties'
     }
 }
+
+def coverageSourceDirs = [
+        'src/main/java',
+]
+
+def jacocoExcludes = [
+        'android/**',
+        'org/bspeice/minimalbible/R*',
+        '**/*$$*'
+]
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -85,6 +98,5 @@ dependencies {
     compile "com.jakewharton.timber:timber:$rootProject.ext.timberLibVersion"
 
     androidTestCompile "junit:junit:$rootProject.ext.junitVersion"
-    androidTestCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
     androidTestCompile "com.linkedin.dexmaker:dexmaker-mockito:$rootProject.ext.mockitoDexVersion"
 }
