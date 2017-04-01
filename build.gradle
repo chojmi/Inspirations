@@ -45,7 +45,6 @@ ext {
     materialDesignDimensLibVersion = '1.4'
     glideLibVersion = '3.7.0'
     timberLibVersion = '4.5.1'
-    annimonStreamLibVersion = '1.1.6'
 
     junitVersion = '4.12'
     mockitoVersion = '1.10.19'

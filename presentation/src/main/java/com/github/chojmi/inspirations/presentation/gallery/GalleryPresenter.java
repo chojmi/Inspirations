@@ -42,11 +42,6 @@ public class GalleryPresenter implements GalleryContract.Presenter {
     }
 
     @Override
-    public void pause() {
-
-    }
-
-    @Override
     public void destroy() {
         this.getGalleryUseCase.dispose();
         this.galleryView = null;
