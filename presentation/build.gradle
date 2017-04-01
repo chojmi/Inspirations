@@ -13,8 +13,6 @@ android {
         versionName rootProject.ext.versionName
 
         testInstrumentationRunner rootProject.ext.testInstrumentationRunner
-
-        multiDexEnabled true
     }
     buildTypes {
         debug {
@@ -77,26 +75,24 @@ dependencies {
     compile "com.android.support:design:${rootProject.ext.supportLibVersion}"
     compile "com.android.support:support-v13:${rootProject.ext.supportLibVersion}"
 
-    compile "com.google.guava:guava:${rootProject.ext.guavaLibVersion}"
-
     compile "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxAndroidLibVersion}"
     compile "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxJavaLibVersion}"
 
     compile "com.google.dagger:dagger:${rootProject.ext.daggerLibVersion}"
     annotationProcessor "com.google.dagger:dagger-compiler:${rootProject.ext.daggerLibVersion}"
 
-    //ButterKnife
+    // ButterKnife
     compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeLibVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeLibVersion"
 
     compile "com.dmitrymalkovich.android:material-design-dimens:$rootProject.ext.materialDesignDimensLibVersion"
 
-//    Glide
+    // Glide
     compile "com.github.bumptech.glide:glide:$rootProject.ext.glideLibVersion"
 
     //Event logging
     compile "com.jakewharton.timber:timber:$rootProject.ext.timberLibVersion"
 
-    androidTestCompile "junit:junit:$rootProject.ext.junitVersion"
-    androidTestCompile "com.linkedin.dexmaker:dexmaker-mockito:$rootProject.ext.mockitoDexVersion"
+    testCompile "junit:junit:$rootProject.ext.junitVersion"
+    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
 }

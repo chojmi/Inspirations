@@ -4,7 +4,6 @@ import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.model.Photo;
 import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
-import com.google.common.annotations.VisibleForTesting;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static dagger.internal.Preconditions.checkNotNull;
 
 public class GetGallery extends UseCase<List<Photo>, GetGallery.Params> {
 
@@ -43,9 +42,19 @@ public class GetGallery extends UseCase<List<Photo>, GetGallery.Params> {
             return new Params(galleryId);
         }
 
-        @VisibleForTesting
-        public String getGalleryId() {
-            return galleryId;
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Params params = (Params) o;
+
+            return galleryId != null ? galleryId.equals(params.galleryId) : params.galleryId == null;
+        }
+
+        @Override
+        public int hashCode() {
+            return galleryId != null ? galleryId.hashCode() : 0;
         }
     }
 }

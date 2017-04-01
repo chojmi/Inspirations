@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 
 import com.github.chojmi.inspirations.data.source.remote.interceptors.ParsingInterceptor;
 import com.github.chojmi.presentation.data.R;
-import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -15,6 +14,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import dagger.internal.Preconditions;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;

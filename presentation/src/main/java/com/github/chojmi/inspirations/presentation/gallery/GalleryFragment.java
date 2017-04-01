@@ -18,7 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static dagger.internal.Preconditions.checkNotNull;
 
 public class GalleryFragment extends BaseFragment<GalleryActivity> implements GalleryContract.View {
     @BindView(R.id.rv_gallery)

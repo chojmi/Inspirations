@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import io.reactivex.observers.DisposableObserver;
 
@@ -37,7 +37,7 @@ public class GalleryPresenterTest {
         galleryPresenter.refreshPhotos(GALLERY_ID);
         ArgumentCaptor<GetGallery.Params> forGalleryParams = ArgumentCaptor.forClass(GetGallery.Params.class);
         verify(mockGetGallery, times(1)).execute(any(DisposableObserver.class), forGalleryParams.capture());
-        assertTrue(forGalleryParams.getAllValues().get(0).getGalleryId().equals(GALLERY_ID));
+        assertTrue(forGalleryParams.getAllValues().get(0).equals(GetGallery.Params.forGallery(GALLERY_ID)));
     }
 
     @Test

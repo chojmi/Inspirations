@@ -13,7 +13,7 @@ import javax.inject.Inject;
 
 import timber.log.Timber;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static dagger.internal.Preconditions.checkNotNull;
 
 public class GalleryPresenter implements GalleryContract.Presenter {
     private final GetGallery getGalleryUseCase;
