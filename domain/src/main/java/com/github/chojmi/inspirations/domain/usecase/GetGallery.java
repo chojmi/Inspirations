@@ -26,8 +26,7 @@ public class GetGallery extends UseCase<List<Photo>, GetGallery.Params> {
 
     @Override
     Observable<List<Photo>> buildUseCaseObservable(Params params) {
-        checkNotNull(params);
-        return galleryDataSource.loadGallery(params.galleryId);
+        return galleryDataSource.loadGallery(checkNotNull(params).galleryId);
     }
 
     public static final class Params {

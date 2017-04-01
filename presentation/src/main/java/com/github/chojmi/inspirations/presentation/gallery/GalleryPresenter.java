@@ -6,6 +6,7 @@ import com.github.chojmi.inspirations.domain.model.Photo;
 import com.github.chojmi.inspirations.domain.usecase.DefaultObserver;
 import com.github.chojmi.inspirations.domain.usecase.GetGallery;
 import com.github.chojmi.inspirations.domain.usecase.GetGallery.Params;
+import com.github.chojmi.inspirations.presentation.blueprints.exception.ViewNotFoundException;
 
 import java.util.List;
 
@@ -30,6 +31,9 @@ public class GalleryPresenter implements GalleryContract.Presenter {
 
     @Override
     public void refreshPhotos(String galleryId) {
+        if (galleryView == null) {
+            throw new ViewNotFoundException();
+        }
         getGalleryUseCase.execute(new GalleryObserver(), Params.forGallery(galleryId));
     }
 
