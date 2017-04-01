@@ -9,5 +9,5 @@ import dagger.Component;
 @Component(dependencies = ApplicationComponent.class, modules = GalleryPresenterModule.class)
 interface GalleryComponent {
 
-    void inject(GalleryActivity activity);
+    void inject(GalleryFragment fragment);
 }

@@ -9,8 +9,6 @@ import com.github.chojmi.inspirations.domain.usecase.GetGallery.Params;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import timber.log.Timber;
 
 import static dagger.internal.Preconditions.checkNotNull;
@@ -20,15 +18,14 @@ public class GalleryPresenter implements GalleryContract.Presenter {
 
     private GalleryContract.View galleryView;
 
-    @Inject
-    public GalleryPresenter(@NonNull GalleryContract.View galleryView, @NonNull GetGallery getGalleryUseCase) {
-        this.galleryView = checkNotNull(galleryView);
+    public GalleryPresenter(@NonNull GetGallery getGalleryUseCase) {
         this.getGalleryUseCase = checkNotNull(getGalleryUseCase);
     }
 
-    @Inject
-    void setupListeners() {
-        galleryView.setPresenter(this);
+    @Override
+    public void setView(@NonNull GalleryContract.View view) {
+        galleryView = checkNotNull(view);
+        refreshPhotos("72157677898551390");
     }
 
     @Override
@@ -37,12 +34,7 @@ public class GalleryPresenter implements GalleryContract.Presenter {
     }
 
     @Override
-    public void resume() {
-        refreshPhotos("72157677898551390");
-    }
-
-    @Override
-    public void destroy() {
+    public void destroyView() {
         this.getGalleryUseCase.dispose();
         this.galleryView = null;
     }

@@ -11,4 +11,4 @@ secrets.properties
 data/build
 domain/build
 presentation/build
-data/build
+/.idea/*

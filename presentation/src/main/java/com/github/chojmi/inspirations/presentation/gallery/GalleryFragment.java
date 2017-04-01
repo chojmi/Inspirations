@@ -1,7 +1,6 @@
 package com.github.chojmi.inspirations.presentation.gallery;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,16 +14,15 @@ import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static dagger.internal.Preconditions.checkNotNull;
-
 public class GalleryFragment extends BaseFragment<GalleryActivity> implements GalleryContract.View {
-    @BindView(R.id.rv_gallery)
-    RecyclerView recyclerView;
+    @BindView(R.id.rv_gallery) RecyclerView recyclerView;
+    @Inject GalleryContract.Presenter presenter;
     private GalleryAdapter galleryAdapter;
-    private GalleryContract.Presenter presenter;
 
     @Nullable
     @Override
@@ -41,16 +39,6 @@ public class GalleryFragment extends BaseFragment<GalleryActivity> implements Ga
         initRecyclerView();
     }
 
-    @Override
-    public void setPresenter(@NonNull GalleryContract.Presenter presenter) {
-        this.presenter = checkNotNull(presenter);
-    }
-
-    @Override
-    public boolean isActive() {
-        return isAdded();
-    }
-
     private void initRecyclerView() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -61,7 +49,13 @@ public class GalleryFragment extends BaseFragment<GalleryActivity> implements Ga
     @Override
     public void onResume() {
         super.onResume();
-        presenter.resume();
+        presenter.setView(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.destroyView();
     }
 
     @Override

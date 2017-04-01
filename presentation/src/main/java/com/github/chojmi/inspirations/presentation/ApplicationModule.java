@@ -49,7 +49,6 @@ public class ApplicationModule {
     @Provides
     @Singleton
     GalleryDataSource provideUserRepository(GalleryRepository galleryRepository) {
-        return galleryRepository
-                ;
+        return galleryRepository;
     }
 }

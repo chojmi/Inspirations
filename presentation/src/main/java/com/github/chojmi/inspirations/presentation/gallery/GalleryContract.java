@@ -8,12 +8,12 @@ import java.util.List;
 
 public interface GalleryContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseView {
         void showPhotos(List<Photo> photos);
 
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter<View> {
         void refreshPhotos(String galleryId);
     }
 }

@@ -1,8 +1,10 @@
 package com.github.chojmi.inspirations.presentation.blueprints;
 
-public interface BasePresenter {
+import android.support.annotation.NonNull;
 
-    void resume();
+public interface BasePresenter<V extends BaseView> {
 
-    void destroy();
+    void setView(@NonNull V view);
+
+    void destroyView();
 }

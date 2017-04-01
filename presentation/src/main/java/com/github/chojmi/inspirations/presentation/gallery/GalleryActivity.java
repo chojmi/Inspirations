@@ -8,12 +8,7 @@ import android.support.annotation.Nullable;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
 
-import javax.inject.Inject;
-
 public class GalleryActivity extends BaseActivity {
-
-    @Inject
-    GalleryPresenter galleryPresenter;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, GalleryActivity.class);
@@ -31,8 +26,7 @@ public class GalleryActivity extends BaseActivity {
         GalleryFragment fragment = (GalleryFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
         DaggerGalleryComponent.builder()
                 .applicationComponent(getApplicationComponent())
-                .galleryPresenterModule(new GalleryPresenterModule(fragment))
                 .build()
-                .inject(this);
+                .inject(fragment);
     }
 }

@@ -29,20 +29,20 @@ public class GalleryPresenterTest {
 
     @Before
     public void setUp() {
-        galleryPresenter = new GalleryPresenter(mockGalleryView, mockGetGallery);
+        galleryPresenter = new GalleryPresenter(mockGetGallery);
+        galleryPresenter.setView(mockGalleryView);
     }
 
     @Test
     public void testGalleryPresenterRefreshPhotosHappyCase() {
         galleryPresenter.refreshPhotos(GALLERY_ID);
         ArgumentCaptor<GetGallery.Params> forGalleryParams = ArgumentCaptor.forClass(GetGallery.Params.class);
-        verify(mockGetGallery, times(1)).execute(any(DisposableObserver.class), forGalleryParams.capture());
-        assertTrue(forGalleryParams.getAllValues().get(0).equals(GetGallery.Params.forGallery(GALLERY_ID)));
+        verify(mockGetGallery, times(2)).execute(any(DisposableObserver.class), forGalleryParams.capture());
+        assertTrue(forGalleryParams.getAllValues().get(1).equals(GetGallery.Params.forGallery(GALLERY_ID)));
     }
 
     @Test
     public void testGalleryPresenterRefreshPhotosOnResumeHappyCase() {
-        galleryPresenter.resume();
         verify(mockGetGallery, times(1)).execute(any(DisposableObserver.class), any(GetGallery.Params.class));
     }
 }

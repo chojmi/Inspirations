@@ -1,18 +1,15 @@
 package com.github.chojmi.inspirations.presentation.gallery;
 
+import com.github.chojmi.inspirations.domain.usecase.GetGallery;
+
 import dagger.Module;
 import dagger.Provides;
 
 @Module
 class GalleryPresenterModule {
-    private final GalleryContract.View view;
-
-    public GalleryPresenterModule(GalleryContract.View view) {
-        this.view = view;
-    }
 
     @Provides
-    public GalleryContract.View getView() {
-        return view;
+    public GalleryContract.Presenter provideGalleryPresenter(GetGallery getGallery) {
+        return new GalleryPresenter(getGallery);
     }
 }
