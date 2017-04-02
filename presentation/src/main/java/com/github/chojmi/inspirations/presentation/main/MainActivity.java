@@ -15,15 +15,6 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mainViewPager.setAdapter(new MainScreenSlidePagerAdapter(getSupportFragmentManager()));
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (mainViewPager.getCurrentItem() == 0) {
-            super.onBackPressed();
-        } else {
-            mainViewPager.setCurrentItem(mainViewPager.getCurrentItem() - 1);
-        }
+        mainViewPager.setAdapter(new MainScreenSlidePagerAdapter(this, getSupportFragmentManager()));
     }
 }

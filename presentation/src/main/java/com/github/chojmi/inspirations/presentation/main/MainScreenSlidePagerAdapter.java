@@ -1,31 +1,32 @@
 package com.github.chojmi.inspirations.presentation.main;
 
-
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.github.chojmi.inspirations.presentation.gallery.GalleryFragment;
+import static dagger.internal.Preconditions.checkNotNull;
 
 class MainScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-    private static final int NUM_PAGES = 3;
+    private Context context;
 
-    MainScreenSlidePagerAdapter(FragmentManager fm) {
+    MainScreenSlidePagerAdapter(Context context, FragmentManager fm) {
         super(fm);
+        this.context = checkNotNull(context);
     }
 
     @Override
     public Fragment getItem(int position) {
-        return GalleryFragment.newInstance();
+        return MainScreenTab.valueOf(position).getFragment();
     }
 
     @Override
     public int getCount() {
-        return NUM_PAGES;
+        return MainScreenTab.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return "Gallery";
+        return MainScreenTab.valueOf(position).getTitle(context);
     }
 }
