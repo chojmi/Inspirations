@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.gallery;
+package com.github.chojmi.inspirations.presentation.gallery.grid;
 
 import android.support.annotation.NonNull;
 
@@ -14,17 +14,17 @@ import timber.log.Timber;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
-public class GalleryPresenter implements GalleryContract.Presenter {
+class GridPresenter implements GridContract.Presenter {
     private final GetGallery getGalleryUseCase;
 
-    private GalleryContract.View galleryView;
+    private GridContract.View galleryView;
 
-    public GalleryPresenter(@NonNull GetGallery getGalleryUseCase) {
+    GridPresenter(@NonNull GetGallery getGalleryUseCase) {
         this.getGalleryUseCase = checkNotNull(getGalleryUseCase);
     }
 
     @Override
-    public void setView(@NonNull GalleryContract.View view) {
+    public void setView(@NonNull GridContract.View view) {
         galleryView = checkNotNull(view);
         refreshPhotos("72157677898551390");
     }
@@ -35,6 +35,11 @@ public class GalleryPresenter implements GalleryContract.Presenter {
             throw new ViewNotFoundException();
         }
         getGalleryUseCase.execute(new GalleryObserver(), Params.forGallery(galleryId));
+    }
+
+    @Override
+    public void photoSelected(Photo photo) {
+
     }
 
     @Override

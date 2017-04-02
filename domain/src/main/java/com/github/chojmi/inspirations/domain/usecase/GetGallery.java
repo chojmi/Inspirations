@@ -18,8 +18,8 @@ public class GetGallery extends UseCase<List<Photo>, GetGallery.Params> {
     private final GalleryDataSource galleryDataSource;
 
     @Inject
-    public GetGallery(GalleryDataSource galleryDataSource, ThreadExecutor threadExecutor,
-                      PostExecutionThread postExecutionThread) {
+    GetGallery(GalleryDataSource galleryDataSource, ThreadExecutor threadExecutor,
+               PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         this.galleryDataSource = galleryDataSource;
     }

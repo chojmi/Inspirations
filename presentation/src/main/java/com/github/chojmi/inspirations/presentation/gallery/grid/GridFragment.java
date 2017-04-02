@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.gallery;
+package com.github.chojmi.inspirations.presentation.gallery.grid;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,13 +21,13 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class GalleryFragment extends BaseFragment<MainActivity> implements GalleryContract.View {
+public class GridFragment extends BaseFragment<MainActivity> implements GridContract.View {
     @BindView(R.id.rv_gallery) RecyclerView recyclerView;
-    @Inject GalleryContract.Presenter presenter;
-    private GalleryAdapter galleryAdapter;
+    @Inject GridContract.Presenter presenter;
+    private GridAdapter galleryAdapter;
 
-    public static GalleryFragment newInstance() {
-        return new GalleryFragment();
+    public static GridFragment newInstance() {
+        return new GridFragment();
     }
 
     @Nullable
@@ -57,7 +57,7 @@ public class GalleryFragment extends BaseFragment<MainActivity> implements Galle
     private void initRecyclerView() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        galleryAdapter = new GalleryAdapter();
+        galleryAdapter = new GridAdapter(this);
         recyclerView.setAdapter(galleryAdapter);
     }
 
@@ -76,5 +76,10 @@ public class GalleryFragment extends BaseFragment<MainActivity> implements Galle
     @Override
     public void showPhotos(List<Photo> photos) {
         galleryAdapter.setData(photos);
+    }
+
+    @Override
+    public void photoClicked(Photo photo) {
+        presenter.photoSelected(photo);
     }
 }

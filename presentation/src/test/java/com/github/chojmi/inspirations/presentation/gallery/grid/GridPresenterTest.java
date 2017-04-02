@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.gallery;
+package com.github.chojmi.inspirations.presentation.gallery.grid;
 
 import com.github.chojmi.inspirations.domain.usecase.GetGallery;
 
@@ -17,19 +17,19 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GalleryPresenterTest {
+public class GridPresenterTest {
     private static final String GALLERY_ID = "123";
 
-    private GalleryPresenter galleryPresenter;
+    private GridPresenter galleryPresenter;
 
     @Mock
-    private GalleryContract.View mockGalleryView;
+    private GridContract.View mockGalleryView;
     @Mock
     private GetGallery mockGetGallery;
 
     @Before
     public void setUp() {
-        galleryPresenter = new GalleryPresenter(mockGetGallery);
+        galleryPresenter = new GridPresenter(mockGetGallery);
         galleryPresenter.setView(mockGalleryView);
     }
 

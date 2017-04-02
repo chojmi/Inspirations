@@ -6,11 +6,11 @@ import android.support.v4.app.Fragment;
 
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.camera.CameraFragment;
-import com.github.chojmi.inspirations.presentation.gallery.GalleryFragment;
+import com.github.chojmi.inspirations.presentation.gallery.grid.GridFragment;
 import com.github.chojmi.inspirations.presentation.my_profile.MyProfileFragment;
 
 enum MainScreenTab {
-    GALLERY(GalleryFragment.newInstance(), R.string.gallery),
+    GALLERY(GridFragment.newInstance(), R.string.gallery),
     MY_PROFILE(MyProfileFragment.newInstance(), R.string.my_profile),
     CAMERA(CameraFragment.newInstance(), R.string.camera);
 

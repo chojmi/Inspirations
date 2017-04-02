@@ -1,20 +1,27 @@
-package com.github.chojmi.inspirations.presentation.gallery;
+package com.github.chojmi.inspirations.presentation.gallery.grid;
 
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.github.chojmi.inspirations.data.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.model.Photo;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAdapter;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.loadImage;
 
-public class GalleryAdapter extends BaseRecyclerViewAdapter<GalleryAdapter.GalleryViewHolder, Photo> {
+class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder, Photo> {
+
+    private Listener listener;
+
+    GridAdapter(@Nullable Listener listener) {
+        this.listener = listener;
+    }
 
     @Override
     public GalleryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -27,16 +34,29 @@ public class GalleryAdapter extends BaseRecyclerViewAdapter<GalleryAdapter.Galle
         holder.setPhoto(getItem(position));
     }
 
-    class GalleryViewHolder extends BaseRecyclerViewAdapter.ViewHolder<Photo> {
-        @BindView(R.id.photo)
-        ImageView photoHolder;
+    interface Listener {
+        void photoClicked(Photo photo);
+    }
 
-        public GalleryViewHolder(View itemView) {
+    class GalleryViewHolder extends BaseRecyclerViewAdapter.ViewHolder<Photo> {
+        @BindView(R.id.photo) ImageView photoHolder;
+        private Photo photo;
+
+        GalleryViewHolder(View itemView) {
             super(itemView);
         }
 
         void setPhoto(Photo photo) {
+            this.photo = photo;
             loadImage(photoHolder, photo.getUrl());
+        }
+
+        @OnClick(R.id.photo)
+        void onPhotoClick(ImageView imageView) {
+            if (listener == null) {
+                return;
+            }
+            listener.photoClicked(photo);
         }
     }
 }

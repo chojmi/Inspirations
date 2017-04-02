@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.gallery;
+package com.github.chojmi.inspirations.presentation.gallery.grid;
 
 import com.github.chojmi.inspirations.presentation.ApplicationComponent;
 import com.github.chojmi.inspirations.presentation.blueprints.ActivityScope;
@@ -6,8 +6,8 @@ import com.github.chojmi.inspirations.presentation.blueprints.ActivityScope;
 import dagger.Component;
 
 @ActivityScope
-@Component(dependencies = ApplicationComponent.class, modules = GalleryPresenterModule.class)
+@Component(dependencies = ApplicationComponent.class, modules = GridPresenterModule.class)
 interface GalleryComponent {
 
-    void inject(GalleryFragment fragment);
+    void inject(GridFragment fragment);
 }

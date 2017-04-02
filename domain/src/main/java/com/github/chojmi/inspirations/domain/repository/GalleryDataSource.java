@@ -10,5 +10,4 @@ public interface GalleryDataSource {
     Observable<List<Photo>> loadGallery(String galleryId);
 
     Observable<List<Photo>> loadGallery(String galleryId, int page);
-
 }
