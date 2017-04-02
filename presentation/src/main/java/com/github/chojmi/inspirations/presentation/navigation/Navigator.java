@@ -1,9 +1,8 @@
 package com.github.chojmi.inspirations.presentation.navigation;
 
-import android.content.Context;
-import android.content.Intent;
+import android.support.v4.app.Fragment;
 
-import com.github.chojmi.inspirations.presentation.gallery.GalleryActivity;
+import com.github.chojmi.inspirations.presentation.gallery.GalleryFragment;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -18,10 +17,7 @@ public class Navigator {
     public Navigator() {
     }
 
-    public void navigateToGallery(Context context) {
-        if (context != null) {
-            Intent intentToLaunch = GalleryActivity.getCallingIntent(context);
-            context.startActivity(intentToLaunch);
-        }
+    public Fragment getGalleryFragment() {
+        return GalleryFragment.newInstance();
     }
 }

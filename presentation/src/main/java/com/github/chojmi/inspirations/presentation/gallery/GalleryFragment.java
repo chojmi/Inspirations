@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.chojmi.inspirations.domain.model.Photo;
+import com.github.chojmi.inspirations.presentation.InspirationsApp;
+import com.github.chojmi.inspirations.presentation.MainActivity;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 
@@ -19,10 +21,14 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class GalleryFragment extends BaseFragment<GalleryActivity> implements GalleryContract.View {
+public class GalleryFragment extends BaseFragment<MainActivity> implements GalleryContract.View {
     @BindView(R.id.rv_gallery) RecyclerView recyclerView;
     @Inject GalleryContract.Presenter presenter;
     private GalleryAdapter galleryAdapter;
+
+    public static GalleryFragment newInstance() {
+        return new GalleryFragment();
+    }
 
     @Nullable
     @Override
@@ -31,6 +37,15 @@ public class GalleryFragment extends BaseFragment<GalleryActivity> implements Ga
         View v = inflater.inflate(R.layout.fragment_gallery, container, false);
         ButterKnife.bind(this, v);
         return v;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        DaggerGalleryComponent.builder()
+                .applicationComponent((((InspirationsApp) getActivity().getApplication()).getApplicationComponent()))
+                .build()
+                .inject(this);
     }
 
     @Override
