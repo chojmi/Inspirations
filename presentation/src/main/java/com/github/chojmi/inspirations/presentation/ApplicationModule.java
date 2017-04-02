@@ -7,7 +7,6 @@ import com.github.chojmi.inspirations.data.source.GalleryRepository;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
-import com.github.chojmi.inspirations.presentation.navigation.Navigator;
 
 import javax.inject.Singleton;
 
@@ -38,12 +37,6 @@ public class ApplicationModule {
     @Singleton
     PostExecutionThread providePostExecutionThread(UIThread uiThread) {
         return uiThread;
-    }
-
-    @Provides
-    @Singleton
-    Navigator provideNavigator() {
-        return new Navigator();
     }
 
     @Provides

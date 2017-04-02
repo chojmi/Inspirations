@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 
 import com.github.chojmi.inspirations.domain.model.Photo;
 import com.github.chojmi.inspirations.presentation.InspirationsApp;
-import com.github.chojmi.inspirations.presentation.MainActivity;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
+import com.github.chojmi.inspirations.presentation.main.MainActivity;
 
 import java.util.List;
 

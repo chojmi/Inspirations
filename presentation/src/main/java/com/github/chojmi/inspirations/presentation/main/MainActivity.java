@@ -1,0 +1,29 @@
+package com.github.chojmi.inspirations.presentation.main;
+
+import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+
+import com.github.chojmi.inspirations.presentation.R;
+import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
+
+import butterknife.BindView;
+
+public class MainActivity extends BaseActivity {
+    @BindView(R.id.pager) ViewPager mainViewPager;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        mainViewPager.setAdapter(new MainScreenSlidePagerAdapter(getSupportFragmentManager()));
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mainViewPager.getCurrentItem() == 0) {
+            super.onBackPressed();
+        } else {
+            mainViewPager.setCurrentItem(mainViewPager.getCurrentItem() - 1);
+        }
+    }
+}
