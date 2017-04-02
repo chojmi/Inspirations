@@ -39,7 +39,7 @@ class GridPresenter implements GridContract.Presenter {
 
     @Override
     public void photoSelected(Photo photo) {
-
+        galleryView.openPhotoView(photo);
     }
 
     @Override

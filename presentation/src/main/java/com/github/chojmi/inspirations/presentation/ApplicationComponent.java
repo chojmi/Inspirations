@@ -7,6 +7,7 @@ import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
+import com.github.chojmi.inspirations.presentation.navigation.Navigator;
 
 import javax.inject.Singleton;
 
@@ -22,6 +23,8 @@ public interface ApplicationComponent {
     ThreadExecutor getThreadExecutor();
 
     PostExecutionThread getPostExecutionThread();
+
+    Navigator getNavigator();
 
     GalleryDataSource getGalleryRepository();
 }

@@ -12,6 +12,7 @@ import com.github.chojmi.inspirations.domain.model.Photo;
 import com.github.chojmi.inspirations.presentation.InspirationsApp;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
+import com.github.chojmi.inspirations.presentation.gallery.DaggerGalleryComponent;
 import com.github.chojmi.inspirations.presentation.main.MainActivity;
 
 import java.util.List;
@@ -76,6 +77,11 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridCont
     @Override
     public void showPhotos(List<Photo> photos) {
         galleryAdapter.setData(photos);
+    }
+
+    @Override
+    public void openPhotoView(Photo photo) {
+        getNavigator().navigateToPhoto(getContext(), photo);
     }
 
     @Override

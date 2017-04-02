@@ -11,6 +11,7 @@ public interface GridContract {
     interface View extends BaseView, GridAdapter.Listener {
         void showPhotos(List<Photo> photos);
 
+        void openPhotoView(Photo photo);
     }
 
     interface Presenter extends BasePresenter<View> {

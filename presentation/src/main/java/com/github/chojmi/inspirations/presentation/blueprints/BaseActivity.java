@@ -7,10 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.github.chojmi.inspirations.presentation.ApplicationComponent;
 import com.github.chojmi.inspirations.presentation.InspirationsApp;
+import com.github.chojmi.inspirations.presentation.navigation.Navigator;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity implements IBaseUI {
+    @Inject
+    Navigator navigator;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -22,6 +27,11 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseUI 
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
         ButterKnife.bind(this);
+    }
+
+    @Override
+    public Navigator getNavigator() {
+        return navigator;
     }
 
     protected ApplicationComponent getApplicationComponent() {

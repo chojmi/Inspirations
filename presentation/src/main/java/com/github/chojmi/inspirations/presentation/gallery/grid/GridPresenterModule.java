@@ -6,10 +6,10 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-class GridPresenterModule {
+public class GridPresenterModule {
 
     @Provides
-    public GridContract.Presenter provideGalleryPresenter(GetGallery getGallery) {
+    GridContract.Presenter provideGalleryPresenter(GetGallery getGallery) {
         return new GridPresenter(getGallery);
     }
 }
