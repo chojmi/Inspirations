@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.github.chojmi.inspirations.domain.model.Photo;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAdapter;
+import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 
 import butterknife.BindView;
 import butterknife.OnClick;

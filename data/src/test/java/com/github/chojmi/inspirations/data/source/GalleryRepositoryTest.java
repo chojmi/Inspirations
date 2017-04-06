@@ -1,7 +1,6 @@
 package com.github.chojmi.inspirations.data.source;
 
-import com.github.chojmi.inspirations.data.entity.mapper.GalleryEntityDataMapper;
-import com.github.chojmi.inspirations.domain.model.Photo;
+import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
 
 import org.junit.Before;
@@ -31,8 +30,6 @@ public class GalleryRepositoryTest {
     private GalleryDataSource galleryRepository;
 
     @Mock
-    private GalleryEntityDataMapper mockGalleryEntityDataMapper;
-    @Mock
     private GalleryDataSource mockLocalDataSource;
     @Mock
     private GalleryDataSource mockRemoteDataSource;
@@ -44,8 +41,13 @@ public class GalleryRepositoryTest {
 
     @Test
     public void testGetGalleryFromRemoteHappyCase() {
-        List<Photo> photos = new ArrayList<>();
-        photos.add(Photo.create(FAKE_URL));
+        List<PhotoEntity> photos = new ArrayList<>();
+        photos.add(new PhotoEntity() {
+            @Override
+            public String getUrl() {
+                return FAKE_URL;
+            }
+        });
         given(mockLocalDataSource.loadGallery(FAKE_GALLERY_ID, 1)).willReturn(Observable.just(Collections.emptyList()));
         given(mockRemoteDataSource.loadGallery(FAKE_GALLERY_ID, 1)).willReturn(Observable.just(photos));
 
@@ -57,12 +59,17 @@ public class GalleryRepositoryTest {
 
     @Test
     public void testGetGalleryFromLocalHappyCase() {
-        List<Photo> photos = new ArrayList<>();
-        photos.add(Photo.create(FAKE_URL));
-        given(mockLocalDataSource.loadGallery(FAKE_GALLERY_ID, 1)).willReturn(Observable.just(photos));
-        given(mockRemoteDataSource.loadGallery(FAKE_GALLERY_ID, 1)).willReturn(Observable.create(new ObservableOnSubscribe<List<Photo>>() {
+        List<PhotoEntity> photos = new ArrayList<>();
+        photos.add(new PhotoEntity() {
             @Override
-            public void subscribe(ObservableEmitter<List<Photo>> e) throws Exception {
+            public String getUrl() {
+                return FAKE_URL;
+            }
+        });
+        given(mockLocalDataSource.loadGallery(FAKE_GALLERY_ID, 1)).willReturn(Observable.just(photos));
+        given(mockRemoteDataSource.loadGallery(FAKE_GALLERY_ID, 1)).willReturn(Observable.create(new ObservableOnSubscribe<List<PhotoEntity>>() {
+            @Override
+            public void subscribe(ObservableEmitter<List<PhotoEntity>> e) throws Exception {
                 throw new IllegalStateException("Shouldn't be invoked");
             }
         }));

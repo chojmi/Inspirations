@@ -1,6 +1,7 @@
 package com.github.chojmi.inspirations.presentation.gallery.grid;
 
 import com.github.chojmi.inspirations.domain.usecase.GetGallery;
+import com.github.chojmi.inspirations.presentation.mapper.gallery.PhotoDataMapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,10 +27,12 @@ public class GridPresenterTest {
     private GridContract.View mockGalleryView;
     @Mock
     private GetGallery mockGetGallery;
+    @Mock
+    private PhotoDataMapper mockPhotoDataMapper;
 
     @Before
     public void setUp() {
-        galleryPresenter = new GridPresenter(mockGetGallery);
+        galleryPresenter = new GridPresenter(mockGetGallery, mockPhotoDataMapper);
         galleryPresenter.setView(mockGalleryView);
     }
 

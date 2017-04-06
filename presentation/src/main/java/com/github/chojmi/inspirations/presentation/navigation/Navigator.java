@@ -3,8 +3,8 @@ package com.github.chojmi.inspirations.presentation.navigation;
 import android.content.Context;
 import android.content.Intent;
 
-import com.github.chojmi.inspirations.domain.model.Photo;
 import com.github.chojmi.inspirations.presentation.gallery.photo.PhotoActivity;
+import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

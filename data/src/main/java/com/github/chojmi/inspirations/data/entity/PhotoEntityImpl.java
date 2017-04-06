@@ -2,6 +2,7 @@ package com.github.chojmi.inspirations.data.entity;
 
 import android.os.Parcelable;
 
+import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.google.auto.value.AutoValue;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -10,9 +11,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Locale;
 
 @AutoValue
-public abstract class PhotoEntity implements Parcelable {
-    public static TypeAdapter<PhotoEntity> typeAdapter(Gson gson) {
-        return new AutoValue_PhotoEntity.GsonTypeAdapter(gson);
+public abstract class PhotoEntityImpl implements Parcelable, PhotoEntity {
+    public static TypeAdapter<PhotoEntityImpl> typeAdapter(Gson gson) {
+        return new AutoValue_PhotoEntityImpl.GsonTypeAdapter(gson);
     }
 
     @SerializedName("id")

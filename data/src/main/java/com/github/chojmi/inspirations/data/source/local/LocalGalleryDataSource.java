@@ -2,7 +2,7 @@ package com.github.chojmi.inspirations.data.source.local;
 
 import android.content.Context;
 
-import com.github.chojmi.inspirations.domain.model.Photo;
+import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
 
 import java.util.Collections;
@@ -19,12 +19,12 @@ public class LocalGalleryDataSource implements GalleryDataSource {
     }
 
     @Override
-    public Observable<List<Photo>> loadGallery(String galleryId) {
+    public Observable<List<PhotoEntity>> loadGallery(String galleryId) {
         return loadGallery(galleryId, 1);
     }
 
     @Override
-    public Observable<List<Photo>> loadGallery(String galleryId, int page) {
+    public Observable<List<PhotoEntity>> loadGallery(String galleryId, int page) {
         return Observable.just(Collections.emptyList());
     }
 }

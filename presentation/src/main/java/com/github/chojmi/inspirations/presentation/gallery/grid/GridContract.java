@@ -1,8 +1,8 @@
 package com.github.chojmi.inspirations.presentation.gallery.grid;
 
-import com.github.chojmi.inspirations.domain.model.Photo;
 import com.github.chojmi.inspirations.presentation.blueprints.BasePresenter;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseView;
+import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 
 import java.util.List;
 

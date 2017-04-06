@@ -1,6 +1,7 @@
 package com.github.chojmi.inspirations.presentation.gallery.grid;
 
 import com.github.chojmi.inspirations.domain.usecase.GetGallery;
+import com.github.chojmi.inspirations.presentation.mapper.gallery.PhotoDataMapper;
 
 import dagger.Module;
 import dagger.Provides;
@@ -9,7 +10,7 @@ import dagger.Provides;
 public class GridPresenterModule {
 
     @Provides
-    GridContract.Presenter provideGalleryPresenter(GetGallery getGallery) {
-        return new GridPresenter(getGallery);
+    GridContract.Presenter provideGalleryPresenter(GetGallery getGallery, PhotoDataMapper photoDataMapper) {
+        return new GridPresenter(getGallery, photoDataMapper);
     }
 }

@@ -1,6 +1,6 @@
 package com.github.chojmi.inspirations.data.source.remote;
 
-import com.github.chojmi.inspirations.data.entity.gallery.GalleryEntity;
+import com.github.chojmi.inspirations.data.entity.gallery.GalleryEntityImpl;
 
 import java.util.Map;
 
@@ -11,5 +11,5 @@ import retrofit2.http.QueryMap;
 public interface GalleryService {
 
     @GET("services/rest")
-    Observable<GalleryEntity> loadGallery(@QueryMap Map<String, String> options);
+    Observable<GalleryEntityImpl> loadGallery(@QueryMap Map<String, String> options);
 }

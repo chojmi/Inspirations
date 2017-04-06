@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.chojmi.inspirations.domain.model.Photo;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 import com.github.chojmi.inspirations.presentation.gallery.DaggerGalleryComponent;
 import com.github.chojmi.inspirations.presentation.main.MainActivity;
+import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 
 import java.util.List;
 

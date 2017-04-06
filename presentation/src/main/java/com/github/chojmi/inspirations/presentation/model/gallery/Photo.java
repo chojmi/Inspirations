@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.domain.model;
+package com.github.chojmi.inspirations.presentation.model.gallery;
 
 import com.google.auto.value.AutoValue;
 

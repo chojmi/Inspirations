@@ -2,11 +2,13 @@ package com.github.chojmi.inspirations.presentation.gallery.grid;
 
 import android.support.annotation.NonNull;
 
-import com.github.chojmi.inspirations.domain.model.Photo;
+import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.usecase.DefaultObserver;
 import com.github.chojmi.inspirations.domain.usecase.GetGallery;
 import com.github.chojmi.inspirations.domain.usecase.GetGallery.Params;
 import com.github.chojmi.inspirations.presentation.blueprints.exception.ViewNotFoundException;
+import com.github.chojmi.inspirations.presentation.mapper.gallery.PhotoDataMapper;
+import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 
 import java.util.List;
 
@@ -16,11 +18,13 @@ import static dagger.internal.Preconditions.checkNotNull;
 
 class GridPresenter implements GridContract.Presenter {
     private final GetGallery getGalleryUseCase;
+    private final PhotoDataMapper photoDataMapper;
 
     private GridContract.View galleryView;
 
-    GridPresenter(@NonNull GetGallery getGalleryUseCase) {
+    GridPresenter(@NonNull GetGallery getGalleryUseCase, @NonNull PhotoDataMapper photoDataMapper) {
         this.getGalleryUseCase = checkNotNull(getGalleryUseCase);
+        this.photoDataMapper = checkNotNull(photoDataMapper);
     }
 
     @Override
@@ -48,11 +52,11 @@ class GridPresenter implements GridContract.Presenter {
         this.galleryView = null;
     }
 
-    private DefaultObserver<List<Photo>> getGalleryObserver() {
-        return new DefaultObserver<List<Photo>>() {
+    private DefaultObserver<List<PhotoEntity>> getGalleryObserver() {
+        return new DefaultObserver<List<PhotoEntity>>() {
             @Override
-            public void onNext(List<Photo> photos) {
-                galleryView.showPhotos(photos);
+            public void onNext(List<PhotoEntity> photos) {
+                galleryView.showPhotos(photoDataMapper.transform(photos));
             }
 
             @Override
