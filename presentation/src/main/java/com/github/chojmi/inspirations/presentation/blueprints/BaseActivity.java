@@ -34,7 +34,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseUI 
         return navigator;
     }
 
-    protected ApplicationComponent getApplicationComponent() {
+    @Override
+    public ApplicationComponent getApplicationComponent() {
         return ((InspirationsApp) getApplication()).getApplicationComponent();
     }
 }

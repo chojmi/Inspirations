@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.chojmi.inspirations.domain.model.Photo;
-import com.github.chojmi.inspirations.presentation.InspirationsApp;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 import com.github.chojmi.inspirations.presentation.gallery.DaggerGalleryComponent;
@@ -44,7 +43,7 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridCont
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         DaggerGalleryComponent.builder()
-                .applicationComponent((((InspirationsApp) getActivity().getApplication()).getApplicationComponent()))
+                .applicationComponent(getApplicationComponent())
                 .build()
                 .inject(this);
     }

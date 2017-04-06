@@ -34,7 +34,7 @@ class GridPresenter implements GridContract.Presenter {
         if (galleryView == null) {
             throw new ViewNotFoundException();
         }
-        getGalleryUseCase.execute(new GalleryObserver(), Params.forGallery(galleryId));
+        getGalleryUseCase.execute(getGalleryObserver(), Params.forGallery(galleryId));
     }
 
     @Override
@@ -48,15 +48,17 @@ class GridPresenter implements GridContract.Presenter {
         this.galleryView = null;
     }
 
-    private final class GalleryObserver extends DefaultObserver<List<Photo>> {
-        @Override
-        public void onNext(List<Photo> photos) {
-            galleryView.showPhotos(photos);
-        }
+    private DefaultObserver<List<Photo>> getGalleryObserver() {
+        return new DefaultObserver<List<Photo>>() {
+            @Override
+            public void onNext(List<Photo> photos) {
+                galleryView.showPhotos(photos);
+            }
 
-        @Override
-        public void onError(Throwable exception) {
-            Timber.e(exception);
-        }
+            @Override
+            public void onError(Throwable exception) {
+                Timber.e(exception);
+            }
+        };
     }
 }
