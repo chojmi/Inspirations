@@ -7,6 +7,8 @@ import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
+import com.github.chojmi.inspirations.presentation.gallery.GalleryComponent;
+import com.github.chojmi.inspirations.presentation.gallery.grid.GalleryModule;
 import com.github.chojmi.inspirations.presentation.navigation.Navigator;
 
 import javax.inject.Singleton;
@@ -16,7 +18,9 @@ import dagger.Component;
 @Singleton
 @Component(modules = {GalleryRepositoryModule.class, ApplicationModule.class})
 public interface ApplicationComponent {
-    void inject(BaseActivity baseActivity);
+    void inject(BaseActivity target);
+
+    GalleryComponent plus(GalleryModule ProfileModule);
 
     Context getContext();
 

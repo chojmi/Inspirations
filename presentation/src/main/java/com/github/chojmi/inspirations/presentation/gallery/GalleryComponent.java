@@ -1,15 +1,12 @@
 package com.github.chojmi.inspirations.presentation.gallery;
 
-import com.github.chojmi.inspirations.presentation.ApplicationComponent;
-import com.github.chojmi.inspirations.presentation.blueprints.ActivityScope;
+import com.github.chojmi.inspirations.presentation.gallery.grid.GalleryModule;
 import com.github.chojmi.inspirations.presentation.gallery.grid.GridFragment;
-import com.github.chojmi.inspirations.presentation.gallery.grid.GridPresenterModule;
 
-import dagger.Component;
+import dagger.Subcomponent;
 
-@ActivityScope
-@Component(dependencies = ApplicationComponent.class, modules = GridPresenterModule.class)
+@GalleryScope
+@Subcomponent(modules = GalleryModule.class)
 public interface GalleryComponent {
-
     void inject(GridFragment fragment);
 }

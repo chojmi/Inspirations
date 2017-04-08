@@ -11,20 +11,24 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
+@Singleton
 @Module
 public class GalleryRepositoryModule {
 
-    @Singleton
     @Provides
     @Local
     GalleryDataSource provideLocalGalleryDataSource(Context context) {
         return new LocalGalleryDataSource(context);
     }
 
-    @Singleton
     @Provides
     @Remote
     GalleryDataSource provideRemoteGalleryDataSource(Context context) {
         return new RemoteGalleryDataSource(context);
+    }
+
+    @Provides
+    GalleryDataSource provideUserRepository(GalleryRepository galleryRepository) {
+        return galleryRepository;
     }
 }

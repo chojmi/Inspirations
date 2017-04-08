@@ -6,7 +6,6 @@ import android.content.Intent;
 import com.github.chojmi.inspirations.presentation.gallery.photo.PhotoActivity;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
@@ -15,7 +14,6 @@ import javax.inject.Singleton;
 @Singleton
 public class Navigator {
 
-    @Inject
     public Navigator() {
     }
 

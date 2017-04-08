@@ -5,7 +5,6 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.github.chojmi.inspirations.presentation.ApplicationComponent;
 import com.github.chojmi.inspirations.presentation.InspirationsApp;
 import com.github.chojmi.inspirations.presentation.navigation.Navigator;
 
@@ -20,7 +19,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseUI 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getApplicationComponent().inject(this);
+        getInspirationsApp().getApplicationComponent().inject(this);
     }
 
     @Override
@@ -35,7 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseUI 
     }
 
     @Override
-    public ApplicationComponent getApplicationComponent() {
-        return ((InspirationsApp) getApplication()).getApplicationComponent();
+    public InspirationsApp getInspirationsApp() {
+        return ((InspirationsApp) getApplication());
     }
 }

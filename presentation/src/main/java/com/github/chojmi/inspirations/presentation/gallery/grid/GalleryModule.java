@@ -7,7 +7,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class GridPresenterModule {
+public class GalleryModule {
 
     @Provides
     GridContract.Presenter provideGalleryPresenter(GetGallery getGallery, PhotoDataMapper photoDataMapper) {

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
-import com.github.chojmi.inspirations.presentation.gallery.DaggerGalleryComponent;
 import com.github.chojmi.inspirations.presentation.main.MainActivity;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 
@@ -30,6 +29,12 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridCont
         return new GridFragment();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getInspirationsApp().createGalleryComponent().inject(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -40,25 +45,9 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridCont
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        DaggerGalleryComponent.builder()
-                .applicationComponent(getApplicationComponent())
-                .build()
-                .inject(this);
-    }
-
-    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
-    }
-
-    private void initRecyclerView() {
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        galleryAdapter = new GridAdapter(this);
-        recyclerView.setAdapter(galleryAdapter);
     }
 
     @Override
@@ -71,6 +60,19 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridCont
     public void onDestroyView() {
         super.onDestroyView();
         presenter.destroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getInspirationsApp().releasePGalleryComponent();
+    }
+
+    private void initRecyclerView() {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        galleryAdapter = new GridAdapter(this);
+        recyclerView.setAdapter(galleryAdapter);
     }
 
     @Override
