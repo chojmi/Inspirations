@@ -6,7 +6,7 @@ import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 
 import java.util.List;
 
-public interface GridContract {
+interface GridContract {
 
     interface View extends BaseView, GridAdapter.Listener {
         void showPhotos(List<Photo> photos);

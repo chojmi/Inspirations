@@ -20,7 +20,7 @@ class GridPresenter implements GridContract.Presenter {
     private final GetGallery getGalleryUseCase;
     private final PhotoDataMapper photoDataMapper;
 
-    private GridContract.View galleryView;
+    private GridContract.View view;
 
     GridPresenter(@NonNull GetGallery getGalleryUseCase, @NonNull PhotoDataMapper photoDataMapper) {
         this.getGalleryUseCase = checkNotNull(getGalleryUseCase);
@@ -29,13 +29,13 @@ class GridPresenter implements GridContract.Presenter {
 
     @Override
     public void setView(@NonNull GridContract.View view) {
-        galleryView = checkNotNull(view);
+        this.view = checkNotNull(view);
         refreshPhotos("72157677898551390");
     }
 
     @Override
     public void refreshPhotos(String galleryId) {
-        if (galleryView == null) {
+        if (view == null) {
             throw new ViewNotFoundException();
         }
         getGalleryUseCase.execute(getGalleryObserver(), Params.forGallery(galleryId));
@@ -43,20 +43,20 @@ class GridPresenter implements GridContract.Presenter {
 
     @Override
     public void photoSelected(Photo photo) {
-        galleryView.openPhotoView(photo);
+        view.openPhotoView(photo);
     }
 
     @Override
     public void destroyView() {
         this.getGalleryUseCase.dispose();
-        this.galleryView = null;
+        this.view = null;
     }
 
     private DefaultObserver<List<PhotoEntity>> getGalleryObserver() {
         return new DefaultObserver<List<PhotoEntity>>() {
             @Override
             public void onNext(List<PhotoEntity> photos) {
-                galleryView.showPhotos(photoDataMapper.transform(photos));
+                view.showPhotos(photoDataMapper.transform(photos));
             }
 
             @Override

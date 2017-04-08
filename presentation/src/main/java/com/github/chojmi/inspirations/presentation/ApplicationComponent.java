@@ -8,7 +8,8 @@ import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
 import com.github.chojmi.inspirations.presentation.gallery.GalleryComponent;
-import com.github.chojmi.inspirations.presentation.gallery.grid.GalleryModule;
+import com.github.chojmi.inspirations.presentation.gallery.grid.GridModule;
+import com.github.chojmi.inspirations.presentation.gallery.photo.PhotoViewModule;
 import com.github.chojmi.inspirations.presentation.navigation.Navigator;
 
 import javax.inject.Singleton;
@@ -20,7 +21,7 @@ import dagger.Component;
 public interface ApplicationComponent {
     void inject(BaseActivity target);
 
-    GalleryComponent plus(GalleryModule ProfileModule);
+    GalleryComponent plus(GridModule gridModule, PhotoViewModule photoViewModule);
 
     Context getContext();
 

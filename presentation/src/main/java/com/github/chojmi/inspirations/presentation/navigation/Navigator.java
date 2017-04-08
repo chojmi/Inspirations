@@ -3,7 +3,7 @@ package com.github.chojmi.inspirations.presentation.navigation;
 import android.content.Context;
 import android.content.Intent;
 
-import com.github.chojmi.inspirations.presentation.gallery.photo.PhotoActivity;
+import com.github.chojmi.inspirations.presentation.gallery.photo.PhotoViewActivity;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 
 import javax.inject.Singleton;
@@ -19,7 +19,7 @@ public class Navigator {
 
     public void navigateToPhoto(Context context, Photo photo) {
         if (context != null) {
-            Intent intentToLaunch = PhotoActivity.getCallingIntent(context);
+            Intent intentToLaunch = PhotoViewActivity.getCallingIntent(context, photo);
             context.startActivity(intentToLaunch);
         }
     }

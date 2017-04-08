@@ -3,7 +3,9 @@ package com.github.chojmi.inspirations.presentation;
 import android.app.Application;
 
 import com.github.chojmi.inspirations.presentation.gallery.GalleryComponent;
-import com.github.chojmi.inspirations.presentation.gallery.grid.GalleryModule;
+import com.github.chojmi.inspirations.presentation.gallery.grid.GridModule;
+import com.github.chojmi.inspirations.presentation.gallery.photo.PhotoViewModule;
+import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 
 import timber.log.Timber;
 
@@ -32,11 +34,15 @@ public class InspirationsApp extends Application {
     }
 
     public GalleryComponent createGalleryComponent() {
-        galleryComponent = applicationComponent.plus(new GalleryModule());
+        return createGalleryComponent(null);
+    }
+
+    public GalleryComponent createGalleryComponent(Photo photo) {
+        galleryComponent = applicationComponent.plus(new GridModule(), new PhotoViewModule(photo));
         return galleryComponent;
     }
 
-    public void releasePGalleryComponent() {
+    public void releaseGalleryComponent() {
         galleryComponent = null;
     }
 }

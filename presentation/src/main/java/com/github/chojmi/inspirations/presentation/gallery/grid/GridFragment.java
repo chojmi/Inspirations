@@ -48,11 +48,6 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridCont
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         presenter.setView(this);
     }
 
@@ -65,7 +60,7 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridCont
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getInspirationsApp().releasePGalleryComponent();
+        getInspirationsApp().releaseGalleryComponent();
     }
 
     private void initRecyclerView() {
