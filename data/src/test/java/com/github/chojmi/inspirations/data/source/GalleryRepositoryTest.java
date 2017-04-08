@@ -14,8 +14,6 @@ import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
@@ -67,11 +65,8 @@ public class GalleryRepositoryTest {
             }
         });
         given(mockLocalDataSource.loadGallery(FAKE_GALLERY_ID, 1)).willReturn(Observable.just(photos));
-        given(mockRemoteDataSource.loadGallery(FAKE_GALLERY_ID, 1)).willReturn(Observable.create(new ObservableOnSubscribe<List<PhotoEntity>>() {
-            @Override
-            public void subscribe(ObservableEmitter<List<PhotoEntity>> e) throws Exception {
-                throw new IllegalStateException("Shouldn't be invoked");
-            }
+        given(mockRemoteDataSource.loadGallery(FAKE_GALLERY_ID, 1)).willReturn(Observable.create(e -> {
+            throw new IllegalStateException("Shouldn't be invoked");
         }));
 
         galleryRepository.loadGallery(FAKE_GALLERY_ID).test().assertResult(photos);

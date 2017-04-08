@@ -6,7 +6,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.1'
-        classpath 'me.tatarka:gradle-retrolambda:3.2.0'
+        classpath 'me.tatarka:gradle-retrolambda:3.6.0'
     }
 }
 
@@ -31,17 +31,16 @@ ext {
     testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
 
     supportLibVersion = '25.3.1'
-    daggerLibVersion = '2.7'
-    retrofitLibVersion = '2.1.0'
+    daggerLibVersion = '2.10'
+    retrofitLibVersion = '2.2.0'
     rxAndroidLibVersion = '2.0.1'
-    rxJavaLibVersion = '2.0.4'
-    retrofitRxJavaLibVersion = '1.0.0'
-    loggingInterceptorLibVersion = '3.4.1'
+    rxJavaLibVersion = '2.0.8'
+    loggingInterceptorLibVersion = '3.6.0'
     gsonLibVersion = '2.8.0'
-    butterknifeLibVersion = '8.4.0'
-    autovalueLibVersion = '1.3'
+    butterknifeLibVersion = '8.5.1'
+    autovalueLibVersion = '1.4.1'
     autovalueParcelLibVersion = '0.2.5'
-    autovalueGsonLibVersion = '0.3.1'
+    autovalueGsonLibVersion = '0.4.6'
     materialDesignDimensLibVersion = '1.4'
     glideLibVersion = '3.7.0'
     timberLibVersion = '4.5.1'

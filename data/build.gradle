@@ -14,6 +14,12 @@ android {
         versionName rootProject.ext.versionName
 
         testInstrumentationRunner rootProject.ext.testInstrumentationRunner
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ['autovaluegson.defaultCollectionsToEmpty': 'true']
+            }
+        }
     }
     buildTypes {
         release {
@@ -51,7 +57,6 @@ def getApiKey() {
     return props['API_KEY']
 }
 
-
 def getApiSecretKey() {
     def Properties props = new Properties()
     props.load(new FileInputStream(new File('secrets.properties')))
@@ -75,8 +80,7 @@ dependencies {
     compile "com.squareup.okhttp3:logging-interceptor:${rootProject.ext.loggingInterceptorLibVersion}"
     compile "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofitLibVersion}"
     compile "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofitLibVersion}"
-    compile "com.squareup.retrofit2:adapter-rxjava:${rootProject.ext.retrofitLibVersion}"
-    compile "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:${rootProject.ext.retrofitRxJavaLibVersion}"
+    compile "com.squareup.retrofit2:adapter-rxjava2:${rootProject.ext.retrofitLibVersion}"
 
     compile "com.google.code.gson:gson:${rootProject.ext.gsonLibVersion}"
 
@@ -85,6 +89,7 @@ dependencies {
     annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:$rootProject.ext.autovalueParcelLibVersion"
     annotationProcessor "com.ryanharter.auto.value:auto-value-parcel-adapter:$rootProject.ext.autovalueParcelLibVersion"
     annotationProcessor "com.ryanharter.auto.value:auto-value-gson:$rootProject.autovalueGsonLibVersion"
+    provided "com.ryanharter.auto.value:auto-value-gson:$rootProject.autovalueGsonLibVersion"
 
     //Event logging
     compile "com.jakewharton.timber:timber:$rootProject.ext.timberLibVersion"
