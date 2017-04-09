@@ -32,7 +32,7 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridCont
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getInspirationsApp().createGalleryComponent().inject(this);
+        getInspirationsApp().createGridComponent().inject(this);
     }
 
     @Nullable
@@ -60,7 +60,7 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridCont
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getInspirationsApp().releaseGalleryComponent();
+        getInspirationsApp().releaseGridComponent();
     }
 
     private void initRecyclerView() {

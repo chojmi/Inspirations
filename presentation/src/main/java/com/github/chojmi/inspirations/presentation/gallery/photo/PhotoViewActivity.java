@@ -30,7 +30,7 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getInspirationsApp().createGalleryComponent(getIntent().getParcelableExtra(ARG_PHOTO)).inject(this);
+        getInspirationsApp().createPhotoViewComponent(getIntent().getParcelableExtra(ARG_PHOTO)).inject(this);
         setContentView(R.layout.activity_gallery_photo);
     }
 
@@ -49,7 +49,7 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        getInspirationsApp().releaseGalleryComponent();
+        getInspirationsApp().releasePhotoViewComponent();
     }
 
     @Override

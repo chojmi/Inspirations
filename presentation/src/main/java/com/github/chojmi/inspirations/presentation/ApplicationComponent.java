@@ -7,8 +7,9 @@ import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
-import com.github.chojmi.inspirations.presentation.gallery.GalleryComponent;
+import com.github.chojmi.inspirations.presentation.gallery.grid.GridComponent;
 import com.github.chojmi.inspirations.presentation.gallery.grid.GridModule;
+import com.github.chojmi.inspirations.presentation.gallery.photo.PhotoViewComponent;
 import com.github.chojmi.inspirations.presentation.gallery.photo.PhotoViewModule;
 import com.github.chojmi.inspirations.presentation.navigation.Navigator;
 
@@ -21,7 +22,9 @@ import dagger.Component;
 public interface ApplicationComponent {
     void inject(BaseActivity target);
 
-    GalleryComponent plus(GridModule gridModule, PhotoViewModule photoViewModule);
+    GridComponent plus(GridModule gridModule);
+
+    PhotoViewComponent plus(PhotoViewModule photoViewModule);
 
     Context getContext();
 

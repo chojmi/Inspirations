@@ -2,8 +2,9 @@ package com.github.chojmi.inspirations.presentation;
 
 import android.app.Application;
 
-import com.github.chojmi.inspirations.presentation.gallery.GalleryComponent;
+import com.github.chojmi.inspirations.presentation.gallery.grid.GridComponent;
 import com.github.chojmi.inspirations.presentation.gallery.grid.GridModule;
+import com.github.chojmi.inspirations.presentation.gallery.photo.PhotoViewComponent;
 import com.github.chojmi.inspirations.presentation.gallery.photo.PhotoViewModule;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 
@@ -12,7 +13,8 @@ import timber.log.Timber;
 public class InspirationsApp extends Application {
 
     private ApplicationComponent applicationComponent;
-    private GalleryComponent galleryComponent;
+    private GridComponent gridComponent;
+    private PhotoViewComponent photoViewComponent;
 
     @Override
     public void onCreate() {
@@ -33,16 +35,21 @@ public class InspirationsApp extends Application {
         return this.applicationComponent;
     }
 
-    public GalleryComponent createGalleryComponent() {
-        return createGalleryComponent(null);
+    public GridComponent createGridComponent() {
+        gridComponent = applicationComponent.plus(new GridModule());
+        return gridComponent;
     }
 
-    public GalleryComponent createGalleryComponent(Photo photo) {
-        galleryComponent = applicationComponent.plus(new GridModule(), new PhotoViewModule(photo));
-        return galleryComponent;
+    public void releaseGridComponent() {
+        gridComponent = null;
     }
 
-    public void releaseGalleryComponent() {
-        galleryComponent = null;
+    public PhotoViewComponent createPhotoViewComponent(Photo photo) {
+        photoViewComponent = applicationComponent.plus(new PhotoViewModule(photo));
+        return photoViewComponent;
+    }
+
+    public void releasePhotoViewComponent() {
+        photoViewComponent = null;
     }
 }
