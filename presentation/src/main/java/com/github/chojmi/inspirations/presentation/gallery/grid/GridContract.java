@@ -15,7 +15,7 @@ interface GridContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void refreshPhotos(String galleryId);
+        void refreshPhotos(String userId);
 
         void photoSelected(Photo photo);
     }

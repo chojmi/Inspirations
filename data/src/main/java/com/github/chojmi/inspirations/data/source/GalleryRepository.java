@@ -32,4 +32,15 @@ public class GalleryRepository implements GalleryDataSource {
         return Observable.concat(galleryLocalDataSource.loadGallery(galleryId, page),
                 galleryRemoteDataSource.loadGallery(galleryId, page)).filter(photos -> photos.size() > 0).firstElement().toObservable();
     }
+
+    @Override
+    public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId) {
+        return loadUserPublicPhotos(userId, 1);
+    }
+
+    @Override
+    public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page) {
+        return Observable.concat(galleryLocalDataSource.loadUserPublicPhotos(userId, page),
+                galleryRemoteDataSource.loadUserPublicPhotos(userId, page)).filter(photos -> photos.size() > 0).firstElement().toObservable();
+    }
 }

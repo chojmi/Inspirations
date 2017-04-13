@@ -4,8 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.usecase.DefaultObserver;
-import com.github.chojmi.inspirations.domain.usecase.GetGallery;
-import com.github.chojmi.inspirations.domain.usecase.GetGallery.Params;
+import com.github.chojmi.inspirations.domain.usecase.GetUserPublicPhotos;
 import com.github.chojmi.inspirations.presentation.blueprints.exception.ViewNotFoundException;
 import com.github.chojmi.inspirations.presentation.mapper.gallery.PhotoDataMapper;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
@@ -17,28 +16,28 @@ import timber.log.Timber;
 import static dagger.internal.Preconditions.checkNotNull;
 
 class GridPresenter implements GridContract.Presenter {
-    private final GetGallery getGalleryUseCase;
+    private final GetUserPublicPhotos getUserPublicPhotos;
     private final PhotoDataMapper photoDataMapper;
 
     private GridContract.View view;
 
-    GridPresenter(@NonNull GetGallery getGalleryUseCase, @NonNull PhotoDataMapper photoDataMapper) {
-        this.getGalleryUseCase = checkNotNull(getGalleryUseCase);
+    GridPresenter(@NonNull GetUserPublicPhotos getUserPublicPhotos, @NonNull PhotoDataMapper photoDataMapper) {
+        this.getUserPublicPhotos = checkNotNull(getUserPublicPhotos);
         this.photoDataMapper = checkNotNull(photoDataMapper);
     }
 
     @Override
     public void setView(@NonNull GridContract.View view) {
         this.view = checkNotNull(view);
-        refreshPhotos("72157677898551390");
+        refreshPhotos("66956608@N06");
     }
 
     @Override
-    public void refreshPhotos(String galleryId) {
+    public void refreshPhotos(String userId) {
         if (view == null) {
             throw new ViewNotFoundException();
         }
-        getGalleryUseCase.execute(getGalleryObserver(), Params.forGallery(galleryId));
+        getUserPublicPhotos.execute(getGalleryObserver(), GetUserPublicPhotos.Params.forUserId(userId));
     }
 
     @Override
@@ -48,7 +47,7 @@ class GridPresenter implements GridContract.Presenter {
 
     @Override
     public void destroyView() {
-        this.getGalleryUseCase.dispose();
+        this.getUserPublicPhotos.dispose();
         this.view = null;
     }
 

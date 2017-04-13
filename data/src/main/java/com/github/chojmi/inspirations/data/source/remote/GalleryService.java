@@ -8,8 +8,11 @@ import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
 
-public interface GalleryService {
+interface GalleryService {
 
     @GET("services/rest")
     Observable<GalleryEntityImpl> loadGallery(@QueryMap Map<String, String> options);
+
+    @GET("services/rest")
+    Observable<GalleryEntityImpl> loadUserPublicPhotos(@QueryMap Map<String, String> options);
 }

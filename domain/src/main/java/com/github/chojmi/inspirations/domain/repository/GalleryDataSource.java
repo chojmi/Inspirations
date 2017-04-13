@@ -10,4 +10,8 @@ public interface GalleryDataSource {
     Observable<List<PhotoEntity>> loadGallery(String galleryId);
 
     Observable<List<PhotoEntity>> loadGallery(String galleryId, int page);
+
+    Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId);
+
+    Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page);
 }

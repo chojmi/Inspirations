@@ -43,4 +43,22 @@ public class RemoteGalleryDataSource implements GalleryDataSource {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread()).map(GalleryEntity::getPhoto);
     }
+
+    @Override
+    public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId) {
+        return loadUserPublicPhotos(userId, 1);
+    }
+
+    @Override
+    public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page) {
+        Map<String, String> args = new HashMap<>();
+        args.put("method", "flickr.people.getPublicPhotos");
+        args.put("api_key", BuildConfig.API_KEY);
+        args.put("format", "json");
+        args.put("user_id", userId);
+        args.put("page", String.valueOf(page));
+        return galleryService.loadGallery(args)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread()).map(GalleryEntity::getPhoto);
+    }
 }

@@ -24,6 +24,16 @@ public class FakeRemoteGalleryDataSource implements GalleryDataSource {
         return Observable.just(fakePhotoLists);
     }
 
+    @Override
+    public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId) {
+        return loadUserPublicPhotos(userId, 1);
+    }
+
+    @Override
+    public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page) {
+        return Observable.just(fakePhotoLists);
+    }
+
     @VisibleForTesting
     public void setFakePhotoLists(List<PhotoEntity> fakePhotoLists) {
         this.fakePhotoLists = fakePhotoLists;

@@ -1,6 +1,6 @@
 package com.github.chojmi.inspirations.presentation.gallery.grid;
 
-import com.github.chojmi.inspirations.domain.usecase.GetGallery;
+import com.github.chojmi.inspirations.domain.usecase.GetUserPublicPhotos;
 import com.github.chojmi.inspirations.presentation.mapper.gallery.PhotoDataMapper;
 
 import org.junit.Before;
@@ -19,33 +19,33 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GridPresenterTest {
-    private static final String GALLERY_ID = "123";
+    private static final String USER_ID = "123";
 
     private GridPresenter galleryPresenter;
 
     @Mock
     private GridContract.View mockGalleryView;
     @Mock
-    private GetGallery mockGetGallery;
+    private GetUserPublicPhotos mockGetUserPublicPhotos;
     @Mock
     private PhotoDataMapper mockPhotoDataMapper;
 
     @Before
     public void setUp() {
-        galleryPresenter = new GridPresenter(mockGetGallery, mockPhotoDataMapper);
+        galleryPresenter = new GridPresenter(mockGetUserPublicPhotos, mockPhotoDataMapper);
         galleryPresenter.setView(mockGalleryView);
     }
 
     @Test
     public void testGalleryPresenterRefreshPhotosHappyCase() {
-        galleryPresenter.refreshPhotos(GALLERY_ID);
-        ArgumentCaptor<GetGallery.Params> forGalleryParams = ArgumentCaptor.forClass(GetGallery.Params.class);
-        verify(mockGetGallery, times(2)).execute(any(DisposableObserver.class), forGalleryParams.capture());
-        assertTrue(forGalleryParams.getAllValues().get(1).equals(GetGallery.Params.forGallery(GALLERY_ID)));
+        galleryPresenter.refreshPhotos(USER_ID);
+        ArgumentCaptor<GetUserPublicPhotos.Params> params = ArgumentCaptor.forClass(GetUserPublicPhotos.Params.class);
+        verify(mockGetUserPublicPhotos, times(2)).execute(any(DisposableObserver.class), params.capture());
+        assertTrue(params.getAllValues().get(1).equals(GetUserPublicPhotos.Params.forUserId(USER_ID)));
     }
 
     @Test
     public void testGalleryPresenterRefreshPhotosOnResumeHappyCase() {
-        verify(mockGetGallery, times(1)).execute(any(DisposableObserver.class), any(GetGallery.Params.class));
+        verify(mockGetUserPublicPhotos, times(1)).execute(any(DisposableObserver.class), any(GetUserPublicPhotos.Params.class));
     }
 }

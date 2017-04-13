@@ -27,4 +27,14 @@ public class LocalGalleryDataSource implements GalleryDataSource {
     public Observable<List<PhotoEntity>> loadGallery(String galleryId, int page) {
         return Observable.just(Collections.emptyList());
     }
+
+    @Override
+    public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId) {
+        return loadUserPublicPhotos(userId, 1);
+    }
+
+    @Override
+    public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page) {
+        return Observable.just(Collections.emptyList());
+    }
 }
