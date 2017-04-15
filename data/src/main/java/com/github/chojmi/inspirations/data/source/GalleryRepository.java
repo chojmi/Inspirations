@@ -1,6 +1,8 @@
 package com.github.chojmi.inspirations.data.source;
 
-import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
+import android.support.annotation.NonNull;
+
+import com.github.chojmi.inspirations.domain.entity.gallery.PhotoEntity;
 import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
 
 import java.util.List;
@@ -9,17 +11,19 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 
-public class GalleryRepository implements GalleryDataSource {
+import static dagger.internal.Preconditions.checkNotNull;
+
+public final class GalleryRepository implements GalleryDataSource {
 
     private final GalleryDataSource galleryRemoteDataSource;
 
     private final GalleryDataSource galleryLocalDataSource;
 
     @Inject
-    GalleryRepository(@Remote GalleryDataSource galleryRemoteDataSource,
-                      @Local GalleryDataSource galleryLocalDataSource) {
-        this.galleryRemoteDataSource = galleryRemoteDataSource;
-        this.galleryLocalDataSource = galleryLocalDataSource;
+    GalleryRepository(@Remote @NonNull GalleryDataSource galleryRemoteDataSource,
+                      @Local @NonNull GalleryDataSource galleryLocalDataSource) {
+        this.galleryRemoteDataSource = checkNotNull(galleryRemoteDataSource);
+        this.galleryLocalDataSource = checkNotNull(galleryLocalDataSource);
     }
 
     @Override
@@ -31,16 +35,5 @@ public class GalleryRepository implements GalleryDataSource {
     public Observable<List<PhotoEntity>> loadGallery(String galleryId, int page) {
         return Observable.concat(galleryLocalDataSource.loadGallery(galleryId, page),
                 galleryRemoteDataSource.loadGallery(galleryId, page)).filter(photos -> photos.size() > 0).firstElement().toObservable();
-    }
-
-    @Override
-    public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId) {
-        return loadUserPublicPhotos(userId, 1);
-    }
-
-    @Override
-    public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page) {
-        return Observable.concat(galleryLocalDataSource.loadUserPublicPhotos(userId, page),
-                galleryRemoteDataSource.loadUserPublicPhotos(userId, page)).filter(photos -> photos.size() > 0).firstElement().toObservable();
     }
 }

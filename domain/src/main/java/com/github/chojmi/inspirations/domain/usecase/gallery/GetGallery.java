@@ -1,31 +1,33 @@
-package com.github.chojmi.inspirations.domain.usecase;
+package com.github.chojmi.inspirations.domain.usecase.gallery;
 
-import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
+import com.github.chojmi.inspirations.domain.entity.gallery.PhotoEntity;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
+import com.github.chojmi.inspirations.domain.usecase.UseCase;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
-public class GetGallery extends UseCase<List<PhotoEntity>, GetGallery.Params> {
+public final class GetGallery extends UseCase<List<PhotoEntity>, GetGallery.Params> {
 
     private final GalleryDataSource galleryDataSource;
 
     @Inject
-    GetGallery(GalleryDataSource galleryDataSource, ThreadExecutor threadExecutor,
-               PostExecutionThread postExecutionThread) {
+    public GetGallery(@NonNull GalleryDataSource galleryDataSource, @NonNull ThreadExecutor threadExecutor,
+                      @NonNull PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        this.galleryDataSource = galleryDataSource;
+        this.galleryDataSource = checkNotNull(galleryDataSource);
     }
 
     @Override
-    Observable<List<PhotoEntity>> buildUseCaseObservable(Params params) {
+    public Observable<List<PhotoEntity>> buildUseCaseObservable(@NonNull Params params) {
         return galleryDataSource.loadGallery(checkNotNull(params).galleryId);
     }
 
@@ -33,11 +35,11 @@ public class GetGallery extends UseCase<List<PhotoEntity>, GetGallery.Params> {
 
         private final String galleryId;
 
-        private Params(String galleryId) {
-            this.galleryId = galleryId;
+        private Params(@NonNull String galleryId) {
+            this.galleryId = checkNotNull(galleryId);
         }
 
-        public static Params forGallery(String galleryId) {
+        public static Params forGallery(@NonNull String galleryId) {
             return new Params(galleryId);
         }
 

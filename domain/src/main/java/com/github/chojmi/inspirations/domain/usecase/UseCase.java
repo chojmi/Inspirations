@@ -4,6 +4,7 @@ import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 
 import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
@@ -25,16 +26,16 @@ public abstract class UseCase<T, Params> {
     private final PostExecutionThread postExecutionThread;
     private final CompositeDisposable disposables;
 
-    UseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
-        this.threadExecutor = threadExecutor;
-        this.postExecutionThread = postExecutionThread;
+    public UseCase(@NonNull ThreadExecutor threadExecutor, @NonNull PostExecutionThread postExecutionThread) {
+        this.threadExecutor = checkNotNull(threadExecutor);
+        this.postExecutionThread = checkNotNull(postExecutionThread);
         this.disposables = new CompositeDisposable();
     }
 
     /**
      * Builds an {@link Observable} which will be used when executing the current {@link UseCase}.
      */
-    abstract Observable<T> buildUseCaseObservable(Params params);
+    public abstract Observable<T> buildUseCaseObservable(Params params);
 
     /**
      * Executes the current use case.

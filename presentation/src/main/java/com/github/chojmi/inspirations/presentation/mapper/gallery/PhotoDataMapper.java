@@ -1,7 +1,7 @@
 package com.github.chojmi.inspirations.presentation.mapper.gallery;
 
-import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.entity.gallery.GalleryEntity;
+import com.github.chojmi.inspirations.domain.entity.gallery.PhotoEntity;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 
 import java.util.ArrayList;

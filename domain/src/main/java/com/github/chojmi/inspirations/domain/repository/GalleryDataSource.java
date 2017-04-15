@@ -1,6 +1,6 @@
 package com.github.chojmi.inspirations.domain.repository;
 
-import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
+import com.github.chojmi.inspirations.domain.entity.gallery.PhotoEntity;
 
 import java.util.List;
 
@@ -10,8 +10,4 @@ public interface GalleryDataSource {
     Observable<List<PhotoEntity>> loadGallery(String galleryId);
 
     Observable<List<PhotoEntity>> loadGallery(String galleryId, int page);
-
-    Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId);
-
-    Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page);
 }

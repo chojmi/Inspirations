@@ -6,7 +6,9 @@ import dagger.Component;
 
 @Singleton
 @Component(modules = RestClientModule.class)
-public interface RemoteGalleryComponent {
+public interface RemoteComponent {
 
     void inject(RemoteGalleryDataSource remoteGalleryDataSource);
+
+    void inject(RemotePeopleDataSource remotePeopleDataSource);
 }

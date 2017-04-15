@@ -28,7 +28,7 @@ public class GalleryRepositoryModule {
     }
 
     @Provides
-    GalleryDataSource provideUserRepository(GalleryRepository galleryRepository) {
+    GalleryDataSource provideGalleryDataSource(GalleryRepository galleryRepository) {
         return galleryRepository;
     }
 }

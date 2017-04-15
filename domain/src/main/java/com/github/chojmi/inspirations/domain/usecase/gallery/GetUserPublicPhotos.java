@@ -1,43 +1,45 @@
-package com.github.chojmi.inspirations.domain.usecase;
+package com.github.chojmi.inspirations.domain.usecase.gallery;
 
-import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
+import com.github.chojmi.inspirations.domain.entity.gallery.PhotoEntity;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
-import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
+import com.github.chojmi.inspirations.domain.repository.PeopleDataSource;
+import com.github.chojmi.inspirations.domain.usecase.UseCase;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
 public class GetUserPublicPhotos extends UseCase<List<PhotoEntity>, GetUserPublicPhotos.Params> {
 
-    private final GalleryDataSource galleryDataSource;
+    private final PeopleDataSource peopleDataSource;
 
     @Inject
-    GetUserPublicPhotos(GalleryDataSource galleryDataSource, ThreadExecutor threadExecutor,
-                        PostExecutionThread postExecutionThread) {
+    GetUserPublicPhotos(@NonNull PeopleDataSource peopleDataSource, @NonNull ThreadExecutor threadExecutor,
+                        @NonNull PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        this.galleryDataSource = galleryDataSource;
+        this.peopleDataSource = checkNotNull(peopleDataSource);
     }
 
     @Override
-    Observable<List<PhotoEntity>> buildUseCaseObservable(Params params) {
-        return galleryDataSource.loadUserPublicPhotos(checkNotNull(params).userId);
+    public Observable<List<PhotoEntity>> buildUseCaseObservable(Params params) {
+        return peopleDataSource.loadUserPublicPhotos(checkNotNull(params).userId);
     }
 
     public static final class Params {
 
         private final String userId;
 
-        private Params(String userId) {
-            this.userId = userId;
+        private Params(@NonNull String userId) {
+            this.userId = checkNotNull(userId);
         }
 
-        public static Params forUserId(String userId) {
+        public static Params forUserId(@NonNull String userId) {
             return new Params(userId);
         }
 

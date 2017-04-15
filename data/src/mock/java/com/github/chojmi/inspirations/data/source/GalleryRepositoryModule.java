@@ -17,18 +17,18 @@ public class GalleryRepositoryModule {
 
     @Provides
     @Local
-    GalleryDataSource provideStreamLocalDataSource(Context context) {
+    GalleryDataSource provideGalleryLocalDataSource(Context context) {
         return new LocalGalleryDataSource(context);
     }
 
     @Provides
     @Remote
-    GalleryDataSource provideStreamRemoteDataSource() {
+    GalleryDataSource provideGalleryRemoteDataSource() {
         return new FakeRemoteGalleryDataSource();
     }
 
     @Provides
-    GalleryDataSource provideUserRepository(GalleryRepository galleryRepository) {
+    GalleryDataSource provideGalleryRepository(GalleryRepository galleryRepository) {
         return galleryRepository;
     }
 }

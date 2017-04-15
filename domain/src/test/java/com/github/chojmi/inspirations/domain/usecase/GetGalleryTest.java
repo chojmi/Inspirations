@@ -3,6 +3,7 @@ package com.github.chojmi.inspirations.domain.usecase;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
+import com.github.chojmi.inspirations.domain.usecase.gallery.GetGallery;
 
 import org.junit.Before;
 import org.junit.Rule;

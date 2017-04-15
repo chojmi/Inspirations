@@ -2,9 +2,10 @@ package com.github.chojmi.inspirations.presentation.gallery.grid;
 
 import android.support.annotation.NonNull;
 
-import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
+import com.github.chojmi.inspirations.domain.entity.gallery.PhotoEntity;
 import com.github.chojmi.inspirations.domain.usecase.DefaultObserver;
-import com.github.chojmi.inspirations.domain.usecase.GetUserPublicPhotos;
+import com.github.chojmi.inspirations.domain.usecase.gallery.GetUserPublicPhotos;
+import com.github.chojmi.inspirations.domain.usecase.people.GetUserInfo;
 import com.github.chojmi.inspirations.presentation.blueprints.exception.ViewNotFoundException;
 import com.github.chojmi.inspirations.presentation.mapper.gallery.PhotoDataMapper;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
@@ -17,12 +18,14 @@ import static dagger.internal.Preconditions.checkNotNull;
 
 class GridPresenter implements GridContract.Presenter {
     private final GetUserPublicPhotos getUserPublicPhotos;
+    private final GetUserInfo getUserInfo;
     private final PhotoDataMapper photoDataMapper;
 
     private GridContract.View view;
 
-    GridPresenter(@NonNull GetUserPublicPhotos getUserPublicPhotos, @NonNull PhotoDataMapper photoDataMapper) {
+    GridPresenter(@NonNull GetUserPublicPhotos getUserPublicPhotos, @NonNull GetUserInfo getUserInfo, @NonNull PhotoDataMapper photoDataMapper) {
         this.getUserPublicPhotos = checkNotNull(getUserPublicPhotos);
+        this.getUserInfo = checkNotNull(getUserInfo);
         this.photoDataMapper = checkNotNull(photoDataMapper);
     }
 
@@ -48,6 +51,7 @@ class GridPresenter implements GridContract.Presenter {
     @Override
     public void destroyView() {
         this.getUserPublicPhotos.dispose();
+        this.getUserInfo.dispose();
         this.view = null;
     }
 

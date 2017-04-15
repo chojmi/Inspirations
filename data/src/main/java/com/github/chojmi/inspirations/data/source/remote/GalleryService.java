@@ -12,7 +12,4 @@ interface GalleryService {
 
     @GET("services/rest")
     Observable<GalleryEntityImpl> loadGallery(@QueryMap Map<String, String> options);
-
-    @GET("services/rest")
-    Observable<GalleryEntityImpl> loadUserPublicPhotos(@QueryMap Map<String, String> options);
 }

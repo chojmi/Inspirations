@@ -2,7 +2,7 @@ package com.github.chojmi.inspirations.data.source.local;
 
 import android.content.Context;
 
-import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
+import com.github.chojmi.inspirations.domain.entity.gallery.PhotoEntity;
 import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
 
 import java.util.Collections;
@@ -10,12 +10,14 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
-public class LocalGalleryDataSource implements GalleryDataSource {
+import static dagger.internal.Preconditions.checkNotNull;
+
+public final class LocalGalleryDataSource implements GalleryDataSource {
 
     private Context context;
 
     public LocalGalleryDataSource(Context context) {
-        this.context = context;
+        this.context = checkNotNull(context);
     }
 
     @Override
@@ -25,16 +27,6 @@ public class LocalGalleryDataSource implements GalleryDataSource {
 
     @Override
     public Observable<List<PhotoEntity>> loadGallery(String galleryId, int page) {
-        return Observable.just(Collections.emptyList());
-    }
-
-    @Override
-    public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId) {
-        return loadUserPublicPhotos(userId, 1);
-    }
-
-    @Override
-    public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page) {
         return Observable.just(Collections.emptyList());
     }
 }

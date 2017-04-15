@@ -2,7 +2,7 @@ package com.github.chojmi.inspirations.data.source;
 
 import android.support.annotation.NonNull;
 
-import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
+import com.github.chojmi.inspirations.domain.entity.gallery.PhotoEntity;
 import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
 
 import org.junit.Before;
