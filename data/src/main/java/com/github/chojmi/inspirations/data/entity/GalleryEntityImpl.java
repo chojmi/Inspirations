@@ -1,8 +1,8 @@
-package com.github.chojmi.inspirations.data.entity.gallery;
+package com.github.chojmi.inspirations.data.entity;
 
 import android.os.Parcelable;
 
-import com.github.chojmi.inspirations.domain.entity.gallery.GalleryEntity;
+import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 import com.google.auto.value.AutoValue;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;

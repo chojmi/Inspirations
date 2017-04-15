@@ -8,7 +8,7 @@ import dagger.Component;
 @Component(modules = RestClientModule.class)
 public interface RemoteComponent {
 
-    void inject(RemoteGalleryDataSource remoteGalleryDataSource);
+    void inject(RemoteGalleriesDataSource remoteGalleryDataSource);
 
     void inject(RemotePeopleDataSource remotePeopleDataSource);
 }

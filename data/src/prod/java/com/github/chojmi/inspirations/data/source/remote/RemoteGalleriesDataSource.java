@@ -2,9 +2,9 @@ package com.github.chojmi.inspirations.data.source.remote;
 
 import android.content.Context;
 
-import com.github.chojmi.inspirations.domain.entity.gallery.GalleryEntity;
-import com.github.chojmi.inspirations.domain.entity.gallery.PhotoEntity;
-import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
+import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
+import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
+import com.github.chojmi.inspirations.domain.repository.GalleriesDataSource;
 
 import java.util.List;
 import java.util.Map;
@@ -15,12 +15,12 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public final class RemoteGalleryDataSource extends BaseRemoteDataSource implements GalleryDataSource {
+public final class RemoteGalleriesDataSource extends BaseRemoteDataSource implements GalleriesDataSource {
 
     @Inject
-    GalleryService galleryService;
+    GalleriesService galleryService;
 
-    public RemoteGalleryDataSource(Context context) {
+    public RemoteGalleriesDataSource(Context context) {
         DaggerRemoteComponent.builder().restClientModule(new RestClientModule(context)).build().inject(this);
     }
 

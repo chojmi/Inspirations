@@ -2,8 +2,8 @@ package com.github.chojmi.inspirations.data.source;
 
 import android.support.annotation.NonNull;
 
-import com.github.chojmi.inspirations.domain.entity.gallery.PhotoEntity;
-import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
+import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
+import com.github.chojmi.inspirations.domain.repository.GalleriesDataSource;
 
 import java.util.List;
 
@@ -13,17 +13,17 @@ import io.reactivex.Observable;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
-public final class GalleryRepository implements GalleryDataSource {
+public final class GalleriesRepository implements GalleriesDataSource {
 
-    private final GalleryDataSource galleryRemoteDataSource;
+    private final GalleriesDataSource galleryRemoteDataSource;
 
-    private final GalleryDataSource galleryLocalDataSource;
+    private final GalleriesDataSource galleryLocalDataSource;
 
     @Inject
-    GalleryRepository(@Remote @NonNull GalleryDataSource galleryRemoteDataSource,
-                      @Local @NonNull GalleryDataSource galleryLocalDataSource) {
-        this.galleryRemoteDataSource = checkNotNull(galleryRemoteDataSource);
-        this.galleryLocalDataSource = checkNotNull(galleryLocalDataSource);
+    GalleriesRepository(@Remote @NonNull GalleriesDataSource galleriesRemoteDataSource,
+                        @Local @NonNull GalleriesDataSource galleriesLocalDataSource) {
+        this.galleryRemoteDataSource = checkNotNull(galleriesRemoteDataSource);
+        this.galleryLocalDataSource = checkNotNull(galleriesLocalDataSource);
     }
 
     @Override

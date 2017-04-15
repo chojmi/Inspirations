@@ -2,8 +2,8 @@ package com.github.chojmi.inspirations.data.source;
 
 import android.support.annotation.NonNull;
 
-import com.github.chojmi.inspirations.domain.entity.gallery.PhotoEntity;
-import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
+import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
+import com.github.chojmi.inspirations.domain.repository.GalleriesDataSource;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,22 +22,22 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GalleryRepositoryTest {
+public class GalleriesRepositoryTest {
 
     private static final String FAKE_GALLERY_ID = "123";
     private static final String FAKE_URL = "www.url.pl";
     private static final String FAKE_TITLE = "fake_title";
 
-    private GalleryDataSource galleryRepository;
+    private GalleriesDataSource galleriesDataSource;
 
     @Mock
-    private GalleryDataSource mockLocalDataSource;
+    private GalleriesDataSource mockLocalDataSource;
     @Mock
-    private GalleryDataSource mockRemoteDataSource;
+    private GalleriesDataSource mockRemoteDataSource;
 
     @Before
     public void setUp() {
-        galleryRepository = new GalleryRepository(mockRemoteDataSource, mockLocalDataSource);
+        galleriesDataSource = new GalleriesRepository(mockRemoteDataSource, mockLocalDataSource);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class GalleryRepositoryTest {
         given(mockLocalDataSource.loadGallery(FAKE_GALLERY_ID, 1)).willReturn(Observable.just(Collections.emptyList()));
         given(mockRemoteDataSource.loadGallery(FAKE_GALLERY_ID, 1)).willReturn(Observable.just(photos));
 
-        galleryRepository.loadGallery(FAKE_GALLERY_ID).test().assertResult(photos);
+        galleriesDataSource.loadGallery(FAKE_GALLERY_ID).test().assertResult(photos);
 
         verify(mockLocalDataSource, times(1)).loadGallery(FAKE_GALLERY_ID, 1);
         verify(mockRemoteDataSource, times(1)).loadGallery(FAKE_GALLERY_ID, 1);
@@ -60,7 +60,7 @@ public class GalleryRepositoryTest {
             throw new IllegalStateException("Shouldn't be invoked");
         }));
 
-        galleryRepository.loadGallery(FAKE_GALLERY_ID).test().assertResult(photos);
+        galleriesDataSource.loadGallery(FAKE_GALLERY_ID).test().assertResult(photos);
 
         verify(mockLocalDataSource, times(1)).loadGallery(FAKE_GALLERY_ID, 1);
         verify(mockRemoteDataSource, times(1)).loadGallery(FAKE_GALLERY_ID, 1);

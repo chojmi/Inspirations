@@ -2,10 +2,10 @@ package com.github.chojmi.inspirations.presentation.gallery.grid;
 
 import android.support.annotation.NonNull;
 
-import com.github.chojmi.inspirations.domain.entity.gallery.PhotoEntity;
+import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.usecase.DefaultObserver;
-import com.github.chojmi.inspirations.domain.usecase.gallery.GetUserPublicPhotos;
 import com.github.chojmi.inspirations.domain.usecase.people.GetUserInfo;
+import com.github.chojmi.inspirations.domain.usecase.people.GetUserPublicPhotos;
 import com.github.chojmi.inspirations.presentation.blueprints.exception.ViewNotFoundException;
 import com.github.chojmi.inspirations.presentation.mapper.gallery.PhotoDataMapper;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;

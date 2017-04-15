@@ -2,7 +2,7 @@ package com.github.chojmi.inspirations.data.source.local;
 
 import android.content.Context;
 
-import com.github.chojmi.inspirations.domain.entity.gallery.PhotoEntity;
+import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.repository.PeopleDataSource;
 

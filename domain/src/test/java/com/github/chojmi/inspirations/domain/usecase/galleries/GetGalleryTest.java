@@ -2,8 +2,8 @@ package com.github.chojmi.inspirations.domain.usecase;
 
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
-import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
-import com.github.chojmi.inspirations.domain.usecase.gallery.GetGallery;
+import com.github.chojmi.inspirations.domain.repository.GalleriesDataSource;
+import com.github.chojmi.inspirations.domain.usecase.galleries.GetGallery;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -25,7 +25,7 @@ public class GetGalleryTest {
     public ExpectedException expectedException = ExpectedException.none();
     private GetGallery getGallery;
     @Mock
-    private GalleryDataSource mockGalleryDataSource;
+    private GalleriesDataSource mockGalleriesDataSource;
     @Mock
     private ThreadExecutor mockThreadExecutor;
     @Mock
@@ -33,7 +33,7 @@ public class GetGalleryTest {
 
     @Before
     public void setUp() {
-        getGallery = new GetGallery(mockGalleryDataSource, mockThreadExecutor,
+        getGallery = new GetGallery(mockGalleriesDataSource, mockThreadExecutor,
                 mockPostExecutionThread);
     }
 
@@ -41,8 +41,8 @@ public class GetGalleryTest {
     public void testGetGalleryUseCaseObservableHappyCase() {
         getGallery.buildUseCaseObservable(GetGallery.Params.forGallery(GALLERY_ID));
 
-        verify(mockGalleryDataSource).loadGallery(GALLERY_ID);
-        verifyNoMoreInteractions(mockGalleryDataSource);
+        verify(mockGalleriesDataSource).loadGallery(GALLERY_ID);
+        verifyNoMoreInteractions(mockGalleriesDataSource);
         verifyZeroInteractions(mockPostExecutionThread);
         verifyZeroInteractions(mockThreadExecutor);
     }

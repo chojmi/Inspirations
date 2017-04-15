@@ -1,9 +1,9 @@
-package com.github.chojmi.inspirations.domain.usecase.gallery;
+package com.github.chojmi.inspirations.domain.usecase.galleries;
 
-import com.github.chojmi.inspirations.domain.entity.gallery.PhotoEntity;
+import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
-import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
+import com.github.chojmi.inspirations.domain.repository.GalleriesDataSource;
 import com.github.chojmi.inspirations.domain.usecase.UseCase;
 
 import java.util.List;
@@ -15,20 +15,20 @@ import io.reactivex.annotations.NonNull;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
-public final class GetGallery extends UseCase<List<PhotoEntity>, GetGallery.Params> {
+public class GetGallery extends UseCase<List<PhotoEntity>, GetGallery.Params> {
 
-    private final GalleryDataSource galleryDataSource;
+    private final GalleriesDataSource galleriesDataSource;
 
     @Inject
-    public GetGallery(@NonNull GalleryDataSource galleryDataSource, @NonNull ThreadExecutor threadExecutor,
+    public GetGallery(@NonNull GalleriesDataSource galleriesDataSource, @NonNull ThreadExecutor threadExecutor,
                       @NonNull PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        this.galleryDataSource = checkNotNull(galleryDataSource);
+        this.galleriesDataSource = checkNotNull(galleriesDataSource);
     }
 
     @Override
     public Observable<List<PhotoEntity>> buildUseCaseObservable(@NonNull Params params) {
-        return galleryDataSource.loadGallery(checkNotNull(params).galleryId);
+        return galleriesDataSource.loadGallery(checkNotNull(params).galleryId);
     }
 
     public static final class Params {

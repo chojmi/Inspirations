@@ -1,6 +1,6 @@
 package com.github.chojmi.inspirations.domain.repository;
 
-import com.github.chojmi.inspirations.domain.entity.gallery.PhotoEntity;
+import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 
 import java.util.List;

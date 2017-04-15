@@ -1,7 +1,7 @@
 package com.github.chojmi.inspirations.presentation.gallery.grid;
 
-import com.github.chojmi.inspirations.domain.usecase.gallery.GetUserPublicPhotos;
 import com.github.chojmi.inspirations.domain.usecase.people.GetUserInfo;
+import com.github.chojmi.inspirations.domain.usecase.people.GetUserPublicPhotos;
 import com.github.chojmi.inspirations.presentation.gallery.GalleryScope;
 import com.github.chojmi.inspirations.presentation.mapper.gallery.PhotoDataMapper;
 

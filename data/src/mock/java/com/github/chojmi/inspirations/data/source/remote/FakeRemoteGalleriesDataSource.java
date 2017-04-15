@@ -2,15 +2,16 @@ package com.github.chojmi.inspirations.data.source.remote;
 
 import android.support.annotation.VisibleForTesting;
 
-import com.github.chojmi.inspirations.domain.entity.gallery.PhotoEntity;
-import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
+
+import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
+import com.github.chojmi.inspirations.domain.repository.GalleriesDataSource;
 
 import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
 
-public class FakeRemoteGalleryDataSource implements GalleryDataSource {
+public class FakeRemoteGalleriesDataSource implements GalleriesDataSource {
 
     private List<PhotoEntity> fakePhotoLists = Collections.emptyList();
 

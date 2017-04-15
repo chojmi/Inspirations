@@ -1,6 +1,6 @@
-package com.github.chojmi.inspirations.domain.usecase.gallery;
+package com.github.chojmi.inspirations.domain.usecase.people;
 
-import com.github.chojmi.inspirations.domain.entity.gallery.PhotoEntity;
+import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.repository.PeopleDataSource;

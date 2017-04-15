@@ -34,8 +34,8 @@ class RestClientModule {
 
     @Provides
     @Singleton
-    GalleryService provideGalleryService(Retrofit retrofit) {
-        return retrofit.create(GalleryService.class);
+    GalleriesService provideGalleryService(Retrofit retrofit) {
+        return retrofit.create(GalleriesService.class);
     }
 
 

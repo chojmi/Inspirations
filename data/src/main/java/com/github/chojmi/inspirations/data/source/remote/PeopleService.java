@@ -1,6 +1,6 @@
 package com.github.chojmi.inspirations.data.source.remote;
 
-import com.github.chojmi.inspirations.data.entity.gallery.GalleryEntityImpl;
+import com.github.chojmi.inspirations.data.entity.GalleryEntityImpl;
 import com.github.chojmi.inspirations.data.entity.people.PersonEntityImpl;
 
 import java.util.Map;
