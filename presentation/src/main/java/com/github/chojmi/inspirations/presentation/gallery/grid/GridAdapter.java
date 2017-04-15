@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAdapter;
@@ -40,6 +41,7 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
 
     class GalleryViewHolder extends BaseRecyclerViewAdapter.ViewHolder<Photo> {
         @BindView(R.id.photo) ImageView photoHolder;
+        @BindView(R.id.title) TextView textView;
         private Photo photo;
 
         GalleryViewHolder(View itemView) {
@@ -49,6 +51,7 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
         void setPhoto(Photo photo) {
             this.photo = photo;
             loadImage(photoHolder, photo.getUrl());
+            textView.setText(photo.getTitle());
         }
 
         @OnClick(R.id.photo)

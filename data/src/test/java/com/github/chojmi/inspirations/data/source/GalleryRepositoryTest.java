@@ -1,5 +1,7 @@
 package com.github.chojmi.inspirations.data.source;
 
+import android.support.annotation.NonNull;
+
 import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.repository.GalleryDataSource;
 
@@ -24,6 +26,7 @@ public class GalleryRepositoryTest {
 
     private static final String FAKE_GALLERY_ID = "123";
     private static final String FAKE_URL = "www.url.pl";
+    private static final String FAKE_TITLE = "fake_title";
 
     private GalleryDataSource galleryRepository;
 
@@ -39,13 +42,7 @@ public class GalleryRepositoryTest {
 
     @Test
     public void testGetGalleryFromRemoteHappyCase() {
-        List<PhotoEntity> photos = new ArrayList<>();
-        photos.add(new PhotoEntity() {
-            @Override
-            public String getUrl() {
-                return FAKE_URL;
-            }
-        });
+        List<PhotoEntity> photos = getFakePhotoEntities();
         given(mockLocalDataSource.loadGallery(FAKE_GALLERY_ID, 1)).willReturn(Observable.just(Collections.emptyList()));
         given(mockRemoteDataSource.loadGallery(FAKE_GALLERY_ID, 1)).willReturn(Observable.just(photos));
 
@@ -57,13 +54,7 @@ public class GalleryRepositoryTest {
 
     @Test
     public void testGetGalleryFromLocalHappyCase() {
-        List<PhotoEntity> photos = new ArrayList<>();
-        photos.add(new PhotoEntity() {
-            @Override
-            public String getUrl() {
-                return FAKE_URL;
-            }
-        });
+        List<PhotoEntity> photos = getFakePhotoEntities();
         given(mockLocalDataSource.loadGallery(FAKE_GALLERY_ID, 1)).willReturn(Observable.just(photos));
         given(mockRemoteDataSource.loadGallery(FAKE_GALLERY_ID, 1)).willReturn(Observable.create(e -> {
             throw new IllegalStateException("Shouldn't be invoked");
@@ -73,5 +64,22 @@ public class GalleryRepositoryTest {
 
         verify(mockLocalDataSource, times(1)).loadGallery(FAKE_GALLERY_ID, 1);
         verify(mockRemoteDataSource, times(1)).loadGallery(FAKE_GALLERY_ID, 1);
+    }
+
+    @NonNull
+    private List<PhotoEntity> getFakePhotoEntities() {
+        List<PhotoEntity> photos = new ArrayList<>();
+        photos.add(new PhotoEntity() {
+            @Override
+            public String getUrl() {
+                return FAKE_URL;
+            }
+
+            @Override
+            public String getTitle() {
+                return FAKE_TITLE;
+            }
+        });
+        return photos;
     }
 }

@@ -19,7 +19,7 @@ public class PhotoDataMapper {
     }
 
     private Photo transform(PhotoEntity photo) {
-        return Photo.create(photo.getUrl());
+        return Photo.create(photo.getTitle(), photo.getUrl());
     }
 
     public List<Photo> transform(List<PhotoEntity> photos) {
