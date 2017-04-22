@@ -21,7 +21,6 @@ import io.reactivex.observers.TestObserver;
 @RunWith(MockitoJUnitRunner.class)
 public class GetUserPublicPhotosTest {
     private static final String USER_ID = "123";
-    private List<PhotoEntity> mockPhotoEntities;
 
     private GetUserPublicPhotos getUserPublicPhotos;
     private TestObserver testObserver;
@@ -52,7 +51,7 @@ public class GetUserPublicPhotosTest {
 
     @Test
     public void shouldReturnProperValue() {
-        mockPhotoEntities = createMockPhotoEntities();
+        List<PhotoEntity> mockPhotoEntities = createMockPhotoEntities();
         Mockito.when(mockPeopleDataSource.loadUserPublicPhotos(USER_ID)).thenReturn(Observable.fromCallable(() -> mockPhotoEntities));
         Observable<GetUserPublicPhotos.SubmitUiModel> resultObs = getUserPublicPhotos.buildUseCaseObservable(Observable.fromCallable(() -> GetUserPublicPhotos.SubmitEvent.create(USER_ID)));
         testObserver.assertNotSubscribed();

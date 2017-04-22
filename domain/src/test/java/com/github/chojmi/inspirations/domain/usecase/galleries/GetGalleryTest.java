@@ -21,7 +21,6 @@ import io.reactivex.observers.TestObserver;
 @RunWith(MockitoJUnitRunner.class)
 public class GetGalleryTest {
     private static final String GALLERY_ID = "123";
-    private List<PhotoEntity> mockPhotoEntities;
 
     private GetGallery getGallery;
     private TestObserver testObserver;
@@ -52,7 +51,7 @@ public class GetGalleryTest {
 
     @Test
     public void shouldReturnProperValue() {
-        mockPhotoEntities = createMockPhotoEntities();
+        List<PhotoEntity> mockPhotoEntities = createMockPhotoEntities();
         Mockito.when(mockGalleriesDataSource.loadGallery(GALLERY_ID)).thenReturn(Observable.fromCallable(() -> mockPhotoEntities));
         Observable<GetGallery.SubmitUiModel> resultObs = getGallery.buildUseCaseObservable(Observable.fromCallable(() -> GetGallery.SubmitEvent.create(GALLERY_ID)));
         testObserver.assertNotSubscribed();
