@@ -11,9 +11,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import io.reactivex.Observable;
 import io.reactivex.observers.DisposableObserver;
 
-import static junit.framework.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -42,13 +42,13 @@ public class GridPresenterTest {
     @Test
     public void testGalleryPresenterRefreshPhotosHappyCase() {
         galleryPresenter.refreshPhotos(USER_ID);
-        ArgumentCaptor<GetUserPublicPhotos.Params> params = ArgumentCaptor.forClass(GetUserPublicPhotos.Params.class);
+        ArgumentCaptor<Observable> params = ArgumentCaptor.forClass(Observable.class);
         verify(mockGetUserPublicPhotos, times(2)).execute(any(DisposableObserver.class), params.capture());
-        assertTrue(params.getAllValues().get(1).equals(GetUserPublicPhotos.Params.forUserId(USER_ID)));
+        params.getAllValues().get(1).test().assertResult(GetUserPublicPhotos.SubmitEvent.create(USER_ID));
     }
 
     @Test
     public void testGalleryPresenterRefreshPhotosOnResumeHappyCase() {
-        verify(mockGetUserPublicPhotos, times(1)).execute(any(DisposableObserver.class), any(GetUserPublicPhotos.Params.class));
+        verify(mockGetUserPublicPhotos, times(1)).execute(any(DisposableObserver.class), any(Observable.class));
     }
 }

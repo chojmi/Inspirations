@@ -35,6 +35,7 @@ ext {
     retrofitLibVersion = '2.2.0'
     rxAndroidLibVersion = '2.0.1'
     rxJavaLibVersion = '2.0.8'
+    rxBindingsVersion = '2.0.0'
     loggingInterceptorLibVersion = '3.6.0'
     gsonLibVersion = '2.8.0'
     butterknifeLibVersion = '8.5.1'

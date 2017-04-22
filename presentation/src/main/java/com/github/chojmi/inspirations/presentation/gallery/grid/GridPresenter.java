@@ -2,7 +2,6 @@ package com.github.chojmi.inspirations.presentation.gallery.grid;
 
 import android.support.annotation.NonNull;
 
-import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.usecase.DefaultObserver;
 import com.github.chojmi.inspirations.domain.usecase.people.GetUserInfo;
 import com.github.chojmi.inspirations.domain.usecase.people.GetUserPublicPhotos;
@@ -10,8 +9,7 @@ import com.github.chojmi.inspirations.presentation.blueprints.exception.ViewNotF
 import com.github.chojmi.inspirations.presentation.mapper.gallery.PhotoDataMapper;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 
-import java.util.List;
-
+import io.reactivex.Observable;
 import timber.log.Timber;
 
 import static dagger.internal.Preconditions.checkNotNull;
@@ -36,11 +34,11 @@ class GridPresenter implements GridContract.Presenter {
     }
 
     @Override
-    public void refreshPhotos(String userId) {
+    public void refreshPhotos(@NonNull String userId) {
         if (view == null) {
             throw new ViewNotFoundException();
         }
-        getUserPublicPhotos.execute(getGalleryObserver(), GetUserPublicPhotos.Params.forUserId(userId));
+        getUserPublicPhotos.execute(getGalleryObserver(), Observable.fromCallable(() -> GetUserPublicPhotos.SubmitEvent.create(checkNotNull(userId))));
     }
 
     @Override
@@ -55,11 +53,16 @@ class GridPresenter implements GridContract.Presenter {
         this.view = null;
     }
 
-    private DefaultObserver<List<PhotoEntity>> getGalleryObserver() {
-        return new DefaultObserver<List<PhotoEntity>>() {
+    private DefaultObserver<GetUserPublicPhotos.SubmitUiModel> getGalleryObserver() {
+        return new DefaultObserver<GetUserPublicPhotos.SubmitUiModel>() {
             @Override
-            public void onNext(List<PhotoEntity> photos) {
-                view.showPhotos(photoDataMapper.transform(photos));
+            public void onNext(GetUserPublicPhotos.SubmitUiModel model) {
+                if (model.isInProgress()) {
+                    return;
+                }
+                if (model.isSuccess()) {
+                    view.showPhotos(photoDataMapper.transform(model.getResult()));
+                }
             }
 
             @Override

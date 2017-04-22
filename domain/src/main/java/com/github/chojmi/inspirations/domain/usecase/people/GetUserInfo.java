@@ -4,15 +4,20 @@ import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.repository.PeopleDataSource;
+import com.github.chojmi.inspirations.domain.usecase.BaseSubmitEvent;
+import com.github.chojmi.inspirations.domain.usecase.BaseSubmitUiModel;
 import com.github.chojmi.inspirations.domain.usecase.UseCase;
+import com.google.auto.value.AutoValue;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.annotations.Nullable;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
-public class GetUserInfo extends UseCase<PersonEntity, GetUserInfo.Params> {
+public class GetUserInfo extends UseCase<GetUserInfo.SubmitUiModel, GetUserInfo.SubmitEvent> {
 
     private final PeopleDataSource peopleDataSource;
 
@@ -24,35 +29,37 @@ public class GetUserInfo extends UseCase<PersonEntity, GetUserInfo.Params> {
     }
 
     @Override
-    public Observable<PersonEntity> buildUseCaseObservable(Params params) {
-        return peopleDataSource.loadPersonInfo(checkNotNull(params).userId);
+    public Observable<SubmitUiModel> buildUseCaseObservable(Observable<SubmitEvent> inputEvents) {
+        return inputEvents.flatMap(event -> peopleDataSource.loadPersonInfo(event.getUserId())
+                .map(GetUserInfo.SubmitUiModel::success)
+                .onErrorReturn(GetUserInfo.SubmitUiModel::failure)
+                .startWith(GetUserInfo.SubmitUiModel.inProgress()));
     }
 
-    public static final class Params {
-
-        private final String userId;
-
-        private Params(String userId) {
-            this.userId = checkNotNull(userId);
+    @AutoValue
+    public static abstract class SubmitEvent extends BaseSubmitEvent {
+        public static SubmitEvent create(@NonNull String userId) {
+            return new AutoValue_GetUserInfo_SubmitEvent(checkNotNull(userId));
         }
 
-        public static GetUserInfo.Params forUser(String userId) {
-            return new GetUserInfo.Params(userId);
+        abstract String getUserId();
+    }
+
+    @AutoValue
+    public static abstract class SubmitUiModel extends BaseSubmitUiModel {
+        static SubmitUiModel inProgress() {
+            return new AutoValue_GetUserInfo_SubmitUiModel(true, false, null, null);
         }
 
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            GetUserInfo.Params params = (GetUserInfo.Params) o;
-
-            return userId != null ? userId.equals(params.userId) : params.userId == null;
+        static SubmitUiModel failure(Throwable t) {
+            return new AutoValue_GetUserInfo_SubmitUiModel(false, false, t, null);
         }
 
-        @Override
-        public int hashCode() {
-            return userId != null ? userId.hashCode() : 0;
+        static SubmitUiModel success(PersonEntity personEntity) {
+            return new AutoValue_GetUserInfo_SubmitUiModel(false, true, null, personEntity);
         }
+
+        @Nullable
+        public abstract PersonEntity getResult();
     }
 }

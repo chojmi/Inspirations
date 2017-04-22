@@ -4,7 +4,10 @@ import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.repository.PeopleDataSource;
+import com.github.chojmi.inspirations.domain.usecase.BaseSubmitEvent;
+import com.github.chojmi.inspirations.domain.usecase.BaseSubmitUiModel;
 import com.github.chojmi.inspirations.domain.usecase.UseCase;
+import com.google.auto.value.AutoValue;
 
 import java.util.List;
 
@@ -12,10 +15,11 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.annotations.Nullable;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
-public class GetUserPublicPhotos extends UseCase<List<PhotoEntity>, GetUserPublicPhotos.Params> {
+public class GetUserPublicPhotos extends UseCase<GetUserPublicPhotos.SubmitUiModel, GetUserPublicPhotos.SubmitEvent> {
 
     private final PeopleDataSource peopleDataSource;
 
@@ -27,35 +31,37 @@ public class GetUserPublicPhotos extends UseCase<List<PhotoEntity>, GetUserPubli
     }
 
     @Override
-    public Observable<List<PhotoEntity>> buildUseCaseObservable(Params params) {
-        return peopleDataSource.loadUserPublicPhotos(checkNotNull(params).userId);
+    public Observable<SubmitUiModel> buildUseCaseObservable(Observable<SubmitEvent> inputEvents) {
+        return inputEvents.flatMap(event -> peopleDataSource.loadUserPublicPhotos(event.getUserId())
+                        .map(SubmitUiModel::success)
+                        .onErrorReturn(SubmitUiModel::failure)
+                        .startWith(SubmitUiModel.inProgress()));
     }
 
-    public static final class Params {
-
-        private final String userId;
-
-        private Params(@NonNull String userId) {
-            this.userId = checkNotNull(userId);
+    @AutoValue
+    public static abstract class SubmitEvent extends BaseSubmitEvent {
+        public static SubmitEvent create(@NonNull String userId) {
+            return new AutoValue_GetUserPublicPhotos_SubmitEvent(checkNotNull(userId));
         }
 
-        public static Params forUserId(@NonNull String userId) {
-            return new Params(userId);
+        abstract String getUserId();
+    }
+
+    @AutoValue
+    public static abstract class SubmitUiModel extends BaseSubmitUiModel {
+        static SubmitUiModel inProgress() {
+            return new AutoValue_GetUserPublicPhotos_SubmitUiModel(true, false, null, null);
         }
 
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            Params params = (Params) o;
-
-            return userId != null ? userId.equals(params.userId) : params.userId == null;
+        static SubmitUiModel failure(Throwable t) {
+            return new AutoValue_GetUserPublicPhotos_SubmitUiModel(false, false, t, null);
         }
 
-        @Override
-        public int hashCode() {
-            return userId != null ? userId.hashCode() : 0;
+        static SubmitUiModel success(List<PhotoEntity> photoEntities) {
+            return new AutoValue_GetUserPublicPhotos_SubmitUiModel(false, true, null, photoEntities);
         }
+
+        @Nullable
+        public abstract List<PhotoEntity> getResult();
     }
 }

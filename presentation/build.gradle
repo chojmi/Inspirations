@@ -78,6 +78,9 @@ dependencies {
     compile "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxAndroidLibVersion}"
     compile "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxJavaLibVersion}"
 
+    compile "com.jakewharton.rxbinding2:rxbinding:${rootProject.ext.rxBindingsVersion}"
+    compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:${rootProject.ext.rxBindingsVersion}"
+
     compile "com.google.dagger:dagger:${rootProject.ext.daggerLibVersion}"
     annotationProcessor "com.google.dagger:dagger-compiler:${rootProject.ext.daggerLibVersion}"
 
