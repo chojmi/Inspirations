@@ -21,6 +21,8 @@ import io.reactivex.observers.TestObserver;
 @RunWith(MockitoJUnitRunner.class)
 public class GetGalleryTest {
     private static final String GALLERY_ID = "123";
+    private static final String FAKE_URL = "www.url.pl";
+    private static final String FAKE_TITLE = "fake_title";
 
     private GetGallery getGallery;
     private TestObserver testObserver;
@@ -51,46 +53,46 @@ public class GetGalleryTest {
 
     @Test
     public void shouldReturnProperValue() {
-        List<PhotoEntity> mockPhotoEntities = createMockPhotoEntities();
-        Mockito.when(mockGalleriesDataSource.loadGallery(GALLERY_ID)).thenReturn(Observable.fromCallable(() -> mockPhotoEntities));
+        List<PhotoEntity> fakePhotoEntities = createFakePhotoEntities();
+        Mockito.when(mockGalleriesDataSource.loadGallery(GALLERY_ID)).thenReturn(Observable.fromCallable(() -> fakePhotoEntities));
         Observable<GetGallery.SubmitUiModel> resultObs = getGallery.buildUseCaseObservable(Observable.fromCallable(() -> GetGallery.SubmitEvent.create(GALLERY_ID)));
         testObserver.assertNotSubscribed();
         resultObs.subscribe(testObserver);
         testObserver.assertSubscribed();
         resultObs.test().assertSubscribed();
-        resultObs.test().assertResult(GetGallery.SubmitUiModel.inProgress(), GetGallery.SubmitUiModel.success(mockPhotoEntities));
+        resultObs.test().assertResult(GetGallery.SubmitUiModel.inProgress(), GetGallery.SubmitUiModel.success(fakePhotoEntities));
         resultObs.test().assertComplete();
     }
 
     @Test
     public void shouldReturnError() {
-        Throwable mockThrowable = new Throwable("Mock throwable");
-        Mockito.when(mockGalleriesDataSource.loadGallery(GALLERY_ID)).thenReturn(Observable.error(mockThrowable));
+        Throwable fakeThrowable = new Throwable("Fake throwable");
+        Mockito.when(mockGalleriesDataSource.loadGallery(GALLERY_ID)).thenReturn(Observable.error(fakeThrowable));
         Observable<GetGallery.SubmitUiModel> resultObs = getGallery.buildUseCaseObservable(Observable.fromCallable(() -> GetGallery.SubmitEvent.create(GALLERY_ID)));
         testObserver.assertNotSubscribed();
         resultObs.subscribe(testObserver);
         testObserver.assertSubscribed();
         resultObs.test().assertSubscribed();
-        resultObs.test().assertResult(GetGallery.SubmitUiModel.inProgress(), GetGallery.SubmitUiModel.failure(mockThrowable));
+        resultObs.test().assertResult(GetGallery.SubmitUiModel.inProgress(), GetGallery.SubmitUiModel.failure(fakeThrowable));
         resultObs.test().assertComplete();
     }
 
-    private List<PhotoEntity> createMockPhotoEntities() {
-        List<PhotoEntity> mockPhotoEntities = new ArrayList<>();
-        mockPhotoEntities.add(createMockPhotoEntity());
-        return mockPhotoEntities;
+    private List<PhotoEntity> createFakePhotoEntities() {
+        List<PhotoEntity> fakePhotoEntities = new ArrayList<>();
+        fakePhotoEntities.add(createFakePhotoEntity());
+        return fakePhotoEntities;
     }
 
-    private PhotoEntity createMockPhotoEntity() {
+    private PhotoEntity createFakePhotoEntity() {
         return new PhotoEntity() {
             @Override
             public String getUrl() {
-                return "url";
+                return FAKE_URL;
             }
 
             @Override
             public String getTitle() {
-                return "title";
+                return FAKE_TITLE;
             }
         };
     }

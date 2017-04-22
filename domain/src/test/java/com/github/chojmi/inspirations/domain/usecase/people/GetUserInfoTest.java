@@ -48,31 +48,31 @@ public class GetUserInfoTest {
 
     @Test
     public void shouldReturnProperValue() {
-        PersonEntity mockPersonEntity = new MockPersonEntity();
-        Mockito.when(mockPeopleDataSource.loadPersonInfo(USER_ID)).thenReturn(Observable.fromCallable(() -> mockPersonEntity));
+        PersonEntity fakePersonEntity = new FakePersonEntity();
+        Mockito.when(mockPeopleDataSource.loadPersonInfo(USER_ID)).thenReturn(Observable.fromCallable(() -> fakePersonEntity));
         Observable<GetUserInfo.SubmitUiModel> resultObs = getUserPublicPhotos.buildUseCaseObservable(Observable.fromCallable(() -> GetUserInfo.SubmitEvent.create(USER_ID)));
         testObserver.assertNotSubscribed();
         resultObs.subscribe(testObserver);
         testObserver.assertSubscribed();
         resultObs.test().assertSubscribed();
-        resultObs.test().assertResult(GetUserInfo.SubmitUiModel.inProgress(), GetUserInfo.SubmitUiModel.success(mockPersonEntity));
+        resultObs.test().assertResult(GetUserInfo.SubmitUiModel.inProgress(), GetUserInfo.SubmitUiModel.success(fakePersonEntity));
         resultObs.test().assertComplete();
     }
 
     @Test
     public void shouldReturnError() {
-        Throwable mockThrowable = new Throwable("Mock throwable");
-        Mockito.when(mockPeopleDataSource.loadPersonInfo(USER_ID)).thenReturn(Observable.error(mockThrowable));
+        Throwable fakeThrowable = new Throwable("Fake throwable");
+        Mockito.when(mockPeopleDataSource.loadPersonInfo(USER_ID)).thenReturn(Observable.error(fakeThrowable));
         Observable<GetUserInfo.SubmitUiModel> resultObs = getUserPublicPhotos.buildUseCaseObservable(Observable.fromCallable(() -> GetUserInfo.SubmitEvent.create(USER_ID)));
         testObserver.assertNotSubscribed();
         resultObs.subscribe(testObserver);
         testObserver.assertSubscribed();
         resultObs.test().assertSubscribed();
-        resultObs.test().assertResult(GetUserInfo.SubmitUiModel.inProgress(), GetUserInfo.SubmitUiModel.failure(mockThrowable));
+        resultObs.test().assertResult(GetUserInfo.SubmitUiModel.inProgress(), GetUserInfo.SubmitUiModel.failure(fakeThrowable));
         resultObs.test().assertComplete();
     }
 
-    private class MockPersonEntity implements PersonEntity {
+    private class FakePersonEntity implements PersonEntity {
 
     }
 }
