@@ -1,15 +1,17 @@
 package com.github.chojmi.inspirations.presentation.gallery.grid;
 
-import android.support.annotation.NonNull;
-
 import com.github.chojmi.inspirations.domain.usecase.DefaultObserver;
 import com.github.chojmi.inspirations.domain.usecase.people.GetUserInfo;
 import com.github.chojmi.inspirations.domain.usecase.people.GetUserPublicPhotos;
 import com.github.chojmi.inspirations.presentation.blueprints.exception.ViewNotFoundException;
 import com.github.chojmi.inspirations.presentation.mapper.gallery.PhotoDataMapper;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
+import com.github.chojmi.inspirations.presentation.model.gallery.PhotoSubmitUiModel;
 
 import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.BiFunction;
 import timber.log.Timber;
 
 import static dagger.internal.Preconditions.checkNotNull;
@@ -18,13 +20,14 @@ class GridPresenter implements GridContract.Presenter {
     private final GetUserPublicPhotos getUserPublicPhotos;
     private final GetUserInfo getUserInfo;
     private final PhotoDataMapper photoDataMapper;
-
+    private final CompositeDisposable disposables;
     private GridContract.View view;
 
     GridPresenter(@NonNull GetUserPublicPhotos getUserPublicPhotos, @NonNull GetUserInfo getUserInfo, @NonNull PhotoDataMapper photoDataMapper) {
         this.getUserPublicPhotos = checkNotNull(getUserPublicPhotos);
         this.getUserInfo = checkNotNull(getUserInfo);
         this.photoDataMapper = checkNotNull(photoDataMapper);
+        this.disposables = new CompositeDisposable();
     }
 
     @Override
@@ -38,7 +41,14 @@ class GridPresenter implements GridContract.Presenter {
         if (view == null) {
             throw new ViewNotFoundException();
         }
-        getUserPublicPhotos.execute(getGalleryObserver(), Observable.fromCallable(() -> GetUserPublicPhotos.SubmitEvent.create(checkNotNull(userId))));
+        disposables.add(getPhotoObservable(userId).subscribe(uiModel -> {
+            if (uiModel.isInProgress()) {
+                return;
+            }
+            if (uiModel.isSuccess()) {
+                view.showPhotos(uiModel.getPhotos());
+            }
+        }, throwable -> Timber.e(throwable)));
     }
 
     @Override
@@ -50,25 +60,28 @@ class GridPresenter implements GridContract.Presenter {
     public void destroyView() {
         this.getUserPublicPhotos.dispose();
         this.getUserInfo.dispose();
+        this.disposables.dispose();
         this.view = null;
     }
 
-    private DefaultObserver<GetUserPublicPhotos.SubmitUiModel> getGalleryObserver() {
-        return new DefaultObserver<GetUserPublicPhotos.SubmitUiModel>() {
-            @Override
-            public void onNext(GetUserPublicPhotos.SubmitUiModel model) {
-                if (model.isInProgress()) {
-                    return;
-                }
-                if (model.isSuccess()) {
-                    view.showPhotos(photoDataMapper.transform(model.getResult()));
-                }
-            }
-
-            @Override
-            public void onError(Throwable exception) {
-                Timber.e(exception);
-            }
-        };
+    private Observable<PhotoSubmitUiModel> getPhotoObservable(@NonNull String userId) {
+        return Observable.zip(
+                Observable.create(e -> getUserPublicPhotos.execute(DefaultObserver.create(e), Observable.fromCallable(() -> GetUserPublicPhotos.SubmitEvent.create(checkNotNull(userId))))),
+                Observable.create(e -> getUserInfo.execute(DefaultObserver.create(e), Observable.fromCallable(() -> GetUserInfo.SubmitEvent.create(checkNotNull(userId))))),
+                (BiFunction<GetUserPublicPhotos.SubmitUiModel, GetUserInfo.SubmitUiModel, PhotoSubmitUiModel>) (publicPhotosModel, userInfoModel) -> {
+                    if (publicPhotosModel.isInProgress() || userInfoModel.isInProgress()) {
+                        return PhotoSubmitUiModel.inProgress();
+                    }
+                    if (publicPhotosModel.getErrorMessage() != null) {
+                        return PhotoSubmitUiModel.failure(publicPhotosModel.getErrorMessage());
+                    }
+                    if (userInfoModel.getErrorMessage() != null) {
+                        return PhotoSubmitUiModel.failure(userInfoModel.getErrorMessage());
+                    }
+                    if (publicPhotosModel.isSuccess() && userInfoModel.isSuccess()) {
+                        return PhotoSubmitUiModel.success(photoDataMapper.transform(publicPhotosModel.getResult(), userInfoModel.getResult()));
+                    }
+                    return PhotoSubmitUiModel.failure(new Throwable());
+                });
     }
 }

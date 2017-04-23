@@ -6,11 +6,13 @@ import com.google.auto.value.AutoValue;
 
 @AutoValue
 public abstract class Photo implements Parcelable {
-    public static Photo create(String title, String url) {
-        return new AutoValue_Photo(title, url);
+    public static Photo create(String title, String url, Person person) {
+        return new AutoValue_Photo(title, url, person);
     }
 
     public abstract String getTitle();
 
     public abstract String getUrl();
+
+    public abstract Person getPerson();
 }

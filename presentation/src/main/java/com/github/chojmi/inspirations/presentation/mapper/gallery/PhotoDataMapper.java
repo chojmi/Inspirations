@@ -2,6 +2,8 @@ package com.github.chojmi.inspirations.presentation.mapper.gallery;
 
 import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
+import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
+import com.github.chojmi.inspirations.presentation.model.gallery.Person;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 
 import java.util.ArrayList;
@@ -18,17 +20,20 @@ public class PhotoDataMapper {
     public PhotoDataMapper() {
     }
 
-    private Photo transform(PhotoEntity photo) {
-        return Photo.create(photo.getTitle(), photo.getUrl());
+    private Photo transform(PhotoEntity photo, PersonEntity person) {
+        return Photo.create(photo.getTitle(), photo.getUrl(), Person.create(person.getUsername()));
     }
 
-    public List<Photo> transform(List<PhotoEntity> photos) {
+    public List<Photo> transform(List<PhotoEntity> photos, PersonEntity person) {
         List<Photo> result = new ArrayList<>();
-        Observable.fromIterable(photos).map(this::transform).toList().subscribe(result::addAll, Timber::e);
+        Observable.fromIterable(photos)
+                .map(photoEntity -> transform(photoEntity, person))
+                .toList()
+                .subscribe(result::addAll, Timber::e);
         return result;
     }
 
-    public List<Photo> transform(GalleryEntity galleryEntity) {
-        return transform(galleryEntity.getPhoto());
+    public List<Photo> transform(GalleryEntity galleryEntity, PersonEntity person) {
+        return transform(galleryEntity.getPhoto(), person);
     }
 }

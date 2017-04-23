@@ -74,5 +74,14 @@ public class GetUserInfoTest {
 
     private class FakePersonEntity implements PersonEntity {
 
+        @Override
+        public String getUsername() {
+            return null;
+        }
+
+        @Override
+        public String getDescription() {
+            return null;
+        }
     }
 }
