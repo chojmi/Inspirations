@@ -4,4 +4,6 @@ public interface PersonEntity {
     String getUsername();
 
     String getDescription();
+
+    String getIconUrl();
 }

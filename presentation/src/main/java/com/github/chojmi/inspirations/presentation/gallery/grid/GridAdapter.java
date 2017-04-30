@@ -29,6 +29,7 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
 
     class GalleryViewHolder extends BaseRecyclerViewAdapter.ViewHolder<Photo> {
         @BindView(R.id.photo) ImageView photoHolder;
+        @BindView(R.id.person_icon) ImageView personIconHolder;
         @BindView(R.id.title) TextView titleTextView;
         @BindView(R.id.owner) TextView ownerTextView;
         private Photo photo;
@@ -40,6 +41,7 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
         void setPhoto(Photo photo) {
             this.photo = photo;
             loadImage(photoHolder, photo.getUrl());
+            loadImage(personIconHolder, photo.getPerson().getIconUrl());
             titleTextView.setText(photo.getTitle());
             ownerTextView.setText(photo.getPerson().getUsername());
         }

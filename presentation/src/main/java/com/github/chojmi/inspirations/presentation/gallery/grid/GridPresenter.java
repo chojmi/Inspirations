@@ -48,7 +48,7 @@ class GridPresenter implements GridContract.Presenter {
             if (uiModel.isSuccess()) {
                 view.showPhotos(uiModel.getPhotos());
             }
-        }, throwable -> Timber.e(throwable)));
+        }, Timber::e));
     }
 
     @Override
