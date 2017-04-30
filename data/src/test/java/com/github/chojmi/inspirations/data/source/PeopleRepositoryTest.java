@@ -28,7 +28,6 @@ public class PeopleRepositoryTest {
     private static final String FAKE_URL = "www.url.pl";
     private static final String FAKE_TITLE = "fake_title";
     private static final String FAKE_USERNAME = "fake_username";
-    private static final String FAKE_DESCRIPTION = "fake_description";
     private static final String FAKE_ICON_URL = "fake_icon_url";
 
     private PeopleDataSource galleriesDataSource;
@@ -117,11 +116,6 @@ public class PeopleRepositoryTest {
         @Override
         public String getUsername() {
             return FAKE_USERNAME;
-        }
-
-        @Override
-        public String getDescription() {
-            return FAKE_DESCRIPTION;
         }
 
         @Override

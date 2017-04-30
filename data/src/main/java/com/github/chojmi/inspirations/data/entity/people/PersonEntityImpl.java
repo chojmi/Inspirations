@@ -41,7 +41,6 @@ public abstract class PersonEntityImpl implements Parcelable, PersonEntity {
         return getUsernameContentHolder().getContent();
     }
 
-    @Override
     public String getDescription() {
         return getDescriptionContentHolder().getContent();
     }
