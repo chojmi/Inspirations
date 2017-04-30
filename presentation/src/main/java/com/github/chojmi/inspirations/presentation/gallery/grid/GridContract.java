@@ -8,7 +8,7 @@ import java.util.List;
 
 interface GridContract {
 
-    interface View extends BaseView, GridAdapter.Listener {
+    interface View extends BaseView {
         void showPhotos(List<Photo> photos);
 
         void openPhotoView(Photo photo);

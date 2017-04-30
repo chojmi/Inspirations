@@ -4,15 +4,21 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
+
+import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
 
 public abstract class BaseRecyclerViewAdapter<VH extends RecyclerView.ViewHolder, O> extends RecyclerView.Adapter<VH> {
 
+    private static final PublishSubject<Integer> mViewClickSubject = PublishSubject.create();
     private final List<O> mDataset;
 
     public BaseRecyclerViewAdapter() {
@@ -128,24 +134,23 @@ public abstract class BaseRecyclerViewAdapter<VH extends RecyclerView.ViewHolder
         return mDataset;
     }
 
+    public Observable<Integer> getOnItemClickPositionObservable() {
+        return mViewClickSubject;
+    }
 
-    public interface OnItemClickListener<O> {
-        void onItemClick(View view, int position);
+    public Observable<O> getOnItemClickObservable() {
+        return getOnItemClickPositionObservable().map(this::getItem);
     }
 
     public static abstract class ViewHolder<O> extends RecyclerView.ViewHolder {
 
-        public ViewHolder(View itemView) {
-            this(itemView, null);
-        }
-
-        public ViewHolder(View itemView, final OnItemClickListener<O> onItemClickListener) {
+        public ViewHolder(View itemView, ViewGroup parent) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            if (onItemClickListener == null) {
-                return;
-            }
-            itemView.setOnClickListener(view -> onItemClickListener.onItemClick(view, getAdapterPosition()));
+            RxView.clicks(itemView)
+                    .takeUntil(RxView.detaches(parent))
+                    .map(o -> getAdapterPosition())
+                    .subscribe(mViewClickSubject);
         }
     }
 }

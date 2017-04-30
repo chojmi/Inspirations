@@ -19,12 +19,13 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class GridFragment extends BaseFragment<MainActivity> implements GridContract.View {
     @BindView(R.id.rv_gallery) RecyclerView recyclerView;
     @Inject GridContract.Presenter presenter;
     private GridAdapter galleryAdapter;
-
+    private CompositeDisposable disposables;
     public static GridFragment newInstance() {
         return new GridFragment();
     }
@@ -47,6 +48,7 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridCont
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.disposables = new CompositeDisposable();
         initRecyclerView();
         presenter.setView(this);
     }
@@ -55,6 +57,7 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridCont
     public void onDestroyView() {
         super.onDestroyView();
         presenter.destroyView();
+        disposables.dispose();
     }
 
     @Override
@@ -66,7 +69,8 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridCont
     private void initRecyclerView() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        galleryAdapter = new GridAdapter(this);
+        galleryAdapter = new GridAdapter();
+        disposables.add(galleryAdapter.getOnItemClickObservable().subscribe(photo -> presenter.photoSelected(photo)));
         recyclerView.setAdapter(galleryAdapter);
     }
 
@@ -78,10 +82,5 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridCont
     @Override
     public void openPhotoView(Photo photo) {
         getNavigator().navigateToPhoto(getContext(), photo);
-    }
-
-    @Override
-    public void photoClicked(Photo photo) {
-        presenter.photoSelected(photo);
     }
 }
