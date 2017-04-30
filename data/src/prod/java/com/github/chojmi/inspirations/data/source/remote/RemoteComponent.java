@@ -11,4 +11,6 @@ public interface RemoteComponent {
     void inject(RemoteGalleriesDataSource remoteGalleryDataSource);
 
     void inject(RemotePeopleDataSource remotePeopleDataSource);
+
+    void inject(RemotePhotosDataSource remotePhotosDataSource);
 }

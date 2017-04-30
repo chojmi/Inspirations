@@ -47,6 +47,12 @@ class RestClientModule {
 
     @Provides
     @Singleton
+    PhotosService providePhotosService(Retrofit retrofit) {
+        return retrofit.create(PhotosService.class);
+    }
+
+    @Provides
+    @Singleton
     Retrofit provideRetrofit(OkHttpClient okHttpClient, Gson gson, String serviceAddress) {
         return new Retrofit.Builder()
                 .baseUrl(serviceAddress)

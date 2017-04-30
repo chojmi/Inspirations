@@ -1,7 +1,9 @@
-package com.github.chojmi.inspirations.data.source;
+package com.github.chojmi.inspirations.data.source.repository;
 
 import android.support.annotation.NonNull;
 
+import com.github.chojmi.inspirations.data.source.Local;
+import com.github.chojmi.inspirations.data.source.Remote;
 import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.repository.GalleriesDataSource;
 

@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.data.source;
+package com.github.chojmi.inspirations.data.source.repository;
 
 import android.support.annotation.NonNull;
 

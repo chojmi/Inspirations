@@ -2,12 +2,14 @@ package com.github.chojmi.inspirations.presentation;
 
 import android.content.Context;
 
-import com.github.chojmi.inspirations.data.source.GalleriesRepositoryModule;
-import com.github.chojmi.inspirations.data.source.PeopleRepositoryModule;
+import com.github.chojmi.inspirations.data.source.module.GalleriesRepositoryModule;
+import com.github.chojmi.inspirations.data.source.module.PeopleRepositoryModule;
+import com.github.chojmi.inspirations.data.source.module.PhotosRepositoryModule;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.repository.GalleriesDataSource;
 import com.github.chojmi.inspirations.domain.repository.PeopleDataSource;
+import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
 import com.github.chojmi.inspirations.presentation.gallery.grid.GridComponent;
 import com.github.chojmi.inspirations.presentation.gallery.grid.GridModule;
@@ -20,7 +22,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {GalleriesRepositoryModule.class, PeopleRepositoryModule.class, ApplicationModule.class})
+@Component(modules = {GalleriesRepositoryModule.class, PeopleRepositoryModule.class, PhotosRepositoryModule.class, ApplicationModule.class})
 public interface ApplicationComponent {
     void inject(BaseActivity target);
 
@@ -39,4 +41,6 @@ public interface ApplicationComponent {
     GalleriesDataSource getGalleriesRepository();
 
     PeopleDataSource getPeopleDataSource();
+
+    PhotosDataSource getPhotosDataSource();
 }
