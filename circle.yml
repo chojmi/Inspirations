@@ -23,5 +23,7 @@ dependencies:
 test:
     override:
         - ./gradlew assemble
-#        - ./gradlew test
+        - ./gradlew testMockDebug
+        - ./gradlew :domain:test
+        - ./gradlew connectedMockDebugAndroidTest
         - cp -r presentation/build/outputs $CIRCLE_ARTIFACTS
