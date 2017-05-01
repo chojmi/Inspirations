@@ -36,6 +36,7 @@ public final class PhotosRepository implements PhotosDataSource {
 
     @Override
     public Observable<List<CommentEntity>> loadPhotoComments(String photoId) {
-        return null;
+        return Observable.concat(photosLocalDataSource.loadPhotoComments(photoId),
+                photosRemoteDataSource.loadPhotoComments(photoId)).filter(comments -> comments.size() > 0).firstElement().toObservable();
     }
 }

@@ -2,7 +2,9 @@ package com.github.chojmi.inspirations.data.source.remote;
 
 import android.content.Context;
 
+import com.github.chojmi.inspirations.data.entity.photos.CommentEntityImpl;
 import com.github.chojmi.inspirations.data.entity.photos.PersonEntityImpl;
+import com.github.chojmi.inspirations.data.source.repository.response.PhotoCommentsResponse;
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.CommentEntity;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
@@ -45,6 +47,17 @@ public final class RemotePhotosDataSource extends BaseRemoteDataSource implement
 
     @Override
     public Observable<List<CommentEntity>> loadPhotoComments(String photoId) {
-        return null;
+        Map<String, String> args = getBaseArgs("flickr.photos.comments.getList");
+        args.put("photo_id", photoId);
+        return photosService.loadPhotoComments(args)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(PhotoCommentsResponse::getComments)
+                .flatMap(new Function<List<CommentEntityImpl>, ObservableSource<List<CommentEntity>>>() {
+                    @Override
+                    public ObservableSource<List<CommentEntity>> apply(@NonNull List<CommentEntityImpl> commentEntities) throws Exception {
+                        return Observable.fromIterable(commentEntities).map(commentEntity -> (CommentEntity) commentEntity).toList().toObservable();
+                    }
+                });
     }
 }

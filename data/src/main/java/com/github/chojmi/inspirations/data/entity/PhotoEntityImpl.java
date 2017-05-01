@@ -2,13 +2,12 @@ package com.github.chojmi.inspirations.data.entity;
 
 import android.os.Parcelable;
 
+import com.github.chojmi.inspirations.data.entity.helpers.ImageLinkProvider;
 import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.google.auto.value.AutoValue;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.Locale;
 
 @AutoValue
 public abstract class PhotoEntityImpl implements Parcelable, PhotoEntity {
@@ -50,6 +49,6 @@ public abstract class PhotoEntityImpl implements Parcelable, PhotoEntity {
     public abstract int hasComment();
 
     public String getUrl() {
-        return String.format(Locale.ENGLISH, "https://farm%d.staticflickr.com/%s/%s_%s.jpg", getFarm(), getServer(), getId(), getSecret());
+        return ImageLinkProvider.provideLink(getFarm(), getServer(), getId(), getSecret());
     }
 }
