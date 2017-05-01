@@ -26,4 +26,4 @@ test:
         - ./gradlew testMockDebug
         - ./gradlew :domain:test
         - ./gradlew connectedMockDebugAndroidTest
-        - cp -r presentation/build/outputs $CIRCLE_ARTIFACTS
+#        - cp -r presentation/build/outputs $CIRCLE_ARTIFACTS
