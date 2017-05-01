@@ -20,8 +20,7 @@ import io.reactivex.observers.TestObserver;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GetPhotoFavsTest {
-    private static final String FAKE_PHOTO_ID = "234";
-    private static final String FAKE_USER_ID = "123";
+    private static final String FAKE_PHOTO_ID = "123";
     private static final String FAKE_USERNAME = "fake_username";
     private static final String FAKE_ICON_URL = "fake_icon_url";
 
@@ -68,8 +67,8 @@ public class GetPhotoFavsTest {
     @Test
     public void shouldReturnError() {
         Throwable fakeThrowable = new Throwable("Fake throwable");
-        Mockito.when(mockPhotosDataSource.loadPhotoFavs(FAKE_USER_ID)).thenReturn(Observable.error(fakeThrowable));
-        Observable<GetPhotoFavs.SubmitUiModel> resultObs = getPhotoFavs.buildUseCaseObservable(Observable.fromCallable(() -> GetPhotoFavs.SubmitEvent.create(FAKE_USER_ID)));
+        Mockito.when(mockPhotosDataSource.loadPhotoFavs(FAKE_PHOTO_ID)).thenReturn(Observable.error(fakeThrowable));
+        Observable<GetPhotoFavs.SubmitUiModel> resultObs = getPhotoFavs.buildUseCaseObservable(Observable.fromCallable(() -> GetPhotoFavs.SubmitEvent.create(FAKE_PHOTO_ID)));
         testObserver.assertNotSubscribed();
         resultObs.subscribe(testObserver);
         testObserver.assertSubscribed();

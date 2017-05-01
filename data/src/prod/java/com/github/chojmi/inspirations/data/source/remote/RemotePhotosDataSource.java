@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.github.chojmi.inspirations.data.entity.photos.PersonEntityImpl;
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
+import com.github.chojmi.inspirations.domain.entity.photos.CommentEntity;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
 import java.util.List;
@@ -40,5 +41,10 @@ public final class RemotePhotosDataSource extends BaseRemoteDataSource implement
                         return Observable.fromIterable(personEntities).map(personEntity -> (PersonEntity) personEntity).toList().toObservable();
                     }
                 });
+    }
+
+    @Override
+    public Observable<List<CommentEntity>> loadPhotoComments(String photoId) {
+        return null;
     }
 }
