@@ -14,6 +14,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 
 public final class RemoteGalleriesDataSource extends BaseRemoteDataSource implements GalleriesDataSource {
@@ -23,6 +24,10 @@ public final class RemoteGalleriesDataSource extends BaseRemoteDataSource implem
 
     public RemoteGalleriesDataSource(Context context) {
         DaggerRemoteComponent.builder().restClientModule(new RestClientModule(context)).build().inject(this);
+    }
+
+    public RemoteGalleriesDataSource(@NonNull GalleriesService galleryService) {
+        this.galleryService = galleryService;
     }
 
     @Override

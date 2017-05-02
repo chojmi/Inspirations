@@ -41,7 +41,6 @@ class RestClientModule {
         return retrofit.create(GalleriesService.class);
     }
 
-
     @Provides
     @Singleton
     PeopleService providePeopleService(Retrofit retrofit) {
