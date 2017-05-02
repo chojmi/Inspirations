@@ -4,7 +4,8 @@ import android.content.Context;
 
 import com.github.chojmi.inspirations.data.entity.photos.CommentEntityImpl;
 import com.github.chojmi.inspirations.data.entity.photos.PersonEntityImpl;
-import com.github.chojmi.inspirations.data.source.repository.response.PhotoCommentsResponse;
+import com.github.chojmi.inspirations.data.source.remote.response.PhotoCommentsResponse;
+import com.github.chojmi.inspirations.data.source.remote.service.PhotosService;
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.CommentEntity;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;

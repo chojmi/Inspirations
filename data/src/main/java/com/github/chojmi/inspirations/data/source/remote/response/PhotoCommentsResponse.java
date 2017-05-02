@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.data.source.repository.response;
+package com.github.chojmi.inspirations.data.source.remote.response;
 
 import android.os.Parcelable;
 

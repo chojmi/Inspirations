@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.domain.usecase;
+package com.github.chojmi.inspirations.domain.usecase.blueprints;
 
 import io.reactivex.annotations.Nullable;
 

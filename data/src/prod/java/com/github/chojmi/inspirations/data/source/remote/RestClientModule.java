@@ -4,6 +4,9 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.github.chojmi.inspirations.data.source.remote.interceptors.ParsingInterceptor;
+import com.github.chojmi.inspirations.data.source.remote.service.GalleriesService;
+import com.github.chojmi.inspirations.data.source.remote.service.PeopleService;
+import com.github.chojmi.inspirations.data.source.remote.service.PhotosService;
 import com.github.chojmi.presentation.data.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.domain.usecase;
+package com.github.chojmi.inspirations.domain.usecase.blueprints;
 
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;

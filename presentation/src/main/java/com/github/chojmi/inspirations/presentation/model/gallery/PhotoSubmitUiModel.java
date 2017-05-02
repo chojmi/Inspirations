@@ -1,6 +1,6 @@
 package com.github.chojmi.inspirations.presentation.model.gallery;
 
-import com.github.chojmi.inspirations.domain.usecase.BaseSubmitUiModel;
+import com.github.chojmi.inspirations.domain.usecase.blueprints.BaseSubmitUiModel;
 import com.google.auto.value.AutoValue;
 
 import java.util.List;

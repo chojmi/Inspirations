@@ -4,9 +4,9 @@ import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.repository.GalleriesDataSource;
-import com.github.chojmi.inspirations.domain.usecase.BaseSubmitEvent;
-import com.github.chojmi.inspirations.domain.usecase.BaseSubmitUiModel;
-import com.github.chojmi.inspirations.domain.usecase.UseCase;
+import com.github.chojmi.inspirations.domain.usecase.blueprints.BaseSubmitEvent;
+import com.github.chojmi.inspirations.domain.usecase.blueprints.BaseSubmitUiModel;
+import com.github.chojmi.inspirations.domain.usecase.blueprints.UseCase;
 import com.google.auto.value.AutoValue;
 
 import java.util.List;

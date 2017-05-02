@@ -15,7 +15,7 @@ public final class ImageLinkProvider {
         }
     }
 
-    public static String provideLink(int farm, String server, String id, String secret) {
-        return String.format(Locale.ENGLISH, "https://farm%d.staticflickr.com/%s/%s_%s.jpg", farm, server, id, secret);
+    public static String provideLink(int farm, int server, String id, String secret) {
+        return String.format(Locale.ENGLISH, "https://farm%d.staticflickr.com/%d/%s_%s.jpg", farm, server, id, secret);
     }
 }

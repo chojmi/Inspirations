@@ -2,6 +2,7 @@ package com.github.chojmi.inspirations.data.source.remote;
 
 import android.content.Context;
 
+import com.github.chojmi.inspirations.data.source.remote.service.PeopleService;
 import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;

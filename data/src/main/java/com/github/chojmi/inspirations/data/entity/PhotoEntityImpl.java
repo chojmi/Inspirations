@@ -25,7 +25,7 @@ public abstract class PhotoEntityImpl implements Parcelable, PhotoEntity {
     public abstract String getSecret();
 
     @SerializedName("server")
-    public abstract String getServer();
+    public abstract int getServer();
 
     @SerializedName("farm")
     public abstract int getFarm();

@@ -1,6 +1,6 @@
 package com.github.chojmi.inspirations.presentation.gallery.grid;
 
-import com.github.chojmi.inspirations.domain.usecase.DefaultObserver;
+import com.github.chojmi.inspirations.domain.usecase.blueprints.DefaultObserver;
 import com.github.chojmi.inspirations.domain.usecase.people.GetUserInfo;
 import com.github.chojmi.inspirations.domain.usecase.people.GetUserPublicPhotos;
 import com.github.chojmi.inspirations.presentation.blueprints.exception.ViewNotFoundException;

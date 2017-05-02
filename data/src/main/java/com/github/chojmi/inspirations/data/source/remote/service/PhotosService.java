@@ -1,7 +1,7 @@
-package com.github.chojmi.inspirations.data.source.remote;
+package com.github.chojmi.inspirations.data.source.remote.service;
 
 import com.github.chojmi.inspirations.data.entity.photos.PersonEntityImpl;
-import com.github.chojmi.inspirations.data.source.repository.response.PhotoCommentsResponse;
+import com.github.chojmi.inspirations.data.source.remote.response.PhotoCommentsResponse;
 
 import java.util.List;
 import java.util.Map;
