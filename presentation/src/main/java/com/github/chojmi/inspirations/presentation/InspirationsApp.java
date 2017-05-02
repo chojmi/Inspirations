@@ -2,6 +2,7 @@ package com.github.chojmi.inspirations.presentation;
 
 import android.app.Application;
 
+import com.github.chojmi.inspirations.data.source.remote.module.RestClientModule;
 import com.github.chojmi.inspirations.presentation.gallery.grid.GridComponent;
 import com.github.chojmi.inspirations.presentation.gallery.grid.GridModule;
 import com.github.chojmi.inspirations.presentation.gallery.photo.PhotoViewComponent;
@@ -28,6 +29,7 @@ public class InspirationsApp extends Application {
     private void initializeInjector() {
         this.applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
+                .restClientModule(new RestClientModule(this))
                 .build();
     }
 

@@ -2,9 +2,10 @@ package com.github.chojmi.inspirations.presentation;
 
 import android.content.Context;
 
-import com.github.chojmi.inspirations.data.source.module.GalleriesRepositoryModule;
-import com.github.chojmi.inspirations.data.source.module.PeopleRepositoryModule;
-import com.github.chojmi.inspirations.data.source.module.PhotosRepositoryModule;
+import com.github.chojmi.inspirations.data.source.remote.module.GalleriesRepositoryModule;
+import com.github.chojmi.inspirations.data.source.remote.module.PeopleRepositoryModule;
+import com.github.chojmi.inspirations.data.source.remote.module.PhotosRepositoryModule;
+import com.github.chojmi.inspirations.data.source.remote.module.RestClientModule;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.repository.GalleriesDataSource;
@@ -22,7 +23,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {GalleriesRepositoryModule.class, PeopleRepositoryModule.class, PhotosRepositoryModule.class, ApplicationModule.class})
+@Component(modules = {GalleriesRepositoryModule.class, PeopleRepositoryModule.class, PhotosRepositoryModule.class, ApplicationModule.class, RestClientModule.class})
 public interface ApplicationComponent {
     void inject(BaseActivity target);
 

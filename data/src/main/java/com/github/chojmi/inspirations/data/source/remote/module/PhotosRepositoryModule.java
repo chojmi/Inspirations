@@ -1,11 +1,9 @@
-package com.github.chojmi.inspirations.data.source.module;
-
-import android.content.Context;
+package com.github.chojmi.inspirations.data.source.remote.module;
 
 import com.github.chojmi.inspirations.data.source.Local;
 import com.github.chojmi.inspirations.data.source.Remote;
 import com.github.chojmi.inspirations.data.source.local.LocalPhotosDataSource;
-import com.github.chojmi.inspirations.data.source.remote.RemotePhotosDataSource;
+import com.github.chojmi.inspirations.data.source.remote.data_source.RemotePhotosDataSource;
 import com.github.chojmi.inspirations.data.source.repository.PhotosRepository;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
@@ -19,14 +17,14 @@ import dagger.Provides;
 public class PhotosRepositoryModule {
     @Provides
     @Local
-    PhotosDataSource provideLocalPhotosDataSource(Context context) {
-        return new LocalPhotosDataSource(context);
+    PhotosDataSource provideLocalPhotosDataSource(LocalPhotosDataSource localPhotosDataSource) {
+        return localPhotosDataSource;
     }
 
     @Provides
     @Remote
-    PhotosDataSource provideRemotePhotosDataSource(Context context) {
-        return new RemotePhotosDataSource(context);
+    PhotosDataSource provideRemotePhotosDataSource(RemotePhotosDataSource remotePhotosDataSource) {
+        return remotePhotosDataSource;
     }
 
     @Provides

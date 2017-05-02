@@ -1,23 +1,19 @@
 package com.github.chojmi.inspirations.data.source.local;
 
-import android.content.Context;
-
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.CommentEntity;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
 import java.util.List;
 
-import io.reactivex.Observable;
+import javax.inject.Inject;
 
-import static dagger.internal.Preconditions.checkNotNull;
+import io.reactivex.Observable;
 
 public final class LocalPhotosDataSource implements PhotosDataSource {
 
-    private Context context;
-
-    public LocalPhotosDataSource(Context context) {
-        this.context = checkNotNull(context);
+    @Inject
+    public LocalPhotosDataSource() {
     }
 
     @Override

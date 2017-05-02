@@ -1,14 +1,12 @@
-package com.github.chojmi.inspirations.data.source.remote;
-
-import android.content.Context;
+package com.github.chojmi.inspirations.data.source.remote.data_source;
 
 import com.github.chojmi.inspirations.data.source.remote.service.GalleriesService;
+import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
 import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.repository.GalleriesDataSource;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -17,17 +15,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 
-public final class RemoteGalleriesDataSource extends BaseRemoteDataSource implements GalleriesDataSource {
+import static dagger.internal.Preconditions.checkNotNull;
+
+public final class RemoteGalleriesDataSource implements GalleriesDataSource {
+
+    private GalleriesService galleryService;
+    private RemoteQueryProducer remoteQueryProducer;
 
     @Inject
-    GalleriesService galleryService;
-
-    public RemoteGalleriesDataSource(Context context) {
-        DaggerRemoteComponent.builder().restClientModule(new RestClientModule(context)).build().inject(this);
-    }
-
-    public RemoteGalleriesDataSource(@NonNull GalleriesService galleryService) {
-        this.galleryService = galleryService;
+    public RemoteGalleriesDataSource(@NonNull GalleriesService galleryService, @NonNull RemoteQueryProducer remoteQueryProducer) {
+        this.galleryService = checkNotNull(galleryService);
+        this.remoteQueryProducer = checkNotNull(remoteQueryProducer);
     }
 
     @Override
@@ -37,10 +35,7 @@ public final class RemoteGalleriesDataSource extends BaseRemoteDataSource implem
 
     @Override
     public Observable<List<PhotoEntity>> loadGallery(String galleryId, int page) {
-        Map<String, String> args = getBaseArgs("flickr.galleries.getPhotos");
-        args.put("gallery_id", galleryId);
-        args.put("page", String.valueOf(page));
-        return galleryService.loadGallery(args)
+        return galleryService.loadGallery(remoteQueryProducer.produceLoadGalleryQuery(galleryId, page))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread()).map(GalleryEntity::getPhoto);
     }

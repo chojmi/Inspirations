@@ -1,11 +1,9 @@
-package com.github.chojmi.inspirations.data.source.module;
-
-import android.content.Context;
+package com.github.chojmi.inspirations.data.source.remote.module;
 
 import com.github.chojmi.inspirations.data.source.Local;
 import com.github.chojmi.inspirations.data.source.Remote;
 import com.github.chojmi.inspirations.data.source.local.LocalGalleriesDataSource;
-import com.github.chojmi.inspirations.data.source.remote.FakeRemoteGalleriesDataSource;
+import com.github.chojmi.inspirations.data.source.remote.data_source.RemoteGalleriesDataSource;
 import com.github.chojmi.inspirations.data.source.repository.GalleriesRepository;
 import com.github.chojmi.inspirations.domain.repository.GalleriesDataSource;
 
@@ -20,18 +18,18 @@ public class GalleriesRepositoryModule {
 
     @Provides
     @Local
-    GalleriesDataSource provideGalleriesLocalDataSource(Context context) {
-        return new LocalGalleriesDataSource(context);
+    GalleriesDataSource provideLocalGalleriesDataSource(LocalGalleriesDataSource localGalleriesDataSource) {
+        return localGalleriesDataSource;
     }
 
     @Provides
     @Remote
-    GalleriesDataSource provideGalleriesRemoteDataSource() {
-        return new FakeRemoteGalleriesDataSource();
+    GalleriesDataSource provideRemoteGalleriesDataSource(RemoteGalleriesDataSource remoteGalleriesDataSource) {
+        return remoteGalleriesDataSource;
     }
 
     @Provides
-    GalleriesDataSource provideGalleriesRepository(GalleriesRepository galleriesRepository) {
+    GalleriesDataSource provideGalleriesDataSource(GalleriesRepository galleriesRepository) {
         return galleriesRepository;
     }
 }

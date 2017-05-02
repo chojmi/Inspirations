@@ -1,17 +1,15 @@
-package com.github.chojmi.inspirations.data.source.remote;
-
-import android.content.Context;
+package com.github.chojmi.inspirations.data.source.remote.data_source;
 
 import com.github.chojmi.inspirations.data.entity.photos.CommentEntityImpl;
 import com.github.chojmi.inspirations.data.entity.photos.PersonEntityImpl;
 import com.github.chojmi.inspirations.data.source.remote.response.PhotoCommentsResponse;
 import com.github.chojmi.inspirations.data.source.remote.service.PhotosService;
+import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.CommentEntity;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -22,20 +20,22 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-public final class RemotePhotosDataSource extends BaseRemoteDataSource implements PhotosDataSource {
+import static dagger.internal.Preconditions.checkNotNull;
+
+public final class RemotePhotosDataSource implements PhotosDataSource {
+
+    private PhotosService photosService;
+    private RemoteQueryProducer remoteQueryProducer;
 
     @Inject
-    PhotosService photosService;
-
-    public RemotePhotosDataSource(Context context) {
-        DaggerRemoteComponent.builder().restClientModule(new RestClientModule(context)).build().inject(this);
+    RemotePhotosDataSource(@NonNull PhotosService photosService, @NonNull RemoteQueryProducer remoteQueryProducer) {
+        this.photosService = checkNotNull(photosService);
+        this.remoteQueryProducer = checkNotNull(remoteQueryProducer);
     }
 
     @Override
     public Observable<List<PersonEntity>> loadPhotoFavs(String photoId) {
-        Map<String, String> args = getBaseArgs("flickr.photos.getFavorites");
-        args.put("photo_id", photoId);
-        return photosService.loadPhotoFavs(args)
+        return photosService.loadPhotoFavs(remoteQueryProducer.produceLoadPhotoFavsQuery(photoId))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(new Function<List<PersonEntityImpl>, ObservableSource<List<PersonEntity>>>() {
@@ -48,9 +48,7 @@ public final class RemotePhotosDataSource extends BaseRemoteDataSource implement
 
     @Override
     public Observable<List<CommentEntity>> loadPhotoComments(String photoId) {
-        Map<String, String> args = getBaseArgs("flickr.photos.comments.getList");
-        args.put("photo_id", photoId);
-        return photosService.loadPhotoComments(args)
+        return photosService.loadPhotoComments(remoteQueryProducer.produceLoadPhotoComments(photoId))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(PhotoCommentsResponse::getComments)
