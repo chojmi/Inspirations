@@ -1,11 +1,6 @@
 package com.github.chojmi.inspirations.data.source.remote.data_source;
 
-import android.annotation.SuppressLint;
-import android.os.Parcel;
-
-import com.github.chojmi.inspirations.data.entity.GalleryEntityImpl;
-import com.github.chojmi.inspirations.data.entity.PhotoEntityImpl;
-import com.github.chojmi.inspirations.data.source.remote.service.GalleriesService;
+import com.github.chojmi.inspirations.data.source.fake_service.FakeGalleriesService;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
 import com.github.chojmi.inspirations.data.source.utils.TestAndroidScheduler;
 
@@ -17,14 +12,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import io.reactivex.Observable;
 import io.reactivex.observers.TestObserver;
-import retrofit2.http.QueryMap;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RemoteGalleriesDataSourceTest {
@@ -34,6 +25,7 @@ public class RemoteGalleriesDataSourceTest {
     @Mock private RemoteQueryProducer mockRemoteQueryProducer;
     private RemoteGalleriesDataSource remoteGalleriesDataSource;
     private TestObserver testObserver;
+    private FakeGalleriesService fakeGalleriesService;
 
     @BeforeClass
     public static void setUpRxSchedulers() {
@@ -42,7 +34,8 @@ public class RemoteGalleriesDataSourceTest {
 
     @Before
     public void setUp() {
-        this.remoteGalleriesDataSource = new RemoteGalleriesDataSource(new FakeGalleriesService(), mockRemoteQueryProducer);
+        this.fakeGalleriesService = new FakeGalleriesService(getFakeQueryMap());
+        this.remoteGalleriesDataSource = new RemoteGalleriesDataSource(fakeGalleriesService, mockRemoteQueryProducer);
         this.testObserver = new TestObserver();
     }
 
@@ -51,7 +44,7 @@ public class RemoteGalleriesDataSourceTest {
         Mockito.when(mockRemoteQueryProducer.produceLoadGalleryQuery(FAKE_GALLERY_ID, 1)).thenReturn(getFakeQueryMap());
         remoteGalleriesDataSource.loadGallery(FAKE_GALLERY_ID).subscribe(testObserver);
         testObserver.assertSubscribed();
-        testObserver.assertResult(new ArrayList<>());
+        testObserver.assertResult(fakeGalleriesService.getFakeGalleryEntity().getPhoto());
         testObserver.assertComplete();
     }
 
@@ -59,55 +52,5 @@ public class RemoteGalleriesDataSourceTest {
         Map<String, String> args = new HashMap<>();
         args.put(FAKE_GALLERY_ARG, FAKE_GALLERY_ID);
         return args;
-    }
-
-    private static class FakeGalleriesService implements GalleriesService {
-        @Override
-        public Observable<GalleryEntityImpl> loadGallery(@QueryMap Map<String, String> options) {
-            if (options.get(FAKE_GALLERY_ARG).equals(FAKE_GALLERY_ID)) {
-                return Observable.just(new FakeGalleryEntityImpl());
-            } else {
-                return Observable.error(new Throwable("Wrong gallery id"));
-            }
-        }
-    }
-
-    @SuppressLint("ParcelCreator")
-    private static class FakeGalleryEntityImpl extends GalleryEntityImpl {
-
-        @Override
-        public int getPage() {
-            return 0;
-        }
-
-        @Override
-        public int getPages() {
-            return 0;
-        }
-
-        @Override
-        public int getPerpage() {
-            return 0;
-        }
-
-        @Override
-        public int getTotal() {
-            return 0;
-        }
-
-        @Override
-        public List<PhotoEntityImpl> getPhoto() {
-            return new ArrayList<>();
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-
-        }
     }
 }
