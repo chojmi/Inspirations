@@ -1,8 +1,9 @@
-package com.github.chojmi.inspirations.data.source.remote.service;
+package com.github.chojmi.inspirations.data.source.remote.test_service;
 
 import com.github.chojmi.inspirations.data.entity.photos.FakePhotoCommentsResponse;
 import com.github.chojmi.inspirations.data.entity.photos.PersonEntityImpl;
 import com.github.chojmi.inspirations.data.source.remote.response.PhotoCommentsResponse;
+import com.github.chojmi.inspirations.data.source.remote.service.PhotosService;
 
 import java.util.ArrayList;
 import java.util.List;

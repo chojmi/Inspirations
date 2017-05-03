@@ -1,7 +1,8 @@
-package com.github.chojmi.inspirations.data.source.remote.service;
+package com.github.chojmi.inspirations.data.source.remote.test_service;
 
 import com.github.chojmi.inspirations.data.entity.FakeGalleryEntityImpl;
 import com.github.chojmi.inspirations.data.entity.GalleryEntityImpl;
+import com.github.chojmi.inspirations.data.source.remote.service.GalleriesService;
 
 import java.util.Map;
 
