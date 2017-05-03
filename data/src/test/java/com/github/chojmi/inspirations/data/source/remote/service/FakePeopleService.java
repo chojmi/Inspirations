@@ -1,10 +1,9 @@
-package com.github.chojmi.inspirations.data.source.fake_service;
+package com.github.chojmi.inspirations.data.source.remote.service;
 
+import com.github.chojmi.inspirations.data.entity.FakeGalleryEntityImpl;
 import com.github.chojmi.inspirations.data.entity.GalleryEntityImpl;
+import com.github.chojmi.inspirations.data.entity.people.FakePersonEntityImpl;
 import com.github.chojmi.inspirations.data.entity.people.PersonEntityImpl;
-import com.github.chojmi.inspirations.data.source.fake_entity.FakeGalleryEntityImpl;
-import com.github.chojmi.inspirations.data.source.fake_entity.FakePersonEntityImpl;
-import com.github.chojmi.inspirations.data.source.remote.service.PeopleService;
 
 import java.util.Map;
 
@@ -29,7 +28,7 @@ public final class FakePeopleService implements PeopleService {
         if (loadPersonInfoQuery.equals(options)) {
             return Observable.just(fakePersonEntity);
         } else {
-            return Observable.error(new Throwable("Wrong user id"));
+            return Observable.error(new Throwable("Wrong args"));
         }
     }
 
@@ -38,7 +37,7 @@ public final class FakePeopleService implements PeopleService {
         if (loadUserPublicPhotosQuery.equals(options)) {
             return Observable.just(fakeGalleryEntity);
         } else {
-            return Observable.error(new Throwable("Wrong user id"));
+            return Observable.error(new Throwable("Wrong args"));
         }
     }
 

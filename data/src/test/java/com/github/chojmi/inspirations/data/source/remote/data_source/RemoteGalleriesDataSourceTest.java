@@ -1,6 +1,6 @@
 package com.github.chojmi.inspirations.data.source.remote.data_source;
 
-import com.github.chojmi.inspirations.data.source.fake_service.FakeGalleriesService;
+import com.github.chojmi.inspirations.data.source.remote.service.FakeGalleriesService;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
 import com.github.chojmi.inspirations.data.source.utils.TestAndroidScheduler;
 

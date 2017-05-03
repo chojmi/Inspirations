@@ -1,8 +1,7 @@
-package com.github.chojmi.inspirations.data.source.fake_service;
+package com.github.chojmi.inspirations.data.source.remote.service;
 
+import com.github.chojmi.inspirations.data.entity.FakeGalleryEntityImpl;
 import com.github.chojmi.inspirations.data.entity.GalleryEntityImpl;
-import com.github.chojmi.inspirations.data.source.fake_entity.FakeGalleryEntityImpl;
-import com.github.chojmi.inspirations.data.source.remote.service.GalleriesService;
 
 import java.util.Map;
 
@@ -23,7 +22,7 @@ public final class FakeGalleriesService implements GalleriesService {
         if (loadGalleryInfoQuery.equals(options)) {
             return Observable.just(fakeGalleryEntity);
         } else {
-            return Observable.error(new Throwable("Wrong gallery id"));
+            return Observable.error(new Throwable("Wrong args"));
         }
     }
 

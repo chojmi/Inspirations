@@ -1,8 +1,6 @@
-package com.github.chojmi.inspirations.data.source.fake_entity;
+package com.github.chojmi.inspirations.data.entity;
 
 import android.os.Parcel;
-
-import com.github.chojmi.inspirations.data.entity.GalleryEntityImpl;
 
 import java.util.ArrayList;
 import java.util.List;

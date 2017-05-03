@@ -1,9 +1,8 @@
-package com.github.chojmi.inspirations.data.source.fake_entity;
+package com.github.chojmi.inspirations.data.entity.people;
 
 import android.os.Parcel;
 
 import com.github.chojmi.inspirations.data.entity.helpers.ContentHolder;
-import com.github.chojmi.inspirations.data.entity.people.PersonEntityImpl;
 
 public final class FakePersonEntityImpl extends PersonEntityImpl {
 
