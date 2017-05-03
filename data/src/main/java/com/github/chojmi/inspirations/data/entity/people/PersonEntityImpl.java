@@ -16,24 +16,24 @@ public abstract class PersonEntityImpl implements Parcelable, PersonEntity {
         return new AutoValue_PersonEntityImpl.GsonTypeAdapter(gson);
     }
 
-    abstract String getId();
+    public abstract String getId();
 
-    abstract String getNsid();
+    public abstract String getNsid();
 
     @SerializedName("ispro")
-    abstract int getIsPro();
+    public abstract int getIsPro();
 
     @SerializedName("iconserver")
-    abstract int getServer();
+    public abstract int getServer();
 
     @SerializedName("iconfarm")
-    abstract int getFarm();
+    public abstract int getFarm();
 
     @SerializedName("username")
-    abstract ContentHolder getUsernameContentHolder();
+    public abstract ContentHolder getUsernameContentHolder();
 
     @SerializedName("description")
-    abstract ContentHolder getDescriptionContentHolder();
+    public abstract ContentHolder getDescriptionContentHolder();
 
     @Override
     public String getUsername() {

@@ -29,9 +29,9 @@ import retrofit2.http.QueryMap;
 @RunWith(MockitoJUnitRunner.class)
 public class RemoteGalleriesDataSourceTest {
     private static final String FAKE_GALLERY_ID = "123";
+    private static final String FAKE_GALLERY_ARG = "fake_gallery_arg";
 
-    @Mock
-    private RemoteQueryProducer mockRemoteQueryProducer;
+    @Mock private RemoteQueryProducer mockRemoteQueryProducer;
     private RemoteGalleriesDataSource remoteGalleriesDataSource;
     private TestObserver testObserver;
 
@@ -42,7 +42,7 @@ public class RemoteGalleriesDataSourceTest {
 
     @Before
     public void setUp() {
-        this.remoteGalleriesDataSource = new RemoteGalleriesDataSource(new TestGalleriesService(), mockRemoteQueryProducer);
+        this.remoteGalleriesDataSource = new RemoteGalleriesDataSource(new FakeGalleriesService(), mockRemoteQueryProducer);
         this.testObserver = new TestObserver();
     }
 
@@ -57,14 +57,14 @@ public class RemoteGalleriesDataSourceTest {
 
     private Map<String, String> getFakeQueryMap() {
         Map<String, String> args = new HashMap<>();
-        args.put("gallery_id", FAKE_GALLERY_ID);
+        args.put(FAKE_GALLERY_ARG, FAKE_GALLERY_ID);
         return args;
     }
 
-    private static class TestGalleriesService implements GalleriesService {
+    private static class FakeGalleriesService implements GalleriesService {
         @Override
         public Observable<GalleryEntityImpl> loadGallery(@QueryMap Map<String, String> options) {
-            if (options.get("gallery_id").equals(FAKE_GALLERY_ID)) {
+            if (options.get(FAKE_GALLERY_ARG).equals(FAKE_GALLERY_ID)) {
                 return Observable.just(new FakeGalleryEntityImpl());
             } else {
                 return Observable.error(new Throwable("Wrong gallery id"));
