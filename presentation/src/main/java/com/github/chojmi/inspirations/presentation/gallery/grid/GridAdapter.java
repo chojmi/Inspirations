@@ -3,16 +3,13 @@ package com.github.chojmi.inspirations.presentation.gallery.grid;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAdapter;
+import com.github.chojmi.inspirations.presentation.gallery.grid.item.GalleryItemTopView;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 
 import butterknife.BindView;
-
-import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.loadImage;
 
 class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder, Photo> {
 
@@ -27,23 +24,31 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
         holder.setPhoto(getItem(position));
     }
 
+    @Override
+    public void onViewRecycled(GalleryViewHolder holder) {
+        holder.onViewRecycled();
+        super.onViewRecycled(holder);
+    }
+
+    @Override
+    public boolean onFailedToRecycleView(GalleryViewHolder holder) {
+        holder.onViewRecycled();
+        return super.onFailedToRecycleView(holder);
+    }
+
     class GalleryViewHolder extends BaseRecyclerViewAdapter.ViewHolder<Photo> {
-        @BindView(R.id.photo) ImageView photoHolder;
-        @BindView(R.id.person_icon) ImageView personIconHolder;
-        @BindView(R.id.title) TextView titleTextView;
-        @BindView(R.id.owner) TextView ownerTextView;
-        private Photo photo;
+        @BindView(R.id.item_top) GalleryItemTopView galleryItemTopView;
 
         GalleryViewHolder(View itemView, ViewGroup parent) {
             super(itemView, parent);
         }
 
         void setPhoto(Photo photo) {
-            this.photo = photo;
-            loadImage(photoHolder, photo.getUrl());
-            loadImage(personIconHolder, photo.getPerson().getIconUrl());
-            titleTextView.setText(photo.getTitle());
-            ownerTextView.setText(photo.getPerson().getUsername());
+            galleryItemTopView.setPhoto(photo);
+        }
+
+        void onViewRecycled() {
+            galleryItemTopView.onViewRecycled();
         }
     }
 }

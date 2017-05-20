@@ -12,4 +12,8 @@ public final class ImageViewUtils {
     public static void loadImage(ImageView imageView, String url) {
         Glide.with(imageView.getContext()).load(url).into(imageView);
     }
+
+    public static void clearImageCache(ImageView imageView) {
+        Glide.clear(imageView);
+    }
 }
