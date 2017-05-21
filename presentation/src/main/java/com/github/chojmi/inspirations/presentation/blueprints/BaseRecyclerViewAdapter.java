@@ -47,6 +47,13 @@ public abstract class BaseRecyclerViewAdapter<VH extends RecyclerView.ViewHolder
         notifyItemRemoved(position);
     }
 
+    // Replaces a RecyclerView item on a predefined position
+    public void replace(int position, O data) {
+        mDataset.remove(position);
+        mDataset.add(position, data);
+        notifyItemChanged(position);
+    }
+
     protected void checkAndAddItem(@NonNull List<O> existChildList, @NonNull List<O> newChildList) {
         for (O newChild : newChildList) {
             if (!existChildList.contains(newChild)) {

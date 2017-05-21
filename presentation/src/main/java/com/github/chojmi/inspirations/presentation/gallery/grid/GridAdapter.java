@@ -6,12 +6,21 @@ import android.view.ViewGroup;
 
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAdapter;
+import com.github.chojmi.inspirations.presentation.gallery.grid.item.GridItemBottomView;
 import com.github.chojmi.inspirations.presentation.gallery.grid.item.GridItemTopView;
+import com.github.chojmi.inspirations.presentation.model.gallery.GridAdapterUiModel;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
+import com.github.chojmi.inspirations.presentation.model.gallery.PhotoComments;
+import com.github.chojmi.inspirations.presentation.model.gallery.PhotoFavs;
 
 import butterknife.BindView;
 
-class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder, Photo> {
+class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder, GridAdapterUiModel> {
+    private final Listener listener;
+
+    GridAdapter(Listener listener) {
+        this.listener = listener;
+    }
 
     @Override
     public GalleryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -21,7 +30,11 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
 
     @Override
     public void onBindViewHolder(GalleryViewHolder holder, int position) {
-        holder.setPhoto(getItem(position));
+        GridAdapterUiModel uiModel = getItem(position);
+        holder.setGridAdapterUiModel(uiModel);
+        if (uiModel.getComments() == null && uiModel.getFavs() == null) {
+            listener.onNewItemBind(position, uiModel.getPhoto());
+        }
     }
 
     @Override
@@ -36,19 +49,34 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
         return super.onFailedToRecycleView(holder);
     }
 
+    void setFavs(int position, PhotoFavs photoFavs) {
+        replace(position, GridAdapterUiModel.setFavs(getItem(position), photoFavs));
+    }
+
+    void setComments(int position, PhotoComments photoComments) {
+        replace(position, GridAdapterUiModel.setComments(getItem(position), photoComments));
+    }
+
+    interface Listener {
+        void onNewItemBind(int position, Photo photo);
+    }
+
     class GalleryViewHolder extends BaseRecyclerViewAdapter.ViewHolder<Photo> {
-        @BindView(R.id.item_top) GridItemTopView galleryItemTopView;
+        @BindView(R.id.item_top) GridItemTopView gridItemTopView;
+        @BindView(R.id.item_bottom) GridItemBottomView gridItemBottomView;
 
         GalleryViewHolder(View itemView, ViewGroup parent) {
             super(itemView, parent);
         }
 
-        void setPhoto(Photo photo) {
-            galleryItemTopView.setPhoto(photo);
+        void setGridAdapterUiModel(GridAdapterUiModel gridAdapterUiModel) {
+            gridItemTopView.setPhoto(gridAdapterUiModel.getPhoto());
+            gridItemBottomView.setFavs(gridAdapterUiModel.getFavs());
+            gridItemBottomView.setComments(gridAdapterUiModel.getComments());
         }
 
         void onViewRecycled() {
-            galleryItemTopView.onViewRecycled();
+            gridItemTopView.onViewRecycled();
         }
     }
 }

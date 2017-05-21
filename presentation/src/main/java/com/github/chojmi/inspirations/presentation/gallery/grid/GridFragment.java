@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 import com.github.chojmi.inspirations.presentation.main.MainActivity;
+import com.github.chojmi.inspirations.presentation.model.gallery.GridAdapterUiModel;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 import com.github.chojmi.inspirations.presentation.model.gallery.PhotoComments;
 import com.github.chojmi.inspirations.presentation.model.gallery.PhotoFavs;
@@ -23,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class GridFragment extends BaseFragment<MainActivity> implements GridPhotoContract.View, GridPhotoAttrsContract.View {
+public class GridFragment extends BaseFragment<MainActivity> implements GridPhotoContract.View, GridPhotoAttrsContract.View, GridAdapter.Listener {
     @BindView(R.id.rv_gallery) RecyclerView recyclerView;
     @Inject GridPhotoContract.Presenter photoPresenter;
     @Inject GridPhotoAttrsContract.Presenter photoAttrsPresenter;
@@ -74,14 +75,14 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     private void initRecyclerView() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        galleryAdapter = new GridAdapter();
-        disposables.add(galleryAdapter.getOnItemClickObservable().subscribe(photo -> photoPresenter.photoSelected(photo)));
+        galleryAdapter = new GridAdapter(this);
+        disposables.add(galleryAdapter.getOnItemClickObservable().subscribe(uiModel -> photoPresenter.photoSelected(uiModel.getPhoto())));
         recyclerView.setAdapter(galleryAdapter);
     }
 
     @Override
     public void showPhotos(List<Photo> photos) {
-        galleryAdapter.setData(photos);
+        galleryAdapter.setData(GridAdapterUiModel.create(photos));
     }
 
     @Override
@@ -91,9 +92,17 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
 
     @Override
     public void showFavs(int position, PhotoFavs photoFavs) {
+        galleryAdapter.setFavs(position, photoFavs);
     }
 
     @Override
     public void showComments(int position, PhotoComments photoComments) {
+        galleryAdapter.setComments(position, photoComments);
+    }
+
+    @Override
+    public void onNewItemBind(int position, Photo photo) {
+        photoAttrsPresenter.loadComments(position, photo);
+        photoAttrsPresenter.loadFavs(position, photo);
     }
 }
