@@ -21,6 +21,7 @@ import io.reactivex.observers.TestObserver;
 @RunWith(MockitoJUnitRunner.class)
 public class GetGalleryTest {
     private static final String GALLERY_ID = "123";
+    private static final String FAKE_ID = "fake_id";
     private static final String FAKE_URL = "www.url.pl";
     private static final String FAKE_TITLE = "fake_title";
 
@@ -85,6 +86,11 @@ public class GetGalleryTest {
 
     private PhotoEntity createFakePhotoEntity() {
         return new PhotoEntity() {
+            @Override
+            public String getId() {
+                return null;
+            }
+
             @Override
             public String getUrl() {
                 return FAKE_URL;

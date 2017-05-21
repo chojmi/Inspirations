@@ -1,12 +1,11 @@
 package com.github.chojmi.inspirations.data.source.remote.data_source;
 
 import com.github.chojmi.inspirations.data.entity.photos.CommentEntityImpl;
-import com.github.chojmi.inspirations.data.entity.photos.PersonEntityImpl;
 import com.github.chojmi.inspirations.data.source.remote.response.PhotoCommentsResponse;
 import com.github.chojmi.inspirations.data.source.remote.service.PhotosService;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
-import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.CommentEntity;
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
 import java.util.List;
@@ -34,16 +33,11 @@ public final class RemotePhotosDataSource implements PhotosDataSource {
     }
 
     @Override
-    public Observable<List<PersonEntity>> loadPhotoFavs(String photoId) {
+    public Observable<PhotoFavsEntity> loadPhotoFavs(String photoId) {
         return photosService.loadPhotoFavs(remoteQueryProducer.produceLoadPhotoFavsQuery(photoId))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .flatMap(new Function<List<PersonEntityImpl>, ObservableSource<List<PersonEntity>>>() {
-                    @Override
-                    public ObservableSource<List<PersonEntity>> apply(@NonNull List<PersonEntityImpl> personEntities) throws Exception {
-                        return Observable.fromIterable(personEntities).map(personEntity -> (PersonEntity) personEntity).toList().toObservable();
-                    }
-                });
+                .map(photoFavsEntity -> photoFavsEntity);
     }
 
     @Override

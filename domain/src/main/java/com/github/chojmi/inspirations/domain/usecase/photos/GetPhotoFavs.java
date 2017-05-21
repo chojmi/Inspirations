@@ -1,6 +1,6 @@
 package com.github.chojmi.inspirations.domain.usecase.photos;
 
-import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
@@ -8,8 +8,6 @@ import com.github.chojmi.inspirations.domain.usecase.blueprints.BaseSubmitEvent;
 import com.github.chojmi.inspirations.domain.usecase.blueprints.BaseSubmitUiModel;
 import com.github.chojmi.inspirations.domain.usecase.blueprints.UseCase;
 import com.google.auto.value.AutoValue;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -56,11 +54,11 @@ public class GetPhotoFavs extends UseCase<GetPhotoFavs.SubmitUiModel, GetPhotoFa
             return new AutoValue_GetPhotoFavs_SubmitUiModel(false, false, t, null);
         }
 
-        static SubmitUiModel success(List<PersonEntity> personEntities) {
-            return new AutoValue_GetPhotoFavs_SubmitUiModel(false, true, null, personEntities);
+        static SubmitUiModel success(PhotoFavsEntity photoFavsEntity) {
+            return new AutoValue_GetPhotoFavs_SubmitUiModel(false, true, null, photoFavsEntity);
         }
 
         @Nullable
-        public abstract List<PersonEntity> getResult();
+        public abstract PhotoFavsEntity getResult();
     }
 }

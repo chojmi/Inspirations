@@ -2,8 +2,10 @@ package com.github.chojmi.inspirations.data.source.repository;
 
 import android.support.annotation.NonNull;
 
+import com.github.chojmi.inspirations.data.entity.photos.FakePhotoFavsEntityImpl;
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.CommentEntity;
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
 import org.junit.Before;
@@ -44,8 +46,8 @@ public class PhotosRepositoryTest {
 
     @Test
     public void testLoadPhotoFavsFromRemoteHappyCase() {
-        final List<PersonEntity> favs = getFakeFavs();
-        given(mockLocalDataSource.loadPhotoFavs(FAKE_PHOTO_ID)).willReturn(Observable.just(Collections.emptyList()));
+        final PhotoFavsEntity favs = getFakePhotoFavs();
+        given(mockLocalDataSource.loadPhotoFavs(FAKE_PHOTO_ID)).willReturn(Observable.just(new FakePhotoFavsEntityImpl()));
         given(mockRemoteDataSource.loadPhotoFavs(FAKE_PHOTO_ID)).willReturn(Observable.just(favs));
 
         photosDataSource.loadPhotoFavs(FAKE_PHOTO_ID).test().assertResult(favs);
@@ -56,7 +58,7 @@ public class PhotosRepositoryTest {
 
     @Test
     public void testLoadPhotoFavsFromLocalHappyCase() {
-        final List<PersonEntity> favs = getFakeFavs();
+        final PhotoFavsEntity favs = getFakePhotoFavs();
         given(mockLocalDataSource.loadPhotoFavs(FAKE_PHOTO_ID)).willReturn(Observable.just(favs));
         given(mockRemoteDataSource.loadPhotoFavs(FAKE_PHOTO_ID)).willReturn(Observable.create(e -> {
             throw new IllegalStateException("Shouldn't be invoked");
@@ -94,6 +96,30 @@ public class PhotosRepositoryTest {
         verify(mockRemoteDataSource, times(1)).loadPhotoComments(FAKE_PHOTO_ID);
     }
 
+    @NonNull
+    private PhotoFavsEntity getFakePhotoFavs() {
+        return new PhotoFavsEntity() {
+            @Override
+            public List<PersonEntity> getPeople() {
+                return getFakeFavs();
+            }
+
+            @Override
+            public int getPage() {
+                return 0;
+            }
+
+            @Override
+            public String getPhotoId() {
+                return "";
+            }
+
+            @Override
+            public int getTotal() {
+                return 0;
+            }
+        };
+    }
     @NonNull
     private List<PersonEntity> getFakeFavs() {
         List<PersonEntity> photos = new ArrayList<>();

@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAdapter;
-import com.github.chojmi.inspirations.presentation.gallery.grid.item.GalleryItemTopView;
+import com.github.chojmi.inspirations.presentation.gallery.grid.item.GridItemTopView;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 
 import butterknife.BindView;
@@ -37,7 +37,7 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
     }
 
     class GalleryViewHolder extends BaseRecyclerViewAdapter.ViewHolder<Photo> {
-        @BindView(R.id.item_top) GalleryItemTopView galleryItemTopView;
+        @BindView(R.id.item_top) GridItemTopView galleryItemTopView;
 
         GalleryViewHolder(View itemView, ViewGroup parent) {
             super(itemView, parent);

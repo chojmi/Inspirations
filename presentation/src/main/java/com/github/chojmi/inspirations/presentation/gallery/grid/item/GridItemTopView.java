@@ -15,13 +15,13 @@ import butterknife.ButterKnife;
 import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.clearImageCache;
 import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.loadImage;
 
-public class GalleryItemTopView extends LinearLayoutCompat {
+public class GridItemTopView extends LinearLayoutCompat {
     @BindView(R.id.photo) ImageView photoHolder;
     @BindView(R.id.person_icon) ImageView personIconHolder;
     @BindView(R.id.title) TextView titleTextView;
     @BindView(R.id.owner) TextView ownerTextView;
 
-    public GalleryItemTopView(Context context, AttributeSet attrs) {
+    public GridItemTopView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

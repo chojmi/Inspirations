@@ -21,7 +21,7 @@ public class PhotoDataMapper {
     }
 
     private Photo transform(PhotoEntity photo, PersonEntity person) {
-        return Photo.create(photo.getTitle(), photo.getUrl(), Person.create(person.getUsername(), person.getIconUrl()));
+        return Photo.create(photo.getId(), photo.getTitle(), photo.getUrl(), Person.create(person.getUsername(), person.getIconUrl()));
     }
 
     public List<Photo> transform(List<PhotoEntity> photos, PersonEntity person) {

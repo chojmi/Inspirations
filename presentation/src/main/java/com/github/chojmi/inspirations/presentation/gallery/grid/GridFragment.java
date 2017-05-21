@@ -12,6 +12,7 @@ import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 import com.github.chojmi.inspirations.presentation.main.MainActivity;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
+import com.github.chojmi.inspirations.presentation.model.gallery.PhotoFavs;
 
 import java.util.List;
 
@@ -21,9 +22,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class GridFragment extends BaseFragment<MainActivity> implements GridContract.View {
+public class GridFragment extends BaseFragment<MainActivity> implements GridPhotoContract.View, GridPhotoAttrsContract.View {
     @BindView(R.id.rv_gallery) RecyclerView recyclerView;
-    @Inject GridContract.Presenter presenter;
+    @Inject GridPhotoContract.Presenter photoPresenter;
+    @Inject GridPhotoAttrsContract.Presenter photoAttrsPresenter;
     private GridAdapter galleryAdapter;
     private CompositeDisposable disposables;
     public static GridFragment newInstance() {
@@ -50,13 +52,15 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridCont
         super.onViewCreated(view, savedInstanceState);
         this.disposables = new CompositeDisposable();
         initRecyclerView();
-        presenter.setView(this);
+        photoPresenter.setView(this);
+        photoAttrsPresenter.setView(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        presenter.destroyView();
+        photoPresenter.destroyView();
+        photoAttrsPresenter.destroyView();
         disposables.dispose();
     }
 
@@ -70,7 +74,7 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridCont
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         galleryAdapter = new GridAdapter();
-        disposables.add(galleryAdapter.getOnItemClickObservable().subscribe(photo -> presenter.photoSelected(photo)));
+        disposables.add(galleryAdapter.getOnItemClickObservable().subscribe(photo -> photoPresenter.photoSelected(photo)));
         recyclerView.setAdapter(galleryAdapter);
     }
 
@@ -82,5 +86,9 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridCont
     @Override
     public void openPhotoView(Photo photo) {
         getNavigator().navigateToPhoto(getContext(), photo);
+    }
+
+    @Override
+    public void showFavs(int position, PhotoFavs photoFavs) {
     }
 }

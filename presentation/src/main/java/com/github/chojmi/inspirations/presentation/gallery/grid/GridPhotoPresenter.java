@@ -16,14 +16,14 @@ import timber.log.Timber;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
-class GridPresenter implements GridContract.Presenter {
+class GridPhotoPresenter implements GridPhotoContract.Presenter {
     private final GetUserPublicPhotos getUserPublicPhotos;
     private final GetUserInfo getUserInfo;
     private final PhotoDataMapper photoDataMapper;
     private final CompositeDisposable disposables;
-    private GridContract.View view;
+    private GridPhotoContract.View view;
 
-    GridPresenter(@NonNull GetUserPublicPhotos getUserPublicPhotos, @NonNull GetUserInfo getUserInfo, @NonNull PhotoDataMapper photoDataMapper) {
+    GridPhotoPresenter(@NonNull GetUserPublicPhotos getUserPublicPhotos, @NonNull GetUserInfo getUserInfo, @NonNull PhotoDataMapper photoDataMapper) {
         this.getUserPublicPhotos = checkNotNull(getUserPublicPhotos);
         this.getUserInfo = checkNotNull(getUserInfo);
         this.photoDataMapper = checkNotNull(photoDataMapper);
@@ -31,7 +31,7 @@ class GridPresenter implements GridContract.Presenter {
     }
 
     @Override
-    public void setView(@NonNull GridContract.View view) {
+    public void setView(@NonNull GridPhotoContract.View view) {
         this.view = checkNotNull(view);
         refreshPhotos("66956608@N06");
     }

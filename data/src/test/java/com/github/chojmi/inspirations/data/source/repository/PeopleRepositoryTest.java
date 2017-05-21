@@ -25,6 +25,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class PeopleRepositoryTest {
     private static final String FAKE_USER_ID = "123";
+    private static final String FAKE_PHOTO_ID = "fake_photo_id";
     private static final String FAKE_URL = "www.url.pl";
     private static final String FAKE_TITLE = "fake_title";
     private static final String FAKE_USERNAME = "fake_username";
@@ -98,6 +99,11 @@ public class PeopleRepositoryTest {
     private List<PhotoEntity> createFakePhotoEntities() {
         List<PhotoEntity> photos = new ArrayList<>();
         photos.add(new PhotoEntity() {
+            @Override
+            public String getId() {
+                return FAKE_PHOTO_ID;
+            }
+
             @Override
             public String getUrl() {
                 return FAKE_URL;

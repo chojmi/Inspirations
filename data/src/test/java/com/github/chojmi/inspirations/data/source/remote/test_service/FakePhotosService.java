@@ -1,12 +1,11 @@
 package com.github.chojmi.inspirations.data.source.remote.test_service;
 
 import com.github.chojmi.inspirations.data.entity.photos.FakePhotoCommentsResponse;
-import com.github.chojmi.inspirations.data.entity.photos.PersonEntityImpl;
+import com.github.chojmi.inspirations.data.entity.photos.FakePhotoFavsEntityImpl;
+import com.github.chojmi.inspirations.data.entity.photos.PhotoFavsEntityImpl;
 import com.github.chojmi.inspirations.data.source.remote.response.PhotoCommentsResponse;
 import com.github.chojmi.inspirations.data.source.remote.service.PhotosService;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -14,21 +13,21 @@ import retrofit2.http.QueryMap;
 
 public final class FakePhotosService implements PhotosService {
 
-    private final List<PersonEntityImpl> fakePhotoFavs;
+    private final FakePhotoFavsEntityImpl fakePhotoFavsEntity;
     private final PhotoCommentsResponse fakePhotoCommentsResponse;
     private final Map<String, String> loadPhotoFavsQuery, loadPhotoCommentsQuery;
 
     public FakePhotosService(Map<String, String> loadPhotoFavsQuery, Map<String, String> loadPhotoCommentsQuery) {
         this.loadPhotoFavsQuery = loadPhotoFavsQuery;
         this.loadPhotoCommentsQuery = loadPhotoCommentsQuery;
-        this.fakePhotoFavs = new ArrayList<>();
+        this.fakePhotoFavsEntity = new FakePhotoFavsEntityImpl();
         this.fakePhotoCommentsResponse = new FakePhotoCommentsResponse();
     }
 
     @Override
-    public Observable<List<PersonEntityImpl>> loadPhotoFavs(@QueryMap Map<String, String> options) {
+    public Observable<PhotoFavsEntityImpl> loadPhotoFavs(@QueryMap Map<String, String> options) {
         if (loadPhotoCommentsQuery.equals(options)) {
-            return Observable.just(fakePhotoFavs);
+            return Observable.just(fakePhotoFavsEntity);
         } else {
             return Observable.error(new Throwable("Wrong args"));
         }
@@ -43,8 +42,8 @@ public final class FakePhotosService implements PhotosService {
         }
     }
 
-    public List<PersonEntityImpl> getLoadPhotoFavsResult() {
-        return fakePhotoFavs;
+    public FakePhotoFavsEntityImpl getLoadPhotoFavsResult() {
+        return fakePhotoFavsEntity;
     }
 
     public PhotoCommentsResponse getLoadPhotoCommentsResult() {

@@ -20,7 +20,7 @@ import io.reactivex.observers.TestObserver;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GetUserPublicPhotosTest {
-    private static final String USER_ID = "123";
+    private static final String FAKE_USER_ID = "123";
     private static final String FAKE_URL = "www.url.pl";
     private static final String FAKE_TITLE = "fake_title";
 
@@ -41,8 +41,8 @@ public class GetUserPublicPhotosTest {
 
     @Test
     public void shouldInvokeInProgressEventAtBeginning() {
-        Mockito.when(mockPeopleDataSource.loadUserPublicPhotos(USER_ID)).thenReturn(Observable.empty());
-        Observable<GetUserPublicPhotos.SubmitUiModel> resultObs = getUserPublicPhotos.buildUseCaseObservable(Observable.fromCallable(() -> GetUserPublicPhotos.SubmitEvent.create(USER_ID)));
+        Mockito.when(mockPeopleDataSource.loadUserPublicPhotos(FAKE_USER_ID)).thenReturn(Observable.empty());
+        Observable<GetUserPublicPhotos.SubmitUiModel> resultObs = getUserPublicPhotos.buildUseCaseObservable(Observable.fromCallable(() -> GetUserPublicPhotos.SubmitEvent.create(FAKE_USER_ID)));
         testObserver.assertNotSubscribed();
         resultObs.subscribe(testObserver);
         testObserver.assertSubscribed();
@@ -54,8 +54,8 @@ public class GetUserPublicPhotosTest {
     @Test
     public void shouldReturnProperValue() {
         List<PhotoEntity> fakePhotoEntities = createFakePhotoEntities();
-        Mockito.when(mockPeopleDataSource.loadUserPublicPhotos(USER_ID)).thenReturn(Observable.fromCallable(() -> fakePhotoEntities));
-        Observable<GetUserPublicPhotos.SubmitUiModel> resultObs = getUserPublicPhotos.buildUseCaseObservable(Observable.fromCallable(() -> GetUserPublicPhotos.SubmitEvent.create(USER_ID)));
+        Mockito.when(mockPeopleDataSource.loadUserPublicPhotos(FAKE_USER_ID)).thenReturn(Observable.fromCallable(() -> fakePhotoEntities));
+        Observable<GetUserPublicPhotos.SubmitUiModel> resultObs = getUserPublicPhotos.buildUseCaseObservable(Observable.fromCallable(() -> GetUserPublicPhotos.SubmitEvent.create(FAKE_USER_ID)));
         testObserver.assertNotSubscribed();
         resultObs.subscribe(testObserver);
         testObserver.assertSubscribed();
@@ -67,8 +67,8 @@ public class GetUserPublicPhotosTest {
     @Test
     public void shouldReturnError() {
         Throwable fakeThrowable = new Throwable("Fake throwable");
-        Mockito.when(mockPeopleDataSource.loadUserPublicPhotos(USER_ID)).thenReturn(Observable.error(fakeThrowable));
-        Observable<GetUserPublicPhotos.SubmitUiModel> resultObs = getUserPublicPhotos.buildUseCaseObservable(Observable.fromCallable(() -> GetUserPublicPhotos.SubmitEvent.create(USER_ID)));
+        Mockito.when(mockPeopleDataSource.loadUserPublicPhotos(FAKE_USER_ID)).thenReturn(Observable.error(fakeThrowable));
+        Observable<GetUserPublicPhotos.SubmitUiModel> resultObs = getUserPublicPhotos.buildUseCaseObservable(Observable.fromCallable(() -> GetUserPublicPhotos.SubmitEvent.create(FAKE_USER_ID)));
         testObserver.assertNotSubscribed();
         resultObs.subscribe(testObserver);
         testObserver.assertSubscribed();
@@ -85,6 +85,11 @@ public class GetUserPublicPhotosTest {
 
     private PhotoEntity createFakePhotoEntity() {
         return new PhotoEntity() {
+            @Override
+            public String getId() {
+                return FAKE_USER_ID;
+            }
+
             @Override
             public String getUrl() {
                 return FAKE_URL;

@@ -19,13 +19,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GridPresenterTest {
+public class GridPhotoPresenterTest {
     private static final String USER_ID = "123";
 
-    private GridPresenter galleryPresenter;
+    private GridPhotoPresenter galleryPresenter;
 
     @Mock
-    private GridContract.View mockGalleryView;
+    private GridPhotoContract.View mockGalleryView;
     @Mock
     private GetUserPublicPhotos mockGetUserPublicPhotos;
     @Mock
@@ -35,7 +35,7 @@ public class GridPresenterTest {
 
     @Before
     public void setUp() {
-        galleryPresenter = new GridPresenter(mockGetUserPublicPhotos, mockGetUserInfo, mockPhotoDataMapper);
+        galleryPresenter = new GridPhotoPresenter(mockGetUserPublicPhotos, mockGetUserInfo, mockPhotoDataMapper);
         galleryPresenter.setView(mockGalleryView);
     }
 

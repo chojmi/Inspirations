@@ -1,6 +1,7 @@
 package com.github.chojmi.inspirations.domain.usecase.photos;
 
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
@@ -53,14 +54,14 @@ public class GetPhotoFavsTest {
 
     @Test
     public void shouldReturnProperValue() {
-        final List<PersonEntity> resultFavs = createFakeFavsList();
-        Mockito.when(mockPhotosDataSource.loadPhotoFavs(FAKE_PHOTO_ID)).thenReturn(Observable.fromCallable(() -> resultFavs));
+        final PhotoFavsEntity photoFavsEntity = createFakePhotoFavsEntity();
+        Mockito.when(mockPhotosDataSource.loadPhotoFavs(FAKE_PHOTO_ID)).thenReturn(Observable.fromCallable(() -> photoFavsEntity));
         Observable<GetPhotoFavs.SubmitUiModel> resultObs = getPhotoFavs.buildUseCaseObservable(Observable.fromCallable(() -> GetPhotoFavs.SubmitEvent.create(FAKE_PHOTO_ID)));
         testObserver.assertNotSubscribed();
         resultObs.subscribe(testObserver);
         testObserver.assertSubscribed();
         resultObs.test().assertSubscribed();
-        resultObs.test().assertResult(GetPhotoFavs.SubmitUiModel.inProgress(), GetPhotoFavs.SubmitUiModel.success(resultFavs));
+        resultObs.test().assertResult(GetPhotoFavs.SubmitUiModel.inProgress(), GetPhotoFavs.SubmitUiModel.success(photoFavsEntity));
         resultObs.test().assertComplete();
     }
 
@@ -75,6 +76,30 @@ public class GetPhotoFavsTest {
         resultObs.test().assertSubscribed();
         resultObs.test().assertResult(GetPhotoFavs.SubmitUiModel.inProgress(), GetPhotoFavs.SubmitUiModel.failure(fakeThrowable));
         resultObs.test().assertComplete();
+    }
+
+    private PhotoFavsEntity createFakePhotoFavsEntity() {
+        return new PhotoFavsEntity<PersonEntity>() {
+            @Override
+            public List<PersonEntity> getPeople() {
+                return createFakeFavsList();
+            }
+
+            @Override
+            public int getPage() {
+                return 0;
+            }
+
+            @Override
+            public String getPhotoId() {
+                return null;
+            }
+
+            @Override
+            public int getTotal() {
+                return 0;
+            }
+        };
     }
 
     private List<PersonEntity> createFakeFavsList() {

@@ -1,7 +1,7 @@
 package com.github.chojmi.inspirations.data.source.local;
 
-import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.CommentEntity;
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public final class LocalPhotosDataSource implements PhotosDataSource {
     }
 
     @Override
-    public Observable<List<PersonEntity>> loadPhotoFavs(String photoId) {
+    public Observable<PhotoFavsEntity> loadPhotoFavs(String photoId) {
         return Observable.empty();
     }
 

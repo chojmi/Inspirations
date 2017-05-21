@@ -3,20 +3,14 @@ package com.github.chojmi.inspirations.presentation.gallery.grid;
 import com.github.chojmi.inspirations.presentation.blueprints.BasePresenter;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseView;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
+import com.github.chojmi.inspirations.presentation.model.gallery.PhotoFavs;
 
-import java.util.List;
-
-interface GridContract {
-
+public interface GridPhotoAttrsContract {
     interface View extends BaseView {
-        void showPhotos(List<Photo> photos);
-
-        void openPhotoView(Photo photo);
+        void showFavs(int position, PhotoFavs photoFavs);
     }
 
-    interface Presenter extends BasePresenter<View> {
-        void refreshPhotos(String userId);
-
-        void photoSelected(Photo photo);
+    interface Presenter extends BasePresenter<GridPhotoAttrsContract.View> {
+        void loadFavs(int position, Photo photo);
     }
 }
