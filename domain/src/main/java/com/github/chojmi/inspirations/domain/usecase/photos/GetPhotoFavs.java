@@ -37,6 +37,10 @@ public class GetPhotoFavs extends UseCase<GetPhotoFavs.SubmitUiModel, GetPhotoFa
 
     @AutoValue
     public static abstract class SubmitEvent extends BaseSubmitEvent {
+        public static Observable<SubmitEvent> createObservable(@NonNull String photoId) {
+            return Observable.fromCallable(() -> create(photoId));
+        }
+
         public static SubmitEvent create(@NonNull String photoId) {
             return new AutoValue_GetPhotoFavs_SubmitEvent(checkNotNull(photoId));
         }

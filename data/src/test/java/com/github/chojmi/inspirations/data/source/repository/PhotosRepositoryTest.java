@@ -2,9 +2,11 @@ package com.github.chojmi.inspirations.data.source.repository;
 
 import android.support.annotation.NonNull;
 
+import com.github.chojmi.inspirations.data.entity.photos.FakePhotoCommentsEntityImpl;
 import com.github.chojmi.inspirations.data.entity.photos.FakePhotoFavsEntityImpl;
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.CommentEntity;
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
@@ -15,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -72,11 +73,11 @@ public class PhotosRepositoryTest {
 
     @Test
     public void testLoadPhotoCommentsFromRemoteHappyCase() {
-        final List<CommentEntity> comments = getFakeComments();
-        given(mockLocalDataSource.loadPhotoComments(FAKE_PHOTO_ID)).willReturn(Observable.just(Collections.emptyList()));
-        given(mockRemoteDataSource.loadPhotoComments(FAKE_PHOTO_ID)).willReturn(Observable.just(comments));
+        final PhotoCommentsEntity photoCommentsEntity = getFakePhotoCommentsEntity();
+        given(mockLocalDataSource.loadPhotoComments(FAKE_PHOTO_ID)).willReturn(Observable.just(new FakePhotoCommentsEntityImpl()));
+        given(mockRemoteDataSource.loadPhotoComments(FAKE_PHOTO_ID)).willReturn(Observable.just(photoCommentsEntity));
 
-        photosDataSource.loadPhotoComments(FAKE_PHOTO_ID).test().assertResult(comments);
+        photosDataSource.loadPhotoComments(FAKE_PHOTO_ID).test().assertResult(photoCommentsEntity);
 
         verify(mockLocalDataSource, times(1)).loadPhotoComments(FAKE_PHOTO_ID);
         verify(mockRemoteDataSource, times(1)).loadPhotoComments(FAKE_PHOTO_ID);
@@ -84,13 +85,13 @@ public class PhotosRepositoryTest {
 
     @Test
     public void testLoadPhotoCommentsFromLocalHappyCase() {
-        final List<CommentEntity> comments = getFakeComments();
-        given(mockLocalDataSource.loadPhotoComments(FAKE_PHOTO_ID)).willReturn(Observable.just(comments));
+        final PhotoCommentsEntity photoCommentsEntity = getFakePhotoCommentsEntity();
+        given(mockLocalDataSource.loadPhotoComments(FAKE_PHOTO_ID)).willReturn(Observable.just(photoCommentsEntity));
         given(mockRemoteDataSource.loadPhotoComments(FAKE_PHOTO_ID)).willReturn(Observable.create(e -> {
             throw new IllegalStateException("Shouldn't be invoked");
         }));
 
-        photosDataSource.loadPhotoComments(FAKE_PHOTO_ID).test().assertResult(comments);
+        photosDataSource.loadPhotoComments(FAKE_PHOTO_ID).test().assertResult(photoCommentsEntity);
 
         verify(mockLocalDataSource, times(1)).loadPhotoComments(FAKE_PHOTO_ID);
         verify(mockRemoteDataSource, times(1)).loadPhotoComments(FAKE_PHOTO_ID);
@@ -111,7 +112,7 @@ public class PhotosRepositoryTest {
 
             @Override
             public String getPhotoId() {
-                return "";
+                return FAKE_PHOTO_ID;
             }
 
             @Override
@@ -120,6 +121,7 @@ public class PhotosRepositoryTest {
             }
         };
     }
+
     @NonNull
     private List<PersonEntity> getFakeFavs() {
         List<PersonEntity> photos = new ArrayList<>();
@@ -135,6 +137,22 @@ public class PhotosRepositoryTest {
             }
         });
         return photos;
+    }
+
+    @NonNull
+    private PhotoCommentsEntity getFakePhotoCommentsEntity() {
+        return new PhotoCommentsEntity() {
+
+            @Override
+            public List getComments() {
+                return getFakeComments();
+            }
+
+            @Override
+            public String getPhotoId() {
+                return FAKE_PHOTO_ID;
+            }
+        };
     }
 
     @NonNull

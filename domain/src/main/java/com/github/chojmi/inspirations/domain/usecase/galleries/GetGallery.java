@@ -40,6 +40,10 @@ public class GetGallery extends UseCase<GetGallery.SubmitUiModel, GetGallery.Sub
 
     @AutoValue
     public static abstract class SubmitEvent extends BaseSubmitEvent {
+        public static Observable<SubmitEvent> createObservable(@NonNull String galleryId) {
+            return Observable.fromCallable(() -> create(galleryId));
+        }
+
         public static SubmitEvent create(@NonNull String galleryId) {
             return new AutoValue_GetGallery_SubmitEvent(checkNotNull(galleryId));
         }

@@ -40,6 +40,11 @@ public class GetUserPublicPhotos extends UseCase<GetUserPublicPhotos.SubmitUiMod
 
     @AutoValue
     public static abstract class SubmitEvent extends BaseSubmitEvent {
+
+        public static Observable<SubmitEvent> createObservable(@NonNull String userId) {
+            return Observable.fromCallable(() -> create(userId));
+        }
+
         public static SubmitEvent create(@NonNull String userId) {
             return new AutoValue_GetUserPublicPhotos_SubmitEvent(checkNotNull(userId));
         }

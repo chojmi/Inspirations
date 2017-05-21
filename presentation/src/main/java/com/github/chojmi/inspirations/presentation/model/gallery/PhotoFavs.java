@@ -19,5 +19,4 @@ public abstract class PhotoFavs implements Parcelable {
     public abstract String getPhotoId();
 
     public abstract int getTotal();
-
 }

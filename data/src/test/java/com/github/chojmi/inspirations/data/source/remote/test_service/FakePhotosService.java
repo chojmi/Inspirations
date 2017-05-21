@@ -1,9 +1,9 @@
 package com.github.chojmi.inspirations.data.source.remote.test_service;
 
-import com.github.chojmi.inspirations.data.entity.photos.FakePhotoCommentsResponse;
+import com.github.chojmi.inspirations.data.entity.photos.FakePhotoCommentsEntityImpl;
 import com.github.chojmi.inspirations.data.entity.photos.FakePhotoFavsEntityImpl;
+import com.github.chojmi.inspirations.data.entity.photos.PhotoCommentsEntityImpl;
 import com.github.chojmi.inspirations.data.entity.photos.PhotoFavsEntityImpl;
-import com.github.chojmi.inspirations.data.source.remote.response.PhotoCommentsResponse;
 import com.github.chojmi.inspirations.data.source.remote.service.PhotosService;
 
 import java.util.Map;
@@ -14,14 +14,14 @@ import retrofit2.http.QueryMap;
 public final class FakePhotosService implements PhotosService {
 
     private final FakePhotoFavsEntityImpl fakePhotoFavsEntity;
-    private final PhotoCommentsResponse fakePhotoCommentsResponse;
+    private final FakePhotoCommentsEntityImpl fakePhotoCommentsEntity;
     private final Map<String, String> loadPhotoFavsQuery, loadPhotoCommentsQuery;
 
     public FakePhotosService(Map<String, String> loadPhotoFavsQuery, Map<String, String> loadPhotoCommentsQuery) {
         this.loadPhotoFavsQuery = loadPhotoFavsQuery;
         this.loadPhotoCommentsQuery = loadPhotoCommentsQuery;
         this.fakePhotoFavsEntity = new FakePhotoFavsEntityImpl();
-        this.fakePhotoCommentsResponse = new FakePhotoCommentsResponse();
+        this.fakePhotoCommentsEntity = new FakePhotoCommentsEntityImpl();
     }
 
     @Override
@@ -34,9 +34,9 @@ public final class FakePhotosService implements PhotosService {
     }
 
     @Override
-    public Observable<PhotoCommentsResponse> loadPhotoComments(@QueryMap Map<String, String> options) {
+    public Observable<PhotoCommentsEntityImpl> loadPhotoComments(@QueryMap Map<String, String> options) {
         if (loadPhotoCommentsQuery.equals(options)) {
-            return Observable.just(fakePhotoCommentsResponse);
+            return Observable.just(fakePhotoCommentsEntity);
         } else {
             return Observable.error(new Throwable("Wrong args"));
         }
@@ -46,7 +46,7 @@ public final class FakePhotosService implements PhotosService {
         return fakePhotoFavsEntity;
     }
 
-    public PhotoCommentsResponse getLoadPhotoCommentsResult() {
-        return fakePhotoCommentsResponse;
+    public FakePhotoCommentsEntityImpl getLoadPhotoCommentsResult() {
+        return fakePhotoCommentsEntity;
     }
 }

@@ -45,7 +45,7 @@ public class RemotePhotosDataSourceTest {
         Mockito.when(mockRemoteQueryProducer.produceLoadPhotoComments(FAKE_PHOTO_ID)).thenReturn(getFakePhotoIdQueryMap());
         remotePhotosDataSource.loadPhotoComments(FAKE_PHOTO_ID).subscribe(testObserver);
         testObserver.assertSubscribed();
-        testObserver.assertResult(fakePhotosService.getLoadPhotoCommentsResult().getComments());
+        testObserver.assertResult(fakePhotosService.getLoadPhotoCommentsResult());
         testObserver.assertComplete();
     }
 

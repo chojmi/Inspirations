@@ -1,6 +1,6 @@
 package com.github.chojmi.inspirations.domain.usecase.photos;
 
-import com.github.chojmi.inspirations.domain.entity.photos.CommentEntity;
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
@@ -8,8 +8,6 @@ import com.github.chojmi.inspirations.domain.usecase.blueprints.BaseSubmitEvent;
 import com.github.chojmi.inspirations.domain.usecase.blueprints.BaseSubmitUiModel;
 import com.github.chojmi.inspirations.domain.usecase.blueprints.UseCase;
 import com.google.auto.value.AutoValue;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -39,6 +37,10 @@ public class GetPhotoComments extends UseCase<GetPhotoComments.SubmitUiModel, Ge
 
     @AutoValue
     public static abstract class SubmitEvent extends BaseSubmitEvent {
+        public static Observable<SubmitEvent> createObservable(@NonNull String photoId) {
+            return Observable.fromCallable(() -> create(photoId));
+        }
+
         public static SubmitEvent create(@NonNull String photoId) {
             return new AutoValue_GetPhotoComments_SubmitEvent(checkNotNull(photoId));
         }
@@ -56,11 +58,11 @@ public class GetPhotoComments extends UseCase<GetPhotoComments.SubmitUiModel, Ge
             return new AutoValue_GetPhotoComments_SubmitUiModel(false, false, t, null);
         }
 
-        static SubmitUiModel success(List<CommentEntity> commentsEntities) {
-            return new AutoValue_GetPhotoComments_SubmitUiModel(false, true, null, commentsEntities);
+        static SubmitUiModel success(PhotoCommentsEntity photoCommentsEntity) {
+            return new AutoValue_GetPhotoComments_SubmitUiModel(false, true, null, photoCommentsEntity);
         }
 
         @Nullable
-        public abstract List<CommentEntity> getResult();
+        public abstract PhotoCommentsEntity getResult();
     }
 }

@@ -66,8 +66,8 @@ class GridPhotoPresenter implements GridPhotoContract.Presenter {
 
     private Observable<PhotoSubmitUiModel> getPhotoObservable(@NonNull String userId) {
         return Observable.zip(
-                Observable.create(e -> getUserPublicPhotos.execute(DefaultObserver.create(e), Observable.fromCallable(() -> GetUserPublicPhotos.SubmitEvent.create(checkNotNull(userId))))),
-                Observable.create(e -> getUserInfo.execute(DefaultObserver.create(e), Observable.fromCallable(() -> GetUserInfo.SubmitEvent.create(checkNotNull(userId))))),
+                Observable.create(e -> getUserPublicPhotos.execute(DefaultObserver.create(e), GetUserPublicPhotos.SubmitEvent.createObservable(checkNotNull(userId)))),
+                Observable.create(e -> getUserInfo.execute(DefaultObserver.create(e), GetUserInfo.SubmitEvent.createObservable(checkNotNull(userId)))),
                 (BiFunction<GetUserPublicPhotos.SubmitUiModel, GetUserInfo.SubmitUiModel, PhotoSubmitUiModel>) (publicPhotosModel, userInfoModel) -> {
                     if (publicPhotosModel.isInProgress() || userInfoModel.isInProgress()) {
                         return PhotoSubmitUiModel.inProgress();

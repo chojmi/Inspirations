@@ -5,7 +5,6 @@ import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoFavs;
 import com.github.chojmi.inspirations.presentation.mapper.gallery.GalleryAttrsMapper;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 
-import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
@@ -30,14 +29,26 @@ class GridPhotoAttrsPresenter implements GridPhotoAttrsContract.Presenter {
 
     @Override
     public void loadFavs(int position, Photo photo) {
-        getPhotoFavs.buildUseCaseObservable(Observable.fromCallable(() -> GetPhotoFavs.SubmitEvent.create(checkNotNull(photo).getId()))).subscribe(new Consumer<GetPhotoFavs.SubmitUiModel>() {
+        getPhotoFavs.buildUseCaseObservable(GetPhotoFavs.SubmitEvent.createObservable(checkNotNull(photo).getId())).subscribe(submitUiModel -> {
+            if (submitUiModel.isInProgress()) {
+                return;
+            }
+            if (submitUiModel.isSuccess()) {
+                view.showFavs(position, galleryAttrsMapper.transform(submitUiModel.getResult()));
+            }
+        });
+    }
+
+    @Override
+    public void loadComments(int position, Photo photo) {
+        getPhotoComments.buildUseCaseObservable(GetPhotoComments.SubmitEvent.createObservable(checkNotNull(photo).getId())).subscribe(new Consumer<GetPhotoComments.SubmitUiModel>() {
             @Override
-            public void accept(@NonNull GetPhotoFavs.SubmitUiModel submitUiModel) throws Exception {
+            public void accept(@NonNull GetPhotoComments.SubmitUiModel submitUiModel) throws Exception {
                 if (submitUiModel.isInProgress()) {
                     return;
                 }
                 if (submitUiModel.isSuccess()) {
-                    view.showFavs(position, galleryAttrsMapper.transform(submitUiModel.getResult()));
+                    view.showComments(position, galleryAttrsMapper.transform(submitUiModel.getResult()));
                 }
             }
         });

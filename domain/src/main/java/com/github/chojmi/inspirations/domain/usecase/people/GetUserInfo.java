@@ -38,6 +38,10 @@ public class GetUserInfo extends UseCase<GetUserInfo.SubmitUiModel, GetUserInfo.
 
     @AutoValue
     public static abstract class SubmitEvent extends BaseSubmitEvent {
+        public static Observable<SubmitEvent> createObservable(@NonNull String userId) {
+            return Observable.fromCallable(() -> create(userId));
+        }
+
         public static SubmitEvent create(@NonNull String userId) {
             return new AutoValue_GetUserInfo_SubmitEvent(checkNotNull(userId));
         }

@@ -12,6 +12,7 @@ import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 import com.github.chojmi.inspirations.presentation.main.MainActivity;
 import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
+import com.github.chojmi.inspirations.presentation.model.gallery.PhotoComments;
 import com.github.chojmi.inspirations.presentation.model.gallery.PhotoFavs;
 
 import java.util.List;
@@ -90,5 +91,9 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
 
     @Override
     public void showFavs(int position, PhotoFavs photoFavs) {
+    }
+
+    @Override
+    public void showComments(int position, PhotoComments photoComments) {
     }
 }
