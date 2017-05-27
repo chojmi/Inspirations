@@ -22,16 +22,12 @@ import static org.mockito.Mockito.verify;
 public class GridPhotoPresenterTest {
     private static final String USER_ID = "123";
 
-    private GridPhotoPresenter galleryPresenter;
+    @Mock private GridPhotoContract.View mockGalleryView;
+    @Mock private GetUserPublicPhotos mockGetUserPublicPhotos;
+    @Mock private GetUserInfo mockGetUserInfo;
+    @Mock private PhotoDataMapper mockPhotoDataMapper;
 
-    @Mock
-    private GridPhotoContract.View mockGalleryView;
-    @Mock
-    private GetUserPublicPhotos mockGetUserPublicPhotos;
-    @Mock
-    private GetUserInfo mockGetUserInfo;
-    @Mock
-    private PhotoDataMapper mockPhotoDataMapper;
+    private GridPhotoPresenter galleryPresenter;
 
     @Before
     public void setUp() {
@@ -42,6 +38,7 @@ public class GridPhotoPresenterTest {
     @Test
     public void testGalleryPresenterRefreshPhotosHappyCase() {
         galleryPresenter.refreshPhotos(USER_ID);
+
         ArgumentCaptor<Observable> params = ArgumentCaptor.forClass(Observable.class);
         verify(mockGetUserPublicPhotos, times(2)).execute(any(DisposableObserver.class), params.capture());
         params.getAllValues().get(1).test().assertResult(GetUserPublicPhotos.SubmitEvent.create(USER_ID));
