@@ -3,11 +3,11 @@ package com.github.chojmi.inspirations.presentation;
 import android.app.Application;
 
 import com.github.chojmi.inspirations.data.source.remote.module.RestClientModule;
-import com.github.chojmi.inspirations.presentation.gallery.grid.GridComponent;
-import com.github.chojmi.inspirations.presentation.gallery.grid.GridModule;
-import com.github.chojmi.inspirations.presentation.gallery.photo.PhotoViewComponent;
-import com.github.chojmi.inspirations.presentation.gallery.photo.PhotoViewModule;
-import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
+import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
+import com.github.chojmi.inspirations.presentation.gallery.ui.grid.GridComponent;
+import com.github.chojmi.inspirations.presentation.gallery.ui.grid.GridModule;
+import com.github.chojmi.inspirations.presentation.gallery.ui.photo.PhotoViewComponent;
+import com.github.chojmi.inspirations.presentation.gallery.ui.photo.PhotoViewModule;
 
 import timber.log.Timber;
 

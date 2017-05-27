@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.camera.CameraFragment;
-import com.github.chojmi.inspirations.presentation.gallery.grid.GridFragment;
+import com.github.chojmi.inspirations.presentation.gallery.ui.grid.GridFragment;
 import com.github.chojmi.inspirations.presentation.my_profile.MyProfileFragment;
 
 enum MainScreenTab {
