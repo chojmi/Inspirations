@@ -1,7 +1,9 @@
 package com.github.chojmi.inspirations.data.source.remote.data_source;
 
+import com.github.chojmi.inspirations.data.entity.photos.PhotoCommentsEntityImpl;
+import com.github.chojmi.inspirations.data.entity.photos.PhotoFavsEntityImpl;
+import com.github.chojmi.inspirations.data.source.remote.service.PhotosService;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
-import com.github.chojmi.inspirations.data.source.remote.test_service.FakePhotosService;
 import com.github.chojmi.inspirations.data.source.utils.TestAndroidScheduler;
 
 import org.junit.Before;
@@ -15,17 +17,19 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.reactivex.Observable;
 import io.reactivex.observers.TestObserver;
+
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RemotePhotosDataSourceTest {
     private static final String FAKE_PHOTO_ID = "123";
-    private static final String FAKE_PHOTO_ARG = "fake_photo_arg";
-
+    private final Map<String, String> fakeQueryMap = new HashMap<>();
     @Mock private RemoteQueryProducer mockRemoteQueryProducer;
-    private RemotePhotosDataSource remotePhotosDataSource;
+    @Mock private PhotosService mockPhotoService;
     private TestObserver testObserver;
-    private FakePhotosService fakePhotosService;
+    private RemotePhotosDataSource remotePhotosDataSource;
 
     @BeforeClass
     public static void setUpRxSchedulers() {
@@ -34,33 +38,33 @@ public class RemotePhotosDataSourceTest {
 
     @Before
     public void setUp() throws Exception {
-        this.fakePhotosService = new FakePhotosService(getFakePhotoIdQueryMap(), getFakePhotoIdQueryMap());
-        this.remotePhotosDataSource = new RemotePhotosDataSource(fakePhotosService, mockRemoteQueryProducer);
+        this.remotePhotosDataSource = new RemotePhotosDataSource(mockPhotoService, mockRemoteQueryProducer);
         this.testObserver = new TestObserver();
     }
 
-
     @Test
     public void loadPhotoCommentsHappyCase() {
-        Mockito.when(mockRemoteQueryProducer.produceLoadPhotoComments(FAKE_PHOTO_ID)).thenReturn(getFakePhotoIdQueryMap());
+        final PhotoCommentsEntityImpl mockPhotoCommentsEntity = Mockito.mock(PhotoCommentsEntityImpl.class);
+        when(mockRemoteQueryProducer.produceLoadPhotoComments(FAKE_PHOTO_ID)).thenReturn(fakeQueryMap);
+        when(mockPhotoService.loadPhotoComments(fakeQueryMap)).thenReturn(Observable.just(mockPhotoCommentsEntity));
+
         remotePhotosDataSource.loadPhotoComments(FAKE_PHOTO_ID).subscribe(testObserver);
+
         testObserver.assertSubscribed();
-        testObserver.assertResult(fakePhotosService.getLoadPhotoCommentsResult());
+        testObserver.assertResult(mockPhotoCommentsEntity);
         testObserver.assertComplete();
     }
 
     @Test
     public void loadPhotoFavsHappyCase() {
-        Mockito.when(mockRemoteQueryProducer.produceLoadPhotoFavsQuery(FAKE_PHOTO_ID)).thenReturn(getFakePhotoIdQueryMap());
-        remotePhotosDataSource.loadPhotoFavs(FAKE_PHOTO_ID).subscribe(testObserver);
-        testObserver.assertSubscribed();
-        testObserver.assertResult(fakePhotosService.getLoadPhotoFavsResult());
-        testObserver.assertComplete();
-    }
+        final PhotoFavsEntityImpl mockPhotoFavsEntity = Mockito.mock(PhotoFavsEntityImpl.class);
+        when(mockRemoteQueryProducer.produceLoadPhotoFavsQuery(FAKE_PHOTO_ID)).thenReturn(fakeQueryMap);
+        when(mockPhotoService.loadPhotoFavs(fakeQueryMap)).thenReturn(Observable.just(mockPhotoFavsEntity));
 
-    private Map<String, String> getFakePhotoIdQueryMap() {
-        Map<String, String> args = new HashMap<>();
-        args.put(FAKE_PHOTO_ARG, FAKE_PHOTO_ID);
-        return args;
+        remotePhotosDataSource.loadPhotoFavs(FAKE_PHOTO_ID).subscribe(testObserver);
+
+        testObserver.assertSubscribed();
+        testObserver.assertResult(mockPhotoFavsEntity);
+        testObserver.assertComplete();
     }
 }

@@ -11,6 +11,11 @@ import com.github.chojmi.inspirations.presentation.model.gallery.Photo;
 
 import timber.log.Timber;
 
+/*TODO:
+1. Poprawić inicjializację fake obiektów w testach. Potworzyć jakieś factory, wyrzucić to z testów.
+2. Uzupełnić testy jednostkowe do 100%
+3. Ostylować grid adapter item
+*/
 public class InspirationsApp extends Application {
 
     private ApplicationComponent applicationComponent;
