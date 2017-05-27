@@ -26,7 +26,9 @@ public class DefaultObserverTest {
     @Test
     public void shouldOnNextBeInvokedOnObservableEmitter() {
         Observable observable = Observable.just(new Object());
+
         observable.subscribe(DefaultObserver.create(testObservableEmitter));
+
         assertTrue(testObservableEmitter.onNextCount == 1);
         assertTrue(testObservableEmitter.onCompleteCount == 1);
         assertTrue(testObservableEmitter.onErrorCount == 0);
@@ -35,7 +37,9 @@ public class DefaultObserverTest {
     @Test
     public void shouldOnErrorBeInvokedOnObservableEmitter() {
         Observable observable = Observable.error(new Throwable("Fake throwable"));
+
         observable.subscribe(DefaultObserver.create(testObservableEmitter));
+
         assertTrue(testObservableEmitter.onNextCount == 0);
         assertTrue(testObservableEmitter.onCompleteCount == 0);
         assertTrue(testObservableEmitter.onErrorCount == 1);

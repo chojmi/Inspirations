@@ -16,22 +16,23 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.TestScheduler;
 
 import static org.junit.Assert.assertTrue;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UseCaseTest {
 
     @Rule public ExpectedException expectedException = ExpectedException.none();
-    private UseCaseTestClass useCase;
     private TestDisposableObserver<BaseSubmitUiModel> testObserver;
     @Mock private ThreadExecutor mockThreadExecutor;
     @Mock private PostExecutionThread mockPostExecutionThread;
+
+    private UseCaseTestClass useCase;
 
     @Before
     public void setUp() {
         this.useCase = new UseCaseTestClass(mockThreadExecutor, mockPostExecutionThread);
         this.testObserver = new TestDisposableObserver<>();
-        given(mockPostExecutionThread.getScheduler()).willReturn(new TestScheduler());
+        when(mockPostExecutionThread.getScheduler()).thenReturn(new TestScheduler());
     }
 
     @Test
