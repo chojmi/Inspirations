@@ -3,8 +3,6 @@ package com.github.chojmi.inspirations.data.source.remote.signing;
 import android.support.annotation.NonNull;
 import android.util.Base64;
 
-import com.github.chojmi.presentation.data.BuildConfig;
-
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
@@ -14,12 +12,14 @@ import java.util.TreeMap;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import javax.inject.Inject;
 
-public class SigningProvider {
+import static dagger.internal.Preconditions.checkNotNull;
 
-    @Inject
-    public SigningProvider() {
+public class SignatureProvider {
+    private final String key;
+
+    public SignatureProvider(@NonNull String key) {
+        this.key = checkNotNull(key);
     }
 
     public String sha1(String s, String keyString) throws
@@ -67,7 +67,7 @@ public class SigningProvider {
     }
 
     private String createSigString(Map<String, String> sortedArgs) {
-        StringBuffer buffer = new StringBuffer(BuildConfig.API_SECRET_KEY);
+        StringBuffer buffer = new StringBuffer(key);
         sortedArgs.forEach((s, s2) -> {
             buffer.append(s);
             buffer.append(s2);

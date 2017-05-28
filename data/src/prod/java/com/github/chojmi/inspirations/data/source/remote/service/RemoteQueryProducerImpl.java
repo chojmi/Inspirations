@@ -2,7 +2,7 @@ package com.github.chojmi.inspirations.data.source.remote.service;
 
 import android.support.annotation.NonNull;
 
-import com.github.chojmi.inspirations.data.source.remote.signing.SigningProvider;
+import com.github.chojmi.inspirations.data.source.remote.signing.SignatureProvider;
 import com.github.chojmi.presentation.data.BuildConfig;
 
 import java.util.HashMap;
@@ -13,11 +13,11 @@ import javax.inject.Inject;
 import static dagger.internal.Preconditions.checkNotNull;
 
 public class RemoteQueryProducerImpl implements RemoteQueryProducer {
-    private SigningProvider signingProvider;
+    private SignatureProvider signatureProvider;
 
     @Inject
-    public RemoteQueryProducerImpl(@NonNull SigningProvider signingProvider) {
-        this.signingProvider = checkNotNull(signingProvider);
+    public RemoteQueryProducerImpl(@NonNull SignatureProvider signatureProvider) {
+        this.signatureProvider = checkNotNull(signatureProvider);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class RemoteQueryProducerImpl implements RemoteQueryProducer {
     @Override
     public Map<String, String> produceLoadFrob() {
         Map<String, String> args = getBaseArgs("flickr.auth.getFrob");
-        args = signingProvider.provideSigArg(args);
+        args = signatureProvider.provideSigArg(args);
         return args;
     }
 
