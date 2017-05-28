@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.github.chojmi.inspirations.data.source.Remote;
 import com.github.chojmi.inspirations.data.source.remote.RestAdapterFactory;
 import com.github.chojmi.inspirations.data.source.remote.interceptors.ParsingInterceptor;
+import com.github.chojmi.inspirations.data.source.remote.service.AuthService;
 import com.github.chojmi.inspirations.data.source.remote.service.GalleriesService;
 import com.github.chojmi.inspirations.data.source.remote.service.PeopleService;
 import com.github.chojmi.inspirations.data.source.remote.service.PhotosService;
@@ -54,8 +55,13 @@ public class RestClientModule {
     }
 
     @Provides
-    RemoteQueryProducer provideRemoteQueryProducer() {
-        return new RemoteQueryProducerImpl();
+    AuthService provideAuthService(Retrofit retrofit) {
+        return retrofit.create(AuthService.class);
+    }
+
+    @Provides
+    RemoteQueryProducer provideRemoteQueryProducer(RemoteQueryProducerImpl remoteQueryProducer) {
+        return remoteQueryProducer;
     }
 
     @Provides

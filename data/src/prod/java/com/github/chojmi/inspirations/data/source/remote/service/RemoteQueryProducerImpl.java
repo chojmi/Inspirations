@@ -1,11 +1,24 @@
 package com.github.chojmi.inspirations.data.source.remote.service;
 
+import android.support.annotation.NonNull;
+
+import com.github.chojmi.inspirations.data.source.remote.signing.SigningProvider;
 import com.github.chojmi.presentation.data.BuildConfig;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import static dagger.internal.Preconditions.checkNotNull;
+
 public class RemoteQueryProducerImpl implements RemoteQueryProducer {
+    private SigningProvider signingProvider;
+
+    @Inject
+    public RemoteQueryProducerImpl(@NonNull SigningProvider signingProvider) {
+        this.signingProvider = checkNotNull(signingProvider);
+    }
 
     @Override
     public Map<String, String> produceLoadGalleryQuery(String galleryId, int page) {
@@ -41,6 +54,13 @@ public class RemoteQueryProducerImpl implements RemoteQueryProducer {
     public Map<String, String> produceLoadPhotoComments(String photoId) {
         Map<String, String> args = getBaseArgs("flickr.photos.comments.getList");
         args.put("photo_id", photoId);
+        return args;
+    }
+
+    @Override
+    public Map<String, String> produceLoadFrob() {
+        Map<String, String> args = getBaseArgs("flickr.auth.getFrob");
+        args = signingProvider.provideSigArg(args);
         return args;
     }
 

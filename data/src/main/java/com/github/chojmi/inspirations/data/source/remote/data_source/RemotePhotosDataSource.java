@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
-public final class RemotePhotosDataSource implements PhotosDataSource {
+public class RemotePhotosDataSource implements PhotosDataSource {
 
     private PhotosService photosService;
     private RemoteQueryProducer remoteQueryProducer;

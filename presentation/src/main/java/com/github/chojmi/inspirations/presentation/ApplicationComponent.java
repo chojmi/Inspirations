@@ -2,6 +2,8 @@ package com.github.chojmi.inspirations.presentation;
 
 import android.content.Context;
 
+import com.github.chojmi.inspirations.data.source.remote.data_source.RemoteAuthDataSource;
+import com.github.chojmi.inspirations.data.source.remote.module.AuthRepositoryModule;
 import com.github.chojmi.inspirations.data.source.remote.module.GalleriesRepositoryModule;
 import com.github.chojmi.inspirations.data.source.remote.module.PeopleRepositoryModule;
 import com.github.chojmi.inspirations.data.source.remote.module.PhotosRepositoryModule;
@@ -23,7 +25,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {GalleriesRepositoryModule.class, PeopleRepositoryModule.class, PhotosRepositoryModule.class, ApplicationModule.class, RestClientModule.class})
+@Component(modules = {GalleriesRepositoryModule.class, PeopleRepositoryModule.class, PhotosRepositoryModule.class, AuthRepositoryModule.class, ApplicationModule.class, RestClientModule.class})
 public interface ApplicationComponent {
     void inject(BaseActivity target);
 
@@ -44,4 +46,6 @@ public interface ApplicationComponent {
     PeopleDataSource getPeopleDataSource();
 
     PhotosDataSource getPhotosDataSource();
+
+    RemoteAuthDataSource getRemoteAuthDataSource();
 }
