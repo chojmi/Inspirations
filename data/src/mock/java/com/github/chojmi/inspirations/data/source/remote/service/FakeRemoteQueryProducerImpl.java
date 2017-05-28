@@ -30,4 +30,9 @@ public class FakeRemoteQueryProducerImpl implements RemoteQueryProducer {
     public Map<String, String> produceLoadPhotoComments(String photoId) {
         return new HashMap<>();
     }
+
+    @Override
+    public Map<String, String> produceLoadFrob() {
+        return new HashMap<>();
+    }
 }
