@@ -27,6 +27,7 @@ public class PhotosRepositoryModule {
         return remotePhotosDataSource;
     }
 
+    @Singleton
     @Provides
     PhotosDataSource provideGalleryDataSource(PhotosRepository photosRepository) {
         return photosRepository;

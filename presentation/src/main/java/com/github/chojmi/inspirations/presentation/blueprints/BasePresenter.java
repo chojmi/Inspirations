@@ -1,6 +1,6 @@
 package com.github.chojmi.inspirations.presentation.blueprints;
 
-import android.support.annotation.NonNull;
+import io.reactivex.annotations.NonNull;
 
 public interface BasePresenter<V extends BaseView> {
 

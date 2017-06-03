@@ -9,8 +9,10 @@ import com.github.chojmi.inspirations.presentation.gallery.ui.grid.GridComponent
 import com.github.chojmi.inspirations.presentation.gallery.ui.grid.GridModule;
 import com.github.chojmi.inspirations.presentation.gallery.ui.photo.PhotoViewComponent;
 import com.github.chojmi.inspirations.presentation.gallery.ui.photo.PhotoViewModule;
-import com.github.chojmi.inspirations.presentation.my_profile.login.LoginWebViewComponent;
-import com.github.chojmi.inspirations.presentation.my_profile.login.LoginWebViewModule;
+import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewComponent;
+import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewModule;
+import com.github.chojmi.inspirations.presentation.profile.my_profile.MyProfileComponent;
+import com.github.chojmi.inspirations.presentation.profile.my_profile.MyProfileModule;
 
 import timber.log.Timber;
 
@@ -20,6 +22,7 @@ public class InspirationsApp extends Application {
     private GridComponent gridComponent;
     private PhotoViewComponent photoViewComponent;
     private LoginWebViewComponent loginWebViewComponent;
+    private MyProfileComponent myProfileComponent;
 
     @Override
     public void onCreate() {
@@ -67,5 +70,14 @@ public class InspirationsApp extends Application {
 
     public void releaseLoginWebViewViewComponent() {
         loginWebViewComponent = null;
+    }
+
+    public MyProfileComponent createMyProfileComponent() {
+        myProfileComponent = applicationComponent.plus(new MyProfileModule());
+        return myProfileComponent;
+    }
+
+    public void releaseMyProfileComponent() {
+        myProfileComponent = null;
     }
 }

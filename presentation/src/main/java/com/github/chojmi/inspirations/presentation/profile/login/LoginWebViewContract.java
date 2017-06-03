@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.my_profile.login;
+package com.github.chojmi.inspirations.presentation.profile.login;
 
 import com.github.chojmi.inspirations.presentation.blueprints.BasePresenter;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseView;
@@ -12,7 +12,7 @@ public interface LoginWebViewContract {
 
     interface Presenter extends BasePresenter<View> {
 
-        void pageStartedLoading(String url);
+        void pageLoaded(String url);
 
         boolean isPermittedUrl(String url);
     }

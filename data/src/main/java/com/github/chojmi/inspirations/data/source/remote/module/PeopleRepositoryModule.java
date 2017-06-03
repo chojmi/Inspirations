@@ -27,6 +27,7 @@ public class PeopleRepositoryModule {
         return remotePeopleDataSource;
     }
 
+    @Singleton
     @Provides
     PeopleDataSource provideGalleryDataSource(PeopleRepository peopleRepository) {
         return peopleRepository;

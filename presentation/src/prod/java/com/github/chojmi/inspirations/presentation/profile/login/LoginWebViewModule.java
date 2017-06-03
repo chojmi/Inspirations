@@ -1,13 +1,13 @@
-package com.github.chojmi.inspirations.presentation.my_profile.login;
+package com.github.chojmi.inspirations.presentation.profile.login;
 
 import com.github.chojmi.inspirations.domain.usecase.auth.GetFrob;
 import com.github.chojmi.inspirations.domain.usecase.auth.GetToken;
-import com.github.chojmi.inspirations.presentation.my_profile.MyProfileScope;
+import com.github.chojmi.inspirations.presentation.profile.ProfileScope;
 
 import dagger.Module;
 import dagger.Provides;
 
-@MyProfileScope
+@ProfileScope
 @Module
 public class LoginWebViewModule {
     @Provides

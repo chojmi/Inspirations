@@ -42,6 +42,10 @@ public class GetToken extends UseCase<GetToken.SubmitUiModel, GetToken.SubmitEve
             return Observable.fromCallable(() -> create(frob));
         }
 
+        public static Observable<SubmitEvent> createCacheObservable() {
+            return Observable.fromCallable(() -> create(""));
+        }
+
         public static SubmitEvent create(String frob) {
             return new AutoValue_GetToken_SubmitEvent(frob);
         }

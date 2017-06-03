@@ -4,8 +4,6 @@ import com.github.chojmi.inspirations.data.source.Local;
 import com.github.chojmi.inspirations.data.source.Remote;
 import com.github.chojmi.inspirations.data.source.local.LocalAuthDataSource;
 import com.github.chojmi.inspirations.data.source.remote.data_source.RemoteAuthDataSource;
-import com.github.chojmi.inspirations.data.source.remote.service.AuthService;
-import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
 import com.github.chojmi.inspirations.data.source.remote.signing.SignatureProvider;
 import com.github.chojmi.inspirations.data.source.repository.AuthRepository;
 import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
@@ -31,11 +29,13 @@ public class AuthRepositoryModule {
         return remoteAuthDataSource;
     }
 
+    @Singleton
     @Provides
     AuthDataSource provideGalleryDataSource(AuthRepository authRepository) {
         return authRepository;
     }
 
+    @Singleton
     @Provides
     SignatureProvider provideSignatureProvider() {
         return new SignatureProvider(BuildConfig.API_SECRET_KEY);

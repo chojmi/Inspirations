@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.my_profile.login;
+package com.github.chojmi.inspirations.presentation.profile.login;
 
 import android.support.annotation.NonNull;
 
@@ -19,7 +19,7 @@ public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
     }
 
     @Override
-    public void pageStartedLoading(String url) {
+    public void pageLoaded(String url) {
 
     }
 

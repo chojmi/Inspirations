@@ -1,9 +1,8 @@
-package com.github.chojmi.inspirations.presentation.my_profile.login;
+package com.github.chojmi.inspirations.presentation.profile.login;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.webkit.WebResourceRequest;
@@ -53,9 +52,9 @@ public class LoginWebViewActivity extends BaseActivity implements LoginWebViewCo
             }
 
             @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-                presenter.pageStartedLoading(url);
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                presenter.pageLoaded(url);
             }
         });
     }
@@ -75,7 +74,7 @@ public class LoginWebViewActivity extends BaseActivity implements LoginWebViewCo
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        getInspirationsApp().releasePhotoViewComponent();
+        getInspirationsApp().releaseLoginWebViewViewComponent();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.my_profile.login;
+package com.github.chojmi.inspirations.presentation.profile.login;
 
 import com.github.chojmi.inspirations.domain.usecase.auth.GetFrob;
 import com.github.chojmi.inspirations.domain.usecase.auth.GetToken;
@@ -60,14 +60,14 @@ public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
     }
 
     @Override
-    public void pageStartedLoading(String url) {
+    public void pageLoaded(String url) {
         if (isLogged(url)) {
             fetchToken(currentFrob);
         }
     }
 
     private boolean isLogged(String url) {
-        return "https://www.flickr.com/services/auth/" .equals(url);
+        return "https://www.flickr.com/services/auth/".equals(url);
     }
 
     @Override

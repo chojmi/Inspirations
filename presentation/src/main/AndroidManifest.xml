@@ -18,6 +18,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".gallery.ui.photo.PhotoViewActivity"/>
-        <activity android:name=".my_profile.login.LoginWebViewActivity"/>
+        <activity android:name=".profile.login.LoginWebViewActivity"/>
     </application>
 </manifest>

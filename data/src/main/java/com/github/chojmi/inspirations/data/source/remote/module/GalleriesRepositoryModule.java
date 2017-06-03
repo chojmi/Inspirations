@@ -28,6 +28,7 @@ public class GalleriesRepositoryModule {
         return remoteGalleriesDataSource;
     }
 
+    @Singleton
     @Provides
     GalleriesDataSource provideGalleriesDataSource(GalleriesRepository galleriesRepository) {
         return galleriesRepository;

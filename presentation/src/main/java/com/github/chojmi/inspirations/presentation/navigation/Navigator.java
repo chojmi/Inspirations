@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.gallery.ui.photo.PhotoViewActivity;
-import com.github.chojmi.inspirations.presentation.my_profile.login.LoginWebViewActivity;
+import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewActivity;
 
 import javax.inject.Singleton;
 

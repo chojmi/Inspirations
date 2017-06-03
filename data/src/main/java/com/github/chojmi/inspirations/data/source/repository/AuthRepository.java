@@ -33,6 +33,9 @@ public class AuthRepository implements AuthDataSource {
 
     @Override
     public Observable<TokenEntity> getToken(String frob) {
+        if (frob.isEmpty()) {
+            return authLocalDataSource.getToken(frob);
+        }
         return Observable.concat(authLocalDataSource.getToken(frob),
                 authRemoteDataSource.getToken(frob))
                 .firstElement()
