@@ -1,7 +1,5 @@
 package com.github.chojmi.inspirations.data.source.remote.service;
 
-import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +30,17 @@ public class FakeRemoteQueryProducerImpl implements RemoteQueryProducer {
     }
 
     @Override
-    public Map<String, String> produceLoadFrob() {
+    public Map<String, String> produceGetFrob() {
+        return new HashMap<>();
+    }
+
+    @Override
+    public Map<String, String> produceLoginPage(String frob) {
+        return new HashMap<>();
+    }
+
+    @Override
+    public Map<String, String> produceGetToken(String frob) {
         return new HashMap<>();
     }
 }

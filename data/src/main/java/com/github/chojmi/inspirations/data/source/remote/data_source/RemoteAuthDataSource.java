@@ -1,6 +1,7 @@
 package com.github.chojmi.inspirations.data.source.remote.data_source;
 
 import com.github.chojmi.inspirations.data.entity.auth.FrobEntityImpl;
+import com.github.chojmi.inspirations.data.entity.auth.TokenEntityImpl;
 import com.github.chojmi.inspirations.data.source.remote.service.AuthService;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
 
@@ -21,7 +22,13 @@ public class RemoteAuthDataSource {
     }
 
     public Observable<FrobEntityImpl> getFrob() {
-        return authService.getFrob(remoteQueryProducer.produceLoadFrob())
+        return authService.getFrob(remoteQueryProducer.produceGetFrob())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<TokenEntityImpl> getToken(@NonNull String frob) {
+        return authService.getToken(remoteQueryProducer.produceGetToken(checkNotNull(frob)))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
     }

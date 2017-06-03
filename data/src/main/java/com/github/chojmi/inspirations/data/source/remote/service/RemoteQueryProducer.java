@@ -13,5 +13,9 @@ public interface RemoteQueryProducer {
 
     Map<String, String> produceLoadPhotoComments(String photoId);
 
-    Map<String, String> produceLoadFrob();
+    Map<String, String> produceGetFrob();
+
+    Map<String, String> produceLoginPage(String frob);
+
+    Map<String, String> produceGetToken(String frob);
 }

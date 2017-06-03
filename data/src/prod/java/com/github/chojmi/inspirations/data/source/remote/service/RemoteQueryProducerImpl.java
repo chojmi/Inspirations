@@ -58,8 +58,26 @@ public class RemoteQueryProducerImpl implements RemoteQueryProducer {
     }
 
     @Override
-    public Map<String, String> produceLoadFrob() {
+    public Map<String, String> produceGetFrob() {
         Map<String, String> args = getBaseArgs("flickr.auth.getFrob");
+        args = signatureProvider.provideSigArg(args);
+        return args;
+    }
+
+    @Override
+    public Map<String, String> produceLoginPage(String frob) {
+        Map<String, String> args = new HashMap<>();
+        args.put("api_key", BuildConfig.API_KEY);
+        args.put("perms", "write");
+        args.put("frob", frob);
+        args = signatureProvider.provideSigArg(args);
+        return args;
+    }
+
+    @Override
+    public Map<String, String> produceGetToken(String frob) {
+        Map<String, String> args = getBaseArgs("flickr.auth.getToken");
+        args.put("frob", frob);
         args = signatureProvider.provideSigArg(args);
         return args;
     }
