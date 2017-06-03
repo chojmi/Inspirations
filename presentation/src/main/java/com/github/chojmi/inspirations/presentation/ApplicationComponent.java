@@ -18,6 +18,8 @@ import com.github.chojmi.inspirations.presentation.gallery.ui.grid.GridComponent
 import com.github.chojmi.inspirations.presentation.gallery.ui.grid.GridModule;
 import com.github.chojmi.inspirations.presentation.gallery.ui.photo.PhotoViewComponent;
 import com.github.chojmi.inspirations.presentation.gallery.ui.photo.PhotoViewModule;
+import com.github.chojmi.inspirations.presentation.my_profile.login.LoginWebViewComponent;
+import com.github.chojmi.inspirations.presentation.my_profile.login.LoginWebViewModule;
 import com.github.chojmi.inspirations.presentation.navigation.Navigator;
 
 import javax.inject.Singleton;
@@ -32,6 +34,8 @@ public interface ApplicationComponent {
     GridComponent plus(GridModule gridModule);
 
     PhotoViewComponent plus(PhotoViewModule photoViewModule);
+
+    LoginWebViewComponent plus(LoginWebViewModule loginWebViewModule);
 
     Context getContext();
 

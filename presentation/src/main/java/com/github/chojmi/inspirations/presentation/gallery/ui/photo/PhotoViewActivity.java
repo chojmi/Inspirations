@@ -17,7 +17,7 @@ import butterknife.BindView;
 
 public class PhotoViewActivity extends BaseActivity implements PhotoViewContract.View {
 
-    private static final String ARG_PHOTO = "ARG_PHOTO";
+    private static final String ARG_PHOTO = "com.github.chojmi.inspirations.presentation.gallery.ui.photo.PhotoViewActivity.ARG_PHOTO";
     @Inject PhotoViewContract.Presenter presenter;
     @BindView(R.id.photo) ImageView imageView;
 

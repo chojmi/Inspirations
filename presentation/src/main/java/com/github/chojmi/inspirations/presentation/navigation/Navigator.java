@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.gallery.ui.photo.PhotoViewActivity;
+import com.github.chojmi.inspirations.presentation.my_profile.login.LoginWebViewActivity;
 
 import javax.inject.Singleton;
 
@@ -20,6 +21,13 @@ public class Navigator {
     public void navigateToPhoto(Context context, Photo photo) {
         if (context != null) {
             Intent intentToLaunch = PhotoViewActivity.getCallingIntent(context, photo);
+            context.startActivity(intentToLaunch);
+        }
+    }
+
+    public void navigateToLoginWebView(Context context) {
+        if (context != null) {
+            Intent intentToLaunch = LoginWebViewActivity.getCallingIntent(context);
             context.startActivity(intentToLaunch);
         }
     }

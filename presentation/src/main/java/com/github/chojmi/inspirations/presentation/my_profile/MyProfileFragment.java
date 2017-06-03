@@ -11,6 +11,7 @@ import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 import com.github.chojmi.inspirations.presentation.main.MainActivity;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MyProfileFragment extends BaseFragment<MainActivity> {
     public static MyProfileFragment newInstance() {
@@ -24,5 +25,10 @@ public class MyProfileFragment extends BaseFragment<MainActivity> {
         View v = inflater.inflate(R.layout.fragment_my_profile, container, false);
         ButterKnife.bind(this, v);
         return v;
+    }
+
+    @OnClick(R.id.btn_login)
+    public void onLoginButtonClick(View view) {
+        getNavigator().navigateToLoginWebView(getContext());
     }
 }
