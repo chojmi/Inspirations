@@ -3,6 +3,7 @@ package com.github.chojmi.inspirations.data.source.remote.module;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.github.chojmi.inspirations.data.source.Remote;
 import com.github.chojmi.inspirations.data.source.remote.RestAdapterFactory;
 import com.github.chojmi.inspirations.data.source.remote.interceptors.ParsingInterceptor;
@@ -77,6 +78,7 @@ public class RestClientModule {
     @Provides
     OkHttpClient provideOkHttpClient() {
         return new OkHttpClient.Builder()
+                .addNetworkInterceptor(new StethoInterceptor())
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(LOG_LEVEL))
                 .addInterceptor(new ParsingInterceptor())
                 .followSslRedirects(true)

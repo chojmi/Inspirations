@@ -90,6 +90,8 @@ dependencies {
     //Event logging
     compile "com.jakewharton.timber:timber:$rootProject.ext.timberLibVersion"
 
+    compile "com.facebook.stetho:stetho:$rootProject.ext.stethoLibVersion"
+
     testCompile "junit:junit:$rootProject.ext.junitVersion"
     testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
 }

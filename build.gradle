@@ -45,6 +45,7 @@ ext {
     materialDesignDimensLibVersion = '1.4'
     glideLibVersion = '3.7.0'
     timberLibVersion = '4.5.1'
+    stethoLibVersion = '1.5.0'
 
     junitVersion = '4.12'
     mockitoVersion = '1.10.19'
