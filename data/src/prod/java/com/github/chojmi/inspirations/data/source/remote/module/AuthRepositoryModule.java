@@ -4,6 +4,7 @@ import com.github.chojmi.inspirations.data.source.remote.data_source.RemoteAuthD
 import com.github.chojmi.inspirations.data.source.remote.service.AuthService;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
 import com.github.chojmi.inspirations.data.source.remote.signing.SignatureProvider;
+import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
 import com.github.chojmi.presentation.data.BuildConfig;
 
 import javax.inject.Singleton;
@@ -15,7 +16,7 @@ import dagger.Provides;
 @Module
 public class AuthRepositoryModule {
     @Provides
-    RemoteAuthDataSource provideRemoteAuthDataSource(AuthService authService, RemoteQueryProducer remoteQueryProducer) {
+    AuthDataSource provideRemoteAuthDataSource(AuthService authService, RemoteQueryProducer remoteQueryProducer) {
         return new RemoteAuthDataSource(authService, remoteQueryProducer);
     }
 

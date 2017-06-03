@@ -1,7 +1,7 @@
 package com.github.chojmi.inspirations.data.source.remote.module;
 
-import com.github.chojmi.inspirations.data.source.remote.data_source.RemoteAuthDataSource;
 import com.github.chojmi.inspirations.data.source.remote.signing.SignatureProvider;
+import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
 
 import javax.inject.Singleton;
 
@@ -12,7 +12,7 @@ import dagger.Provides;
 @Module
 public class AuthRepositoryModule {
     @Provides
-    RemoteAuthDataSource provideRemoteAuthDataSource() {
+    AuthDataSource provideRemoteAuthDataSource() {
         return null;
     }
 

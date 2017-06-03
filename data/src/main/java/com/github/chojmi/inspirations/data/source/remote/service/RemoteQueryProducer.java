@@ -15,7 +15,7 @@ public interface RemoteQueryProducer {
 
     Map<String, String> produceGetFrob();
 
-    Map<String, String> produceLoginPage(String frob);
+    String produceLoginPageUrl(String frob);
 
     Map<String, String> produceGetToken(String frob);
 }

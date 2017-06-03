@@ -2,7 +2,6 @@ package com.github.chojmi.inspirations.presentation;
 
 import android.content.Context;
 
-import com.github.chojmi.inspirations.data.source.remote.data_source.RemoteAuthDataSource;
 import com.github.chojmi.inspirations.data.source.remote.module.AuthRepositoryModule;
 import com.github.chojmi.inspirations.data.source.remote.module.GalleriesRepositoryModule;
 import com.github.chojmi.inspirations.data.source.remote.module.PeopleRepositoryModule;
@@ -10,6 +9,7 @@ import com.github.chojmi.inspirations.data.source.remote.module.PhotosRepository
 import com.github.chojmi.inspirations.data.source.remote.module.RestClientModule;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
+import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
 import com.github.chojmi.inspirations.domain.repository.GalleriesDataSource;
 import com.github.chojmi.inspirations.domain.repository.PeopleDataSource;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
@@ -51,5 +51,5 @@ public interface ApplicationComponent {
 
     PhotosDataSource getPhotosDataSource();
 
-    RemoteAuthDataSource getRemoteAuthDataSource();
+    AuthDataSource getAuthDataSource();
 }
