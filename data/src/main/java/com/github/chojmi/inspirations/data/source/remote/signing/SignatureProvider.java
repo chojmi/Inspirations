@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Base64;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -12,6 +13,8 @@ import java.util.TreeMap;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+
+import timber.log.Timber;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
@@ -37,19 +40,11 @@ public class SignatureProvider {
 
     private String md5(String s) {
         try {
-            // Create MD5 Hash
-            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-            digest.update(s.getBytes());
-            byte messageDigest[] = digest.digest();
-
-            // Create Hex String
-            StringBuffer hexString = new StringBuffer();
-            for (int i = 0; i < messageDigest.length; i++)
-                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-            return hexString.toString();
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.update(s.getBytes("UTF-8"), 0, s.length());
+            return new BigInteger(1, m.digest()).toString(16);
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            Timber.e(e);
         }
         return "";
     }
