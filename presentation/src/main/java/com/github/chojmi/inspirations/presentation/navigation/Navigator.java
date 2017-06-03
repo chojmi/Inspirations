@@ -2,6 +2,7 @@ package com.github.chojmi.inspirations.presentation.navigation;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.gallery.ui.photo.PhotoViewActivity;
@@ -25,10 +26,10 @@ public class Navigator {
         }
     }
 
-    public void navigateToLoginWebView(Context context) {
-        if (context != null) {
-            Intent intentToLaunch = LoginWebViewActivity.getCallingIntent(context);
-            context.startActivity(intentToLaunch);
+    public void navigateToLoginWebView(Fragment fragment, int requestCode) {
+        if (fragment != null) {
+            Intent intentToLaunch = LoginWebViewActivity.getCallingIntent(fragment.getContext());
+            fragment.startActivityForResult(intentToLaunch, requestCode);
         }
     }
 }

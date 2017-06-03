@@ -16,7 +16,7 @@ import io.reactivex.Observable;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
-public final class PeopleRepository implements PeopleDataSource {
+public class PeopleRepository implements PeopleDataSource {
 
     private final PeopleDataSource peopleRemoteDataSource;
 

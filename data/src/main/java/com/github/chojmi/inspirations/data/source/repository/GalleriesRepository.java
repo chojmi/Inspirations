@@ -15,7 +15,7 @@ import io.reactivex.Observable;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
-public final class GalleriesRepository implements GalleriesDataSource {
+public class GalleriesRepository implements GalleriesDataSource {
 
     private final GalleriesDataSource galleryRemoteDataSource;
 

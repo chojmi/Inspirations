@@ -1,11 +1,16 @@
 package com.github.chojmi.inspirations.presentation.my_profile.login;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.github.chojmi.inspirations.presentation.BuildConfig;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
 
@@ -27,7 +32,32 @@ public class LoginWebViewActivity extends BaseActivity implements LoginWebViewCo
         super.onCreate(savedInstanceState);
         getInspirationsApp().createLoginWebViewViewComponent().inject(this);
         setContentView(R.layout.webview);
-        webView.setWebViewClient(new WebViewClient());
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (BuildConfig.VERSION_CODE < Build.VERSION_CODES.LOLLIPOP) {
+                    return !presenter.isPermittedUrl(url);
+                } else {
+                    return super.shouldOverrideUrlLoading(view, url);
+                }
+            }
+
+            @Override
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (BuildConfig.VERSION_CODE >= Build.VERSION_CODES.LOLLIPOP) {
+                    return !presenter.isPermittedUrl(request.getUrl().getQuery());
+                } else {
+                    return super.shouldOverrideUrlLoading(view, request);
+                }
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                presenter.pageStartedLoading(url);
+            }
+        });
     }
 
     @Override
@@ -51,5 +81,12 @@ public class LoginWebViewActivity extends BaseActivity implements LoginWebViewCo
     @Override
     public void loadLoginPage(String url) {
         webView.loadUrl(url);
+    }
+
+    @Override
+    public void closeSuccessfully() {
+        Intent result = new Intent();
+        setResult(RESULT_OK, result);
+        finish();
     }
 }

@@ -10,11 +10,21 @@ public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
     @Override
     public void setView(@NonNull LoginWebViewContract.View view) {
         this.view = checkNotNull(view);
-        view.loadLoginPage("https://developer.android.com/");
+        this.view.closeSuccessfully();
     }
 
     @Override
     public void destroyView() {
         this.view = null;
+    }
+
+    @Override
+    public void pageStartedLoading(String url) {
+
+    }
+
+    @Override
+    public boolean isPermittedUrl(String url) {
+        return false;
     }
 }

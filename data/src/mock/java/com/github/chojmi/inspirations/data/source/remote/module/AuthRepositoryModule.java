@@ -1,5 +1,6 @@
 package com.github.chojmi.inspirations.data.source.remote.module;
 
+import com.github.chojmi.inspirations.data.source.local.LocalAuthDataSource;
 import com.github.chojmi.inspirations.data.source.remote.signing.SignatureProvider;
 import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
 
@@ -11,9 +12,10 @@ import dagger.Provides;
 @Singleton
 @Module
 public class AuthRepositoryModule {
+
     @Provides
-    AuthDataSource provideRemoteAuthDataSource() {
-        return null;
+    AuthDataSource provideGalleryDataSource() {
+        return new LocalAuthDataSource();
     }
 
     @Provides
@@ -21,3 +23,4 @@ public class AuthRepositoryModule {
         return new SignatureProvider("fake_key");
     }
 }
+

@@ -1,9 +1,13 @@
 package com.github.chojmi.inspirations.data.source.remote.module;
 
+import com.github.chojmi.inspirations.data.source.Local;
+import com.github.chojmi.inspirations.data.source.Remote;
+import com.github.chojmi.inspirations.data.source.local.LocalAuthDataSource;
 import com.github.chojmi.inspirations.data.source.remote.data_source.RemoteAuthDataSource;
 import com.github.chojmi.inspirations.data.source.remote.service.AuthService;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
 import com.github.chojmi.inspirations.data.source.remote.signing.SignatureProvider;
+import com.github.chojmi.inspirations.data.source.repository.AuthRepository;
 import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
 import com.github.chojmi.presentation.data.BuildConfig;
 
@@ -16,8 +20,20 @@ import dagger.Provides;
 @Module
 public class AuthRepositoryModule {
     @Provides
-    AuthDataSource provideRemoteAuthDataSource(AuthService authService, RemoteQueryProducer remoteQueryProducer) {
-        return new RemoteAuthDataSource(authService, remoteQueryProducer);
+    @Local
+    AuthDataSource provideLocalGalleryDataSource(LocalAuthDataSource localAuthDataSource) {
+        return localAuthDataSource;
+    }
+
+    @Provides
+    @Remote
+    AuthDataSource provideRemoteAuthDataSource(RemoteAuthDataSource remoteAuthDataSource) {
+        return remoteAuthDataSource;
+    }
+
+    @Provides
+    AuthDataSource provideGalleryDataSource(AuthRepository authRepository) {
+        return authRepository;
     }
 
     @Provides

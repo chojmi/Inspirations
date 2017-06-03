@@ -13,7 +13,7 @@ import io.reactivex.annotations.NonNull;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
-public final class PhotosRepository implements PhotosDataSource {
+public class PhotosRepository implements PhotosDataSource {
 
     private final PhotosDataSource photosRemoteDataSource;
 
