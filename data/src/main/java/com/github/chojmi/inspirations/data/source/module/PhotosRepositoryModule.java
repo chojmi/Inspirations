@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.data.source.remote.module;
+package com.github.chojmi.inspirations.data.source.module;
 
 import com.github.chojmi.inspirations.data.source.Local;
 import com.github.chojmi.inspirations.data.source.Remote;

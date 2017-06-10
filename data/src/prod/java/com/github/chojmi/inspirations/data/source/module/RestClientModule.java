@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.data.source.remote.module;
+package com.github.chojmi.inspirations.data.source.module;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

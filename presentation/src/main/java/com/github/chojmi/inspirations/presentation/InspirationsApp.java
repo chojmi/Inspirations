@@ -3,7 +3,7 @@ package com.github.chojmi.inspirations.presentation;
 import android.app.Application;
 
 import com.facebook.stetho.Stetho;
-import com.github.chojmi.inspirations.data.source.remote.module.RestClientModule;
+import com.github.chojmi.inspirations.data.source.module.RestClientModule;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.gallery.ui.grid.GridComponent;
 import com.github.chojmi.inspirations.presentation.gallery.ui.grid.GridModule;
