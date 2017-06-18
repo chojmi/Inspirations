@@ -1,14 +1,11 @@
 package com.github.chojmi.inspirations.domain.repository;
 
-import com.github.chojmi.inspirations.domain.entity.auth.FrobEntity;
-import com.github.chojmi.inspirations.domain.entity.auth.TokenEntity;
+import com.github.scribejava.core.model.OAuth1AccessToken;
 
 import io.reactivex.Observable;
 
 public interface AuthDataSource {
-    Observable<FrobEntity> getFrob();
+    Observable<String> getAuthorizationUrl();
 
-    Observable<TokenEntity> getToken(String frob);
-
-    void onNewTokenEntity(TokenEntity tokenEntity);
+    Observable<OAuth1AccessToken> getAccessToken(String oauthVerifier);
 }

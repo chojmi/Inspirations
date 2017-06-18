@@ -30,11 +30,6 @@ public class FakeRemoteQueryProducerImpl implements RemoteQueryProducer {
     }
 
     @Override
-    public Map<String, String> produceGetFrob() {
-        return new HashMap<>();
-    }
-
-    @Override
     public String produceLoginPageUrl(String frob) {
         return "";
     }

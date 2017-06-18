@@ -2,9 +2,8 @@ package com.github.chojmi.inspirations.data.source.repository;
 
 import com.github.chojmi.inspirations.data.source.Local;
 import com.github.chojmi.inspirations.data.source.Remote;
-import com.github.chojmi.inspirations.domain.entity.auth.FrobEntity;
-import com.github.chojmi.inspirations.domain.entity.auth.TokenEntity;
 import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
+import com.github.scribejava.core.model.OAuth1AccessToken;
 
 import javax.inject.Inject;
 
@@ -26,24 +25,14 @@ public class AuthRepository implements AuthDataSource {
     }
 
     @Override
-    public Observable<FrobEntity> getFrob() {
-        return Observable.concat(authLocalDataSource.getFrob(),
-                authRemoteDataSource.getFrob()).firstElement().toObservable();
+    public Observable<String> getAuthorizationUrl() {
+        return Observable.concat(authLocalDataSource.getAuthorizationUrl(),
+                authRemoteDataSource.getAuthorizationUrl()).firstElement().toObservable();
     }
 
     @Override
-    public Observable<TokenEntity> getToken(String frob) {
-        if (frob.isEmpty()) {
-            return authLocalDataSource.getToken(frob);
-        }
-        return Observable.concat(authLocalDataSource.getToken(frob),
-                authRemoteDataSource.getToken(frob))
-                .firstElement()
-                .doOnSuccess(authLocalDataSource::onNewTokenEntity).toObservable();
-    }
-
-    @Override
-    public void onNewTokenEntity(TokenEntity tokenEntity) {
-
+    public Observable<OAuth1AccessToken> getAccessToken(String oauthVerifier) {
+        return Observable.concat(authLocalDataSource.getAccessToken(oauthVerifier),
+                authRemoteDataSource.getAccessToken(oauthVerifier)).firstElement().toObservable();
     }
 }

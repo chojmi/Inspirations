@@ -1,7 +1,7 @@
 package com.github.chojmi.inspirations.presentation.profile.login;
 
-import com.github.chojmi.inspirations.domain.usecase.auth.GetFrob;
-import com.github.chojmi.inspirations.domain.usecase.auth.GetToken;
+import com.github.chojmi.inspirations.domain.usecase.auth.GetAccessToken;
+import com.github.chojmi.inspirations.domain.usecase.auth.GetAuthorizationUrl;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
@@ -10,14 +10,14 @@ import timber.log.Timber;
 import static dagger.internal.Preconditions.checkNotNull;
 
 public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
-    private final GetFrob getFrob;
-    private final GetToken getToken;
+    private final GetAuthorizationUrl getAuthorizationUrl;
+    private final GetAccessToken getToken;
     private final CompositeDisposable disposables;
     private LoginWebViewContract.View view;
     private String currentFrob = "";
 
-    public LoginWebViewPresenter(@NonNull GetFrob getFrob, @NonNull GetToken getToken) {
-        this.getFrob = checkNotNull(getFrob);
+    public LoginWebViewPresenter(@NonNull GetAuthorizationUrl getAuthorizationUrl, @NonNull GetAccessToken getToken) {
+        this.getAuthorizationUrl = checkNotNull(getAuthorizationUrl);
         this.getToken = checkNotNull(getToken);
         this.disposables = new CompositeDisposable();
     }
@@ -25,23 +25,27 @@ public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
     @Override
     public void setView(@NonNull LoginWebViewContract.View view) {
         this.view = checkNotNull(view);
-        fetchFrob();
+        openLoginPage();
     }
 
-    private void fetchFrob() {
-        disposables.add(getFrob.buildUseCaseObservable(GetFrob.SubmitEvent.createObservable()).subscribe(submitUiModel -> {
+    private void openLoginPage() {
+        disposables.add(getAuthorizationUrl.buildUseCaseObservable(GetAuthorizationUrl.SubmitEvent.createObservable()).subscribe(submitUiModel -> {
             if (submitUiModel.isInProgress()) {
                 return;
             }
             if (submitUiModel.isSuccess()) {
-                this.currentFrob = submitUiModel.getResult().getFrob();
-                view.loadLoginPage(submitUiModel.getResult().getLoginUrl());
+                view.loadLoginPage(submitUiModel.getResult());
             }
         }, Timber::e));
     }
 
-    private void fetchToken(String frob) {
-        disposables.add(getToken.buildUseCaseObservable(GetToken.SubmitEvent.createObservable(frob)).subscribe(submitUiModel -> {
+    @Override
+    public void onVerifierTokenObtained(String verifier) {
+        fetchAccessToken(verifier);
+    }
+
+    private void fetchAccessToken(String verifier) {
+        disposables.add(getToken.buildUseCaseObservable(GetAccessToken.SubmitEvent.createObservable(verifier)).subscribe(submitUiModel -> {
             if (submitUiModel.isInProgress()) {
                 return;
             }
@@ -53,7 +57,7 @@ public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
 
     @Override
     public void destroyView() {
-        this.getFrob.dispose();
+        this.getAuthorizationUrl.dispose();
         this.getToken.dispose();
         this.disposables.dispose();
         this.view = null;
@@ -62,7 +66,7 @@ public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
     @Override
     public void pageLoaded(String url) {
         if (isLogged(url)) {
-            fetchToken(currentFrob);
+            fetchAccessToken(currentFrob);
         }
     }
 

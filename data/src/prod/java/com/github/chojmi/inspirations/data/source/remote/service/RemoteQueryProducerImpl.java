@@ -1,8 +1,5 @@
 package com.github.chojmi.inspirations.data.source.remote.service;
 
-import android.support.annotation.NonNull;
-
-import com.github.chojmi.inspirations.data.source.remote.signing.SignatureProvider;
 import com.github.chojmi.presentation.data.BuildConfig;
 
 import java.util.HashMap;
@@ -10,14 +7,11 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import static dagger.internal.Preconditions.checkNotNull;
 
 public class RemoteQueryProducerImpl implements RemoteQueryProducer {
-    private SignatureProvider signatureProvider;
 
     @Inject
-    public RemoteQueryProducerImpl(@NonNull SignatureProvider signatureProvider) {
-        this.signatureProvider = checkNotNull(signatureProvider);
+    public RemoteQueryProducerImpl() {
     }
 
     @Override
@@ -54,38 +48,6 @@ public class RemoteQueryProducerImpl implements RemoteQueryProducer {
     public Map<String, String> produceLoadPhotoComments(String photoId) {
         Map<String, String> args = getBaseArgs("flickr.photos.comments.getList");
         args.put("photo_id", photoId);
-        return args;
-    }
-
-    @Override
-    public Map<String, String> produceGetFrob() {
-        Map<String, String> args = getBaseArgs("flickr.auth.getFrob");
-        args = signatureProvider.provideSigArg(args);
-        return args;
-    }
-
-    @Override
-    public String produceLoginPageUrl(String frob) {
-        Map<String, String> args = new HashMap<>();
-        args.put("api_key", BuildConfig.API_KEY);
-        args.put("perms", "write");
-        args.put("frob", frob);
-        args = signatureProvider.provideSigArg(args);
-        return produceLoginPageUrl(args);
-    }
-
-    private String produceLoginPageUrl(Map<String, String> args) {
-        return "http://flickr.com/services/auth/?" + args.entrySet().stream()
-                .map(p -> p.getKey() + "=" + p.getValue())
-                .reduce((p1, p2) -> p1 + "&" + p2)
-                .orElse("");
-    }
-
-    @Override
-    public Map<String, String> produceGetToken(String frob) {
-        Map<String, String> args = getBaseArgs("flickr.auth.getToken");
-        args.put("frob", frob);
-        args = signatureProvider.provideSigArg(args);
         return args;
     }
 

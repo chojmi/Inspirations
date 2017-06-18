@@ -1,7 +1,7 @@
 package com.github.chojmi.inspirations.presentation.profile.my_profile;
 
-import com.github.chojmi.inspirations.domain.entity.auth.TokenEntity;
-import com.github.chojmi.inspirations.domain.usecase.auth.GetToken;
+import com.github.chojmi.inspirations.domain.usecase.auth.GetAccessToken;
+import com.github.scribejava.core.model.OAuth1AccessToken;
 
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -12,11 +12,11 @@ import timber.log.Timber;
 import static dagger.internal.Preconditions.checkNotNull;
 
 public class MyProfilePresenter implements MyProfileContract.Presenter {
-    private final GetToken getToken;
+    private final GetAccessToken getToken;
     private final CompositeDisposable disposables;
     private MyProfileContract.View view;
 
-    public MyProfilePresenter(@NonNull GetToken getToken) {
+    public MyProfilePresenter(@NonNull GetAccessToken getToken) {
         this.getToken = checkNotNull(getToken);
         this.disposables = new CompositeDisposable();
     }
@@ -39,12 +39,12 @@ public class MyProfilePresenter implements MyProfileContract.Presenter {
         fetchToken();
     }
 
-    private Observer<GetToken.SubmitUiModel> getTokenObserver() {
-        return new DisposableObserver<GetToken.SubmitUiModel>() {
-            TokenEntity tokenEntity = null;
+    private Observer<GetAccessToken.SubmitUiModel> getTokenObserver() {
+        return new DisposableObserver<GetAccessToken.SubmitUiModel>() {
+            OAuth1AccessToken tokenEntity = null;
 
             @Override
-            public void onNext(GetToken.SubmitUiModel submitUiModel) {
+            public void onNext(GetAccessToken.SubmitUiModel submitUiModel) {
                 tokenEntity = submitUiModel.getResult();
             }
 
@@ -66,12 +66,12 @@ public class MyProfilePresenter implements MyProfileContract.Presenter {
         };
     }
 
-    private void fetchProfile(TokenEntity tokenEntity) {
+    private void fetchProfile(OAuth1AccessToken tokenEntity) {
         //TODO: Fetch all profile data
         view.renderProfile("Zalogowano");
     }
 
     private void fetchToken() {
-        getToken.buildUseCaseObservable(GetToken.SubmitEvent.createCacheObservable()).subscribe(getTokenObserver());
+        getToken.buildUseCaseObservable(GetAccessToken.SubmitEvent.createObservable()).subscribe(getTokenObserver());
     }
 }

@@ -11,6 +11,7 @@ public interface LoginWebViewContract {
     }
 
     interface Presenter extends BasePresenter<View> {
+        void onVerifierTokenObtained(String verifier);
 
         void pageLoaded(String url);
 
