@@ -7,7 +7,10 @@ import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.github.chojmi.inspirations.data.source.Remote;
 import com.github.chojmi.inspirations.data.source.remote.RestAdapterFactory;
 import com.github.chojmi.inspirations.data.source.remote.interceptors.ParsingInterceptor;
+import com.github.chojmi.inspirations.data.source.remote.interceptors.SigningInterceptor;
+import com.github.chojmi.inspirations.data.source.remote.service.AuthService;
 import com.github.chojmi.inspirations.data.source.remote.service.GalleriesService;
+import com.github.chojmi.inspirations.data.source.remote.service.OAuthServiceWrapper;
 import com.github.chojmi.inspirations.data.source.remote.service.PeopleService;
 import com.github.chojmi.inspirations.data.source.remote.service.PhotosService;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
@@ -19,6 +22,8 @@ import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.oauth.OAuth10aService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -41,6 +46,12 @@ public class RestClientModule {
 
     public RestClientModule(@NonNull Context context) {
         this.context = checkNotNull(context);
+    }
+
+    @Singleton
+    @Provides
+    OAuthServiceWrapper provideOAuthServiceWrapper(OAuth10aService oAuth10aService) {
+        return new OAuthServiceWrapper(oAuth10aService);
     }
 
     @Provides
@@ -67,6 +78,11 @@ public class RestClientModule {
     }
 
     @Provides
+    AuthService provideAuthService(Retrofit retrofit) {
+        return retrofit.create(AuthService.class);
+    }
+
+    @Provides
     RemoteQueryProducer provideRemoteQueryProducer(RemoteQueryProducerImpl remoteQueryProducer) {
         return remoteQueryProducer;
     }
@@ -81,9 +97,11 @@ public class RestClientModule {
                 .build();
     }
 
+    @Singleton
     @Provides
-    OkHttpClient provideOkHttpClient() {
+    OkHttpClient provideOkHttpClient(OAuthServiceWrapper wrapper) {
         return new OkHttpClient.Builder()
+                .addInterceptor(new SigningInterceptor(wrapper))
                 .addNetworkInterceptor(new StethoInterceptor())
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(LOG_LEVEL))
                 .addInterceptor(new ParsingInterceptor())

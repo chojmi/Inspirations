@@ -1,5 +1,6 @@
 package com.github.chojmi.inspirations.data.source.local;
 
+import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
 import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 
@@ -20,6 +21,11 @@ public class LocalAuthDataSource implements AuthDataSource {
 
     @Override
     public Observable<OAuth1AccessToken> getAccessToken(String oauthVerifier) {
+        return Observable.empty();
+    }
+
+    @Override
+    public Observable<UserEntity> getLoginData() {
         return Observable.empty();
     }
 }

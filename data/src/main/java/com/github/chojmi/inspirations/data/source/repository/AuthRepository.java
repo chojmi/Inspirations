@@ -2,6 +2,7 @@ package com.github.chojmi.inspirations.data.source.repository;
 
 import com.github.chojmi.inspirations.data.source.Local;
 import com.github.chojmi.inspirations.data.source.Remote;
+import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
 import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 
@@ -34,5 +35,10 @@ public class AuthRepository implements AuthDataSource {
     public Observable<OAuth1AccessToken> getAccessToken(String oauthVerifier) {
         return Observable.concat(authLocalDataSource.getAccessToken(oauthVerifier),
                 authRemoteDataSource.getAccessToken(oauthVerifier)).firstElement().toObservable();
+    }
+
+    @Override
+    public Observable<UserEntity> getLoginData() {
+        return authRemoteDataSource.getLoginData();
     }
 }

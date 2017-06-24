@@ -51,6 +51,13 @@ public class RemoteQueryProducerImpl implements RemoteQueryProducer {
         return args;
     }
 
+    @Override
+    public Map<String, String> produceLoadLoginData() {
+        Map<String, String> args = getBaseArgs("flickr.test.login");
+        args.put("nojsoncallback", "1");
+        return args;
+    }
+
     private Map<String, String> getBaseArgs(String method) {
         Map<String, String> args = new HashMap<>();
         args.put("api_key", BuildConfig.API_KEY);

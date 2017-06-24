@@ -1,9 +1,12 @@
 package com.github.chojmi.inspirations.data.source.remote.data_source;
 
+import com.github.chojmi.inspirations.data.source.remote.service.AuthService;
+import com.github.chojmi.inspirations.data.source.remote.service.OAuthServiceWrapper;
+import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
+import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
 import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
-import com.github.scribejava.core.oauth.OAuth10aService;
 
 import javax.inject.Inject;
 
@@ -15,18 +18,23 @@ import io.reactivex.schedulers.Schedulers;
 import static dagger.internal.Preconditions.checkNotNull;
 
 public class RemoteAuthDataSource implements AuthDataSource {
-    private OAuth10aService oAuthService;
+    private final OAuthServiceWrapper oAuthService;
+    private final AuthService authService;
+    private final RemoteQueryProducer remoteQueryProducer;
     private OAuth1RequestToken requestToken;
-    private OAuth1AccessToken accessToken;
 
     @Inject
-    public RemoteAuthDataSource(@NonNull OAuth10aService oAuthService) {
+    public RemoteAuthDataSource(@NonNull AuthService authService,
+                                @NonNull RemoteQueryProducer remoteQueryProducer,
+                                @NonNull OAuthServiceWrapper oAuthService) {
+        this.authService = checkNotNull(authService);
+        this.remoteQueryProducer = checkNotNull(remoteQueryProducer);
         this.oAuthService = checkNotNull(oAuthService);
     }
 
     @Override
     public Observable getAuthorizationUrl() {
-        return Observable.fromCallable(() -> oAuthService.getRequestToken())
+        return Observable.fromCallable(oAuthService::getRequestToken)
                 .subscribeOn(Schedulers.newThread())
                 .map(oAuth1RequestToken -> {
                     requestToken = oAuth1RequestToken;
@@ -37,11 +45,20 @@ public class RemoteAuthDataSource implements AuthDataSource {
 
     @Override
     public Observable getAccessToken(String oauthVerifier) {
-        if (accessToken != null && oauthVerifier.isEmpty()) {
-            return Observable.just(accessToken);
+        OAuth1AccessToken cachedAccessToken = oAuthService.getAccessToken();
+        if (cachedAccessToken != null && oauthVerifier.isEmpty()) {
+            return Observable.just(cachedAccessToken);
         }
         return Observable.fromCallable(() -> oAuthService.getAccessToken(requestToken, oauthVerifier))
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread()).doOnNext(oAuth1AccessToken -> accessToken = oAuth1AccessToken);
+                .observeOn(AndroidSchedulers.mainThread()).doOnNext(accessToken -> oAuthService.setAccessToken(accessToken));
+    }
+
+    @Override
+    public Observable<UserEntity> getLoginData() {
+        return authService.loadLoginData(remoteQueryProducer.produceLoadLoginData())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(loginDataEntity -> (UserEntity) loginDataEntity.getUser());
     }
 }
