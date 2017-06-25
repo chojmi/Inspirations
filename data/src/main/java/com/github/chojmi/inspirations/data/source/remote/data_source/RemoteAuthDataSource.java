@@ -1,9 +1,6 @@
 package com.github.chojmi.inspirations.data.source.remote.data_source;
 
-import com.github.chojmi.inspirations.data.source.remote.service.AuthService;
-import com.github.chojmi.inspirations.data.source.remote.service.OAuthServiceWrapper;
-import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
-import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
+import com.github.chojmi.inspirations.data.source.remote.service.OAuthService;
 import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
@@ -18,17 +15,11 @@ import io.reactivex.schedulers.Schedulers;
 import static dagger.internal.Preconditions.checkNotNull;
 
 public class RemoteAuthDataSource implements AuthDataSource {
-    private final OAuthServiceWrapper oAuthService;
-    private final AuthService authService;
-    private final RemoteQueryProducer remoteQueryProducer;
+    private final OAuthService oAuthService;
     private OAuth1RequestToken requestToken;
 
     @Inject
-    public RemoteAuthDataSource(@NonNull AuthService authService,
-                                @NonNull RemoteQueryProducer remoteQueryProducer,
-                                @NonNull OAuthServiceWrapper oAuthService) {
-        this.authService = checkNotNull(authService);
-        this.remoteQueryProducer = checkNotNull(remoteQueryProducer);
+    public RemoteAuthDataSource(@NonNull OAuthService oAuthService) {
         this.oAuthService = checkNotNull(oAuthService);
     }
 
@@ -52,13 +43,5 @@ public class RemoteAuthDataSource implements AuthDataSource {
         return Observable.fromCallable(() -> oAuthService.getAccessToken(requestToken, oauthVerifier))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread()).doOnNext(accessToken -> oAuthService.setAccessToken(accessToken));
-    }
-
-    @Override
-    public Observable<UserEntity> getLoginData() {
-        return authService.loadLoginData(remoteQueryProducer.produceLoadLoginData())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(loginDataEntity -> (UserEntity) loginDataEntity.getUser());
     }
 }

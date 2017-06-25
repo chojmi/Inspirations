@@ -1,6 +1,6 @@
 package com.github.chojmi.inspirations.data.source.remote.interceptors;
 
-import com.github.chojmi.inspirations.data.source.remote.service.OAuthServiceWrapper;
+import com.github.chojmi.inspirations.data.source.remote.service.OAuthService;
 
 import java.io.IOException;
 
@@ -12,9 +12,9 @@ import okhttp3.Response;
 import static dagger.internal.Preconditions.checkNotNull;
 
 public class SigningInterceptor implements Interceptor {
-    private final OAuthServiceWrapper oAuthService;
+    private final OAuthService oAuthService;
 
-    public SigningInterceptor(@NonNull OAuthServiceWrapper oAuthService) {
+    public SigningInterceptor(@NonNull OAuthService oAuthService) {
         this.oAuthService = checkNotNull(oAuthService);
     }
 

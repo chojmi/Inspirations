@@ -8,9 +8,9 @@ import com.github.chojmi.inspirations.data.source.Remote;
 import com.github.chojmi.inspirations.data.source.remote.RestAdapterFactory;
 import com.github.chojmi.inspirations.data.source.remote.interceptors.ParsingInterceptor;
 import com.github.chojmi.inspirations.data.source.remote.interceptors.SigningInterceptor;
-import com.github.chojmi.inspirations.data.source.remote.service.AuthService;
+import com.github.chojmi.inspirations.data.source.remote.service.AuthTestService;
 import com.github.chojmi.inspirations.data.source.remote.service.GalleriesService;
-import com.github.chojmi.inspirations.data.source.remote.service.OAuthServiceWrapper;
+import com.github.chojmi.inspirations.data.source.remote.service.OAuthService;
 import com.github.chojmi.inspirations.data.source.remote.service.PeopleService;
 import com.github.chojmi.inspirations.data.source.remote.service.PhotosService;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
@@ -50,8 +50,8 @@ public class RestClientModule {
 
     @Singleton
     @Provides
-    OAuthServiceWrapper provideOAuthServiceWrapper(OAuth10aService oAuth10aService) {
-        return new OAuthServiceWrapper(oAuth10aService);
+    OAuthService provideOAuthServiceWrapper(OAuth10aService oAuth10aService) {
+        return new OAuthService(oAuth10aService);
     }
 
     @Provides
@@ -78,8 +78,8 @@ public class RestClientModule {
     }
 
     @Provides
-    AuthService provideAuthService(Retrofit retrofit) {
-        return retrofit.create(AuthService.class);
+    AuthTestService provideAuthService(Retrofit retrofit) {
+        return retrofit.create(AuthTestService.class);
     }
 
     @Provides
@@ -99,7 +99,7 @@ public class RestClientModule {
 
     @Singleton
     @Provides
-    OkHttpClient provideOkHttpClient(OAuthServiceWrapper wrapper) {
+    OkHttpClient provideOkHttpClient(OAuthService wrapper) {
         return new OkHttpClient.Builder()
                 .addInterceptor(new SigningInterceptor(wrapper))
                 .addNetworkInterceptor(new StethoInterceptor())

@@ -3,7 +3,7 @@ package com.github.chojmi.inspirations.domain.usecase.auth;
 import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
-import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
+import com.github.chojmi.inspirations.domain.repository.AuthTestDataSource;
 import com.github.chojmi.inspirations.domain.usecase.blueprints.BaseSubmitEvent;
 import com.github.chojmi.inspirations.domain.usecase.blueprints.BaseSubmitUiModel;
 import com.github.chojmi.inspirations.domain.usecase.blueprints.UseCase;
@@ -19,18 +19,18 @@ import static dagger.internal.Preconditions.checkNotNull;
 
 public class GetLoginData extends UseCase<GetLoginData.SubmitUiModel, GetLoginData.SubmitEvent> {
 
-    private final AuthDataSource authDataSource;
+    private final AuthTestDataSource authTestDataSource;
 
     @Inject
-    public GetLoginData(@NonNull AuthDataSource authDataSource, @NonNull ThreadExecutor threadExecutor,
+    public GetLoginData(@NonNull AuthTestDataSource authTestDataSource, @NonNull ThreadExecutor threadExecutor,
                         @NonNull PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        this.authDataSource = checkNotNull(authDataSource);
+        this.authTestDataSource = checkNotNull(authTestDataSource);
     }
 
     @Override
     public Observable<SubmitUiModel> buildUseCaseObservable(Observable<SubmitEvent> inputEvents) {
-        return inputEvents.flatMap(event -> authDataSource.getLoginData()
+        return inputEvents.flatMap(event -> authTestDataSource.getLoginData()
                 .map(GetLoginData.SubmitUiModel::success)
                 .onErrorReturn(GetLoginData.SubmitUiModel::failure)
                 .startWith(GetLoginData.SubmitUiModel.inProgress()));

@@ -8,8 +8,7 @@ import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
 
-public interface AuthService {
+public interface AuthTestService {
     @GET("services/rest")
     Observable<LoginDataEntityImpl> loadLoginData(@QueryMap Map<String, String> options);
-
 }

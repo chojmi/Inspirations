@@ -14,11 +14,11 @@ import io.reactivex.annotations.Nullable;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
-public class OAuthServiceWrapper {
+public class OAuthService {
     private final OAuth10aService oAuthService;
     private OAuth1AccessToken accessToken;
 
-    public OAuthServiceWrapper(@NonNull OAuth10aService oAuthService) {
+    public OAuthService(@NonNull OAuth10aService oAuthService) {
         this.oAuthService = checkNotNull(oAuthService);
     }
 
