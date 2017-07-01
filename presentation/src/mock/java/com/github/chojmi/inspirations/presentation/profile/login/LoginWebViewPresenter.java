@@ -2,7 +2,7 @@ package com.github.chojmi.inspirations.presentation.profile.login;
 
 import android.support.annotation.NonNull;
 
-import static dagger.internal.Preconditions.checkNotNull;
+import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
 public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
     private LoginWebViewContract.View view;

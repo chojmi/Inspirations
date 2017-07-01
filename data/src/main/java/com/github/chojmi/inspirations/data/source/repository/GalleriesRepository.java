@@ -13,7 +13,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 
-import static dagger.internal.Preconditions.checkNotNull;
+import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
 public class GalleriesRepository implements GalleriesDataSource {
 

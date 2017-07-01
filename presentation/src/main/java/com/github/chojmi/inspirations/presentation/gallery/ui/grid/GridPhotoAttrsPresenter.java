@@ -8,7 +8,7 @@ import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
-import static dagger.internal.Preconditions.checkNotNull;
+import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
 class GridPhotoAttrsPresenter implements GridPhotoAttrsContract.Presenter {
     private final GetPhotoFavs getPhotoFavs;

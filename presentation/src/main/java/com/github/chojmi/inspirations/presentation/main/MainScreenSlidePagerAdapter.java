@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import static dagger.internal.Preconditions.checkNotNull;
+import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
 class MainScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     private Context context;

@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import io.reactivex.annotations.NonNull;
 
-import static dagger.internal.Preconditions.checkNotNull;
+import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
 class TokenFetcher {
     private final Listener listener;

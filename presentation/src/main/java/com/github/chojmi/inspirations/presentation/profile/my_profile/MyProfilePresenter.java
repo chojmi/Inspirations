@@ -10,7 +10,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import timber.log.Timber;
 
-import static dagger.internal.Preconditions.checkNotNull;
+import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
 public class MyProfilePresenter implements MyProfileContract.Presenter {
     private final GetAccessToken getToken;

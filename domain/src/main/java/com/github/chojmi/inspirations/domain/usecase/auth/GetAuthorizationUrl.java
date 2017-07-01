@@ -14,7 +14,7 @@ import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.annotations.Nullable;
 
-import static dagger.internal.Preconditions.checkNotNull;
+import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
 public class GetAuthorizationUrl extends UseCase<GetAuthorizationUrl.SubmitUiModel, GetAuthorizationUrl.SubmitEvent> {
 
