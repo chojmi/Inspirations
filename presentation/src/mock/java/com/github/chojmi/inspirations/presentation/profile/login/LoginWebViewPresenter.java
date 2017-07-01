@@ -19,6 +19,11 @@ public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
     }
 
     @Override
+    public void onVerifierTokenObtained(String verifier) {
+
+    }
+
+    @Override
     public void pageLoaded(String url) {
 
     }

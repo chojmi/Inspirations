@@ -3,6 +3,8 @@ package com.github.chojmi.inspirations.data.source.module;
 import android.content.Context;
 
 import com.github.chojmi.inspirations.data.source.Remote;
+import com.github.chojmi.inspirations.data.source.remote.service.AuthTestService;
+import com.github.chojmi.inspirations.data.source.remote.service.FakeAuthTestService;
 import com.github.chojmi.inspirations.data.source.remote.service.FakeGalleriesService;
 import com.github.chojmi.inspirations.data.source.remote.service.FakePeopleService;
 import com.github.chojmi.inspirations.data.source.remote.service.FakePhotosService;
@@ -34,6 +36,11 @@ public class RestClientModule {
     @Provides
     PhotosService providePhotosService() {
         return new FakePhotosService();
+    }
+
+    @Provides
+    AuthTestService provideAuthTestService() {
+        return new FakeAuthTestService();
     }
 
     @Provides

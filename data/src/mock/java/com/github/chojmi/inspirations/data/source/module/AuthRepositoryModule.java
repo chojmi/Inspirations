@@ -1,26 +1,29 @@
 package com.github.chojmi.inspirations.data.source.module;
 
-import com.github.chojmi.inspirations.data.source.local.LocalAuthDataSource;
-import com.github.chojmi.inspirations.data.source.remote.signing.SignatureProvider;
+import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
 import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
-
-import javax.inject.Singleton;
+import com.github.chojmi.inspirations.domain.repository.AuthTestDataSource;
+import com.github.scribejava.core.model.OAuth1AccessToken;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.Observable;
 
-@Singleton
 @Module
 public class AuthRepositoryModule {
-
     @Provides
-    AuthDataSource provideGalleryDataSource() {
-        return new LocalAuthDataSource();
-    }
+    AuthDataSource provideAuthDataSource() {
+        return new AuthDataSource() {
 
-    @Provides
-    SignatureProvider provideSignatureProvider() {
-        return new SignatureProvider("fake_key");
+            @Override
+            public Observable<String> getAuthorizationUrl() {
+                return null;
+            }
+
+            @Override
+            public Observable<OAuth1AccessToken> getAccessToken(String oauthVerifier) {
+                return null;
+            }
+        };
     }
 }
-

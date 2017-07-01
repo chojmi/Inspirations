@@ -7,15 +7,23 @@ import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.github.chojmi.inspirations.data.source.Remote;
 import com.github.chojmi.inspirations.data.source.remote.RestAdapterFactory;
 import com.github.chojmi.inspirations.data.source.remote.interceptors.ParsingInterceptor;
-import com.github.chojmi.inspirations.data.source.remote.service.AuthService;
+import com.github.chojmi.inspirations.data.source.remote.interceptors.SigningInterceptor;
+import com.github.chojmi.inspirations.data.source.remote.service.AuthTestService;
 import com.github.chojmi.inspirations.data.source.remote.service.GalleriesService;
+import com.github.chojmi.inspirations.data.source.remote.service.OAuthService;
 import com.github.chojmi.inspirations.data.source.remote.service.PeopleService;
 import com.github.chojmi.inspirations.data.source.remote.service.PhotosService;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducerImpl;
+import com.github.chojmi.presentation.data.BuildConfig;
 import com.github.chojmi.presentation.data.R;
+import com.github.scribejava.apis.FlickrApi;
+import com.github.scribejava.core.builder.ServiceBuilder;
+import com.github.scribejava.core.oauth.OAuth10aService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -40,6 +48,20 @@ public class RestClientModule {
         this.context = checkNotNull(context);
     }
 
+    @Singleton
+    @Provides
+    OAuthService provideOAuthServiceWrapper(OAuth10aService oAuth10aService) {
+        return new OAuthService(oAuth10aService);
+    }
+
+    @Provides
+    OAuth10aService provideOAuthService() {
+        return new ServiceBuilder()
+                .apiKey(BuildConfig.API_KEY)
+                .apiSecret(BuildConfig.API_SECRET_KEY)
+                .build(FlickrApi.instance(FlickrApi.FlickrPerm.WRITE));
+    }
+
     @Provides
     GalleriesService provideGalleryService(Retrofit retrofit) {
         return retrofit.create(GalleriesService.class);
@@ -56,8 +78,8 @@ public class RestClientModule {
     }
 
     @Provides
-    AuthService provideAuthService(Retrofit retrofit) {
-        return retrofit.create(AuthService.class);
+    AuthTestService provideAuthService(Retrofit retrofit) {
+        return retrofit.create(AuthTestService.class);
     }
 
     @Provides
@@ -75,9 +97,11 @@ public class RestClientModule {
                 .build();
     }
 
+    @Singleton
     @Provides
-    OkHttpClient provideOkHttpClient() {
+    OkHttpClient provideOkHttpClient(OAuthService wrapper) {
         return new OkHttpClient.Builder()
+                .addInterceptor(new SigningInterceptor(wrapper))
                 .addNetworkInterceptor(new StethoInterceptor())
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(LOG_LEVEL))
                 .addInterceptor(new ParsingInterceptor())

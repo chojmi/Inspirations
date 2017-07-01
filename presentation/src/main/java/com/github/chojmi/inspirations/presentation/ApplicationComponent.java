@@ -3,6 +3,7 @@ package com.github.chojmi.inspirations.presentation;
 import android.content.Context;
 
 import com.github.chojmi.inspirations.data.source.module.AuthRepositoryModule;
+import com.github.chojmi.inspirations.data.source.module.AuthTestRepositoryModule;
 import com.github.chojmi.inspirations.data.source.module.GalleriesRepositoryModule;
 import com.github.chojmi.inspirations.data.source.module.PeopleRepositoryModule;
 import com.github.chojmi.inspirations.data.source.module.PhotosRepositoryModule;
@@ -10,6 +11,7 @@ import com.github.chojmi.inspirations.data.source.module.RestClientModule;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
+import com.github.chojmi.inspirations.domain.repository.AuthTestDataSource;
 import com.github.chojmi.inspirations.domain.repository.GalleriesDataSource;
 import com.github.chojmi.inspirations.domain.repository.PeopleDataSource;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
@@ -29,7 +31,9 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {GalleriesRepositoryModule.class, PeopleRepositoryModule.class, PhotosRepositoryModule.class, AuthRepositoryModule.class, ApplicationModule.class, RestClientModule.class})
+@Component(modules = {GalleriesRepositoryModule.class, PeopleRepositoryModule.class,
+        PhotosRepositoryModule.class, AuthRepositoryModule.class, AuthTestRepositoryModule.class,
+        ApplicationModule.class, RestClientModule.class})
 public interface ApplicationComponent {
     void inject(BaseActivity target);
 
@@ -56,4 +60,6 @@ public interface ApplicationComponent {
     PhotosDataSource getPhotosDataSource();
 
     AuthDataSource getAuthDataSource();
+
+    AuthTestDataSource getAuthTestDataSource();
 }

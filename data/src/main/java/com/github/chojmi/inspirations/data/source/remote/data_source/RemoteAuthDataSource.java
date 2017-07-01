@@ -1,11 +1,9 @@
 package com.github.chojmi.inspirations.data.source.remote.data_source;
 
-import com.github.chojmi.inspirations.data.entity.auth.FrobEntityImpl;
-import com.github.chojmi.inspirations.data.source.remote.service.AuthService;
-import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
-import com.github.chojmi.inspirations.domain.entity.auth.FrobEntity;
-import com.github.chojmi.inspirations.domain.entity.auth.TokenEntity;
+import com.github.chojmi.inspirations.data.source.remote.service.OAuthService;
 import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
+import com.github.scribejava.core.model.OAuth1AccessToken;
+import com.github.scribejava.core.model.OAuth1RequestToken;
 
 import javax.inject.Inject;
 
@@ -17,33 +15,33 @@ import io.reactivex.schedulers.Schedulers;
 import static dagger.internal.Preconditions.checkNotNull;
 
 public class RemoteAuthDataSource implements AuthDataSource {
-    private AuthService authService;
-    private RemoteQueryProducer remoteQueryProducer;
+    private final OAuthService oAuthService;
+    private OAuth1RequestToken requestToken;
 
     @Inject
-    public RemoteAuthDataSource(@NonNull AuthService authService, @NonNull RemoteQueryProducer remoteQueryProducer) {
-        this.authService = checkNotNull(authService);
-        this.remoteQueryProducer = checkNotNull(remoteQueryProducer);
+    public RemoteAuthDataSource(@NonNull OAuthService oAuthService) {
+        this.oAuthService = checkNotNull(oAuthService);
     }
 
     @Override
-    public Observable<FrobEntity> getFrob() {
-        return authService.getFrob(remoteQueryProducer.produceGetFrob())
+    public Observable getAuthorizationUrl() {
+        return Observable.fromCallable(oAuthService::getRequestToken)
                 .subscribeOn(Schedulers.newThread())
-                .map(r -> FrobEntityImpl.create(r.getFrob(), remoteQueryProducer.produceLoginPageUrl(r.getFrob())))
+                .map(oAuth1RequestToken -> {
+                    requestToken = oAuth1RequestToken;
+                    return oAuthService.getAuthorizationUrl(oAuth1RequestToken);
+                })
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
-    public Observable<TokenEntity> getToken(@NonNull String frob) {
-        return authService.getToken(remoteQueryProducer.produceGetToken(checkNotNull(frob)))
+    public Observable getAccessToken(String oauthVerifier) {
+        OAuth1AccessToken cachedAccessToken = oAuthService.getAccessToken();
+        if (cachedAccessToken != null && oauthVerifier.isEmpty()) {
+            return Observable.just(cachedAccessToken);
+        }
+        return Observable.fromCallable(() -> oAuthService.getAccessToken(requestToken, oauthVerifier))
                 .subscribeOn(Schedulers.newThread())
-                .map(r -> (TokenEntity) r)
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    @Override
-    public void onNewTokenEntity(TokenEntity tokenEntity) {
-
+                .observeOn(AndroidSchedulers.mainThread()).doOnNext(accessToken -> oAuthService.setAccessToken(accessToken));
     }
 }
