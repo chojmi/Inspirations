@@ -15,25 +15,25 @@ import static dagger.internal.Preconditions.checkNotNull;
 public class MyProfilePresenter implements MyProfileContract.Presenter {
     private final GetAccessToken getToken;
     private final GetLoginData getLoginData;
-    private final CompositeDisposable disposables;
+    private CompositeDisposable disposables;
     private MyProfileContract.View view;
 
     public MyProfilePresenter(@NonNull GetLoginData getLoginData, @NonNull GetAccessToken getToken) {
         this.getLoginData = checkNotNull(getLoginData);
         this.getToken = checkNotNull(getToken);
-        this.disposables = new CompositeDisposable();
     }
 
     @Override
     public void setView(@NonNull MyProfileContract.View view) {
         this.view = checkNotNull(view);
+        this.disposables = new CompositeDisposable();
         fetchToken();
     }
 
     @Override
     public void destroyView() {
         this.getToken.dispose();
-        this.disposables.dispose();
+        this.disposables.clear();
         this.view = null;
     }
 
@@ -72,14 +72,14 @@ public class MyProfilePresenter implements MyProfileContract.Presenter {
     private void fetchProfile(OAuth1AccessToken tokenEntity) {
         //TODO: Fetch all profile data
         view.renderProfile("Zalogowano");
-        getLoginData.buildUseCaseObservable(GetLoginData.SubmitEvent.createObservable()).subscribe(submitUiModel -> {
-            if (submitUiModel.isInProgress()) {
+        disposables.add(getLoginData.invokeRequest().subscribe(uiModel -> {
+            if (uiModel.isInProgress()) {
                 return;
             }
-            if (submitUiModel.isSuccess()) {
-                view.renderProfile("Zalogowano jako: " + submitUiModel.getResult().getUsername());
+            if (uiModel.isSucceed()) {
+                view.renderProfile("Zalogowano jako: " + uiModel.getResult().getUsername());
             }
-        }, Timber::d);
+        }, Timber::d));
     }
 
     private void fetchToken() {
