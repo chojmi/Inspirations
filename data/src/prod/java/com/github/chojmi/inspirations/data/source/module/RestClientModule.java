@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.github.chojmi.inspirations.data.source.Remote;
-import com.github.chojmi.inspirations.data.source.remote.RestAdapterFactory;
 import com.github.chojmi.inspirations.data.source.remote.interceptors.ParsingInterceptor;
 import com.github.chojmi.inspirations.data.source.remote.interceptors.SigningInterceptor;
 import com.github.chojmi.inspirations.data.source.remote.service.AuthTestService;
@@ -112,7 +111,6 @@ public class RestClientModule {
     @Provides
     Gson provideGson() {
         return new GsonBuilder()
-                .registerTypeAdapterFactory(RestAdapterFactory.create())
                 .setLenient()
                 .create();
     }

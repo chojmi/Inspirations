@@ -1,5 +1,6 @@
 package com.github.chojmi.inspirations.data.source.remote.data_source;
 
+import com.github.chojmi.inspirations.data.entity.GalleryEntityImpl;
 import com.github.chojmi.inspirations.data.source.remote.service.GalleriesService;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
 import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
@@ -13,6 +14,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 import static dagger.internal.Preconditions.checkNotNull;
@@ -37,6 +39,6 @@ public class RemoteGalleriesDataSource implements GalleriesDataSource {
     public Observable<List<PhotoEntity>> loadGallery(String galleryId, int page) {
         return galleryService.loadGallery(remoteQueryProducer.produceLoadGalleryQuery(galleryId, page))
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread()).map(GalleryEntity::getPhoto);
+                .observeOn(AndroidSchedulers.mainThread()).map((Function<GalleryEntityImpl, List<PhotoEntity>>) galleryEntity -> ((GalleryEntity) galleryEntity).getPhoto());
     }
 }

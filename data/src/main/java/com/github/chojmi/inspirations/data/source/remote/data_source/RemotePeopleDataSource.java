@@ -1,5 +1,6 @@
 package com.github.chojmi.inspirations.data.source.remote.data_source;
 
+import com.github.chojmi.inspirations.data.entity.GalleryEntityImpl;
 import com.github.chojmi.inspirations.data.source.remote.service.PeopleService;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
 import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
@@ -14,6 +15,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 import static dagger.internal.Preconditions.checkNotNull;
@@ -45,6 +47,8 @@ public class RemotePeopleDataSource implements PeopleDataSource {
     public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page) {
         return peopleService.loadUserPublicPhotos(remoteQueryProducer.produceLoadUserPublicPhotosQuery(userId, page))
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread()).map(GalleryEntity::getPhoto);
+                .observeOn(AndroidSchedulers.mainThread())
+                .map((Function<GalleryEntityImpl, GalleryEntity>) galleryEntity -> galleryEntity)
+                .map(GalleryEntity::getPhoto);
     }
 }
