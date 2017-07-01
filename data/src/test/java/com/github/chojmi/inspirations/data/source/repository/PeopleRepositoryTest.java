@@ -1,6 +1,6 @@
 package com.github.chojmi.inspirations.data.source.repository;
 
-import com.github.chojmi.inspirations.data.entity.photos.PersonEntityImpl;
+import com.github.chojmi.inspirations.data.entity.people.PersonEntityImpl;
 import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.repository.PeopleDataSource;
 

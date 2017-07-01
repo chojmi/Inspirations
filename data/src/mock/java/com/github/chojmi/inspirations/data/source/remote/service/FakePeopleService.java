@@ -2,7 +2,6 @@ package com.github.chojmi.inspirations.data.source.remote.service;
 
 import com.github.chojmi.inspirations.data.entity.GalleryEntityImpl;
 import com.github.chojmi.inspirations.data.entity.people.PersonEntityImpl;
-import com.github.chojmi.inspirations.data.source.remote.service.PeopleService;
 
 import java.util.Map;
 

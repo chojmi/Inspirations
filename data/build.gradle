@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'kotlin-android'
 
 android {
     publishNonDefault true
@@ -65,11 +66,10 @@ def getApiSecretKey() {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
     compile project(":domain")
     compile "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:${rootProject.ext.kotlinVersion}"
 
     compile "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxAndroidLibVersion}"
     compile "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxJavaLibVersion}"
@@ -88,7 +88,6 @@ dependencies {
     provided "com.google.auto.value:auto-value:$rootProject.ext.autovalueLibVersion"
     annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:$rootProject.ext.autovalueParcelLibVersion"
     annotationProcessor "com.ryanharter.auto.value:auto-value-parcel-adapter:$rootProject.ext.autovalueParcelLibVersion"
-    annotationProcessor "com.ryanharter.auto.value:auto-value-gson:$rootProject.autovalueGsonLibVersion"
     provided "com.ryanharter.auto.value:auto-value-gson:$rootProject.autovalueGsonLibVersion"
 
     //Event logging
@@ -96,6 +95,9 @@ dependencies {
 
     compile "com.facebook.stetho:stetho-okhttp3:$rootProject.ext.stethoLibVersion"
 
+    androidTestCompile("com.android.support.test.espresso:espresso-core:${rootProject.ext.espressoVersion}", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
     testCompile "junit:junit:$rootProject.ext.junitVersion"
-    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
+    testCompile "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
 }
