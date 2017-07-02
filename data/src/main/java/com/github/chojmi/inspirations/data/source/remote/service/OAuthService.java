@@ -1,5 +1,6 @@
 package com.github.chojmi.inspirations.data.source.remote.service;
 
+import com.github.chojmi.inspirations.data.source.local.AccessTokenHolder;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 import com.github.scribejava.core.model.OAuthRequest;
@@ -10,16 +11,16 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import io.reactivex.annotations.NonNull;
-import io.reactivex.annotations.Nullable;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
 public class OAuthService {
     private final OAuth10aService oAuthService;
-    private OAuth1AccessToken accessToken;
+    private final AccessTokenHolder accessTokenHolder;
 
-    public OAuthService(@NonNull OAuth10aService oAuthService) {
+    public OAuthService(@NonNull OAuth10aService oAuthService, @NonNull AccessTokenHolder accessTokenHolder) {
         this.oAuthService = checkNotNull(oAuthService);
+        this.accessTokenHolder = checkNotNull(accessTokenHolder);
     }
 
     public final OAuth1RequestToken getRequestToken() throws IOException, InterruptedException, ExecutionException {
@@ -35,23 +36,14 @@ public class OAuthService {
         return oAuthService.getAccessToken(requestToken, oauthVerifier);
     }
 
-    @Nullable
-    public OAuth1AccessToken getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(@Nullable OAuth1AccessToken accessToken) {
-        this.accessToken = accessToken;
-    }
-
     public boolean containsAccessToken() {
-        return accessToken != null;
+        return accessTokenHolder.containsAccessToken();
     }
 
     public String signRequest(String url) {
         final StringBuilder builder = new StringBuilder(url);
         OAuthRequest request = new OAuthRequest(Verb.GET, url);
-        oAuthService.signRequest(accessToken, request);
+        oAuthService.signRequest(accessTokenHolder.getAccessToken(), request);
         request.getOauthParameters().forEach((s, s2) -> builder.append("&").append(s).append("=").append(s2));
         return builder.toString();
     }

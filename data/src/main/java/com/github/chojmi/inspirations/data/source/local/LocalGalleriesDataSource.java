@@ -10,7 +10,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Flowable;
 
-public final class LocalGalleriesDataSource implements GalleriesDataSource {
+public class LocalGalleriesDataSource implements GalleriesDataSource {
 
     @Inject
     public LocalGalleriesDataSource() {

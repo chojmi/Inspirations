@@ -8,7 +8,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Flowable;
 
-public final class LocalPhotosDataSource implements PhotosDataSource {
+public class LocalPhotosDataSource implements PhotosDataSource {
 
     @Inject
     public LocalPhotosDataSource() {

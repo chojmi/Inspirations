@@ -11,7 +11,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Flowable;
 
-public final class LocalPeopleDataSource implements PeopleDataSource {
+public class LocalPeopleDataSource implements PeopleDataSource {
 
     @Inject
     public LocalPeopleDataSource() {

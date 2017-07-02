@@ -8,15 +8,14 @@ import com.github.scribejava.core.model.OAuth1RequestToken;
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.annotations.Nullable;
 import io.reactivex.schedulers.Schedulers;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
 public class RemoteAuthDataSource implements AuthDataSource {
     private final OAuthService oAuthService;
-    private OAuth1RequestToken requestToken;
 
     @Inject
     public RemoteAuthDataSource(@NonNull OAuthService oAuthService) {
@@ -24,24 +23,40 @@ public class RemoteAuthDataSource implements AuthDataSource {
     }
 
     @Override
-    public Flowable getAuthorizationUrl() {
+    public Flowable<OAuth1RequestToken> getRequestToken() {
         return Flowable.fromCallable(oAuthService::getRequestToken)
-                .subscribeOn(Schedulers.newThread())
-                .map(oAuth1RequestToken -> {
-                    requestToken = oAuth1RequestToken;
-                    return oAuthService.getAuthorizationUrl(oAuth1RequestToken);
-                })
-                .observeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.newThread());
     }
 
     @Override
-    public Flowable getAccessToken(String oauthVerifier) {
-        OAuth1AccessToken cachedAccessToken = oAuthService.getAccessToken();
-        if (cachedAccessToken != null && oauthVerifier.isEmpty()) {
-            return Flowable.just(cachedAccessToken);
-        }
-        return Flowable.fromCallable(() -> oAuthService.getAccessToken(requestToken, oauthVerifier))
+    public Flowable<String> getAuthorizationUrl() {
+        return Flowable.error(new Throwable("Needs request token"));
+    }
+
+    @Override
+    public Flowable<String> getAuthorizationUrl(@NonNull OAuth1RequestToken requestToken) {
+        return Flowable.fromCallable(oAuthService::getRequestToken)
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread()).doOnNext(accessToken -> oAuthService.setAccessToken(accessToken));
+                .map(oAuth1RequestToken -> oAuthService.getAuthorizationUrl(requestToken));
+    }
+
+    @Override
+    public Flowable<OAuth1AccessToken> getAccessToken(OAuth1RequestToken requestToken, String oauthVerifier) {
+        return Flowable.fromCallable(() -> oAuthService.getAccessToken(requestToken, oauthVerifier));
+    }
+
+    @Override
+    public Flowable<OAuth1AccessToken> getAccessToken(String oauthVerifier) {
+        return Flowable.error(new Throwable("Needs request token"));
+    }
+
+    @Override
+    public void saveRequestToken(OAuth1RequestToken requestToken) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void saveAccessToken(@Nullable OAuth1AccessToken accessToken) {
+        throw new UnsupportedOperationException();
     }
 }
