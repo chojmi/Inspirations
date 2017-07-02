@@ -1,6 +1,6 @@
 package com.github.chojmi.inspirations.presentation.profile.my_profile;
 
-import com.github.chojmi.inspirations.domain.model.SubmitUiModel;
+import com.github.chojmi.inspirations.domain.common.SubmitUiModel;
 import com.github.chojmi.inspirations.domain.usecase.auth.GetAccessToken;
 import com.github.chojmi.inspirations.domain.usecase.auth.GetLoginData;
 import com.github.scribejava.core.model.OAuth1AccessToken;

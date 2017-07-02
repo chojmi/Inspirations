@@ -1,11 +1,11 @@
 package com.github.chojmi.inspirations.domain.usecase.photos;
 
+import com.github.chojmi.inspirations.domain.common.SubmitUiModel;
+import com.github.chojmi.inspirations.domain.common.UseCase;
+import com.github.chojmi.inspirations.domain.common.UseCaseProcessor;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
-import com.github.chojmi.inspirations.domain.model.SubmitUiModel;
-import com.github.chojmi.inspirations.domain.model.UseCase;
-import com.github.chojmi.inspirations.domain.model.UseCaseProcessor;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
 import javax.inject.Inject;

@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.domain.model;
+package com.github.chojmi.inspirations.domain.common;
 
 import io.reactivex.annotations.Nullable;
 

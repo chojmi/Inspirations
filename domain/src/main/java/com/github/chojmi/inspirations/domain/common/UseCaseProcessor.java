@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.domain.model;
+package com.github.chojmi.inspirations.domain.common;
 
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;

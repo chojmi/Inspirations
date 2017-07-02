@@ -14,7 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Collections;
 import java.util.List;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -38,8 +38,8 @@ public class PeopleRepositoryTest {
     @Test
     public void testGetPublicPhotosFromRemoteHappyCase() {
         when(mockPhotoList.size()).thenReturn(1);
-        when(mockLocalDataSource.loadUserPublicPhotos(FAKE_USER_ID, 1)).thenReturn(Observable.just(Collections.emptyList()));
-        when(mockRemoteDataSource.loadUserPublicPhotos(FAKE_USER_ID, 1)).thenReturn(Observable.just(mockPhotoList));
+        when(mockLocalDataSource.loadUserPublicPhotos(FAKE_USER_ID, 1)).thenReturn(Flowable.just(Collections.emptyList()));
+        when(mockRemoteDataSource.loadUserPublicPhotos(FAKE_USER_ID, 1)).thenReturn(Flowable.just(mockPhotoList));
 
         galleriesDataSource.loadUserPublicPhotos(FAKE_USER_ID).test().assertResult(mockPhotoList);
 
@@ -50,10 +50,10 @@ public class PeopleRepositoryTest {
     @Test
     public void testGetPublicPhotosFromLocalHappyCase() {
         when(mockPhotoList.size()).thenReturn(1);
-        when(mockLocalDataSource.loadUserPublicPhotos(FAKE_USER_ID, 1)).thenReturn(Observable.just(mockPhotoList));
-        when(mockRemoteDataSource.loadUserPublicPhotos(FAKE_USER_ID, 1)).thenReturn(Observable.create(e -> {
-            throw new IllegalStateException("Shouldn't be invoked");
-        }));
+        when(mockLocalDataSource.loadUserPublicPhotos(FAKE_USER_ID, 1)).thenReturn(Flowable.just(mockPhotoList));
+//        when(mockRemoteDataSource.loadUserPublicPhotos(FAKE_USER_ID, 1)).thenReturn(Flowable.create(e -> {
+//            throw new IllegalStateException("Shouldn't be invoked");
+//        }));
 
         galleriesDataSource.loadUserPublicPhotos(FAKE_USER_ID).test().assertResult(mockPhotoList);
 
@@ -64,8 +64,8 @@ public class PeopleRepositoryTest {
     @Test
     public void testGetPersonInfoFromRemoteHappyCase() {
         PersonEntityImpl mockPersonEntity = Mockito.mock(PersonEntityImpl.class);
-        when(mockLocalDataSource.loadPersonInfo(FAKE_USER_ID)).thenReturn(Observable.empty());
-        when(mockRemoteDataSource.loadPersonInfo(FAKE_USER_ID)).thenReturn(Observable.just(mockPersonEntity));
+        when(mockLocalDataSource.loadPersonInfo(FAKE_USER_ID)).thenReturn(Flowable.empty());
+        when(mockRemoteDataSource.loadPersonInfo(FAKE_USER_ID)).thenReturn(Flowable.just(mockPersonEntity));
 
         galleriesDataSource.loadPersonInfo(FAKE_USER_ID).test().assertResult(mockPersonEntity);
 
@@ -76,10 +76,10 @@ public class PeopleRepositoryTest {
     @Test
     public void testGetPersonInfoFromLocalHappyCase() {
         PersonEntityImpl mockPersonEntity = Mockito.mock(PersonEntityImpl.class);
-        when(mockLocalDataSource.loadPersonInfo(FAKE_USER_ID)).thenReturn(Observable.just(mockPersonEntity));
-        when(mockRemoteDataSource.loadPersonInfo(FAKE_USER_ID)).thenReturn(Observable.create(e -> {
-            throw new IllegalStateException("Shouldn't be invoked");
-        }));
+        when(mockLocalDataSource.loadPersonInfo(FAKE_USER_ID)).thenReturn(Flowable.just(mockPersonEntity));
+//        when(mockRemoteDataSource.loadPersonInfo(FAKE_USER_ID)).thenReturn(Observable.create(e -> {
+//            throw new IllegalStateException("Shouldn't be invoked");
+//        }));
 
         galleriesDataSource.loadPersonInfo(FAKE_USER_ID).test().assertResult(mockPersonEntity);
 

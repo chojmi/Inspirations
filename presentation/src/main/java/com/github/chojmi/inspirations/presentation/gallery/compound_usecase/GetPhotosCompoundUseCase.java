@@ -1,9 +1,9 @@
 package com.github.chojmi.inspirations.presentation.gallery.compound_usecase;
 
+import com.github.chojmi.inspirations.domain.common.SubmitUiModel;
+import com.github.chojmi.inspirations.domain.common.UseCase;
 import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
-import com.github.chojmi.inspirations.domain.model.SubmitUiModel;
-import com.github.chojmi.inspirations.domain.model.UseCase;
 import com.github.chojmi.inspirations.domain.usecase.people.GetUserInfo;
 import com.github.chojmi.inspirations.domain.usecase.people.GetUserPublicPhotos;
 import com.github.chojmi.inspirations.presentation.gallery.mapper.PhotoDataMapper;

@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -74,11 +75,15 @@ dependencies {
     compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:${rootProject.ext.rxBindingsVersion}"
 
     compile "com.google.dagger:dagger:${rootProject.ext.daggerLibVersion}"
-    annotationProcessor "com.google.dagger:dagger-compiler:${rootProject.ext.daggerLibVersion}"
+    kapt "com.google.dagger:dagger-compiler:${rootProject.ext.daggerLibVersion}"
+
+    compile "nz.bradcampbell:paperparcel:${rootProject.ext.paperParcelLibVersion}"
+    compile "nz.bradcampbell:paperparcel-kotlin:${rootProject.ext.paperParcelLibVersion}"
+    kapt "nz.bradcampbell:paperparcel-compiler:${rootProject.ext.paperParcelLibVersion}"
 
     // ButterKnife
     compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeLibVersion"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeLibVersion"
+    kapt "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeLibVersion"
 
     compile "com.dmitrymalkovich.android:material-design-dimens:$rootProject.ext.materialDesignDimensLibVersion"
 

@@ -1,10 +1,10 @@
 package com.github.chojmi.inspirations.domain.usecase.auth;
 
+import com.github.chojmi.inspirations.domain.common.SubmitUiModel;
+import com.github.chojmi.inspirations.domain.common.UseCase;
+import com.github.chojmi.inspirations.domain.common.UseCaseProcessor;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
-import com.github.chojmi.inspirations.domain.model.SubmitUiModel;
-import com.github.chojmi.inspirations.domain.model.UseCase;
-import com.github.chojmi.inspirations.domain.model.UseCaseProcessor;
 import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
 
 import javax.inject.Inject;
