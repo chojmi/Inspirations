@@ -50,11 +50,11 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
     }
 
     void setFavs(int position, PhotoFavs photoFavs) {
-        replace(position, GridAdapterUiModel.setFavs(getItem(position), photoFavs));
+        replace(position, GridAdapterUiModel.Companion.setFavs(getItem(position), photoFavs));
     }
 
     void setComments(int position, PhotoComments photoComments) {
-        replace(position, GridAdapterUiModel.setComments(getItem(position), photoComments));
+        replace(position, GridAdapterUiModel.Companion.setComments(getItem(position), photoComments));
     }
 
     interface Listener {

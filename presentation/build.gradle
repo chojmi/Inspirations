@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -64,6 +65,8 @@ dependencies {
     compile "com.android.support:design:${rootProject.ext.supportLibVersion}"
     compile "com.android.support:support-v13:${rootProject.ext.supportLibVersion}"
 
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:${rootProject.ext.kotlinVersion}"
+
     compile "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxAndroidLibVersion}"
     compile "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxJavaLibVersion}"
 
@@ -72,10 +75,6 @@ dependencies {
 
     compile "com.google.dagger:dagger:${rootProject.ext.daggerLibVersion}"
     annotationProcessor "com.google.dagger:dagger-compiler:${rootProject.ext.daggerLibVersion}"
-
-    provided "com.google.auto.value:auto-value:$rootProject.ext.autovalueLibVersion"
-    annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:$rootProject.ext.autovalueParcelLibVersion"
-    annotationProcessor "com.ryanharter.auto.value:auto-value-parcel-adapter:$rootProject.ext.autovalueParcelLibVersion"
 
     // ButterKnife
     compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeLibVersion"

@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import timber.log.Timber;
 
 public class PersonDataMapper {
@@ -18,12 +18,12 @@ public class PersonDataMapper {
     }
 
     public Person transform(PersonEntity person) {
-        return Person.create(person.getUsername(), person.getIconUrl());
+        return new Person(person.getUsername(), person.getIconUrl());
     }
 
     public List<Person> transform(List<PersonEntity> people) {
         List<Person> result = new ArrayList<>();
-        Observable.fromIterable(people)
+        Flowable.fromIterable(people)
                 .map(person -> transform(person))
                 .toList()
                 .subscribe(result::addAll, Timber::e);
