@@ -2,10 +2,10 @@ package com.github.chojmi.inspirations.domain.repository;
 
 import com.github.scribejava.core.model.OAuth1AccessToken;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 
 public interface AuthDataSource {
-    Observable<String> getAuthorizationUrl();
+    Flowable<String> getAuthorizationUrl();
 
-    Observable<OAuth1AccessToken> getAccessToken(String oauthVerifier);
+    Flowable<OAuth1AccessToken> getAccessToken(String oauthVerifier);
 }

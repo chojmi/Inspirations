@@ -11,7 +11,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
@@ -29,13 +29,15 @@ public class GalleriesRepository implements GalleriesDataSource {
     }
 
     @Override
-    public Observable<List<PhotoEntity>> loadGallery(String galleryId) {
+    public Flowable<List<PhotoEntity>> loadGallery(String galleryId) {
         return loadGallery(galleryId, 1);
     }
 
     @Override
-    public Observable<List<PhotoEntity>> loadGallery(String galleryId, int page) {
-        return Observable.concat(galleryLocalDataSource.loadGallery(galleryId, page),
-                galleryRemoteDataSource.loadGallery(galleryId, page)).filter(photos -> photos.size() > 0).firstElement().toObservable();
+    public Flowable<List<PhotoEntity>> loadGallery(String galleryId, int page) {
+        return Flowable.concat(galleryLocalDataSource.loadGallery(galleryId, page),
+                galleryRemoteDataSource.loadGallery(galleryId, page))
+                .filter(photos -> photos.size() > 0).firstElement()
+                .toFlowable();
     }
 }

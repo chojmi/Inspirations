@@ -12,8 +12,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.Flowable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -32,22 +31,21 @@ public class RemotePeopleDataSource implements PeopleDataSource {
     }
 
     @Override
-    public Observable<PersonEntity> loadPersonInfo(String userId) {
+    public Flowable<PersonEntity> loadPersonInfo(String userId) {
         return peopleService.loadPersonInfo(remoteQueryProducer.produceLoadPersonInfoQuery(userId))
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread()).map(personEntity -> personEntity);
+                .map(personEntity -> personEntity);
     }
 
     @Override
-    public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId) {
+    public Flowable<List<PhotoEntity>> loadUserPublicPhotos(String userId) {
         return loadUserPublicPhotos(userId, 1);
     }
 
     @Override
-    public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page) {
+    public Flowable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page) {
         return peopleService.loadUserPublicPhotos(remoteQueryProducer.produceLoadUserPublicPhotosQuery(userId, page))
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
                 .map((Function<GalleryEntityImpl, GalleryEntity>) galleryEntity -> galleryEntity)
                 .map(GalleryEntity::getPhoto);
     }

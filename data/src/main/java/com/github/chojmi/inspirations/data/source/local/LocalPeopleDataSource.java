@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 
 public final class LocalPeopleDataSource implements PeopleDataSource {
 
@@ -18,18 +18,18 @@ public final class LocalPeopleDataSource implements PeopleDataSource {
     }
 
     @Override
-    public Observable<PersonEntity> loadPersonInfo(String personId) {
-        return Observable.empty();
+    public Flowable<PersonEntity> loadPersonInfo(String personId) {
+        return Flowable.empty();
     }
 
 
     @Override
-    public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId) {
+    public Flowable<List<PhotoEntity>> loadUserPublicPhotos(String userId) {
         return loadUserPublicPhotos(userId, 1);
     }
 
     @Override
-    public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page) {
-        return Observable.just(Collections.emptyList());
+    public Flowable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page) {
+        return Flowable.just(Collections.emptyList());
     }
 }

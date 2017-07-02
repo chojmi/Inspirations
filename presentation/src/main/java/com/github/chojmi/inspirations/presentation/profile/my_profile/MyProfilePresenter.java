@@ -1,13 +1,13 @@
 package com.github.chojmi.inspirations.presentation.profile.my_profile;
 
+import com.github.chojmi.inspirations.domain.model.SubmitUiModel;
 import com.github.chojmi.inspirations.domain.usecase.auth.GetAccessToken;
 import com.github.chojmi.inspirations.domain.usecase.auth.GetLoginData;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 
-import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.observers.DisposableObserver;
+import io.reactivex.subscribers.ResourceSubscriber;
 import timber.log.Timber;
 
 import static dagger.internal.Preconditions.checkNotNull;
@@ -32,7 +32,6 @@ public class MyProfilePresenter implements MyProfileContract.Presenter {
 
     @Override
     public void destroyView() {
-        this.getToken.dispose();
         this.disposables.clear();
         this.view = null;
     }
@@ -42,18 +41,31 @@ public class MyProfilePresenter implements MyProfileContract.Presenter {
         fetchToken();
     }
 
-    private Observer<GetAccessToken.SubmitUiModel> getTokenObserver() {
-        return new DisposableObserver<GetAccessToken.SubmitUiModel>() {
+    private void fetchProfile(OAuth1AccessToken tokenEntity) {
+        //TODO: Fetch all profile data
+        view.renderProfile("Zalogowano");
+        disposables.add(getLoginData.process().subscribe(uiModel -> {
+            if (uiModel.isInProgress()) {
+                return;
+            }
+            if (uiModel.isSucceed()) {
+                view.renderProfile("Zalogowano jako: " + uiModel.getResult().getUsername());
+            }
+        }, Timber::d));
+    }
+
+    private void fetchToken() {
+        ResourceSubscriber<SubmitUiModel<OAuth1AccessToken>> tokenObserver = new ResourceSubscriber<SubmitUiModel<OAuth1AccessToken>>() {
             OAuth1AccessToken tokenEntity = null;
 
             @Override
-            public void onNext(GetAccessToken.SubmitUiModel submitUiModel) {
+            public void onNext(SubmitUiModel<OAuth1AccessToken> submitUiModel) {
                 tokenEntity = submitUiModel.getResult();
             }
 
             @Override
-            public void onError(Throwable e) {
-                Timber.e(e);
+            public void onError(Throwable t) {
+                Timber.e(t);
             }
 
             @Override
@@ -67,22 +79,7 @@ public class MyProfilePresenter implements MyProfileContract.Presenter {
                 view.isLoggedIn(tokenEntity != null);
             }
         };
-    }
-
-    private void fetchProfile(OAuth1AccessToken tokenEntity) {
-        //TODO: Fetch all profile data
-        view.renderProfile("Zalogowano");
-        disposables.add(getLoginData.invokeRequest().subscribe(uiModel -> {
-            if (uiModel.isInProgress()) {
-                return;
-            }
-            if (uiModel.isSucceed()) {
-                view.renderProfile("Zalogowano jako: " + uiModel.getResult().getUsername());
-            }
-        }, Timber::d));
-    }
-
-    private void fetchToken() {
-        getToken.buildUseCaseObservable(GetAccessToken.SubmitEvent.createObservable()).subscribe(getTokenObserver());
+        disposables.add(tokenObserver);
+        getToken.process().subscribe(tokenObserver);
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 
 public final class LocalGalleriesDataSource implements GalleriesDataSource {
 
@@ -17,12 +17,12 @@ public final class LocalGalleriesDataSource implements GalleriesDataSource {
     }
 
     @Override
-    public Observable<List<PhotoEntity>> loadGallery(String galleryId) {
+    public Flowable<List<PhotoEntity>> loadGallery(String galleryId) {
         return loadGallery(galleryId, 1);
     }
 
     @Override
-    public Observable<List<PhotoEntity>> loadGallery(String galleryId, int page) {
-        return Observable.just(Collections.emptyList());
+    public Flowable<List<PhotoEntity>> loadGallery(String galleryId, int page) {
+        return Flowable.just(Collections.emptyList());
     }
 }

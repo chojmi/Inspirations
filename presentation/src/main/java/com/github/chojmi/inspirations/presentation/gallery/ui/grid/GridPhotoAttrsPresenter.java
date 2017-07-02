@@ -6,7 +6,8 @@ import com.github.chojmi.inspirations.presentation.gallery.mapper.GalleryAttrsMa
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
+import io.reactivex.disposables.CompositeDisposable;
+import timber.log.Timber;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
@@ -15,6 +16,7 @@ class GridPhotoAttrsPresenter implements GridPhotoAttrsContract.Presenter {
     private final GetPhotoComments getPhotoComments;
     private final GalleryAttrsMapper galleryAttrsMapper;
     private GridPhotoAttrsContract.View view;
+    private CompositeDisposable disposables;
 
     GridPhotoAttrsPresenter(@NonNull GetPhotoFavs getPhotoFavs, @NonNull GetPhotoComments getPhotoComments, @NonNull GalleryAttrsMapper galleryAttrsMapper) {
         this.getPhotoFavs = checkNotNull(getPhotoFavs);
@@ -25,39 +27,36 @@ class GridPhotoAttrsPresenter implements GridPhotoAttrsContract.Presenter {
     @Override
     public void setView(@NonNull GridPhotoAttrsContract.View view) {
         this.view = checkNotNull(view);
+        this.disposables = new CompositeDisposable();
     }
 
     @Override
     public void loadFavs(int position, Photo photo) {
-        getPhotoFavs.buildUseCaseObservable(GetPhotoFavs.SubmitEvent.createObservable(checkNotNull(photo).getId())).subscribe(submitUiModel -> {
+        disposables.add(getPhotoFavs.process(checkNotNull(photo).getId()).subscribe(submitUiModel -> {
             if (submitUiModel.isInProgress()) {
                 return;
             }
-            if (submitUiModel.isSuccess()) {
+            if (submitUiModel.isSucceed()) {
                 view.showFavs(position, galleryAttrsMapper.transform(submitUiModel.getResult()));
             }
-        });
+        }, Timber::e));
     }
 
     @Override
     public void loadComments(int position, Photo photo) {
-        getPhotoComments.buildUseCaseObservable(GetPhotoComments.SubmitEvent.createObservable(checkNotNull(photo).getId())).subscribe(new Consumer<GetPhotoComments.SubmitUiModel>() {
-            @Override
-            public void accept(@NonNull GetPhotoComments.SubmitUiModel submitUiModel) throws Exception {
-                if (submitUiModel.isInProgress()) {
-                    return;
-                }
-                if (submitUiModel.isSuccess()) {
-                    view.showComments(position, galleryAttrsMapper.transform(submitUiModel.getResult()));
-                }
+        disposables.add(getPhotoComments.process(checkNotNull(photo).getId()).subscribe(submitUiModel -> {
+            if (submitUiModel.isInProgress()) {
+                return;
             }
-        });
+            if (submitUiModel.isSucceed()) {
+                view.showComments(position, galleryAttrsMapper.transform(submitUiModel.getResult()));
+            }
+        }, Timber::d));
     }
 
     @Override
     public void destroyView() {
-        this.getPhotoFavs.dispose();
-        this.getPhotoComments.dispose();
+        this.disposables.clear();
         this.view = null;
     }
 }

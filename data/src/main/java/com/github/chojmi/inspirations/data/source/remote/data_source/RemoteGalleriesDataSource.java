@@ -11,8 +11,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.Flowable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -31,14 +30,14 @@ public class RemoteGalleriesDataSource implements GalleriesDataSource {
     }
 
     @Override
-    public Observable<List<PhotoEntity>> loadGallery(String galleryId) {
+    public Flowable<List<PhotoEntity>> loadGallery(String galleryId) {
         return loadGallery(galleryId, 1);
     }
 
     @Override
-    public Observable<List<PhotoEntity>> loadGallery(String galleryId, int page) {
+    public Flowable<List<PhotoEntity>> loadGallery(String galleryId, int page) {
         return galleryService.loadGallery(remoteQueryProducer.produceLoadGalleryQuery(galleryId, page))
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread()).map((Function<GalleryEntityImpl, List<PhotoEntity>>) galleryEntity -> ((GalleryEntity) galleryEntity).getPhoto());
+                .map((Function<GalleryEntityImpl, List<PhotoEntity>>) galleryEntity -> ((GalleryEntity) galleryEntity).getPhoto());
     }
 }

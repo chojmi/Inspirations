@@ -3,67 +3,32 @@ package com.github.chojmi.inspirations.domain.usecase.people;
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
+import com.github.chojmi.inspirations.domain.model.SubmitUiModel;
+import com.github.chojmi.inspirations.domain.model.UseCase;
+import com.github.chojmi.inspirations.domain.model.UseCaseProcessor;
 import com.github.chojmi.inspirations.domain.repository.PeopleDataSource;
-import com.github.chojmi.inspirations.domain.usecase.blueprints.BaseSubmitEvent;
-import com.github.chojmi.inspirations.domain.usecase.blueprints.BaseSubmitUiModel;
-import com.github.chojmi.inspirations.domain.usecase.blueprints.UseCase;
-import com.google.auto.value.AutoValue;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.annotations.Nullable;
+import io.reactivex.Flowable;
 
-import static dagger.internal.Preconditions.checkNotNull;
+public class GetUserInfo implements UseCase<String, PersonEntity> {
 
-public class GetUserInfo extends UseCase<GetUserInfo.SubmitUiModel, GetUserInfo.SubmitEvent> {
-
-    private final PeopleDataSource peopleDataSource;
+    private final UseCaseProcessor<String, PersonEntity> processor;
 
     @Inject
     GetUserInfo(PeopleDataSource peopleDataSource, ThreadExecutor threadExecutor,
                 PostExecutionThread postExecutionThread) {
-        super(threadExecutor, postExecutionThread);
-        this.peopleDataSource = checkNotNull(peopleDataSource);
+        this.processor = new UseCaseProcessor<String, PersonEntity>(threadExecutor, postExecutionThread) {
+            @Override
+            public Flowable<PersonEntity> getUseCaseActionFlowable(String userId) {
+                return peopleDataSource.loadPersonInfo(userId);
+            }
+        };
     }
 
     @Override
-    public Observable<SubmitUiModel> buildUseCaseObservable(Observable<SubmitEvent> inputEvents) {
-        return inputEvents.flatMap(event -> peopleDataSource.loadPersonInfo(event.getUserId())
-                .map(GetUserInfo.SubmitUiModel::success)
-                .onErrorReturn(GetUserInfo.SubmitUiModel::failure)
-                .startWith(GetUserInfo.SubmitUiModel.inProgress()));
-    }
-
-    @AutoValue
-    public static abstract class SubmitEvent extends BaseSubmitEvent {
-        public static Observable<SubmitEvent> createObservable(@NonNull String userId) {
-            return Observable.fromCallable(() -> create(userId));
-        }
-
-        public static SubmitEvent create(@NonNull String userId) {
-            return new AutoValue_GetUserInfo_SubmitEvent(checkNotNull(userId));
-        }
-
-        abstract String getUserId();
-    }
-
-    @AutoValue
-    public static abstract class SubmitUiModel extends BaseSubmitUiModel {
-        static SubmitUiModel inProgress() {
-            return new AutoValue_GetUserInfo_SubmitUiModel(true, false, null, null);
-        }
-
-        static SubmitUiModel failure(Throwable t) {
-            return new AutoValue_GetUserInfo_SubmitUiModel(false, false, t, null);
-        }
-
-        static SubmitUiModel success(PersonEntity personEntity) {
-            return new AutoValue_GetUserInfo_SubmitUiModel(false, true, null, personEntity);
-        }
-
-        @Nullable
-        public abstract PersonEntity getResult();
+    public Flowable<SubmitUiModel<PersonEntity>> process(String userId) {
+        return processor.process(userId);
     }
 }
