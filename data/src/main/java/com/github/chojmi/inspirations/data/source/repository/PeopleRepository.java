@@ -14,7 +14,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Flowable;
 
-import static dagger.internal.Preconditions.checkNotNull;
+import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
 public class PeopleRepository implements PeopleDataSource {
 

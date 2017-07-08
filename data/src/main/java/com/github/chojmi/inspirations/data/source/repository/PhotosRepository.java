@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import io.reactivex.Flowable;
 import io.reactivex.annotations.NonNull;
 
-import static dagger.internal.Preconditions.checkNotNull;
+import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
 public class PhotosRepository implements PhotosDataSource {
 

@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 
-import static dagger.internal.Preconditions.checkNotNull;
+import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
 class PhotoViewPresenter implements PhotoViewContract.Presenter {
     private PhotoViewContract.View view;

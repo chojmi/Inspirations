@@ -10,7 +10,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
-import static dagger.internal.Preconditions.checkNotNull;
+import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
 class GridPhotoPresenter implements GridPhotoContract.Presenter {
     private final UseCase<String, List<Photo>> getPhotosCompoundUseCase;
