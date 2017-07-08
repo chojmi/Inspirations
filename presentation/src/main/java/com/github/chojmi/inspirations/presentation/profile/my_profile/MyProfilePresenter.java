@@ -1,8 +1,9 @@
 package com.github.chojmi.inspirations.presentation.profile.my_profile;
 
 import com.github.chojmi.inspirations.domain.common.SubmitUiModel;
+import com.github.chojmi.inspirations.domain.common.UseCase;
+import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
 import com.github.chojmi.inspirations.domain.usecase.auth.GetAccessToken;
-import com.github.chojmi.inspirations.domain.usecase.auth.GetLoginData;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 
 import io.reactivex.annotations.NonNull;
@@ -14,11 +15,11 @@ import static dagger.internal.Preconditions.checkNotNull;
 
 public class MyProfilePresenter implements MyProfileContract.Presenter {
     private final GetAccessToken getToken;
-    private final GetLoginData getLoginData;
+    private final UseCase<Void, UserEntity> getLoginData;
     private CompositeDisposable disposables;
     private MyProfileContract.View view;
 
-    public MyProfilePresenter(@NonNull GetLoginData getLoginData, @NonNull GetAccessToken getToken) {
+    public MyProfilePresenter(@NonNull UseCase<Void, UserEntity> getLoginData, @NonNull GetAccessToken getToken) {
         this.getLoginData = checkNotNull(getLoginData);
         this.getToken = checkNotNull(getToken);
     }
@@ -44,7 +45,7 @@ public class MyProfilePresenter implements MyProfileContract.Presenter {
     private void fetchProfile(OAuth1AccessToken tokenEntity) {
         //TODO: Fetch all profile data
         view.renderProfile("Zalogowano");
-        disposables.add(getLoginData.process().subscribe(uiModel -> {
+        disposables.add(getLoginData.process(null).subscribe(uiModel -> {
             if (uiModel.isInProgress()) {
                 return;
             }

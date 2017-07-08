@@ -78,7 +78,6 @@ dependencies {
 
     compile "com.google.code.gson:gson:${rootProject.ext.gsonLibVersion}"
 
-    //Event logging
     compile "com.jakewharton.timber:timber:$rootProject.ext.timberLibVersion"
 
     compile "com.facebook.stetho:stetho-okhttp3:$rootProject.ext.stethoLibVersion"

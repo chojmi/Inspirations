@@ -60,7 +60,7 @@ dependencies {
     mockCompile project(path: ':data', configuration: 'mockDebug')
     prodCompile project(path: ':data', configuration: 'prodDebug')
     compile project(":domain")
-    compile 'com.android.support:multidex:1.0.1'
+    compile "com.android.support:multidex:${rootProject.ext.multiDexVersion}"
     compile "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     compile "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}"
     compile "com.android.support:design:${rootProject.ext.supportLibVersion}"
