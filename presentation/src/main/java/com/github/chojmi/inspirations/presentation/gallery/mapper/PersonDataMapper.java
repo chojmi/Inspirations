@@ -18,7 +18,7 @@ public class PersonDataMapper {
     }
 
     public Person transform(PersonEntity person) {
-        return new Person(person.getUsername(), person.getIconUrl());
+        return new Person(person.getId(), person.getUsername(), person.getIconUrl());
     }
 
     public List<Person> transform(List<PersonEntity> people) {

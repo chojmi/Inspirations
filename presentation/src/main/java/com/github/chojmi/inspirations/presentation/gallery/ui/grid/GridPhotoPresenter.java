@@ -2,6 +2,7 @@ package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
 
 import com.github.chojmi.inspirations.domain.common.UseCase;
 import com.github.chojmi.inspirations.presentation.blueprints.exception.ViewNotFoundException;
+import com.github.chojmi.inspirations.presentation.gallery.model.Person;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 
 import java.util.List;
@@ -46,6 +47,11 @@ class GridPhotoPresenter implements GridPhotoContract.Presenter {
     @Override
     public void photoSelected(Photo photo) {
         view.openPhotoView(photo);
+    }
+
+    @Override
+    public void profileSelected(Person person) {
+        view.openUserProfile(person);
     }
 
     @Override

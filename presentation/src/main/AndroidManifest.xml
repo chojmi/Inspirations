@@ -19,5 +19,6 @@
         </activity>
         <activity android:name=".gallery.ui.photo.PhotoViewActivity"/>
         <activity android:name=".profile.login.LoginWebViewActivity"/>
+        <activity android:name=".profile.user_profile.UserProfileActivity"/>
     </application>
 </manifest>

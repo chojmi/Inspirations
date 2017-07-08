@@ -18,17 +18,17 @@ import io.reactivex.subjects.PublishSubject;
 
 public abstract class BaseRecyclerViewAdapter<VH extends RecyclerView.ViewHolder, O> extends RecyclerView.Adapter<VH> {
 
-    private static final PublishSubject<Integer> mViewClickSubject = PublishSubject.create();
-    private final List<O> mDataset;
+    private static final PublishSubject<Integer> viewClickSubject = PublishSubject.create();
+    private final List<O> dataset;
 
     public BaseRecyclerViewAdapter() {
-        this.mDataset = new ArrayList<>();
+        this.dataset = new ArrayList<>();
     }
 
     public void setData(List<O> dataset) {
-        mDataset.clear();
+        this.dataset.clear();
         if (dataset != null) {
-            mDataset.addAll(dataset);
+            this.dataset.addAll(dataset);
         }
 
         notifyDataSetChanged();
@@ -36,21 +36,21 @@ public abstract class BaseRecyclerViewAdapter<VH extends RecyclerView.ViewHolder
 
     // Insert a new item to the RecyclerView on a predefined position
     public void insert(int position, O data) {
-        mDataset.add(position, data);
+        dataset.add(position, data);
         notifyItemInserted(position);
     }
 
     // Remove a RecyclerView item containing a specified Data object
     public void remove(O data) {
-        int position = mDataset.indexOf(data);
-        mDataset.remove(position);
+        int position = dataset.indexOf(data);
+        dataset.remove(position);
         notifyItemRemoved(position);
     }
 
     // Replaces a RecyclerView item on a predefined position
     public void replace(int position, O data) {
-        mDataset.remove(position);
-        mDataset.add(position, data);
+        dataset.remove(position);
+        dataset.add(position, data);
         notifyItemChanged(position);
     }
 
@@ -116,7 +116,7 @@ public abstract class BaseRecyclerViewAdapter<VH extends RecyclerView.ViewHolder
     }
 
     protected void changeData(@NonNull List<O> childList) {
-        List<O> existChildList = mDataset;
+        List<O> existChildList = dataset;
         checkAndMoveItems(existChildList, childList);
         checkAndChangeItems(existChildList, childList);
         checkAndRemoveItem(existChildList, childList);
@@ -126,23 +126,23 @@ public abstract class BaseRecyclerViewAdapter<VH extends RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return dataset.size();
     }
 
     @Nullable
     public O getItem(int position) {
-        if (position < 0 && position >= mDataset.size()) {
+        if (position < 0 && position >= dataset.size()) {
             return null;
         }
-        return mDataset.get(position);
+        return dataset.get(position);
     }
 
     public List<O> getItems() {
-        return mDataset;
+        return dataset;
     }
 
     public Observable<Integer> getOnItemClickPositionObservable() {
-        return mViewClickSubject;
+        return viewClickSubject;
     }
 
     public Observable<O> getOnItemClickObservable() {
@@ -157,7 +157,7 @@ public abstract class BaseRecyclerViewAdapter<VH extends RecyclerView.ViewHolder
             RxView.clicks(itemView)
                     .takeUntil(RxView.detaches(parent))
                     .map(o -> getAdapterPosition())
-                    .subscribe(mViewClickSubject);
+                    .subscribe(viewClickSubject);
         }
     }
 }

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 import com.github.chojmi.inspirations.presentation.gallery.model.GridAdapterUiModel;
+import com.github.chojmi.inspirations.presentation.gallery.model.Person;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoComments;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoFavs;
@@ -76,7 +77,8 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         galleryAdapter = new GridAdapter(this);
-        disposables.add(galleryAdapter.getOnItemClickObservable().subscribe(uiModel -> photoPresenter.photoSelected(uiModel.getPhoto())));
+        disposables.add(galleryAdapter.getPhotoClicksObservable().subscribe(photo -> photoPresenter.photoSelected(photo)));
+        disposables.add(galleryAdapter.getProfileClicksObservable().subscribe(photo -> photoPresenter.profileSelected(photo.getPerson())));
         recyclerView.setAdapter(galleryAdapter);
     }
 
@@ -88,6 +90,11 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     @Override
     public void openPhotoView(Photo photo) {
         getNavigator().navigateToPhoto(getContext(), photo);
+    }
+
+    @Override
+    public void openUserProfile(Person person) {
+        getNavigator().navigateToUserProfile(getContext(), person.getId());
     }
 
     @Override

@@ -12,19 +12,19 @@ import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNot
 public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
     private final GetAuthorizationUrl getAuthorizationUrl;
     private final GetAccessToken getToken;
-    private final CompositeDisposable disposables;
+    private CompositeDisposable disposables;
     private LoginWebViewContract.View view;
     private String currentFrob = "";
 
     public LoginWebViewPresenter(@NonNull GetAuthorizationUrl getAuthorizationUrl, @NonNull GetAccessToken getToken) {
         this.getAuthorizationUrl = checkNotNull(getAuthorizationUrl);
         this.getToken = checkNotNull(getToken);
-        this.disposables = new CompositeDisposable();
     }
 
     @Override
     public void setView(@NonNull LoginWebViewContract.View view) {
         this.view = checkNotNull(view);
+        this.disposables = new CompositeDisposable();
         openLoginPage();
     }
 

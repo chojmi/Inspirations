@@ -4,22 +4,18 @@
              android:layout_height="match_parent"
              android:orientation="vertical">
 
-    <LinearLayout
+    <include
+        android:id="@+id/user_profile"
+        layout="@layout/view_user_profile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-
-        <Button
-            android:id="@+id/btn_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login"/>
-    </LinearLayout>
+        android:text="Login"/>
 </FrameLayout>

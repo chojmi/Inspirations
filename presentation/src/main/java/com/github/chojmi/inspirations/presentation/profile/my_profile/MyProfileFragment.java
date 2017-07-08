@@ -8,11 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
+import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 import com.github.chojmi.inspirations.presentation.main.MainActivity;
+import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileView;
 
 import javax.inject.Inject;
 
@@ -23,7 +24,7 @@ import butterknife.OnClick;
 public class MyProfileFragment extends BaseFragment<MainActivity> implements MyProfileContract.View {
     private static final int LOGIN_REQUEST_CODE = 1000;
     @Inject MyProfileContract.Presenter presenter;
-    @BindView(R.id.tv_name) TextView name;
+    @BindView(R.id.user_profile) UserProfileView userProfileView;
     @BindView(R.id.btn_login) Button loginAction;
 
     public static MyProfileFragment newInstance() {
@@ -61,6 +62,7 @@ public class MyProfileFragment extends BaseFragment<MainActivity> implements MyP
     public void onDestroy() {
         super.onDestroy();
         getInspirationsApp().releaseMyProfileComponent();
+        getInspirationsApp().releaseUserProfileComponent();
     }
 
     @Override
@@ -80,13 +82,9 @@ public class MyProfileFragment extends BaseFragment<MainActivity> implements MyP
     }
 
     @Override
-    public void isLoggedIn(boolean isLoggedIn) {
-        name.setVisibility(isLoggedIn ? View.VISIBLE : View.GONE);
-        loginAction.setVisibility(isLoggedIn ? View.GONE : View.VISIBLE);
-    }
-
-    @Override
-    public void renderProfile(String name) {
-        this.name.setText(name);
+    public void showProfile(UserEntity userEntity) {
+        getInspirationsApp().createUserProfileComponent(userEntity.getId()).inject(userProfileView);
+        userProfileView.setVisibility(View.VISIBLE);
+        loginAction.setVisibility(View.GONE);
     }
 }
