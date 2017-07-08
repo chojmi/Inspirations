@@ -6,13 +6,17 @@ import com.github.chojmi.inspirations.data.source.Remote;
 import com.github.chojmi.inspirations.data.source.remote.service.AuthTestService;
 import com.github.chojmi.inspirations.data.source.remote.service.FakeAuthTestService;
 import com.github.chojmi.inspirations.data.source.remote.service.FakeGalleriesService;
+import com.github.chojmi.inspirations.data.source.remote.service.FakeOAuthService;
 import com.github.chojmi.inspirations.data.source.remote.service.FakePeopleService;
 import com.github.chojmi.inspirations.data.source.remote.service.FakePhotosService;
 import com.github.chojmi.inspirations.data.source.remote.service.FakeRemoteQueryProducerImpl;
 import com.github.chojmi.inspirations.data.source.remote.service.GalleriesService;
+import com.github.chojmi.inspirations.data.source.remote.service.OAuthService;
 import com.github.chojmi.inspirations.data.source.remote.service.PeopleService;
 import com.github.chojmi.inspirations.data.source.remote.service.PhotosService;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -41,6 +45,12 @@ public class RestClientModule {
     @Provides
     AuthTestService provideAuthTestService() {
         return new FakeAuthTestService();
+    }
+
+    @Singleton
+    @Provides
+    OAuthService provideOAuthService() {
+        return new FakeOAuthService();
     }
 
     @Provides

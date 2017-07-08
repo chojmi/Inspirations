@@ -12,6 +12,7 @@ import com.github.chojmi.inspirations.data.source.remote.interceptors.SigningInt
 import com.github.chojmi.inspirations.data.source.remote.service.AuthTestService;
 import com.github.chojmi.inspirations.data.source.remote.service.GalleriesService;
 import com.github.chojmi.inspirations.data.source.remote.service.OAuthService;
+import com.github.chojmi.inspirations.data.source.remote.service.OAuthServiceImpl;
 import com.github.chojmi.inspirations.data.source.remote.service.PeopleService;
 import com.github.chojmi.inspirations.data.source.remote.service.PhotosService;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
@@ -52,7 +53,7 @@ public class RestClientModule {
     @Singleton
     @Provides
     OAuthService provideOAuthServiceWrapper(OAuth10aService oAuth10aService, @Local AccessTokenHolder accessTokenHolder) {
-        return new OAuthService(oAuth10aService, accessTokenHolder);
+        return new OAuthServiceImpl(oAuth10aService, accessTokenHolder);
     }
 
     @Provides

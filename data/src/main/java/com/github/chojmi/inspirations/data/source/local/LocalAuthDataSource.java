@@ -49,7 +49,6 @@ public class LocalAuthDataSource implements AuthDataSource, AccessTokenHolder {
         this.requestToken = requestToken;
     }
 
-
     @Override
     public void saveAccessToken(@Nullable OAuth1AccessToken accessToken) {
         this.accessToken = accessToken;

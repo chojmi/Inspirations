@@ -1,7 +1,5 @@
 package com.github.chojmi.inspirations.data.source.repository;
 
-import android.support.annotation.NonNull;
-
 import com.github.chojmi.inspirations.data.source.Local;
 import com.github.chojmi.inspirations.data.source.Remote;
 import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
@@ -13,6 +11,7 @@ import org.reactivestreams.Publisher;
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.annotations.Nullable;
 import io.reactivex.functions.Function;
 
@@ -44,7 +43,7 @@ public class AuthRepository implements AuthDataSource {
         return getRequestToken()
                 .flatMap(new Function<OAuth1RequestToken, Publisher<String>>() {
                     @Override
-                    public Publisher<String> apply(@io.reactivex.annotations.NonNull OAuth1RequestToken requestToken) throws Exception {
+                    public Publisher<String> apply(@NonNull OAuth1RequestToken requestToken) throws Exception {
                         return getAuthorizationUrl(requestToken);
                     }
                 });
@@ -66,7 +65,7 @@ public class AuthRepository implements AuthDataSource {
         return Flowable.concat(localAuthDataSource.getAccessToken(""),
                 getRequestToken().flatMap(new Function<OAuth1RequestToken, Publisher<OAuth1AccessToken>>() {
                     @Override
-                    public Publisher<OAuth1AccessToken> apply(@io.reactivex.annotations.NonNull OAuth1RequestToken requestToken) throws Exception {
+                    public Publisher<OAuth1AccessToken> apply(@NonNull OAuth1RequestToken requestToken) throws Exception {
                         return getAccessToken(requestToken, oauthVerifier);
                     }
                 }))
