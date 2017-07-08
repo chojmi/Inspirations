@@ -14,6 +14,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Collections;
 import java.util.List;
 
+import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 
 import static org.mockito.Mockito.times;
@@ -51,9 +52,9 @@ public class PeopleRepositoryTest {
     public void testGetPublicPhotosFromLocalHappyCase() {
         when(mockPhotoList.size()).thenReturn(1);
         when(mockLocalDataSource.loadUserPublicPhotos(FAKE_USER_ID, 1)).thenReturn(Flowable.just(mockPhotoList));
-//        when(mockRemoteDataSource.loadUserPublicPhotos(FAKE_USER_ID, 1)).thenReturn(Flowable.create(e -> {
-//            throw new IllegalStateException("Shouldn't be invoked");
-//        }));
+        when(mockRemoteDataSource.loadUserPublicPhotos(FAKE_USER_ID, 1)).thenReturn(Flowable.create(e -> {
+            throw new IllegalStateException("Shouldn't be invoked");
+        }, BackpressureStrategy.BUFFER));
 
         galleriesDataSource.loadUserPublicPhotos(FAKE_USER_ID).test().assertResult(mockPhotoList);
 
@@ -77,9 +78,9 @@ public class PeopleRepositoryTest {
     public void testGetPersonInfoFromLocalHappyCase() {
         PersonEntityImpl mockPersonEntity = Mockito.mock(PersonEntityImpl.class);
         when(mockLocalDataSource.loadPersonInfo(FAKE_USER_ID)).thenReturn(Flowable.just(mockPersonEntity));
-//        when(mockRemoteDataSource.loadPersonInfo(FAKE_USER_ID)).thenReturn(Observable.create(e -> {
-//            throw new IllegalStateException("Shouldn't be invoked");
-//        }));
+        when(mockRemoteDataSource.loadPersonInfo(FAKE_USER_ID)).thenReturn(Flowable.create(e -> {
+            throw new IllegalStateException("Shouldn't be invoked");
+        }, BackpressureStrategy.BUFFER));
 
         galleriesDataSource.loadPersonInfo(FAKE_USER_ID).test().assertResult(mockPersonEntity);
 

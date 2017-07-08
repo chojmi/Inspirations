@@ -38,7 +38,7 @@ public class GalleryAttrsMapper {
     private List<Comment> transform(List<CommentEntity> people) {
         List<Comment> result = new ArrayList<>();
         Observable.fromIterable(people)
-                .map(comment -> transform(comment))
+                .map(this::transform)
                 .toList()
                 .subscribe(result::addAll, Timber::e);
         return result;

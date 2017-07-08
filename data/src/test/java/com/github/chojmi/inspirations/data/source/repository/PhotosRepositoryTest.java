@@ -14,7 +14,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 
-import io.reactivex.Observable;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -51,8 +52,8 @@ public class PhotosRepositoryTest {
     @Test
     public void testLoadPhotoFavsFromRemoteHappyCase() {
         when(mockRemotePersonEntityImplList.size()).thenReturn(1);
-        when(mockLocalDataSource.loadPhotoFavs(FAKE_PHOTO_ID)).thenReturn(Observable.just(mockLocalPhotoFavsEntity));
-        when(mockRemoteDataSource.loadPhotoFavs(FAKE_PHOTO_ID)).thenReturn(Observable.just(mockRemotePhotoFavsEntity));
+        when(mockLocalDataSource.loadPhotoFavs(FAKE_PHOTO_ID)).thenReturn(Flowable.just(mockLocalPhotoFavsEntity));
+        when(mockRemoteDataSource.loadPhotoFavs(FAKE_PHOTO_ID)).thenReturn(Flowable.just(mockRemotePhotoFavsEntity));
 
         photosDataSource.loadPhotoFavs(FAKE_PHOTO_ID).test().assertResult(mockRemotePhotoFavsEntity);
 
@@ -63,10 +64,10 @@ public class PhotosRepositoryTest {
     @Test
     public void testLoadPhotoFavsFromLocalHappyCase() {
         when(mockLocalPersonEntityImplList.size()).thenReturn(1);
-        when(mockLocalDataSource.loadPhotoFavs(FAKE_PHOTO_ID)).thenReturn(Observable.just(mockLocalPhotoFavsEntity));
-        when(mockRemoteDataSource.loadPhotoFavs(FAKE_PHOTO_ID)).thenReturn(Observable.create(e -> {
+        when(mockLocalDataSource.loadPhotoFavs(FAKE_PHOTO_ID)).thenReturn(Flowable.just(mockLocalPhotoFavsEntity));
+        when(mockRemoteDataSource.loadPhotoFavs(FAKE_PHOTO_ID)).thenReturn(Flowable.create(e -> {
             throw new IllegalStateException("Shouldn't be invoked");
-        }));
+        }, BackpressureStrategy.BUFFER));
 
         photosDataSource.loadPhotoFavs(FAKE_PHOTO_ID).test().assertResult(mockLocalPhotoFavsEntity);
 
@@ -77,8 +78,8 @@ public class PhotosRepositoryTest {
     @Test
     public void testLoadPhotoCommentsFromRemoteHappyCase() {
         when(mockRemoteCommentEntityImplList.size()).thenReturn(1);
-        when(mockLocalDataSource.loadPhotoComments(FAKE_PHOTO_ID)).thenReturn(Observable.just(mockLocalPhotoCommentsEntity));
-        when(mockRemoteDataSource.loadPhotoComments(FAKE_PHOTO_ID)).thenReturn(Observable.just(mockRemotePhotoCommentsEntity));
+        when(mockLocalDataSource.loadPhotoComments(FAKE_PHOTO_ID)).thenReturn(Flowable.just(mockLocalPhotoCommentsEntity));
+        when(mockRemoteDataSource.loadPhotoComments(FAKE_PHOTO_ID)).thenReturn(Flowable.just(mockRemotePhotoCommentsEntity));
 
         photosDataSource.loadPhotoComments(FAKE_PHOTO_ID).test().assertResult(mockRemotePhotoCommentsEntity);
 
@@ -89,10 +90,10 @@ public class PhotosRepositoryTest {
     @Test
     public void testLoadPhotoCommentsFromLocalHappyCase() {
         when(mockLocalCommentEntityImplList.size()).thenReturn(1);
-        when(mockLocalDataSource.loadPhotoComments(FAKE_PHOTO_ID)).thenReturn(Observable.just(mockLocalPhotoCommentsEntity));
-        when(mockRemoteDataSource.loadPhotoComments(FAKE_PHOTO_ID)).thenReturn(Observable.create(e -> {
+        when(mockLocalDataSource.loadPhotoComments(FAKE_PHOTO_ID)).thenReturn(Flowable.just(mockLocalPhotoCommentsEntity));
+        when(mockRemoteDataSource.loadPhotoComments(FAKE_PHOTO_ID)).thenReturn(Flowable.create(e -> {
             throw new IllegalStateException("Shouldn't be invoked");
-        }));
+        }, BackpressureStrategy.BUFFER));
 
         photosDataSource.loadPhotoComments(FAKE_PHOTO_ID).test().assertResult(mockLocalPhotoCommentsEntity);
 
