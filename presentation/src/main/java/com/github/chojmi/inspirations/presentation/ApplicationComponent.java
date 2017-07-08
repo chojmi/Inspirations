@@ -25,6 +25,8 @@ import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewCom
 import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewModule;
 import com.github.chojmi.inspirations.presentation.profile.my_profile.MyProfileComponent;
 import com.github.chojmi.inspirations.presentation.profile.my_profile.MyProfileModule;
+import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileComponent;
+import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileModule;
 
 import javax.inject.Singleton;
 
@@ -44,6 +46,8 @@ public interface ApplicationComponent {
     LoginWebViewComponent plus(LoginWebViewModule loginWebViewModule);
 
     MyProfileComponent plus(MyProfileModule myProfileModule);
+
+    UserProfileComponent plus(UserProfileModule userProfileModule);
 
     Context getContext();
 

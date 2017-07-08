@@ -5,7 +5,7 @@ import com.github.chojmi.inspirations.data.entity.helpers.ImageLinkProvider
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity
 import com.google.gson.annotations.SerializedName
 
-data class PersonEntityImpl(val id: String,
+data class PersonEntityImpl(private val id: String,
                             val nsid: String,
                             @SerializedName("ispro") val isPro: Int,
                             @SerializedName("iconserver") val server: Int,
@@ -14,6 +14,10 @@ data class PersonEntityImpl(val id: String,
                             private val description: ContentHolder) : PersonEntity {
     fun getDescription(): String {
         return description.content
+    }
+
+    override fun getId(): String {
+        return id
     }
 
     override fun getUsername(): String {

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.gallery.ui.photo.PhotoViewActivity;
 import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewActivity;
+import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileActivity;
 
 import javax.inject.Singleton;
 
@@ -30,6 +31,13 @@ public class Navigator {
         if (fragment != null) {
             Intent intentToLaunch = LoginWebViewActivity.getCallingIntent(fragment.getContext());
             fragment.startActivityForResult(intentToLaunch, requestCode);
+        }
+    }
+
+    public void navigateToUserProfile(Context context, String userId) {
+        if (context != null) {
+            Intent intentToLaunch = UserProfileActivity.getCallingIntent(context, userId);
+            context.startActivity(intentToLaunch);
         }
     }
 }

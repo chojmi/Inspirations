@@ -11,7 +11,7 @@ import dagger.Provides;
 @Module
 public class MyProfileModule {
     @Provides
-    MyProfileContract.Presenter providePhotoViewPresenter(GetLoginData getLoginData, GetAccessToken getToken) {
+    MyProfileContract.Presenter provideyProfilePresenter(GetLoginData getLoginData, GetAccessToken getToken) {
         return new MyProfilePresenter(getLoginData, getToken);
     }
 }

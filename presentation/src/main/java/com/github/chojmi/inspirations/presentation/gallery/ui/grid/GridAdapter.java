@@ -12,11 +12,16 @@ import com.github.chojmi.inspirations.presentation.gallery.model.PhotoComments;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoFavs;
 import com.github.chojmi.inspirations.presentation.gallery.ui.grid.item.GridItemBottomView;
 import com.github.chojmi.inspirations.presentation.gallery.ui.grid.item.GridItemTopView;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
 
 class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder, GridAdapterUiModel> {
     private final Listener listener;
+    private final PublishSubject<Integer> profileClicksSubject = PublishSubject.create();
+    private final PublishSubject<Integer> photoClicksSubject = PublishSubject.create();
 
     GridAdapter(Listener listener) {
         this.listener = listener;
@@ -57,6 +62,14 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
         replace(position, GridAdapterUiModel.Companion.setComments(getItem(position), photoComments));
     }
 
+    public Observable<Photo> getProfileClicksObservable() {
+        return profileClicksSubject.map(integer -> getItem(integer).getPhoto());
+    }
+
+    public Observable<Photo> getPhotoClicksObservable() {
+        return photoClicksSubject.map(integer -> getItem(integer).getPhoto());
+    }
+
     interface Listener {
         void onNewItemBind(int position, Photo photo);
     }
@@ -67,6 +80,15 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
 
         GalleryViewHolder(View itemView, ViewGroup parent) {
             super(itemView, parent);
+            gridItemTopView.getProfileClicksObservable()
+                    .takeUntil(RxView.detaches(parent))
+                    .map(o -> getAdapterPosition())
+                    .subscribe(profileClicksSubject);
+
+            gridItemTopView.getPhotoClicksObservable()
+                    .takeUntil(RxView.detaches(parent))
+                    .map(o -> getAdapterPosition())
+                    .subscribe(photoClicksSubject);
         }
 
         void setGridAdapterUiModel(GridAdapterUiModel gridAdapterUiModel) {

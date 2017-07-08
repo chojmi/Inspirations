@@ -5,9 +5,14 @@ import com.github.chojmi.inspirations.domain.entity.people.PersonEntity
 import com.google.gson.annotations.SerializedName
 
 data class PersonEntityImpl(private val username: String,
-                            val nsid: String,
+                            private val nsid: String,
                             @SerializedName("iconserver") val server: Int,
                             @SerializedName("iconfarm") val farm: Int) : PersonEntity {
+
+    override fun getId(): String {
+        return nsid
+    }
+
     override fun getUsername(): String {
         return username
     }

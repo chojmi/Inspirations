@@ -13,7 +13,10 @@ import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewCom
 import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewModule;
 import com.github.chojmi.inspirations.presentation.profile.my_profile.MyProfileComponent;
 import com.github.chojmi.inspirations.presentation.profile.my_profile.MyProfileModule;
+import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileComponent;
+import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileModule;
 
+import io.reactivex.annotations.NonNull;
 import timber.log.Timber;
 
 public class InspirationsApp extends Application {
@@ -23,6 +26,7 @@ public class InspirationsApp extends Application {
     private PhotoViewComponent photoViewComponent;
     private LoginWebViewComponent loginWebViewComponent;
     private MyProfileComponent myProfileComponent;
+    private UserProfileComponent userProfileComponent;
 
     @Override
     public void onCreate() {
@@ -79,5 +83,14 @@ public class InspirationsApp extends Application {
 
     public void releaseMyProfileComponent() {
         myProfileComponent = null;
+    }
+
+    public UserProfileComponent createUserProfileComponent(@NonNull String userId) {
+        userProfileComponent = applicationComponent.plus(new UserProfileModule(userId));
+        return userProfileComponent;
+    }
+
+    public void releaseUserProfileComponent() {
+        userProfileComponent = null;
     }
 }
