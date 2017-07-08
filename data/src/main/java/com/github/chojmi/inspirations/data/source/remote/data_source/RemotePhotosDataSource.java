@@ -8,8 +8,7 @@ import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.Flowable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 
@@ -27,18 +26,16 @@ public class RemotePhotosDataSource implements PhotosDataSource {
     }
 
     @Override
-    public Observable<PhotoFavsEntity> loadPhotoFavs(String photoId) {
+    public Flowable<PhotoFavsEntity> loadPhotoFavs(String photoId) {
         return photosService.loadPhotoFavs(remoteQueryProducer.produceLoadPhotoFavsQuery(photoId))
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
                 .map(photoFavsEntity -> photoFavsEntity);
     }
 
     @Override
-    public Observable<PhotoCommentsEntity> loadPhotoComments(String photoId) {
+    public Flowable<PhotoCommentsEntity> loadPhotoComments(String photoId) {
         return photosService.loadPhotoComments(remoteQueryProducer.produceLoadPhotoComments(photoId))
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
                 .map(photoCommentsEntity -> photoCommentsEntity);
     }
 }

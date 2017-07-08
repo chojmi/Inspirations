@@ -82,7 +82,7 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
 
     @Override
     public void showPhotos(List<Photo> photos) {
-        galleryAdapter.setData(GridAdapterUiModel.create(photos));
+        galleryAdapter.setData(GridAdapterUiModel.Companion.create(photos));
     }
 
     @Override

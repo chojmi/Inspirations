@@ -4,10 +4,10 @@ import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 
 import java.util.List;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 
 public interface GalleriesDataSource {
-    Observable<List<PhotoEntity>> loadGallery(String galleryId);
+    Flowable<List<PhotoEntity>> loadGallery(String galleryId);
 
-    Observable<List<PhotoEntity>> loadGallery(String galleryId, int page);
+    Flowable<List<PhotoEntity>> loadGallery(String galleryId, int page);
 }

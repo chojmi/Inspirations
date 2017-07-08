@@ -5,18 +5,18 @@ import com.github.chojmi.inspirations.data.entity.people.PersonEntityImpl;
 
 import java.util.Map;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import retrofit2.http.QueryMap;
 
 public class FakePeopleService implements PeopleService {
 
     @Override
-    public Observable<PersonEntityImpl> loadPersonInfo(@QueryMap Map<String, String> options) {
-        return Observable.empty();
+    public Flowable<PersonEntityImpl> loadPersonInfo(@QueryMap Map<String, String> options) {
+        return Flowable.empty();
     }
 
     @Override
-    public Observable<GalleryEntityImpl> loadUserPublicPhotos(@QueryMap Map<String, String> options) {
-        return Observable.empty();
+    public Flowable<GalleryEntityImpl> loadUserPublicPhotos(@QueryMap Map<String, String> options) {
+        return Flowable.empty();
     }
 }

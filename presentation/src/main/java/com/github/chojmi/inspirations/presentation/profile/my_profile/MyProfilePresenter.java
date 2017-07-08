@@ -1,39 +1,39 @@
 package com.github.chojmi.inspirations.presentation.profile.my_profile;
 
+import com.github.chojmi.inspirations.domain.common.SubmitUiModel;
+import com.github.chojmi.inspirations.domain.common.UseCase;
+import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
 import com.github.chojmi.inspirations.domain.usecase.auth.GetAccessToken;
-import com.github.chojmi.inspirations.domain.usecase.auth.GetLoginData;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 
-import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.observers.DisposableObserver;
+import io.reactivex.subscribers.ResourceSubscriber;
 import timber.log.Timber;
 
 import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
 public class MyProfilePresenter implements MyProfileContract.Presenter {
     private final GetAccessToken getToken;
-    private final GetLoginData getLoginData;
-    private final CompositeDisposable disposables;
+    private final UseCase<Void, UserEntity> getLoginData;
+    private CompositeDisposable disposables;
     private MyProfileContract.View view;
 
-    public MyProfilePresenter(@NonNull GetLoginData getLoginData, @NonNull GetAccessToken getToken) {
+    public MyProfilePresenter(@NonNull UseCase<Void, UserEntity> getLoginData, @NonNull GetAccessToken getToken) {
         this.getLoginData = checkNotNull(getLoginData);
         this.getToken = checkNotNull(getToken);
-        this.disposables = new CompositeDisposable();
     }
 
     @Override
     public void setView(@NonNull MyProfileContract.View view) {
         this.view = checkNotNull(view);
+        this.disposables = new CompositeDisposable();
         fetchToken();
     }
 
     @Override
     public void destroyView() {
-        this.getToken.dispose();
-        this.disposables.dispose();
+        this.disposables.clear();
         this.view = null;
     }
 
@@ -42,18 +42,31 @@ public class MyProfilePresenter implements MyProfileContract.Presenter {
         fetchToken();
     }
 
-    private Observer<GetAccessToken.SubmitUiModel> getTokenObserver() {
-        return new DisposableObserver<GetAccessToken.SubmitUiModel>() {
+    private void fetchProfile(OAuth1AccessToken tokenEntity) {
+        //TODO: Fetch all profile data
+        view.renderProfile("Zalogowano");
+        disposables.add(getLoginData.process(null).subscribe(uiModel -> {
+            if (uiModel.isInProgress()) {
+                return;
+            }
+            if (uiModel.isSucceed()) {
+                view.renderProfile("Zalogowano jako: " + uiModel.getResult().getUsername());
+            }
+        }, Timber::d));
+    }
+
+    private void fetchToken() {
+        ResourceSubscriber<SubmitUiModel<OAuth1AccessToken>> tokenObserver = new ResourceSubscriber<SubmitUiModel<OAuth1AccessToken>>() {
             OAuth1AccessToken tokenEntity = null;
 
             @Override
-            public void onNext(GetAccessToken.SubmitUiModel submitUiModel) {
+            public void onNext(SubmitUiModel<OAuth1AccessToken> submitUiModel) {
                 tokenEntity = submitUiModel.getResult();
             }
 
             @Override
-            public void onError(Throwable e) {
-                Timber.e(e);
+            public void onError(Throwable t) {
+                Timber.e(t);
             }
 
             @Override
@@ -67,22 +80,7 @@ public class MyProfilePresenter implements MyProfileContract.Presenter {
                 view.isLoggedIn(tokenEntity != null);
             }
         };
-    }
-
-    private void fetchProfile(OAuth1AccessToken tokenEntity) {
-        //TODO: Fetch all profile data
-        view.renderProfile("Zalogowano");
-        getLoginData.buildUseCaseObservable(GetLoginData.SubmitEvent.createObservable()).subscribe(submitUiModel -> {
-            if (submitUiModel.isInProgress()) {
-                return;
-            }
-            if (submitUiModel.isSuccess()) {
-                view.renderProfile("Zalogowano jako: " + submitUiModel.getResult().getUsername());
-            }
-        }, Timber::d);
-    }
-
-    private void fetchToken() {
-        getToken.buildUseCaseObservable(GetAccessToken.SubmitEvent.createObservable()).subscribe(getTokenObserver());
+        disposables.add(tokenObserver);
+        getToken.process().subscribe(tokenObserver);
     }
 }

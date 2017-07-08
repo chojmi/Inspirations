@@ -1,8 +1,10 @@
 package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
 
+import com.github.chojmi.inspirations.domain.common.UseCase;
 import com.github.chojmi.inspirations.presentation.blueprints.exception.ViewNotFoundException;
-import com.github.chojmi.inspirations.presentation.gallery.compound_usecase.GetPhotosCompoundUseCase;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
+
+import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
@@ -11,18 +13,18 @@ import timber.log.Timber;
 import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
 class GridPhotoPresenter implements GridPhotoContract.Presenter {
-    private final GetPhotosCompoundUseCase getPhotosCompoundUseCase;
-    private final CompositeDisposable disposables;
+    private final UseCase<String, List<Photo>> getPhotosCompoundUseCase;
+    private CompositeDisposable disposables;
     private GridPhotoContract.View view;
 
-    GridPhotoPresenter(@NonNull GetPhotosCompoundUseCase getPhotosCompoundUseCase) {
+    GridPhotoPresenter(@NonNull UseCase<String, List<Photo>> getPhotosCompoundUseCase) {
         this.getPhotosCompoundUseCase = checkNotNull(getPhotosCompoundUseCase);
-        this.disposables = new CompositeDisposable();
     }
 
     @Override
     public void setView(@NonNull GridPhotoContract.View view) {
         this.view = checkNotNull(view);
+        this.disposables = new CompositeDisposable();
         refreshPhotos("66956608@N06");
     }
 
@@ -31,12 +33,12 @@ class GridPhotoPresenter implements GridPhotoContract.Presenter {
         if (view == null) {
             throw new ViewNotFoundException();
         }
-        disposables.add(getPhotosCompoundUseCase.build(userId).subscribe(submitUiModel -> {
+        disposables.add(getPhotosCompoundUseCase.process(userId).subscribe(submitUiModel -> {
             if (submitUiModel.isInProgress()) {
                 return;
             }
-            if (submitUiModel.isSuccess()) {
-                view.showPhotos(submitUiModel.getPhotos());
+            if (submitUiModel.isSucceed()) {
+                view.showPhotos(submitUiModel.getResult());
             }
         }, Timber::e));
     }
@@ -48,8 +50,7 @@ class GridPhotoPresenter implements GridPhotoContract.Presenter {
 
     @Override
     public void destroyView() {
-        this.getPhotosCompoundUseCase.dispose();
-        this.disposables.dispose();
+        this.disposables.clear();
         this.view = null;
     }
 }

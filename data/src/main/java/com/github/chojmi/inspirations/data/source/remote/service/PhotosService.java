@@ -5,14 +5,14 @@ import com.github.chojmi.inspirations.data.entity.photos.PhotoFavsEntityImpl;
 
 import java.util.Map;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import retrofit2.http.GET;
 import retrofit2.http.QueryMap;
 
 public interface PhotosService {
     @GET("services/rest")
-    Observable<PhotoFavsEntityImpl> loadPhotoFavs(@QueryMap Map<String, String> options);
+    Flowable<PhotoFavsEntityImpl> loadPhotoFavs(@QueryMap Map<String, String> options);
 
     @GET("services/rest")
-    Observable<PhotoCommentsEntityImpl> loadPhotoComments(@QueryMap Map<String, String> options);
+    Flowable<PhotoCommentsEntityImpl> loadPhotoComments(@QueryMap Map<String, String> options);
 }

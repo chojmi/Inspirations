@@ -15,12 +15,6 @@ android {
         versionName rootProject.ext.versionName
 
         testInstrumentationRunner rootProject.ext.testInstrumentationRunner
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = ['autovaluegson.defaultCollectionsToEmpty': 'true']
-            }
-        }
     }
     buildTypes {
         release {
@@ -84,13 +78,6 @@ dependencies {
 
     compile "com.google.code.gson:gson:${rootProject.ext.gsonLibVersion}"
 
-    //AutoValue
-    provided "com.google.auto.value:auto-value:$rootProject.ext.autovalueLibVersion"
-    annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:$rootProject.ext.autovalueParcelLibVersion"
-    annotationProcessor "com.ryanharter.auto.value:auto-value-parcel-adapter:$rootProject.ext.autovalueParcelLibVersion"
-    provided "com.ryanharter.auto.value:auto-value-gson:$rootProject.autovalueGsonLibVersion"
-
-    //Event logging
     compile "com.jakewharton.timber:timber:$rootProject.ext.timberLibVersion"
 
     compile "com.facebook.stetho:stetho-okhttp3:$rootProject.ext.stethoLibVersion"

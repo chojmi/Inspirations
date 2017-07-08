@@ -29,11 +29,11 @@ public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
     }
 
     private void openLoginPage() {
-        disposables.add(getAuthorizationUrl.buildUseCaseObservable(GetAuthorizationUrl.SubmitEvent.createObservable()).subscribe(submitUiModel -> {
+        disposables.add(getAuthorizationUrl.process().subscribe(submitUiModel -> {
             if (submitUiModel.isInProgress()) {
                 return;
             }
-            if (submitUiModel.isSuccess()) {
+            if (submitUiModel.isSucceed()) {
                 view.loadLoginPage(submitUiModel.getResult());
             }
         }, Timber::e));
@@ -45,20 +45,18 @@ public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
     }
 
     private void fetchAccessToken(String verifier) {
-        disposables.add(getToken.buildUseCaseObservable(GetAccessToken.SubmitEvent.createObservable(verifier)).subscribe(submitUiModel -> {
+        disposables.add(getToken.process(verifier).subscribe(submitUiModel -> {
             if (submitUiModel.isInProgress()) {
                 return;
             }
-            if (submitUiModel.isSuccess()) {
+            if (submitUiModel.isSucceed()) {
                 view.closeSuccessfully();
             }
-        }, Timber::e));
+        }, Timber::d));
     }
 
     @Override
     public void destroyView() {
-        this.getAuthorizationUrl.dispose();
-        this.getToken.dispose();
         this.disposables.dispose();
         this.view = null;
     }

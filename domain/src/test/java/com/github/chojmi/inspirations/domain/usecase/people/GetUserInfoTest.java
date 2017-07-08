@@ -1,8 +1,9 @@
 package com.github.chojmi.inspirations.domain.usecase.people;
 
+import com.github.chojmi.inspirations.domain.common.SubmitUiModel;
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
+import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
-import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 import com.github.chojmi.inspirations.domain.repository.PeopleDataSource;
 
 import org.junit.Before;
@@ -10,71 +11,58 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import io.reactivex.Observable;
-import io.reactivex.observers.TestObserver;
-
-import static org.mockito.Mockito.when;
+import io.reactivex.Flowable;
+import io.reactivex.schedulers.TestScheduler;
+import io.reactivex.subscribers.TestSubscriber;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GetUserInfoTest {
-    private static final String FAKE_USER_ID = "123";
-
+    private static final String FAKE_PERSON_ID = "fake_person_id";
     @Mock private PeopleDataSource mockPeopleDataSource;
-    @Mock private ThreadExecutor mockThreadExecutor;
     @Mock private PostExecutionThread mockPostExecutionThread;
-    private TestObserver testObserver;
+    @Mock private UserEntity mockUserEntity;
+    private TestSubscriber<SubmitUiModel<PersonEntity>> testSubscriber;
+    private TestScheduler testScheduler;
 
-    private GetUserInfo getUserPublicPhotos;
+    private GetUserInfo getUserInfo;
 
     @Before
-    public void setUp() throws Exception {
-        getUserPublicPhotos = new GetUserInfo(mockPeopleDataSource, mockThreadExecutor, mockPostExecutionThread);
-        testObserver = new TestObserver();
-    }
-
-    @Test
-    public void shouldInvokeInProgressEventAtBeginning() {
-        when(mockPeopleDataSource.loadPersonInfo(FAKE_USER_ID)).thenReturn(Observable.empty());
-        Observable<GetUserInfo.SubmitUiModel> resultObs = getUserPublicPhotos.buildUseCaseObservable(Observable.fromCallable(() -> GetUserInfo.SubmitEvent.create(FAKE_USER_ID)));
-        testObserver.assertNotSubscribed();
-
-        resultObs.subscribe(testObserver);
-
-        testObserver.assertSubscribed();
-        resultObs.test().assertSubscribed();
-        resultObs.test().assertResult(GetUserInfo.SubmitUiModel.inProgress());
-        resultObs.test().assertComplete();
+    public void setUp() {
+        testScheduler = new TestScheduler();
+        Mockito.when(mockPostExecutionThread.getScheduler()).thenReturn(testScheduler);
+        getUserInfo = new GetUserInfo(mockPeopleDataSource, Runnable::run, mockPostExecutionThread);
+        testSubscriber = new TestSubscriber<>();
     }
 
     @Test
     public void shouldReturnProperValue() {
-        PersonEntity mockFakePersonEntity = Mockito.mock(PersonEntity.class);
-        when(mockPeopleDataSource.loadPersonInfo(FAKE_USER_ID)).thenReturn(Observable.fromCallable(() -> mockFakePersonEntity));
-        Observable<GetUserInfo.SubmitUiModel> resultObs = getUserPublicPhotos.buildUseCaseObservable(Observable.fromCallable(() -> GetUserInfo.SubmitEvent.create(FAKE_USER_ID)));
-        testObserver.assertNotSubscribed();
+        final PersonEntity correctResult = Mockito.mock(PersonEntity.class);
+        Mockito.when(mockPeopleDataSource.loadPersonInfo(FAKE_PERSON_ID)).thenReturn(Flowable.just(correctResult));
+        testSubscriber.assertNotSubscribed();
 
-        resultObs.subscribe(testObserver);
+        getUserInfo.process(FAKE_PERSON_ID).subscribe(testSubscriber);
+        Mockito.verify(mockPeopleDataSource, Mockito.times(1)).loadPersonInfo(FAKE_PERSON_ID);
+        testScheduler.triggerActions();
 
-        testObserver.assertSubscribed();
-        resultObs.test().assertSubscribed();
-        resultObs.test().assertResult(GetUserInfo.SubmitUiModel.inProgress(), GetUserInfo.SubmitUiModel.success(mockFakePersonEntity));
-        resultObs.test().assertComplete();
+        testSubscriber.assertSubscribed();
+        testSubscriber.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.success(correctResult));
+        testSubscriber.assertComplete();
     }
 
     @Test
     public void shouldReturnError() {
         Throwable fakeThrowable = new Throwable("Fake throwable");
-        when(mockPeopleDataSource.loadPersonInfo(FAKE_USER_ID)).thenReturn(Observable.error(fakeThrowable));
-        Observable<GetUserInfo.SubmitUiModel> resultObs = getUserPublicPhotos.buildUseCaseObservable(Observable.fromCallable(() -> GetUserInfo.SubmitEvent.create(FAKE_USER_ID)));
-        testObserver.assertNotSubscribed();
+        Mockito.when(mockPeopleDataSource.loadPersonInfo(FAKE_PERSON_ID)).thenReturn(Flowable.error(fakeThrowable));
+        testSubscriber.assertNotSubscribed();
 
-        resultObs.subscribe(testObserver);
+        getUserInfo.process(FAKE_PERSON_ID).subscribe(testSubscriber);
+        Mockito.verify(mockPeopleDataSource, Mockito.times(1)).loadPersonInfo(FAKE_PERSON_ID);
+        testScheduler.triggerActions();
 
-        testObserver.assertSubscribed();
-        resultObs.test().assertSubscribed();
-        resultObs.test().assertResult(GetUserInfo.SubmitUiModel.inProgress(), GetUserInfo.SubmitUiModel.failure(fakeThrowable));
-        resultObs.test().assertComplete();
+        testSubscriber.assertSubscribed();
+        testSubscriber.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.fail(fakeThrowable));
+        testSubscriber.assertComplete();
     }
 }

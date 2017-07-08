@@ -12,15 +12,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.reactivex.Observable;
-import io.reactivex.observers.TestObserver;
+import io.reactivex.Flowable;
+import io.reactivex.subscribers.TestSubscriber;
 
 import static org.mockito.Mockito.when;
 
@@ -30,7 +30,7 @@ public class RemoteGalleriesDataSourceTest {
     private final Map<String, String> fakeQueryMap = new HashMap<>();
     @Mock private RemoteQueryProducer mockRemoteQueryProducer;
     @Mock private GalleriesService mockGalleryService;
-    private TestObserver testObserver;
+    private TestSubscriber testSubscriber;
     private RemoteGalleriesDataSource remoteGalleriesDataSource;
 
     @BeforeClass
@@ -41,7 +41,7 @@ public class RemoteGalleriesDataSourceTest {
     @Before
     public void setUp() {
         this.remoteGalleriesDataSource = new RemoteGalleriesDataSource(mockGalleryService, mockRemoteQueryProducer);
-        this.testObserver = new TestObserver();
+        this.testSubscriber = new TestSubscriber();
     }
 
     @Test
@@ -49,13 +49,13 @@ public class RemoteGalleriesDataSourceTest {
         List<PhotoEntityImpl> result = new ArrayList<>();
         GalleryEntityImpl mockGalleryEntityImpl = Mockito.mock(GalleryEntityImpl.class);
         when(mockRemoteQueryProducer.produceLoadGalleryQuery(FAKE_GALLERY_ID, 1)).thenReturn(fakeQueryMap);
-        when(mockGalleryService.loadGallery(fakeQueryMap)).thenReturn(Observable.just(mockGalleryEntityImpl));
+        when(mockGalleryService.loadGallery(fakeQueryMap)).thenReturn(Flowable.just(mockGalleryEntityImpl));
         when(mockGalleryEntityImpl.getPhoto()).thenReturn(result);
 
-        remoteGalleriesDataSource.loadGallery(FAKE_GALLERY_ID).subscribe(testObserver);
+        remoteGalleriesDataSource.loadGallery(FAKE_GALLERY_ID).subscribe(testSubscriber);
 
-        testObserver.assertSubscribed();
-        testObserver.assertResult(result);
-        testObserver.assertComplete();
+        testSubscriber.assertSubscribed();
+        testSubscriber.assertResult(result);
+        testSubscriber.assertComplete();
     }
 }

@@ -20,8 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.reactivex.Observable;
-import io.reactivex.observers.TestObserver;
+import io.reactivex.Flowable;
+import io.reactivex.subscribers.TestSubscriber;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RemotePeopleDataSourceTest {
@@ -29,7 +29,7 @@ public class RemotePeopleDataSourceTest {
     private final Map<String, String> fakeQueryMap = new HashMap<>();
     @Mock private RemoteQueryProducer mockRemoteQueryProducer;
     @Mock private PeopleService mockPeopleService;
-    private TestObserver testObserver;
+    private TestSubscriber testSubscriber;
     private RemotePeopleDataSource remotePeopleDataSource;
 
     @BeforeClass
@@ -40,20 +40,20 @@ public class RemotePeopleDataSourceTest {
     @Before
     public void setUp() throws Exception {
         this.remotePeopleDataSource = new RemotePeopleDataSource(mockPeopleService, mockRemoteQueryProducer);
-        this.testObserver = new TestObserver();
+        this.testSubscriber = new TestSubscriber<>();
     }
 
     @Test
     public void loadPersonInfoHappyCase() {
         final PersonEntityImpl mockPhotoEntityImpl = Mockito.mock(PersonEntityImpl.class);
         Mockito.when(mockRemoteQueryProducer.produceLoadPersonInfoQuery(FAKE_USER_ID)).thenReturn(fakeQueryMap);
-        Mockito.when(mockPeopleService.loadPersonInfo(fakeQueryMap)).thenReturn(Observable.just(mockPhotoEntityImpl));
+        Mockito.when(mockPeopleService.loadPersonInfo(fakeQueryMap)).thenReturn(Flowable.just(mockPhotoEntityImpl));
 
-        remotePeopleDataSource.loadPersonInfo(FAKE_USER_ID).subscribe(testObserver);
+        remotePeopleDataSource.loadPersonInfo(FAKE_USER_ID).subscribe(testSubscriber);
 
-        testObserver.assertSubscribed();
-        testObserver.assertResult(mockPhotoEntityImpl);
-        testObserver.assertComplete();
+        testSubscriber.assertSubscribed();
+        testSubscriber.assertResult(mockPhotoEntityImpl);
+        testSubscriber.assertComplete();
     }
 
     @Test
@@ -61,13 +61,13 @@ public class RemotePeopleDataSourceTest {
         final List<PhotoEntityImpl> result = new ArrayList<>();
         final GalleryEntityImpl mockGalleryEntityImpl = Mockito.mock(GalleryEntityImpl.class);
         Mockito.when(mockRemoteQueryProducer.produceLoadUserPublicPhotosQuery(FAKE_USER_ID, 1)).thenReturn(fakeQueryMap);
-        Mockito.when(mockPeopleService.loadUserPublicPhotos(fakeQueryMap)).thenReturn(Observable.just(mockGalleryEntityImpl));
+        Mockito.when(mockPeopleService.loadUserPublicPhotos(fakeQueryMap)).thenReturn(Flowable.just(mockGalleryEntityImpl));
         Mockito.when(mockGalleryEntityImpl.getPhoto()).thenReturn(result);
 
-        remotePeopleDataSource.loadUserPublicPhotos(FAKE_USER_ID).subscribe(testObserver);
+        remotePeopleDataSource.loadUserPublicPhotos(FAKE_USER_ID).subscribe(testSubscriber);
 
-        testObserver.assertSubscribed();
-        testObserver.assertResult(result);
-        testObserver.assertComplete();
+        testSubscriber.assertSubscribed();
+        testSubscriber.assertResult(result);
+        testSubscriber.assertComplete();
     }
 }

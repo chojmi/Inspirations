@@ -8,7 +8,7 @@ import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import io.reactivex.annotations.NonNull;
 
 import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
@@ -27,20 +27,20 @@ public class PhotosRepository implements PhotosDataSource {
     }
 
     @Override
-    public Observable<PhotoFavsEntity> loadPhotoFavs(String photoId) {
-        return Observable.concat(photosLocalDataSource.loadPhotoFavs(photoId),
+    public Flowable<PhotoFavsEntity> loadPhotoFavs(String photoId) {
+        return Flowable.concat(photosLocalDataSource.loadPhotoFavs(photoId),
                 photosRemoteDataSource.loadPhotoFavs(photoId))
                 .filter(photoFavsEntity -> photoFavsEntity.getPeople().size() > 0)
                 .firstElement()
-                .toObservable();
+                .toFlowable();
     }
 
     @Override
-    public Observable<PhotoCommentsEntity> loadPhotoComments(String photoId) {
-        return Observable.concat(photosLocalDataSource.loadPhotoComments(photoId),
+    public Flowable<PhotoCommentsEntity> loadPhotoComments(String photoId) {
+        return Flowable.concat(photosLocalDataSource.loadPhotoComments(photoId),
                 photosRemoteDataSource.loadPhotoComments(photoId))
                 .filter(photoCommentsEntity -> photoCommentsEntity.getComments().size() > 0)
                 .firstElement()
-                .toObservable();
+                .toFlowable();
     }
 }

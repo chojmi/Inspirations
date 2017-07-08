@@ -6,21 +6,21 @@ import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 
-public final class LocalPhotosDataSource implements PhotosDataSource {
+public class LocalPhotosDataSource implements PhotosDataSource {
 
     @Inject
     public LocalPhotosDataSource() {
     }
 
     @Override
-    public Observable<PhotoFavsEntity> loadPhotoFavs(String photoId) {
-        return Observable.empty();
+    public Flowable<PhotoFavsEntity> loadPhotoFavs(String photoId) {
+        return Flowable.empty();
     }
 
     @Override
-    public Observable<PhotoCommentsEntity> loadPhotoComments(String photoId) {
-        return Observable.empty();
+    public Flowable<PhotoCommentsEntity> loadPhotoComments(String photoId) {
+        return Flowable.empty();
     }
 }

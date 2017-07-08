@@ -24,21 +24,21 @@ public class GalleryAttrsMapper {
     }
 
     public PhotoFavs transform(PhotoFavsEntity photoFavsEntity) {
-        return PhotoFavs.create(personDataMapper.transform(photoFavsEntity.getPeople()), photoFavsEntity.getPage(), photoFavsEntity.getPhotoId(), photoFavsEntity.getTotal());
+        return new PhotoFavs(personDataMapper.transform(photoFavsEntity.getPeople()), photoFavsEntity.getPage(), photoFavsEntity.getPhotoId(), photoFavsEntity.getTotal());
     }
 
     public PhotoComments transform(PhotoCommentsEntity photoCommentsEntity) {
-        return PhotoComments.create(transform(photoCommentsEntity.getComments()), photoCommentsEntity.getPhotoId());
+        return new PhotoComments(transform(photoCommentsEntity.getComments()), photoCommentsEntity.getPhotoId());
     }
 
     private Comment transform(CommentEntity commentEntity) {
-        return Comment.create(commentEntity.getAuthorname(), commentEntity.getContent());
+        return new Comment(commentEntity.getAuthorname(), commentEntity.getContent());
     }
 
     private List<Comment> transform(List<CommentEntity> people) {
         List<Comment> result = new ArrayList<>();
         Observable.fromIterable(people)
-                .map(comment -> transform(comment))
+                .map(this::transform)
                 .toList()
                 .subscribe(result::addAll, Timber::e);
         return result;

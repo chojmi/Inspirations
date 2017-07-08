@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -58,11 +60,14 @@ dependencies {
     mockCompile project(path: ':data', configuration: 'mockDebug')
     prodCompile project(path: ':data', configuration: 'prodDebug')
     compile project(":domain")
-    compile 'com.android.support:multidex:1.0.1'
+    compile "com.android.support:multidex:${rootProject.ext.multiDexVersion}"
     compile "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     compile "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}"
     compile "com.android.support:design:${rootProject.ext.supportLibVersion}"
     compile "com.android.support:support-v13:${rootProject.ext.supportLibVersion}"
+
+    mockCompile "org.jetbrains.kotlin:kotlin-stdlib-jre7:${rootProject.ext.kotlinVersion}"
+    prodCompile "org.jetbrains.kotlin:kotlin-stdlib-jre7:${rootProject.ext.kotlinVersion}"
 
     compile "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxAndroidLibVersion}"
     compile "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxJavaLibVersion}"
@@ -71,15 +76,15 @@ dependencies {
     compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:${rootProject.ext.rxBindingsVersion}"
 
     compile "com.google.dagger:dagger:${rootProject.ext.daggerLibVersion}"
-    annotationProcessor "com.google.dagger:dagger-compiler:${rootProject.ext.daggerLibVersion}"
+    kapt "com.google.dagger:dagger-compiler:${rootProject.ext.daggerLibVersion}"
 
-    provided "com.google.auto.value:auto-value:$rootProject.ext.autovalueLibVersion"
-    annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:$rootProject.ext.autovalueParcelLibVersion"
-    annotationProcessor "com.ryanharter.auto.value:auto-value-parcel-adapter:$rootProject.ext.autovalueParcelLibVersion"
+    compile "nz.bradcampbell:paperparcel:${rootProject.ext.paperParcelLibVersion}"
+    compile "nz.bradcampbell:paperparcel-kotlin:${rootProject.ext.paperParcelLibVersion}"
+    kapt "nz.bradcampbell:paperparcel-compiler:${rootProject.ext.paperParcelLibVersion}"
 
     // ButterKnife
     compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeLibVersion"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeLibVersion"
+    kapt "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeLibVersion"
 
     compile "com.dmitrymalkovich.android:material-design-dimens:$rootProject.ext.materialDesignDimensLibVersion"
 

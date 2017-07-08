@@ -7,7 +7,7 @@ import com.github.chojmi.inspirations.domain.repository.AuthTestDataSource;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import io.reactivex.annotations.NonNull;
 
 import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
@@ -19,15 +19,15 @@ public class AuthTestRepository implements AuthTestDataSource {
     private final AuthTestDataSource remoteAuthTestDataSource;
 
     @Inject
-    AuthTestRepository(@Remote @NonNull AuthTestDataSource localAuthTestDataSource,
-                       @Local @NonNull AuthTestDataSource remoteAuthTestDataSource) {
+    AuthTestRepository(@Local @NonNull AuthTestDataSource localAuthTestDataSource,
+                       @Remote @NonNull AuthTestDataSource remoteAuthTestDataSource) {
         this.localAuthTestDataSource = checkNotNull(localAuthTestDataSource);
         this.remoteAuthTestDataSource = checkNotNull(remoteAuthTestDataSource);
     }
 
     @Override
-    public Observable<UserEntity> getLoginData() {
-        return Observable.concat(localAuthTestDataSource.getLoginData(),
-                remoteAuthTestDataSource.getLoginData()).firstElement().toObservable();
+    public Flowable<UserEntity> getLoginData() {
+        return Flowable.concat(localAuthTestDataSource.getLoginData(), remoteAuthTestDataSource.getLoginData())
+                .firstElement().toFlowable();
     }
 }

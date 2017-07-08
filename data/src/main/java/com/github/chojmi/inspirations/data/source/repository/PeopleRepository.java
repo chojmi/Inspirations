@@ -12,7 +12,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 
 import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
@@ -30,19 +30,23 @@ public class PeopleRepository implements PeopleDataSource {
     }
 
     @Override
-    public Observable<PersonEntity> loadPersonInfo(String personId) {
-        return Observable.concat(peopleLocalDataSource.loadPersonInfo(personId),
-                peopleRemoteDataSource.loadPersonInfo(personId)).firstElement().toObservable();
+    public Flowable<PersonEntity> loadPersonInfo(String personId) {
+        return Flowable.concat(peopleLocalDataSource.loadPersonInfo(personId),
+                peopleRemoteDataSource.loadPersonInfo(personId))
+                .firstElement()
+                .toFlowable();
     }
 
     @Override
-    public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId) {
+    public Flowable<List<PhotoEntity>> loadUserPublicPhotos(String userId) {
         return loadUserPublicPhotos(userId, 1);
     }
 
     @Override
-    public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page) {
-        return Observable.concat(peopleLocalDataSource.loadUserPublicPhotos(userId, page),
-                peopleRemoteDataSource.loadUserPublicPhotos(userId, page)).filter(photos -> photos.size() > 0).firstElement().toObservable();
+    public Flowable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page) {
+        return Flowable.concat(peopleLocalDataSource.loadUserPublicPhotos(userId, page),
+                peopleRemoteDataSource.loadUserPublicPhotos(userId, page))
+                .filter(photos -> photos.size() > 0).firstElement()
+                .toFlowable();
     }
 }
