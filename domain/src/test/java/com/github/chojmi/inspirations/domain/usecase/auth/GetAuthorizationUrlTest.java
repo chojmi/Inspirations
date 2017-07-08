@@ -3,7 +3,7 @@ package com.github.chojmi.inspirations.domain.usecase.auth;
 import com.github.chojmi.inspirations.domain.common.SubmitUiModel;
 import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
-import com.github.chojmi.inspirations.domain.repository.AuthTestDataSource;
+import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,45 +17,46 @@ import io.reactivex.schedulers.TestScheduler;
 import io.reactivex.subscribers.TestSubscriber;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GetLoginDataTest {
-    @Mock private AuthTestDataSource mockAuthTestDataSource;
+public class GetAuthorizationUrlTest {
+    private static final String CORRECT_RESULT = "correct_result";
+    @Mock private AuthDataSource mockAuthDataSource;
     @Mock private PostExecutionThread mockPostExecutionThread;
     @Mock private UserEntity mockUserEntity;
-    private TestSubscriber<SubmitUiModel<UserEntity>> testSubscriber;
+    private TestSubscriber<SubmitUiModel<String>> testSubscriber;
     private TestScheduler testScheduler;
 
-    private GetLoginData getLoginData;
+    private GetAuthorizationUrl getAuthorizationUrl;
 
     @Before
     public void setUp() {
         testScheduler = new TestScheduler();
         Mockito.when(mockPostExecutionThread.getScheduler()).thenReturn(testScheduler);
-        getLoginData = new GetLoginData(mockAuthTestDataSource, Runnable::run, mockPostExecutionThread);
+        getAuthorizationUrl = new GetAuthorizationUrl(mockAuthDataSource, Runnable::run, mockPostExecutionThread);
         testSubscriber = new TestSubscriber<>();
     }
 
     @Test
     public void shouldReturnProperValue() {
-        Mockito.when(mockAuthTestDataSource.getLoginData()).thenReturn(Flowable.just(mockUserEntity));
+        Mockito.when(mockAuthDataSource.getAuthorizationUrl()).thenReturn(Flowable.just(CORRECT_RESULT));
         testSubscriber.assertNotSubscribed();
 
-        getLoginData.process().subscribe(testSubscriber);
-        Mockito.verify(mockAuthTestDataSource, Mockito.times(1)).getLoginData();
+        getAuthorizationUrl.process().subscribe(testSubscriber);
+        Mockito.verify(mockAuthDataSource, Mockito.times(1)).getAuthorizationUrl();
         testScheduler.triggerActions();
 
         testSubscriber.assertSubscribed();
-        testSubscriber.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.success(mockUserEntity));
+        testSubscriber.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.success(CORRECT_RESULT));
         testSubscriber.assertComplete();
     }
 
     @Test
     public void shouldReturnError() {
         Throwable fakeThrowable = new Throwable("Fake throwable");
-        Mockito.when(mockAuthTestDataSource.getLoginData()).thenReturn(Flowable.error(fakeThrowable));
+        Mockito.when(mockAuthDataSource.getAuthorizationUrl()).thenReturn(Flowable.error(fakeThrowable));
         testSubscriber.assertNotSubscribed();
 
-        getLoginData.process().subscribe(testSubscriber);
-        Mockito.verify(mockAuthTestDataSource, Mockito.times(1)).getLoginData();
+        getAuthorizationUrl.process().subscribe(testSubscriber);
+        Mockito.verify(mockAuthDataSource, Mockito.times(1)).getAuthorizationUrl();
         testScheduler.triggerActions();
 
         testSubscriber.assertSubscribed();
