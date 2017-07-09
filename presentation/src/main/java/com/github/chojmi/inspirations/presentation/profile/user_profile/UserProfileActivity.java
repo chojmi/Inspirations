@@ -10,7 +10,6 @@ import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.annotations.NonNull;
 
 public class UserProfileActivity extends BaseActivity {
@@ -27,9 +26,9 @@ public class UserProfileActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-        ButterKnife.bind(this);
-        getInspirationsApp().createUserProfileComponent(getIntent().getStringExtra(ARG_USER_ID)).inject(userProfileView);
-
+        UserProfileComponent userProfileComponent = getInspirationsApp().createUserProfileComponent(getIntent().getStringExtra(ARG_USER_ID));
+        userProfileComponent.inject(userProfileView);
+        userProfileView.setUserProfileComponent(userProfileComponent);
     }
 
     @Override

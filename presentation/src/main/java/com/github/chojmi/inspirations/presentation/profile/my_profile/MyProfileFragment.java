@@ -13,6 +13,7 @@ import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 import com.github.chojmi.inspirations.presentation.main.MainActivity;
+import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileComponent;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileView;
 
 import javax.inject.Inject;
@@ -83,7 +84,9 @@ public class MyProfileFragment extends BaseFragment<MainActivity> implements MyP
 
     @Override
     public void showProfile(UserEntity userEntity) {
-        getInspirationsApp().createUserProfileComponent(userEntity.getId()).inject(userProfileView);
+        UserProfileComponent userProfileComponent = getInspirationsApp().createUserProfileComponent(userEntity.getId());
+        userProfileComponent.inject(userProfileView);
+        userProfileView.setUserProfileComponent(userProfileComponent);
         userProfileView.setVisibility(View.VISIBLE);
         loginAction.setVisibility(View.GONE);
     }
