@@ -13,9 +13,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.TestScheduler;
-import io.reactivex.subscribers.TestSubscriber;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GetPhotoCommentsTest {
@@ -23,7 +23,7 @@ public class GetPhotoCommentsTest {
     @Mock private PhotosDataSource mockPhotosDataSource;
     @Mock private PostExecutionThread mockPostExecutionThread;
     @Mock private UserEntity mockUserEntity;
-    private TestSubscriber<SubmitUiModel<PhotoCommentsEntity>> testSubscriber;
+    private TestObserver<SubmitUiModel<PhotoCommentsEntity>> testObserver;
     private TestScheduler testScheduler;
 
     private GetPhotoComments getPhotoComments;
@@ -33,36 +33,36 @@ public class GetPhotoCommentsTest {
         testScheduler = new TestScheduler();
         Mockito.when(mockPostExecutionThread.getScheduler()).thenReturn(testScheduler);
         getPhotoComments = new GetPhotoComments(mockPhotosDataSource, Runnable::run, mockPostExecutionThread);
-        testSubscriber = new TestSubscriber<>();
+        testObserver = new TestObserver<>();
     }
 
     @Test
     public void shouldReturnProperValue() {
         final PhotoCommentsEntity correctResult = Mockito.mock(PhotoCommentsEntity.class);
-        Mockito.when(mockPhotosDataSource.loadPhotoComments(FAKE_PHOTO_ID)).thenReturn(Flowable.just(correctResult));
-        testSubscriber.assertNotSubscribed();
+        Mockito.when(mockPhotosDataSource.loadPhotoComments(FAKE_PHOTO_ID)).thenReturn(Observable.just(correctResult));
+        testObserver.assertNotSubscribed();
 
-        getPhotoComments.process(FAKE_PHOTO_ID).subscribe(testSubscriber);
+        getPhotoComments.process(FAKE_PHOTO_ID).subscribe(testObserver);
         Mockito.verify(mockPhotosDataSource, Mockito.times(1)).loadPhotoComments(FAKE_PHOTO_ID);
         testScheduler.triggerActions();
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.success(correctResult));
-        testSubscriber.assertComplete();
+        testObserver.assertSubscribed();
+        testObserver.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.success(correctResult));
+        testObserver.assertComplete();
     }
 
     @Test
     public void shouldReturnError() {
         Throwable fakeThrowable = new Throwable("Fake throwable");
-        Mockito.when(mockPhotosDataSource.loadPhotoComments(FAKE_PHOTO_ID)).thenReturn(Flowable.error(fakeThrowable));
-        testSubscriber.assertNotSubscribed();
+        Mockito.when(mockPhotosDataSource.loadPhotoComments(FAKE_PHOTO_ID)).thenReturn(Observable.error(fakeThrowable));
+        testObserver.assertNotSubscribed();
 
-        getPhotoComments.process(FAKE_PHOTO_ID).subscribe(testSubscriber);
+        getPhotoComments.process(FAKE_PHOTO_ID).subscribe(testObserver);
         Mockito.verify(mockPhotosDataSource, Mockito.times(1)).loadPhotoComments(FAKE_PHOTO_ID);
         testScheduler.triggerActions();
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.fail(fakeThrowable));
-        testSubscriber.assertComplete();
+        testObserver.assertSubscribed();
+        testObserver.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.fail(fakeThrowable));
+        testObserver.assertComplete();
     }
 }

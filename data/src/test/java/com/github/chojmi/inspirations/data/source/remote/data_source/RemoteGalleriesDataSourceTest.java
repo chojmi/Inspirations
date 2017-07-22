@@ -19,8 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.reactivex.Flowable;
-import io.reactivex.subscribers.TestSubscriber;
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
 
 import static org.mockito.Mockito.when;
 
@@ -30,7 +30,7 @@ public class RemoteGalleriesDataSourceTest {
     private final Map<String, String> fakeQueryMap = new HashMap<>();
     @Mock private RemoteQueryProducer mockRemoteQueryProducer;
     @Mock private GalleriesService mockGalleryService;
-    private TestSubscriber testSubscriber;
+    private TestObserver testObserver;
     private RemoteGalleriesDataSource remoteGalleriesDataSource;
 
     @BeforeClass
@@ -41,7 +41,7 @@ public class RemoteGalleriesDataSourceTest {
     @Before
     public void setUp() {
         this.remoteGalleriesDataSource = new RemoteGalleriesDataSource(mockGalleryService, mockRemoteQueryProducer);
-        this.testSubscriber = new TestSubscriber();
+        this.testObserver = new TestObserver();
     }
 
     @Test
@@ -49,13 +49,13 @@ public class RemoteGalleriesDataSourceTest {
         List<PhotoEntityImpl> result = new ArrayList<>();
         GalleryEntityImpl mockGalleryEntityImpl = Mockito.mock(GalleryEntityImpl.class);
         when(mockRemoteQueryProducer.produceLoadGalleryQuery(FAKE_GALLERY_ID, 1)).thenReturn(fakeQueryMap);
-        when(mockGalleryService.loadGallery(fakeQueryMap)).thenReturn(Flowable.just(mockGalleryEntityImpl));
+        when(mockGalleryService.loadGallery(fakeQueryMap)).thenReturn(Observable.just(mockGalleryEntityImpl));
         when(mockGalleryEntityImpl.getPhoto()).thenReturn(result);
 
-        remoteGalleriesDataSource.loadGallery(FAKE_GALLERY_ID).subscribe(testSubscriber);
+        remoteGalleriesDataSource.loadGallery(FAKE_GALLERY_ID).subscribe(testObserver);
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertResult(result);
-        testSubscriber.assertComplete();
+        testObserver.assertSubscribed();
+        testObserver.assertResult(result);
+        testObserver.assertComplete();
     }
 }

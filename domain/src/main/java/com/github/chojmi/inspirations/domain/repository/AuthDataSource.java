@@ -3,19 +3,19 @@ package com.github.chojmi.inspirations.domain.repository;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.annotations.Nullable;
 
 public interface AuthDataSource {
-    Flowable<OAuth1RequestToken> getRequestToken();
+    Observable<OAuth1RequestToken> getRequestToken();
 
-    Flowable<String> getAuthorizationUrl();
+    Observable<String> getAuthorizationUrl();
 
-    Flowable<String> getAuthorizationUrl(OAuth1RequestToken requestToken);
+    Observable<String> getAuthorizationUrl(OAuth1RequestToken requestToken);
 
-    Flowable<OAuth1AccessToken> getAccessToken(OAuth1RequestToken requestToken, String oauthVerifier);
+    Observable<OAuth1AccessToken> getAccessToken(OAuth1RequestToken requestToken, String oauthVerifier);
 
-    Flowable<OAuth1AccessToken> getAccessToken(String oauthVerifier);
+    Observable<OAuth1AccessToken> getAccessToken(String oauthVerifier);
 
     void saveRequestToken(@Nullable OAuth1RequestToken requestToken);
 

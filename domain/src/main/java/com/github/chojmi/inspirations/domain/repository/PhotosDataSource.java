@@ -3,10 +3,10 @@ package com.github.chojmi.inspirations.domain.repository;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 public interface PhotosDataSource {
-    Flowable<PhotoFavsEntity> loadPhotoFavs(String photoId);
+    Observable<PhotoFavsEntity> loadPhotoFavs(String photoId);
 
-    Flowable<PhotoCommentsEntity> loadPhotoComments(String photoId);
+    Observable<PhotoCommentsEntity> loadPhotoComments(String photoId);
 }

@@ -7,7 +7,7 @@ import com.github.scribejava.core.model.OAuth1RequestToken;
 
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.annotations.Nullable;
 import io.reactivex.schedulers.Schedulers;
@@ -23,31 +23,31 @@ public class RemoteAuthDataSource implements AuthDataSource {
     }
 
     @Override
-    public Flowable<OAuth1RequestToken> getRequestToken() {
-        return Flowable.fromCallable(oAuthService::getRequestToken)
+    public Observable<OAuth1RequestToken> getRequestToken() {
+        return Observable.fromCallable(oAuthService::getRequestToken)
                 .subscribeOn(Schedulers.newThread());
     }
 
     @Override
-    public Flowable<String> getAuthorizationUrl() {
-        return Flowable.error(new Throwable("Needs request token"));
+    public Observable<String> getAuthorizationUrl() {
+        return Observable.error(new Throwable("Needs request token"));
     }
 
     @Override
-    public Flowable<String> getAuthorizationUrl(@NonNull OAuth1RequestToken requestToken) {
-        return Flowable.fromCallable(oAuthService::getRequestToken)
+    public Observable<String> getAuthorizationUrl(@NonNull OAuth1RequestToken requestToken) {
+        return Observable.fromCallable(oAuthService::getRequestToken)
                 .subscribeOn(Schedulers.newThread())
                 .map(oAuth1RequestToken -> oAuthService.getAuthorizationUrl(requestToken));
     }
 
     @Override
-    public Flowable<OAuth1AccessToken> getAccessToken(OAuth1RequestToken requestToken, String oauthVerifier) {
-        return Flowable.fromCallable(() -> oAuthService.getAccessToken(requestToken, oauthVerifier));
+    public Observable<OAuth1AccessToken> getAccessToken(OAuth1RequestToken requestToken, String oauthVerifier) {
+        return Observable.fromCallable(() -> oAuthService.getAccessToken(requestToken, oauthVerifier));
     }
 
     @Override
-    public Flowable<OAuth1AccessToken> getAccessToken(String oauthVerifier) {
-        return Flowable.error(new Throwable("Needs request token"));
+    public Observable<OAuth1AccessToken> getAccessToken(String oauthVerifier) {
+        return Observable.error(new Throwable("Needs request token"));
     }
 
     @Override

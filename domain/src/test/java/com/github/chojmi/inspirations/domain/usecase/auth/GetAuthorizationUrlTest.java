@@ -12,9 +12,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.TestScheduler;
-import io.reactivex.subscribers.TestSubscriber;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GetAuthorizationUrlTest {
@@ -22,7 +22,7 @@ public class GetAuthorizationUrlTest {
     @Mock private AuthDataSource mockAuthDataSource;
     @Mock private PostExecutionThread mockPostExecutionThread;
     @Mock private UserEntity mockUserEntity;
-    private TestSubscriber<SubmitUiModel<String>> testSubscriber;
+    private TestObserver<SubmitUiModel<String>> testObserver;
     private TestScheduler testScheduler;
 
     private GetAuthorizationUrl getAuthorizationUrl;
@@ -32,35 +32,35 @@ public class GetAuthorizationUrlTest {
         testScheduler = new TestScheduler();
         Mockito.when(mockPostExecutionThread.getScheduler()).thenReturn(testScheduler);
         getAuthorizationUrl = new GetAuthorizationUrl(mockAuthDataSource, Runnable::run, mockPostExecutionThread);
-        testSubscriber = new TestSubscriber<>();
+        testObserver = new TestObserver<>();
     }
 
     @Test
     public void shouldReturnProperValue() {
-        Mockito.when(mockAuthDataSource.getAuthorizationUrl()).thenReturn(Flowable.just(CORRECT_RESULT));
-        testSubscriber.assertNotSubscribed();
+        Mockito.when(mockAuthDataSource.getAuthorizationUrl()).thenReturn(Observable.just(CORRECT_RESULT));
+        testObserver.assertNotSubscribed();
 
-        getAuthorizationUrl.process().subscribe(testSubscriber);
+        getAuthorizationUrl.process().subscribe(testObserver);
         Mockito.verify(mockAuthDataSource, Mockito.times(1)).getAuthorizationUrl();
         testScheduler.triggerActions();
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.success(CORRECT_RESULT));
-        testSubscriber.assertComplete();
+        testObserver.assertSubscribed();
+        testObserver.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.success(CORRECT_RESULT));
+        testObserver.assertComplete();
     }
 
     @Test
     public void shouldReturnError() {
         Throwable fakeThrowable = new Throwable("Fake throwable");
-        Mockito.when(mockAuthDataSource.getAuthorizationUrl()).thenReturn(Flowable.error(fakeThrowable));
-        testSubscriber.assertNotSubscribed();
+        Mockito.when(mockAuthDataSource.getAuthorizationUrl()).thenReturn(Observable.error(fakeThrowable));
+        testObserver.assertNotSubscribed();
 
-        getAuthorizationUrl.process().subscribe(testSubscriber);
+        getAuthorizationUrl.process().subscribe(testObserver);
         Mockito.verify(mockAuthDataSource, Mockito.times(1)).getAuthorizationUrl();
         testScheduler.triggerActions();
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.fail(fakeThrowable));
-        testSubscriber.assertComplete();
+        testObserver.assertSubscribed();
+        testObserver.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.fail(fakeThrowable));
+        testObserver.assertComplete();
     }
 }

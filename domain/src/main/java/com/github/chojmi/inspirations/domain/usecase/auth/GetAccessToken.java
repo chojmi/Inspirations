@@ -10,7 +10,7 @@ import com.github.scribejava.core.model.OAuth1AccessToken;
 
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 
 public class GetAccessToken implements UseCase<String, OAuth1AccessToken> {
@@ -22,18 +22,18 @@ public class GetAccessToken implements UseCase<String, OAuth1AccessToken> {
                           @NonNull PostExecutionThread postExecutionThread) {
         this.processor = new UseCaseProcessor<String, OAuth1AccessToken>(threadExecutor, postExecutionThread) {
             @Override
-            public Flowable<OAuth1AccessToken> getUseCaseActionFlowable(String oauthVerifier) {
+            public Observable<OAuth1AccessToken> getUseCaseActionObservable(String oauthVerifier) {
                 return authDataSource.getAccessToken(oauthVerifier);
             }
         };
     }
 
-    public Flowable<SubmitUiModel<OAuth1AccessToken>> process() {
+    public Observable<SubmitUiModel<OAuth1AccessToken>> process() {
         return processor.process("");
     }
 
     @Override
-    public Flowable<SubmitUiModel<OAuth1AccessToken>> process(String oauthVerifier) {
+    public Observable<SubmitUiModel<OAuth1AccessToken>> process(String oauthVerifier) {
         return processor.process(oauthVerifier);
     }
 }

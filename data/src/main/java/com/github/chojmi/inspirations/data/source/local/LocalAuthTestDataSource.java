@@ -5,7 +5,7 @@ import com.github.chojmi.inspirations.domain.repository.AuthTestDataSource;
 
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 public class LocalAuthTestDataSource implements AuthTestDataSource {
     @Inject
@@ -13,7 +13,7 @@ public class LocalAuthTestDataSource implements AuthTestDataSource {
     }
 
     @Override
-    public Flowable<UserEntity> getLoginData() {
-        return Flowable.empty();
+    public Observable<UserEntity> getLoginData() {
+        return Observable.empty();
     }
 }

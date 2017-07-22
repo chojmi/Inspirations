@@ -7,7 +7,7 @@ import com.github.scribejava.core.model.OAuth1RequestToken;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.annotations.Nullable;
 
 @Singleton
@@ -20,28 +20,28 @@ public class LocalAuthDataSource implements AuthDataSource, AccessTokenHolder {
     }
 
     @Override
-    public Flowable<OAuth1RequestToken> getRequestToken() {
-        return requestToken != null ? Flowable.just(requestToken) : Flowable.empty();
+    public Observable<OAuth1RequestToken> getRequestToken() {
+        return requestToken != null ? Observable.just(requestToken) : Observable.empty();
     }
 
     @Override
-    public Flowable<String> getAuthorizationUrl() {
-        return Flowable.empty();
+    public Observable<String> getAuthorizationUrl() {
+        return Observable.empty();
     }
 
     @Override
-    public Flowable<String> getAuthorizationUrl(OAuth1RequestToken requestToken) {
-        return Flowable.empty();
+    public Observable<String> getAuthorizationUrl(OAuth1RequestToken requestToken) {
+        return Observable.empty();
     }
 
     @Override
-    public Flowable<OAuth1AccessToken> getAccessToken(OAuth1RequestToken requestToken, String oauthVerifier) {
-        return accessToken != null ? Flowable.just(accessToken) : Flowable.empty();
+    public Observable<OAuth1AccessToken> getAccessToken(OAuth1RequestToken requestToken, String oauthVerifier) {
+        return accessToken != null ? Observable.just(accessToken) : Observable.empty();
     }
 
     @Override
-    public Flowable<OAuth1AccessToken> getAccessToken(String oauthVerifier) {
-        return accessToken != null ? Flowable.just(accessToken) : Flowable.empty();
+    public Observable<OAuth1AccessToken> getAccessToken(String oauthVerifier) {
+        return accessToken != null ? Observable.just(accessToken) : Observable.empty();
     }
 
     @Override

@@ -9,18 +9,18 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.functions.Function;
+import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.TestScheduler;
-import io.reactivex.subscribers.TestSubscriber;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UseCaseProcessorTest {
     private static final String TEST_INPUT = "test_input";
     private static final String CORRECT_RESULT = "correct_result";
-    @Mock Function<String, Flowable<String>> useCaseAction;
+    @Mock Function<String, Observable<String>> useCaseAction;
     @Mock private PostExecutionThread mockPostExecutionThread;
-    private TestSubscriber<SubmitUiModel<String>> testSubscriber;
+    private TestObserver<SubmitUiModel<String>> testObserver;
     private TestScheduler testScheduler;
 
     private UseCaseProcessor<String, String> useCaseProcessor;
@@ -31,41 +31,41 @@ public class UseCaseProcessorTest {
         Mockito.when(mockPostExecutionThread.getScheduler()).thenReturn(testScheduler);
         useCaseProcessor = new UseCaseProcessor<String, String>(Runnable::run, mockPostExecutionThread) {
             @Override
-            public Flowable<String> getUseCaseActionFlowable(String s) {
+            public Observable<String> getUseCaseActionObservable(String s) {
                 try {
                     return useCaseAction.apply(s);
                 } catch (Exception e) {
-                    return Flowable.error(e);
+                    return Observable.error(e);
                 }
             }
         };
-        testSubscriber = new TestSubscriber<>();
+        testObserver = new TestObserver<>();
     }
 
     @Test
     public void shouldReturnProperValue() throws Exception {
-        Mockito.when(useCaseAction.apply(TEST_INPUT)).thenReturn(Flowable.just(CORRECT_RESULT));
+        Mockito.when(useCaseAction.apply(TEST_INPUT)).thenReturn(Observable.just(CORRECT_RESULT));
 
-        testSubscriber.assertNotSubscribed();
-        useCaseProcessor.process(TEST_INPUT).subscribe(testSubscriber);
+        testObserver.assertNotSubscribed();
+        useCaseProcessor.process(TEST_INPUT).subscribe(testObserver);
         testScheduler.triggerActions();
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.success(CORRECT_RESULT));
-        testSubscriber.assertComplete();
+        testObserver.assertSubscribed();
+        testObserver.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.success(CORRECT_RESULT));
+        testObserver.assertComplete();
     }
 
     @Test
     public void shouldReturnError() throws Exception {
         Throwable fakeThrowable = new Throwable("Fake throwable");
-        Mockito.when(useCaseAction.apply(TEST_INPUT)).thenReturn(Flowable.error(fakeThrowable));
+        Mockito.when(useCaseAction.apply(TEST_INPUT)).thenReturn(Observable.error(fakeThrowable));
 
-        testSubscriber.assertNotSubscribed();
-        useCaseProcessor.process(TEST_INPUT).subscribe(testSubscriber);
+        testObserver.assertNotSubscribed();
+        useCaseProcessor.process(TEST_INPUT).subscribe(testObserver);
         testScheduler.triggerActions();
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.fail(fakeThrowable));
-        testSubscriber.assertComplete();
+        testObserver.assertSubscribed();
+        testObserver.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.fail(fakeThrowable));
+        testObserver.assertComplete();
     }
 }

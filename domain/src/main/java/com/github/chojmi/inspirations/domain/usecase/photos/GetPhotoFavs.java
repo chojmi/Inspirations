@@ -10,7 +10,7 @@ import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 public class GetPhotoFavs implements UseCase<String, PhotoFavsEntity> {
     private final UseCaseProcessor<String, PhotoFavsEntity> processor;
@@ -20,14 +20,14 @@ public class GetPhotoFavs implements UseCase<String, PhotoFavsEntity> {
                  PostExecutionThread postExecutionThread) {
         this.processor = new UseCaseProcessor<String, PhotoFavsEntity>(threadExecutor, postExecutionThread) {
             @Override
-            public Flowable<PhotoFavsEntity> getUseCaseActionFlowable(String photoId) {
+            public Observable<PhotoFavsEntity> getUseCaseActionObservable(String photoId) {
                 return photosDataSource.loadPhotoFavs(photoId);
             }
         };
     }
 
     @Override
-    public Flowable<SubmitUiModel<PhotoFavsEntity>> process(String photoId) {
+    public Observable<SubmitUiModel<PhotoFavsEntity>> process(String photoId) {
         return processor.process(photoId);
     }
 }

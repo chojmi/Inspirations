@@ -10,7 +10,7 @@ import com.github.chojmi.inspirations.domain.repository.PeopleDataSource;
 
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 public class GetUserInfo implements UseCase<String, PersonEntity> {
 
@@ -21,14 +21,14 @@ public class GetUserInfo implements UseCase<String, PersonEntity> {
                 PostExecutionThread postExecutionThread) {
         this.processor = new UseCaseProcessor<String, PersonEntity>(threadExecutor, postExecutionThread) {
             @Override
-            public Flowable<PersonEntity> getUseCaseActionFlowable(String userId) {
+            public Observable<PersonEntity> getUseCaseActionObservable(String userId) {
                 return peopleDataSource.loadPersonInfo(userId);
             }
         };
     }
 
     @Override
-    public Flowable<SubmitUiModel<PersonEntity>> process(String userId) {
+    public Observable<SubmitUiModel<PersonEntity>> process(String userId) {
         return processor.process(userId);
     }
 }

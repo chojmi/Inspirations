@@ -1,6 +1,6 @@
 package com.github.chojmi.inspirations.presentation.gallery.model
 
-import io.reactivex.Flowable
+import io.reactivex.Observable
 import timber.log.Timber
 import java.util.*
 
@@ -13,7 +13,7 @@ data class GridAdapterUiModel(val photo: Photo, val favs: PhotoFavs?, val commen
 
         fun create(photos: List<Photo>): List<GridAdapterUiModel> {
             val uiModels = ArrayList<GridAdapterUiModel>()
-            Flowable.fromIterable(photos)
+            Observable.fromIterable(photos)
                     .map({ photo -> GridAdapterUiModel.Companion.create(photo) })
                     .toList()
                     .subscribe({ list -> uiModels.addAll(list) }, { t -> Timber.d(t) })

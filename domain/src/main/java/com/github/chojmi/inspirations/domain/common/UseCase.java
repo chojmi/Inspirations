@@ -1,7 +1,7 @@
 package com.github.chojmi.inspirations.domain.common;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 public interface UseCase<Input, Output> {
-    Flowable<SubmitUiModel<Output>> process(Input input);
+    Observable<SubmitUiModel<Output>> process(Input input);
 }

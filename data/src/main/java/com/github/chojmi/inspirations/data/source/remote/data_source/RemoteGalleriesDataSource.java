@@ -11,7 +11,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -30,12 +30,12 @@ public class RemoteGalleriesDataSource implements GalleriesDataSource {
     }
 
     @Override
-    public Flowable<List<PhotoEntity>> loadGallery(String galleryId) {
+    public Observable<List<PhotoEntity>> loadGallery(String galleryId) {
         return loadGallery(galleryId, 1);
     }
 
     @Override
-    public Flowable<List<PhotoEntity>> loadGallery(String galleryId, int page) {
+    public Observable<List<PhotoEntity>> loadGallery(String galleryId, int page) {
         return galleryService.loadGallery(remoteQueryProducer.produceLoadGalleryQuery(galleryId, page))
                 .subscribeOn(Schedulers.newThread())
                 .map((Function<GalleryEntityImpl, List<PhotoEntity>>) galleryEntity -> ((GalleryEntity) galleryEntity).getPhoto());

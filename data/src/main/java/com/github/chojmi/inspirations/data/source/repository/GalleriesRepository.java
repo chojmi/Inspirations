@@ -11,7 +11,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
@@ -29,15 +29,15 @@ public class GalleriesRepository implements GalleriesDataSource {
     }
 
     @Override
-    public Flowable<List<PhotoEntity>> loadGallery(String galleryId) {
+    public Observable<List<PhotoEntity>> loadGallery(String galleryId) {
         return loadGallery(galleryId, 1);
     }
 
     @Override
-    public Flowable<List<PhotoEntity>> loadGallery(String galleryId, int page) {
-        return Flowable.concat(galleryLocalDataSource.loadGallery(galleryId, page),
+    public Observable<List<PhotoEntity>> loadGallery(String galleryId, int page) {
+        return Observable.concat(galleryLocalDataSource.loadGallery(galleryId, page),
                 galleryRemoteDataSource.loadGallery(galleryId, page))
                 .filter(photos -> photos.size() > 0).firstElement()
-                .toFlowable();
+                .toObservable();
     }
 }

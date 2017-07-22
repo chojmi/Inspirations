@@ -5,12 +5,12 @@ import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 public interface PeopleDataSource {
-    Flowable<PersonEntity> loadPersonInfo(String personId);
+    Observable<PersonEntity> loadPersonInfo(String personId);
 
-    Flowable<List<PhotoEntity>> loadUserPublicPhotos(String userId);
+    Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId);
 
-    Flowable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page);
+    Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page);
 }

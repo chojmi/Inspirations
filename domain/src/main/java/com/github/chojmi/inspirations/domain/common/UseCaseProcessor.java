@@ -3,7 +3,7 @@ package com.github.chojmi.inspirations.domain.common;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 
@@ -21,8 +21,8 @@ public abstract class UseCaseProcessor<Input, Output> implements UseCase<Input, 
     }
 
     @Override
-    public Flowable<SubmitUiModel<Output>> process(Input input) {
-        return getUseCaseActionFlowable(input)
+    public Observable<SubmitUiModel<Output>> process(Input input) {
+        return getUseCaseActionObservable(input)
                 .subscribeOn(Schedulers.from(threadExecutor))
                 .map(SubmitUiModel::success)
                 .startWith(SubmitUiModel.inProgress())
@@ -30,5 +30,5 @@ public abstract class UseCaseProcessor<Input, Output> implements UseCase<Input, 
                 .observeOn(postExecutionThread.getScheduler());
     }
 
-    public abstract Flowable<Output> getUseCaseActionFlowable(Input input);
+    public abstract Observable<Output> getUseCaseActionObservable(Input input);
 }
