@@ -13,9 +13,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.TestScheduler;
-import io.reactivex.subscribers.TestSubscriber;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GetUserInfoTest {
@@ -23,7 +23,7 @@ public class GetUserInfoTest {
     @Mock private PeopleDataSource mockPeopleDataSource;
     @Mock private PostExecutionThread mockPostExecutionThread;
     @Mock private UserEntity mockUserEntity;
-    private TestSubscriber<SubmitUiModel<PersonEntity>> testSubscriber;
+    private TestObserver<SubmitUiModel<PersonEntity>> testObserver;
     private TestScheduler testScheduler;
 
     private GetUserInfo getUserInfo;
@@ -33,36 +33,36 @@ public class GetUserInfoTest {
         testScheduler = new TestScheduler();
         Mockito.when(mockPostExecutionThread.getScheduler()).thenReturn(testScheduler);
         getUserInfo = new GetUserInfo(mockPeopleDataSource, Runnable::run, mockPostExecutionThread);
-        testSubscriber = new TestSubscriber<>();
+        testObserver = new TestObserver<>();
     }
 
     @Test
     public void shouldReturnProperValue() {
         final PersonEntity correctResult = Mockito.mock(PersonEntity.class);
-        Mockito.when(mockPeopleDataSource.loadPersonInfo(FAKE_PERSON_ID)).thenReturn(Flowable.just(correctResult));
-        testSubscriber.assertNotSubscribed();
+        Mockito.when(mockPeopleDataSource.loadPersonInfo(FAKE_PERSON_ID)).thenReturn(Observable.just(correctResult));
+        testObserver.assertNotSubscribed();
 
-        getUserInfo.process(FAKE_PERSON_ID).subscribe(testSubscriber);
+        getUserInfo.process(FAKE_PERSON_ID).subscribe(testObserver);
         Mockito.verify(mockPeopleDataSource, Mockito.times(1)).loadPersonInfo(FAKE_PERSON_ID);
         testScheduler.triggerActions();
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.success(correctResult));
-        testSubscriber.assertComplete();
+        testObserver.assertSubscribed();
+        testObserver.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.success(correctResult));
+        testObserver.assertComplete();
     }
 
     @Test
     public void shouldReturnError() {
         Throwable fakeThrowable = new Throwable("Fake throwable");
-        Mockito.when(mockPeopleDataSource.loadPersonInfo(FAKE_PERSON_ID)).thenReturn(Flowable.error(fakeThrowable));
-        testSubscriber.assertNotSubscribed();
+        Mockito.when(mockPeopleDataSource.loadPersonInfo(FAKE_PERSON_ID)).thenReturn(Observable.error(fakeThrowable));
+        testObserver.assertNotSubscribed();
 
-        getUserInfo.process(FAKE_PERSON_ID).subscribe(testSubscriber);
+        getUserInfo.process(FAKE_PERSON_ID).subscribe(testObserver);
         Mockito.verify(mockPeopleDataSource, Mockito.times(1)).loadPersonInfo(FAKE_PERSON_ID);
         testScheduler.triggerActions();
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.fail(fakeThrowable));
-        testSubscriber.assertComplete();
+        testObserver.assertSubscribed();
+        testObserver.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.fail(fakeThrowable));
+        testObserver.assertComplete();
     }
 }

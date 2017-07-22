@@ -10,7 +10,7 @@ import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 public class GetPhotoComments implements UseCase<String, PhotoCommentsEntity> {
     private final UseCaseProcessor<String, PhotoCommentsEntity> processor;
@@ -20,14 +20,14 @@ public class GetPhotoComments implements UseCase<String, PhotoCommentsEntity> {
                      PostExecutionThread postExecutionThread) {
         this.processor = new UseCaseProcessor<String, PhotoCommentsEntity>(threadExecutor, postExecutionThread) {
             @Override
-            public Flowable<PhotoCommentsEntity> getUseCaseActionFlowable(String photoId) {
+            public Observable<PhotoCommentsEntity> getUseCaseActionObservable(String photoId) {
                 return photosDataSource.loadPhotoComments(photoId);
             }
         };
     }
 
     @Override
-    public Flowable<SubmitUiModel<PhotoCommentsEntity>> process(String photoId) {
+    public Observable<SubmitUiModel<PhotoCommentsEntity>> process(String photoId) {
         return processor.process(photoId);
     }
 }

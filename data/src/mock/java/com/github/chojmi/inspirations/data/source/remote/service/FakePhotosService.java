@@ -5,19 +5,18 @@ import com.github.chojmi.inspirations.data.entity.photos.PhotoFavsEntityImpl;
 
 import java.util.Map;
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import retrofit2.http.QueryMap;
 
 public class FakePhotosService implements PhotosService {
 
     @Override
-    public Flowable<PhotoFavsEntityImpl> loadPhotoFavs(@QueryMap Map<String, String> options) {
-        return Flowable.empty();
+    public Observable<PhotoFavsEntityImpl> loadPhotoFavs(@QueryMap Map<String, String> options) {
+        return Observable.empty();
     }
 
     @Override
-    public Flowable<PhotoCommentsEntityImpl> loadPhotoComments(@QueryMap Map<String, String> options) {
-        return Flowable.empty();
+    public Observable<PhotoCommentsEntityImpl> loadPhotoComments(@QueryMap Map<String, String> options) {
+        return Observable.empty();
     }
 }

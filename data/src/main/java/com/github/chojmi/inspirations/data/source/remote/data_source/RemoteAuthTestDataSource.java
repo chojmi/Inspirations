@@ -8,7 +8,7 @@ import com.github.chojmi.inspirations.domain.repository.AuthTestDataSource;
 
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 
@@ -25,7 +25,7 @@ public class RemoteAuthTestDataSource implements AuthTestDataSource {
     }
 
     @Override
-    public Flowable<UserEntity> getLoginData() {
+    public Observable<UserEntity> getLoginData() {
         return testService.loadLoginData(remoteQueryProducer.produceLoadLoginData())
                 .subscribeOn(Schedulers.newThread())
                 .map(LoginDataEntityImpl::getUser);

@@ -11,7 +11,7 @@ import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.BiFunction;
 
@@ -27,8 +27,8 @@ public class GetPhotosCompoundUseCase implements UseCase<String, List<Photo>> {
     }
 
     @Override
-    public Flowable<SubmitUiModel<List<Photo>>> process(String userId) {
-        return Flowable.zip(getUserPublicPhotos.process(userId),
+    public Observable<SubmitUiModel<List<Photo>>> process(String userId) {
+        return Observable.zip(getUserPublicPhotos.process(userId),
                 getUserInfo.process(userId),
                 new BiFunction<SubmitUiModel<List<PhotoEntity>>, SubmitUiModel<PersonEntity>, SubmitUiModel<List<Photo>>>() {
                     @Override

@@ -15,7 +15,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -32,7 +32,7 @@ public class GridPhotoPresenterTest {
 
     @Before
     public void setUp() {
-        Mockito.when(mockGetPhotosCompoundUseCase.process(any())).thenReturn(Flowable.empty());
+        Mockito.when(mockGetPhotosCompoundUseCase.process(any())).thenReturn(Observable.empty());
         galleryPresenter = new GridPhotoPresenter(mockGetPhotosCompoundUseCase);
         galleryPresenter.setView(mockGalleryView);
     }

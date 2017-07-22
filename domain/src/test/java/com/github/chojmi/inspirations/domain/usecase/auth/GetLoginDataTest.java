@@ -12,16 +12,16 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.TestScheduler;
-import io.reactivex.subscribers.TestSubscriber;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GetLoginDataTest {
     @Mock private AuthTestDataSource mockAuthTestDataSource;
     @Mock private PostExecutionThread mockPostExecutionThread;
     @Mock private UserEntity mockUserEntity;
-    private TestSubscriber<SubmitUiModel<UserEntity>> testSubscriber;
+    private TestObserver<SubmitUiModel<UserEntity>> testObserver;
     private TestScheduler testScheduler;
 
     private GetLoginData getLoginData;
@@ -31,35 +31,35 @@ public class GetLoginDataTest {
         testScheduler = new TestScheduler();
         Mockito.when(mockPostExecutionThread.getScheduler()).thenReturn(testScheduler);
         getLoginData = new GetLoginData(mockAuthTestDataSource, Runnable::run, mockPostExecutionThread);
-        testSubscriber = new TestSubscriber<>();
+        testObserver = new TestObserver<>();
     }
 
     @Test
     public void shouldReturnProperValue() {
-        Mockito.when(mockAuthTestDataSource.getLoginData()).thenReturn(Flowable.just(mockUserEntity));
-        testSubscriber.assertNotSubscribed();
+        Mockito.when(mockAuthTestDataSource.getLoginData()).thenReturn(Observable.just(mockUserEntity));
+        testObserver.assertNotSubscribed();
 
-        getLoginData.process().subscribe(testSubscriber);
+        getLoginData.process().subscribe(testObserver);
         Mockito.verify(mockAuthTestDataSource, Mockito.times(1)).getLoginData();
         testScheduler.triggerActions();
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.success(mockUserEntity));
-        testSubscriber.assertComplete();
+        testObserver.assertSubscribed();
+        testObserver.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.success(mockUserEntity));
+        testObserver.assertComplete();
     }
 
     @Test
     public void shouldReturnError() {
         Throwable fakeThrowable = new Throwable("Fake throwable");
-        Mockito.when(mockAuthTestDataSource.getLoginData()).thenReturn(Flowable.error(fakeThrowable));
-        testSubscriber.assertNotSubscribed();
+        Mockito.when(mockAuthTestDataSource.getLoginData()).thenReturn(Observable.error(fakeThrowable));
+        testObserver.assertNotSubscribed();
 
-        getLoginData.process().subscribe(testSubscriber);
+        getLoginData.process().subscribe(testObserver);
         Mockito.verify(mockAuthTestDataSource, Mockito.times(1)).getLoginData();
         testScheduler.triggerActions();
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.fail(fakeThrowable));
-        testSubscriber.assertComplete();
+        testObserver.assertSubscribed();
+        testObserver.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.fail(fakeThrowable));
+        testObserver.assertComplete();
     }
 }

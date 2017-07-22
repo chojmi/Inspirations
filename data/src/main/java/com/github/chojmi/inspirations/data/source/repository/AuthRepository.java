@@ -6,11 +6,10 @@ import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 
-import org.reactivestreams.Publisher;
-
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.annotations.Nullable;
 import io.reactivex.functions.Function;
@@ -30,47 +29,42 @@ public class AuthRepository implements AuthDataSource {
     }
 
     @Override
-    public Flowable<OAuth1RequestToken> getRequestToken() {
-        return Flowable.concat(localAuthDataSource.getRequestToken(),
+    public Observable<OAuth1RequestToken> getRequestToken() {
+        return Observable.concat(localAuthDataSource.getRequestToken(),
                 remoteAuthDataSource.getRequestToken())
                 .firstElement()
-                .toFlowable()
+                .toObservable()
                 .doOnNext(localAuthDataSource::saveRequestToken);
     }
 
     @Override
-    public Flowable<String> getAuthorizationUrl() {
+    public Observable<String> getAuthorizationUrl() {
         return getRequestToken()
-                .flatMap(new Function<OAuth1RequestToken, Publisher<String>>() {
+                .flatMap(new Function<OAuth1RequestToken, ObservableSource<String>>() {
                     @Override
-                    public Publisher<String> apply(@NonNull OAuth1RequestToken requestToken) throws Exception {
+                    public ObservableSource<String> apply(@NonNull OAuth1RequestToken requestToken) throws Exception {
                         return getAuthorizationUrl(requestToken);
                     }
                 });
     }
 
     @Override
-    public Flowable<String> getAuthorizationUrl(OAuth1RequestToken requestToken) {
+    public Observable<String> getAuthorizationUrl(OAuth1RequestToken requestToken) {
         return remoteAuthDataSource.getAuthorizationUrl(requestToken);
     }
 
     @Override
-    public Flowable<OAuth1AccessToken> getAccessToken(OAuth1RequestToken requestToken, String oauthVerifier) {
+    public Observable<OAuth1AccessToken> getAccessToken(OAuth1RequestToken requestToken, String oauthVerifier) {
         return remoteAuthDataSource.getAccessToken(requestToken, oauthVerifier)
                 .doOnNext(localAuthDataSource::saveAccessToken);
     }
 
     @Override
-    public Flowable<OAuth1AccessToken> getAccessToken(String oauthVerifier) {
-        return Flowable.concat(localAuthDataSource.getAccessToken(""),
-                getRequestToken().flatMap(new Function<OAuth1RequestToken, Publisher<OAuth1AccessToken>>() {
-                    @Override
-                    public Publisher<OAuth1AccessToken> apply(@NonNull OAuth1RequestToken requestToken) throws Exception {
-                        return getAccessToken(requestToken, oauthVerifier);
-                    }
-                }))
+    public Observable<OAuth1AccessToken> getAccessToken(String oauthVerifier) {
+        return Observable.concat(localAuthDataSource.getAccessToken(""),
+                getRequestToken().flatMap(requestToken -> getAccessToken(requestToken, oauthVerifier)))
                 .firstElement()
-                .toFlowable();
+                .toObservable();
     }
 
     @Override

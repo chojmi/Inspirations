@@ -13,9 +13,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.TestScheduler;
-import io.reactivex.subscribers.TestSubscriber;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GetAccessTokenTest {
@@ -24,7 +24,7 @@ public class GetAccessTokenTest {
     @Mock private AuthDataSource mockAuthDataSource;
     @Mock private PostExecutionThread mockPostExecutionThread;
     @Mock private UserEntity mockUserEntity;
-    private TestSubscriber<SubmitUiModel<OAuth1AccessToken>> testSubscriber;
+    private TestObserver<SubmitUiModel<OAuth1AccessToken>> testObserver;
     private TestScheduler testScheduler;
 
     private GetAccessToken getAccessToken;
@@ -34,35 +34,35 @@ public class GetAccessTokenTest {
         testScheduler = new TestScheduler();
         Mockito.when(mockPostExecutionThread.getScheduler()).thenReturn(testScheduler);
         getAccessToken = new GetAccessToken(mockAuthDataSource, Runnable::run, mockPostExecutionThread);
-        testSubscriber = new TestSubscriber<>();
+        testObserver = new TestObserver<>();
     }
 
     @Test
     public void shouldReturnProperValue() {
-        Mockito.when(mockAuthDataSource.getAccessToken(CORRECT_VERIFIER)).thenReturn(Flowable.just(TEST_ACCESS_TOKEN));
-        testSubscriber.assertNotSubscribed();
+        Mockito.when(mockAuthDataSource.getAccessToken(CORRECT_VERIFIER)).thenReturn(Observable.just(TEST_ACCESS_TOKEN));
+        testObserver.assertNotSubscribed();
 
-        getAccessToken.process(CORRECT_VERIFIER).subscribe(testSubscriber);
+        getAccessToken.process(CORRECT_VERIFIER).subscribe(testObserver);
         Mockito.verify(mockAuthDataSource, Mockito.times(1)).getAccessToken(CORRECT_VERIFIER);
         testScheduler.triggerActions();
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.success(TEST_ACCESS_TOKEN));
-        testSubscriber.assertComplete();
+        testObserver.assertSubscribed();
+        testObserver.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.success(TEST_ACCESS_TOKEN));
+        testObserver.assertComplete();
     }
 
     @Test
     public void shouldReturnError() {
         Throwable fakeThrowable = new Throwable("Fake throwable");
-        Mockito.when(mockAuthDataSource.getAccessToken("")).thenReturn(Flowable.error(fakeThrowable));
-        testSubscriber.assertNotSubscribed();
+        Mockito.when(mockAuthDataSource.getAccessToken("")).thenReturn(Observable.error(fakeThrowable));
+        testObserver.assertNotSubscribed();
 
-        getAccessToken.process().subscribe(testSubscriber);
+        getAccessToken.process().subscribe(testObserver);
         Mockito.verify(mockAuthDataSource, Mockito.times(1)).getAccessToken("");
         testScheduler.triggerActions();
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.fail(fakeThrowable));
-        testSubscriber.assertComplete();
+        testObserver.assertSubscribed();
+        testObserver.assertResult(SubmitUiModel.inProgress(), SubmitUiModel.fail(fakeThrowable));
+        testObserver.assertComplete();
     }
 }

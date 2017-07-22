@@ -10,7 +10,7 @@ import com.github.chojmi.inspirations.domain.repository.AuthTestDataSource;
 
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 
 public class GetLoginData implements UseCase<Void, UserEntity> {
@@ -22,18 +22,18 @@ public class GetLoginData implements UseCase<Void, UserEntity> {
                         @NonNull PostExecutionThread postExecutionThread) {
         this.processor = new UseCaseProcessor<Void, UserEntity>(threadExecutor, postExecutionThread) {
             @Override
-            public Flowable<UserEntity> getUseCaseActionFlowable(Void aVoid) {
+            public Observable<UserEntity> getUseCaseActionObservable(Void aVoid) {
                 return authTestDataSource.getLoginData();
             }
         };
     }
 
-    public Flowable<SubmitUiModel<UserEntity>> process() {
+    public Observable<SubmitUiModel<UserEntity>> process() {
         return process(null);
     }
 
     @Override
-    public Flowable<SubmitUiModel<UserEntity>> process(Void aVoid) {
+    public Observable<SubmitUiModel<UserEntity>> process(Void aVoid) {
         return processor.process(aVoid);
     }
 }

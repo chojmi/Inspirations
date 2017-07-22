@@ -8,7 +8,7 @@ import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 
@@ -26,14 +26,14 @@ public class RemotePhotosDataSource implements PhotosDataSource {
     }
 
     @Override
-    public Flowable<PhotoFavsEntity> loadPhotoFavs(String photoId) {
+    public Observable<PhotoFavsEntity> loadPhotoFavs(String photoId) {
         return photosService.loadPhotoFavs(remoteQueryProducer.produceLoadPhotoFavsQuery(photoId))
                 .subscribeOn(Schedulers.newThread())
                 .map(photoFavsEntity -> photoFavsEntity);
     }
 
     @Override
-    public Flowable<PhotoCommentsEntity> loadPhotoComments(String photoId) {
+    public Observable<PhotoCommentsEntity> loadPhotoComments(String photoId) {
         return photosService.loadPhotoComments(remoteQueryProducer.produceLoadPhotoComments(photoId))
                 .subscribeOn(Schedulers.newThread())
                 .map(photoCommentsEntity -> photoCommentsEntity);

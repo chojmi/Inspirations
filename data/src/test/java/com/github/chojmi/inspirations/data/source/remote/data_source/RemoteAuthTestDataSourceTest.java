@@ -18,8 +18,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.reactivex.Flowable;
-import io.reactivex.subscribers.TestSubscriber;
+import io.reactivex.Observable;
+import io.reactivex.observers.TestObserver;
 
 import static org.mockito.Mockito.when;
 
@@ -28,7 +28,7 @@ public class RemoteAuthTestDataSourceTest {
     private final Map<String, String> fakeQueryMap = new HashMap<>();
     @Mock private RemoteQueryProducer mockRemoteQueryProducer;
     @Mock private AuthTestService mockAuthTestService;
-    private TestSubscriber<UserEntity> testSubscriber;
+    private TestObserver<UserEntity> testObserver;
 
     private RemoteAuthTestDataSource remoteAuthTestDataSource;
 
@@ -40,7 +40,7 @@ public class RemoteAuthTestDataSourceTest {
     @Before
     public void setUp() {
         this.remoteAuthTestDataSource = new RemoteAuthTestDataSource(mockAuthTestService, mockRemoteQueryProducer);
-        this.testSubscriber = new TestSubscriber();
+        this.testObserver = new TestObserver();
     }
 
     @Test
@@ -48,13 +48,13 @@ public class RemoteAuthTestDataSourceTest {
         UserEntityImpl result = Mockito.mock(UserEntityImpl.class);
         LoginDataEntityImpl loginDataEntity = Mockito.mock(LoginDataEntityImpl.class);
         when(mockRemoteQueryProducer.produceLoadLoginData()).thenReturn(fakeQueryMap);
-        when(mockAuthTestService.loadLoginData(fakeQueryMap)).thenReturn(Flowable.just(loginDataEntity));
+        when(mockAuthTestService.loadLoginData(fakeQueryMap)).thenReturn(Observable.just(loginDataEntity));
         when(loginDataEntity.getUser()).thenReturn(result);
 
-        remoteAuthTestDataSource.getLoginData().subscribe(testSubscriber);
+        remoteAuthTestDataSource.getLoginData().subscribe(testObserver);
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertResult(result);
-        testSubscriber.assertComplete();
+        testObserver.assertSubscribed();
+        testObserver.assertResult(result);
+        testObserver.assertComplete();
     }
 }

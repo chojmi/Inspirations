@@ -15,7 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-import io.reactivex.subscribers.TestSubscriber;
+import io.reactivex.observers.TestObserver;
 
 import static org.mockito.Mockito.when;
 
@@ -38,29 +38,29 @@ public class RemoteAuthDataSourceTest {
     @Test
     public void loadAuthorizationUrlHappyCase() throws InterruptedException, ExecutionException, IOException {
         final String correctResult = "correct_result";
-        final TestSubscriber<String> testSubscriber = new TestSubscriber<>();
+        final TestObserver<String> testObserver = new TestObserver<>();
         final OAuth1RequestToken fakeRequestToken = new OAuth1RequestToken("token", "secret_token");
         when(mockOAuthService.getAuthorizationUrl(fakeRequestToken)).thenReturn(correctResult);
         when(mockOAuthService.getRequestToken()).thenReturn(fakeRequestToken);
 
-        remoteAuthDataSource.getAuthorizationUrl(fakeRequestToken).subscribe(testSubscriber);
+        remoteAuthDataSource.getAuthorizationUrl(fakeRequestToken).subscribe(testObserver);
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertResult(correctResult);
-        testSubscriber.assertComplete();
+        testObserver.assertSubscribed();
+        testObserver.assertResult(correctResult);
+        testObserver.assertComplete();
     }
 
     @Test
     public void loadRequestTokenHappyCase() throws InterruptedException, ExecutionException, IOException {
         final OAuth1RequestToken fakeRequestToken = new OAuth1RequestToken("token", "secret_token");
-        final TestSubscriber<OAuth1RequestToken> testSubscriber = new TestSubscriber<>();
+        final TestObserver<OAuth1RequestToken> testObserver = new TestObserver<>();
         when(mockOAuthService.getRequestToken()).thenReturn(fakeRequestToken);
 
-        remoteAuthDataSource.getRequestToken().subscribe(testSubscriber);
+        remoteAuthDataSource.getRequestToken().subscribe(testObserver);
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertResult(fakeRequestToken);
-        testSubscriber.assertComplete();
+        testObserver.assertSubscribed();
+        testObserver.assertResult(fakeRequestToken);
+        testObserver.assertComplete();
     }
 
     @Test
@@ -68,35 +68,35 @@ public class RemoteAuthDataSourceTest {
         final OAuth1RequestToken fakeRequestToken = new OAuth1RequestToken("request+token", "secret_token");
         final OAuth1AccessToken fakeAccessToken = new OAuth1AccessToken("access_token", "secret_token");
         final String fakeOauthVerifier = "fakeOauthVerifier";
-        final TestSubscriber<OAuth1AccessToken> testSubscriber = new TestSubscriber<>();
+        final TestObserver<OAuth1AccessToken> testObserver = new TestObserver<>();
         when(mockOAuthService.getAccessToken(fakeRequestToken, fakeOauthVerifier)).thenReturn(fakeAccessToken);
 
-        remoteAuthDataSource.getAccessToken(fakeRequestToken, fakeOauthVerifier).subscribe(testSubscriber);
+        remoteAuthDataSource.getAccessToken(fakeRequestToken, fakeOauthVerifier).subscribe(testObserver);
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertResult(fakeAccessToken);
-        testSubscriber.assertComplete();
+        testObserver.assertSubscribed();
+        testObserver.assertResult(fakeAccessToken);
+        testObserver.assertComplete();
     }
 
     @Test
     public void loadAccessTokenWithoutRequestToken() {
         final String fakeOauthVerifier = "fakeOauthVerifier";
-        final TestSubscriber<OAuth1AccessToken> testSubscriber = new TestSubscriber<>();
+        final TestObserver<OAuth1AccessToken> testObserver = new TestObserver<>();
 
-        remoteAuthDataSource.getAccessToken(fakeOauthVerifier).subscribe(testSubscriber);
+        remoteAuthDataSource.getAccessToken(fakeOauthVerifier).subscribe(testObserver);
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertError(throwable -> true);
+        testObserver.assertSubscribed();
+        testObserver.assertError(throwable -> true);
     }
 
     @Test
     public void loadAuthorizationUrlRequestToken() {
-        final TestSubscriber<String> testSubscriber = new TestSubscriber<>();
+        final TestObserver<String> testObserver = new TestObserver<>();
 
-        remoteAuthDataSource.getAuthorizationUrl().subscribe(testSubscriber);
+        remoteAuthDataSource.getAuthorizationUrl().subscribe(testObserver);
 
-        testSubscriber.assertSubscribed();
-        testSubscriber.assertError(throwable -> true);
+        testObserver.assertSubscribed();
+        testObserver.assertError(throwable -> true);
     }
 
     @Test(expected = UnsupportedOperationException.class)

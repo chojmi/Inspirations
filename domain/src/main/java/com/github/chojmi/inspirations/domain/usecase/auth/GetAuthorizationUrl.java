@@ -9,7 +9,7 @@ import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
 
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 
 public class GetAuthorizationUrl implements UseCase<Void, String> {
@@ -21,18 +21,18 @@ public class GetAuthorizationUrl implements UseCase<Void, String> {
                                @NonNull PostExecutionThread postExecutionThread) {
         this.processor = new UseCaseProcessor<Void, String>(threadExecutor, postExecutionThread) {
             @Override
-            public Flowable<String> getUseCaseActionFlowable(Void aVoid) {
+            public Observable<String> getUseCaseActionObservable(Void aVoid) {
                 return authDataSource.getAuthorizationUrl();
             }
         };
     }
 
-    public Flowable<SubmitUiModel<String>> process() {
+    public Observable<SubmitUiModel<String>> process() {
         return process(null);
     }
 
     @Override
-    public Flowable<SubmitUiModel<String>> process(Void aVoid) {
+    public Observable<SubmitUiModel<String>> process(Void aVoid) {
         return processor.process(aVoid);
     }
 }
