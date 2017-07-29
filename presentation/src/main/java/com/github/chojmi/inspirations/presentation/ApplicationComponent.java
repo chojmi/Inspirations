@@ -27,6 +27,8 @@ import com.github.chojmi.inspirations.presentation.profile.my_profile.MyProfileC
 import com.github.chojmi.inspirations.presentation.profile.my_profile.MyProfileModule;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileComponent;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileModule;
+import com.github.chojmi.inspirations.presentation.search.SearchComponent;
+import com.github.chojmi.inspirations.presentation.search.SearchModule;
 
 import javax.inject.Singleton;
 
@@ -48,6 +50,8 @@ public interface ApplicationComponent {
     MyProfileComponent plus(MyProfileModule myProfileModule);
 
     UserProfileComponent plus(UserProfileModule userProfileModule);
+
+    SearchComponent plus(SearchModule searchModule);
 
     Context getContext();
 

@@ -39,6 +39,7 @@ public class RemotePhotosDataSource implements PhotosDataSource {
 
     @Override
     public Observable<GalleryEntity> loadSearchPhoto(String text) {
-        return photosService.loadSearchPhoto(remoteQueryProducer.produceLoadSearchPhoto(text));
+        return photosService.loadSearchPhoto(remoteQueryProducer.produceLoadSearchPhoto(text))
+                .map(gallery -> gallery);
     }
 }
