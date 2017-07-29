@@ -6,9 +6,9 @@
 
     <include
         android:id="@+id/item_top"
-        layout="@layout/item_gallery_grid_top"/>
+        layout="@layout/gallery_grid_top_item"/>
 
     <include
         android:id="@+id/item_bottom"
-        layout="@layout/item_gallery_grid_bottom"/>
+        layout="@layout/gallery_grid_bottom_item"/>
 </LinearLayout>

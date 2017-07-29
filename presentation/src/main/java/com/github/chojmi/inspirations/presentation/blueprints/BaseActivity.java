@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.github.chojmi.inspirations.presentation.InspirationsApp;
-import com.github.chojmi.inspirations.presentation.navigation.Navigator;
+import com.github.chojmi.inspirations.presentation.main.Navigator;
 
 import javax.inject.Inject;
 

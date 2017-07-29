@@ -20,7 +20,7 @@ import com.github.chojmi.inspirations.presentation.gallery.ui.grid.GridComponent
 import com.github.chojmi.inspirations.presentation.gallery.ui.grid.GridModule;
 import com.github.chojmi.inspirations.presentation.gallery.ui.photo.PhotoViewComponent;
 import com.github.chojmi.inspirations.presentation.gallery.ui.photo.PhotoViewModule;
-import com.github.chojmi.inspirations.presentation.navigation.Navigator;
+import com.github.chojmi.inspirations.presentation.main.Navigator;
 import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewComponent;
 import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewModule;
 import com.github.chojmi.inspirations.presentation.profile.my_profile.MyProfileComponent;

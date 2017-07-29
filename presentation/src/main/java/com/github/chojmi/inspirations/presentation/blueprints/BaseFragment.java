@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 
 import com.github.chojmi.inspirations.presentation.InspirationsApp;
-import com.github.chojmi.inspirations.presentation.navigation.Navigator;
+import com.github.chojmi.inspirations.presentation.main.Navigator;
 
 import java.lang.ref.WeakReference;
 

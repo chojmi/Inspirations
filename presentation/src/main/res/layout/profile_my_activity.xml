@@ -5,5 +5,5 @@
 
     <include
         android:id="@+id/user_profile_view"
-        layout="@layout/view_user_profile"/>
+        layout="@layout/profile_user_view"/>
 </FrameLayout>

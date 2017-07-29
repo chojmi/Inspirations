@@ -31,7 +31,7 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getInspirationsApp().createPhotoViewComponent(getIntent().getParcelableExtra(ARG_PHOTO)).inject(this);
-        setContentView(R.layout.activity_gallery_photo);
+        setContentView(R.layout.gallery_photo_activity);
     }
 
     @Override

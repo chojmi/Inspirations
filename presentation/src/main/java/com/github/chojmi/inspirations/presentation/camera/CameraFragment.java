@@ -22,7 +22,7 @@ public class CameraFragment extends BaseFragment<MainActivity> {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_camera, container, false);
+        View v = inflater.inflate(R.layout.camera_fragment, container, false);
         ButterKnife.bind(this, v);
         return v;
     }

@@ -5,7 +5,7 @@ import android.content.Context;
 import com.github.chojmi.inspirations.data.executor.JobExecutor;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
-import com.github.chojmi.inspirations.presentation.navigation.Navigator;
+import com.github.chojmi.inspirations.presentation.main.Navigator;
 
 import javax.inject.Singleton;
 
