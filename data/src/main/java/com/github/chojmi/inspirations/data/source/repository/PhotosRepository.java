@@ -30,7 +30,7 @@ public class PhotosRepository implements PhotosDataSource {
     public Observable<PhotoFavsEntity> loadPhotoFavs(String photoId) {
         return Observable.concat(photosLocalDataSource.loadPhotoFavs(photoId),
                 photosRemoteDataSource.loadPhotoFavs(photoId))
-                .filter(photoFavsEntity -> photoFavsEntity.getPeople().size() > 0)
+                .filter(photoFavsEntity -> photoFavsEntity != null)
                 .firstElement()
                 .toObservable();
     }
@@ -39,7 +39,7 @@ public class PhotosRepository implements PhotosDataSource {
     public Observable<PhotoCommentsEntity> loadPhotoComments(String photoId) {
         return Observable.concat(photosLocalDataSource.loadPhotoComments(photoId),
                 photosRemoteDataSource.loadPhotoComments(photoId))
-                .filter(photoCommentsEntity -> photoCommentsEntity.getComments().size() > 0)
+                .filter(photoCommentsEntity -> photoCommentsEntity != null)
                 .firstElement()
                 .toObservable();
     }

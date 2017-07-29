@@ -37,7 +37,7 @@ public class GalleriesRepository implements GalleriesDataSource {
     public Observable<List<PhotoEntity>> loadGallery(String galleryId, int page) {
         return Observable.concat(galleryLocalDataSource.loadGallery(galleryId, page),
                 galleryRemoteDataSource.loadGallery(galleryId, page))
-                .filter(photos -> photos.size() > 0).firstElement()
+                .filter(photos -> photos != null).firstElement()
                 .toObservable();
     }
 }

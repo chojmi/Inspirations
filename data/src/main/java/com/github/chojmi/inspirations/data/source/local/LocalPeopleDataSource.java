@@ -4,7 +4,6 @@ import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.repository.PeopleDataSource;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -30,6 +29,6 @@ public class LocalPeopleDataSource implements PeopleDataSource {
 
     @Override
     public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page) {
-        return Observable.just(Collections.emptyList());
+        return Observable.empty();
     }
 }
