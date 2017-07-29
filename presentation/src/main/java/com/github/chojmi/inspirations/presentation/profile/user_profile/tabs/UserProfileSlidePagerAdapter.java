@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileComponent;
+import com.github.chojmi.inspirations.presentation.profile.user_profile.public_photos.UserPublicPhotosView;
 
 public class UserProfileSlidePagerAdapter extends PagerAdapter {
 
@@ -23,6 +24,9 @@ public class UserProfileSlidePagerAdapter extends PagerAdapter {
         UserProfileTab customPagerEnum = UserProfileTab.values()[position];
         LayoutInflater inflater = LayoutInflater.from(mContext);
         ViewGroup layout = (ViewGroup) inflater.inflate(customPagerEnum.getLayoutResId(), collection, false);
+        if (layout instanceof UserPublicPhotosView) {
+            userProfileComponent.inject((UserPublicPhotosView) layout);
+        }
         collection.addView(layout);
         return layout;
     }
