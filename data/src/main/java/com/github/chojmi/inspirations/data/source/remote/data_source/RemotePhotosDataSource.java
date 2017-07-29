@@ -2,6 +2,7 @@ package com.github.chojmi.inspirations.data.source.remote.data_source;
 
 import com.github.chojmi.inspirations.data.source.remote.service.PhotosService;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
+import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
@@ -34,5 +35,10 @@ public class RemotePhotosDataSource implements PhotosDataSource {
     public Observable<PhotoCommentsEntity> loadPhotoComments(String photoId) {
         return photosService.loadPhotoComments(remoteQueryProducer.produceLoadPhotoComments(photoId))
                 .map(photoCommentsEntity -> photoCommentsEntity);
+    }
+
+    @Override
+    public Observable<GalleryEntity> loadSearchPhoto(String text) {
+        return photosService.loadSearchPhoto(remoteQueryProducer.produceLoadSearchPhoto(text));
     }
 }

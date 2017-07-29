@@ -60,6 +60,13 @@ public class RemoteQueryProducerImpl implements RemoteQueryProducer {
     }
 
     @Override
+    public Map<String, String> produceLoadSearchPhoto(String text) {
+        Map<String, String> args = getBaseArgs("flickr.photos.search");
+        args.put("text", text);
+        return args;
+    }
+
+    @Override
     public Map<String, String> produceLoadLoginData() {
         Map<String, String> args = getBaseArgs("flickr.test.login");
         args.put("nojsoncallback", "1");

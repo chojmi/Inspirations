@@ -15,5 +15,7 @@ public interface RemoteQueryProducer {
 
     Map<String, String> produceLoadPhotoComments(String photoId);
 
+    Map<String, String> produceLoadSearchPhoto(String text);
+
     Map<String, String> produceLoadLoginData();
 }

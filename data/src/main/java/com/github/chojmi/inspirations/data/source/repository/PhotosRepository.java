@@ -2,6 +2,7 @@ package com.github.chojmi.inspirations.data.source.repository;
 
 import com.github.chojmi.inspirations.data.source.Local;
 import com.github.chojmi.inspirations.data.source.Remote;
+import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
@@ -40,6 +41,15 @@ public class PhotosRepository implements PhotosDataSource {
         return Observable.concat(photosLocalDataSource.loadPhotoComments(photoId),
                 photosRemoteDataSource.loadPhotoComments(photoId))
                 .filter(photoCommentsEntity -> photoCommentsEntity != null)
+                .firstElement()
+                .toObservable();
+    }
+
+    @Override
+    public Observable<GalleryEntity> loadSearchPhoto(String text) {
+        return Observable.concat(photosLocalDataSource.loadSearchPhoto(text),
+                photosRemoteDataSource.loadSearchPhoto(text))
+                .filter(gallery -> gallery != null)
                 .firstElement()
                 .toObservable();
     }

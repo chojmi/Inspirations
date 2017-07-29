@@ -1,5 +1,6 @@
 package com.github.chojmi.inspirations.data.source.local;
 
+import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
@@ -21,6 +22,11 @@ public class LocalPhotosDataSource implements PhotosDataSource {
 
     @Override
     public Observable<PhotoCommentsEntity> loadPhotoComments(String photoId) {
+        return Observable.empty();
+    }
+
+    @Override
+    public Observable<GalleryEntity> loadSearchPhoto(String text) {
         return Observable.empty();
     }
 }
