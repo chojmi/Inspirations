@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAdapter;
 import com.github.chojmi.inspirations.presentation.gallery.model.GridAdapterUiModel;
-import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoComments;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoFavs;
+import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
 import com.github.chojmi.inspirations.presentation.gallery.ui.grid.item.GridItemBottomView;
 import com.github.chojmi.inspirations.presentation.gallery.ui.grid.item.GridItemTopView;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -62,19 +62,19 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
         replace(position, GridAdapterUiModel.Companion.setComments(getItem(position), photoComments));
     }
 
-    public Observable<Photo> getProfileClicksObservable() {
+    public Observable<PhotoWithAuthor> getProfileClicksObservable() {
         return profileClicksSubject.map(integer -> getItem(integer).getPhoto());
     }
 
-    public Observable<Photo> getPhotoClicksObservable() {
+    public Observable<PhotoWithAuthor> getPhotoClicksObservable() {
         return photoClicksSubject.map(integer -> getItem(integer).getPhoto());
     }
 
     interface Listener {
-        void onNewItemBind(int position, Photo photo);
+        void onNewItemBind(int position, PhotoWithAuthor photo);
     }
 
-    class GalleryViewHolder extends BaseRecyclerViewAdapter.ViewHolder<Photo> {
+    class GalleryViewHolder extends BaseRecyclerViewAdapter.ViewHolder<PhotoWithAuthor> {
         @BindView(R.id.item_top) GridItemTopView gridItemTopView;
         @BindView(R.id.item_bottom) GridItemBottomView gridItemBottomView;
 

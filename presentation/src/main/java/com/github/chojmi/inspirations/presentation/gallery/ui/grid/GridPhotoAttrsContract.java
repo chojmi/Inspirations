@@ -2,9 +2,9 @@ package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
 
 import com.github.chojmi.inspirations.presentation.blueprints.BasePresenter;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseView;
-import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoComments;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoFavs;
+import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
 
 public interface GridPhotoAttrsContract {
     interface View extends BaseView {
@@ -15,8 +15,8 @@ public interface GridPhotoAttrsContract {
     }
 
     interface Presenter extends BasePresenter<GridPhotoAttrsContract.View> {
-        void loadFavs(int position, Photo photo);
+        void loadFavs(int position, PhotoWithAuthor photo);
 
-        void loadComments(int position, Photo photo);
+        void loadComments(int position, PhotoWithAuthor photo);
     }
 }

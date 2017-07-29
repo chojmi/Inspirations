@@ -37,6 +37,10 @@ public class SearchFragment extends BaseFragment<MainActivity> {
         return v;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
 
     @Override
     public void onDestroy() {

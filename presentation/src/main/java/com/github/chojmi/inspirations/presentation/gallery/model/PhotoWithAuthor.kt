@@ -4,7 +4,7 @@ import paperparcel.PaperParcel
 import paperparcel.PaperParcelable
 
 @PaperParcel
-data class Photo(val id: String, val title: String, val url: String) : PaperParcelable {
+data class PhotoWithAuthor(val photo: Photo, val person: Person) : PaperParcelable {
     companion object {
         @JvmField val CREATOR = PaperParcelPhoto.CREATOR
     }

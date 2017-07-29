@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 
-import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
-import com.github.chojmi.inspirations.presentation.gallery.ui.photo.PhotoViewActivity;
+import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
+import com.github.chojmi.inspirations.presentation.photo.item.PhotoViewActivity;
 import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewActivity;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileActivity;
 
@@ -20,9 +20,9 @@ public class Navigator {
     public Navigator() {
     }
 
-    public void navigateToPhoto(Context context, Photo photo) {
+    public void navigateToPhoto(Context context, PhotoWithAuthor photo) {
         if (context != null) {
-            Intent intentToLaunch = PhotoViewActivity.getCallingIntent(context, photo);
+            Intent intentToLaunch = PhotoViewActivity.getCallingIntent(context, photo.getPhoto());
             context.startActivity(intentToLaunch);
         }
     }

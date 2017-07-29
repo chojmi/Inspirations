@@ -1,12 +1,12 @@
-package com.github.chojmi.inspirations.presentation.gallery.ui.photo;
+package com.github.chojmi.inspirations.presentation.photo.item;
 
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
-import com.github.chojmi.inspirations.presentation.gallery.ui.GalleryScope;
+import com.github.chojmi.inspirations.presentation.photo.PhotoScope;
 
 import dagger.Module;
 import dagger.Provides;
 
-@GalleryScope
+@PhotoScope
 @Module
 public class PhotoViewModule {
     private final Photo photo;

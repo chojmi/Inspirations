@@ -3,7 +3,7 @@ package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
 import com.github.chojmi.inspirations.domain.common.UseCase;
 import com.github.chojmi.inspirations.presentation.blueprints.exception.ViewNotFoundException;
 import com.github.chojmi.inspirations.presentation.gallery.model.Person;
-import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
+import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
 
 import java.util.List;
 
@@ -14,11 +14,11 @@ import timber.log.Timber;
 import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
 class GridPhotoPresenter implements GridPhotoContract.Presenter {
-    private final UseCase<String, List<Photo>> getPhotosCompoundUseCase;
+    private final UseCase<String, List<PhotoWithAuthor>> getPhotosCompoundUseCase;
     private CompositeDisposable disposables;
     private GridPhotoContract.View view;
 
-    GridPhotoPresenter(@NonNull UseCase<String, List<Photo>> getPhotosCompoundUseCase) {
+    GridPhotoPresenter(@NonNull UseCase<String, List<PhotoWithAuthor>> getPhotosCompoundUseCase) {
         this.getPhotosCompoundUseCase = checkNotNull(getPhotosCompoundUseCase);
     }
 
@@ -45,7 +45,7 @@ class GridPhotoPresenter implements GridPhotoContract.Presenter {
     }
 
     @Override
-    public void photoSelected(Photo photo) {
+    public void photoSelected(PhotoWithAuthor photo) {
         view.openPhotoView(photo);
     }
 

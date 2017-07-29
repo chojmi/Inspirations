@@ -3,7 +3,7 @@ package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
 import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoComments;
 import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoFavs;
 import com.github.chojmi.inspirations.presentation.gallery.mapper.GalleryAttrsMapper;
-import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
+import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
@@ -31,8 +31,8 @@ class GridPhotoAttrsPresenter implements GridPhotoAttrsContract.Presenter {
     }
 
     @Override
-    public void loadFavs(int position, Photo photo) {
-        disposables.add(getPhotoFavs.process(checkNotNull(photo).getId()).subscribe(submitUiModel -> {
+    public void loadFavs(int position, PhotoWithAuthor photo) {
+        disposables.add(getPhotoFavs.process(checkNotNull(photo).getPhoto().getId()).subscribe(submitUiModel -> {
             if (submitUiModel.isInProgress()) {
                 return;
             }
@@ -43,8 +43,8 @@ class GridPhotoAttrsPresenter implements GridPhotoAttrsContract.Presenter {
     }
 
     @Override
-    public void loadComments(int position, Photo photo) {
-        disposables.add(getPhotoComments.process(checkNotNull(photo).getId()).subscribe(submitUiModel -> {
+    public void loadComments(int position, PhotoWithAuthor photo) {
+        disposables.add(getPhotoComments.process(checkNotNull(photo).getPhoto().getId()).subscribe(submitUiModel -> {
             if (submitUiModel.isInProgress()) {
                 return;
             }

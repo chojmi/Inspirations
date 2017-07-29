@@ -12,9 +12,9 @@ import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 import com.github.chojmi.inspirations.presentation.gallery.model.GridAdapterUiModel;
 import com.github.chojmi.inspirations.presentation.gallery.model.Person;
-import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoComments;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoFavs;
+import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
 import com.github.chojmi.inspirations.presentation.main.MainActivity;
 
 import java.util.List;
@@ -84,12 +84,12 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     }
 
     @Override
-    public void showPhotos(List<Photo> photos) {
+    public void showPhotos(List<PhotoWithAuthor> photos) {
         galleryAdapter.setData(GridAdapterUiModel.Companion.create(photos));
     }
 
     @Override
-    public void openPhotoView(Photo photo) {
+    public void openPhotoView(PhotoWithAuthor photo) {
         getNavigator().navigateToPhoto(getContext(), photo);
     }
 
@@ -109,7 +109,7 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     }
 
     @Override
-    public void onNewItemBind(int position, Photo photo) {
+    public void onNewItemBind(int position, PhotoWithAuthor photo) {
         photoAttrsPresenter.loadComments(position, photo);
         photoAttrsPresenter.loadFavs(position, photo);
     }

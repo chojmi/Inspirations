@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.chojmi.inspirations.presentation.R;
-import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
+import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import butterknife.BindView;
@@ -35,10 +35,10 @@ public class GridItemTopView extends LinearLayoutCompat {
         ButterKnife.bind(this);
     }
 
-    public void setPhoto(Photo photo) {
-        loadImage(photoHolder, photo.getUrl());
+    public void setPhoto(PhotoWithAuthor photo) {
+        loadImage(photoHolder, photo.getPhoto().getUrl());
         loadImage(personIconHolder, photo.getPerson().getIconUrl());
-        titleTextView.setText(photo.getTitle());
+        titleTextView.setText(photo.getPhoto().getTitle());
         ownerTextView.setText(photo.getPerson().getUsername());
     }
 
