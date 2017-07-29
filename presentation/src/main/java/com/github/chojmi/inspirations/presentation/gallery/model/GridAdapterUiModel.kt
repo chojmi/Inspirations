@@ -4,14 +4,14 @@ import io.reactivex.Observable
 import timber.log.Timber
 import java.util.*
 
-data class GridAdapterUiModel(val photo: Photo, val favs: PhotoFavs?, val comments: PhotoComments?) {
+data class GridAdapterUiModel(val photo: PhotoWithAuthor, val favs: PhotoFavs?, val comments: PhotoComments?) {
 
     companion object {
-        fun create(photo: Photo): GridAdapterUiModel {
+        fun create(photo: PhotoWithAuthor): GridAdapterUiModel {
             return GridAdapterUiModel(photo, null, null)
         }
 
-        fun create(photos: List<Photo>): List<GridAdapterUiModel> {
+        fun create(photos: List<PhotoWithAuthor>): List<GridAdapterUiModel> {
             val uiModels = ArrayList<GridAdapterUiModel>()
             Observable.fromIterable(photos)
                     .map({ photo -> GridAdapterUiModel.Companion.create(photo) })

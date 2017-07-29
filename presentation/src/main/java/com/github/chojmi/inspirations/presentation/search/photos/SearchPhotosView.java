@@ -10,10 +10,13 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 import com.github.chojmi.inspirations.presentation.R;
+import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
+import com.github.chojmi.inspirations.presentation.photo.item.PhotoViewActivity;
+import com.github.chojmi.inspirations.presentation.photo.list.PhotoListAdapter;
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -26,6 +29,8 @@ public class SearchPhotosView extends LinearLayout
     @Inject SearchPhotosContract.Presenter presenter;
     @BindView(R.id.search_view) SearchView searchView;
     @BindView(R.id.rv_search) RecyclerView recyclerView;
+
+    private PhotoListAdapter photoListAdapter;
 
     public SearchPhotosView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -40,13 +45,16 @@ public class SearchPhotosView extends LinearLayout
                 .throttleLast(200, TimeUnit.DAYS.MILLISECONDS)
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .subscribe(charSequence -> presenter.search(charSequence.toString()));
+        initRecyclerView();
     }
 
     private void initRecyclerView() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        galleryAdapter = new GridAdapter(this);
-//        recyclerView.setAdapter(galleryAdapter);
+        photoListAdapter = new PhotoListAdapter();
+        recyclerView.setAdapter(photoListAdapter);
+        photoListAdapter.getPhotoClicksSubject()
+                .subscribe(photo -> getContext().startActivity(PhotoViewActivity.getCallingIntent(getContext(), photo)));
     }
 
 
@@ -67,6 +75,7 @@ public class SearchPhotosView extends LinearLayout
     }
 
     @Override
-    public void renderView(GalleryEntity gallery) {
+    public void renderView(List<Photo> photos) {
+        photoListAdapter.setData(photos);
     }
 }

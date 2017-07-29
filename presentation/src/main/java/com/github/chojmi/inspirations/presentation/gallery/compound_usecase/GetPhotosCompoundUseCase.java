@@ -7,7 +7,7 @@ import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.usecase.people.GetUserInfo;
 import com.github.chojmi.inspirations.domain.usecase.people.GetUserPublicPhotos;
 import com.github.chojmi.inspirations.presentation.gallery.mapper.PhotoDataMapper;
-import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
+import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.BiFunction;
 
-public class GetPhotosCompoundUseCase implements UseCase<String, List<Photo>> {
+public class GetPhotosCompoundUseCase implements UseCase<String, List<PhotoWithAuthor>> {
     private final GetUserPublicPhotos getUserPublicPhotos;
     private final GetUserInfo getUserInfo;
     private final PhotoDataMapper photoDataMapper;
@@ -27,13 +27,13 @@ public class GetPhotosCompoundUseCase implements UseCase<String, List<Photo>> {
     }
 
     @Override
-    public Observable<SubmitUiModel<List<Photo>>> process(String userId) {
+    public Observable<SubmitUiModel<List<PhotoWithAuthor>>> process(String userId) {
         return Observable.zip(getUserPublicPhotos.process(userId),
                 getUserInfo.process(userId),
-                new BiFunction<SubmitUiModel<List<PhotoEntity>>, SubmitUiModel<PersonEntity>, SubmitUiModel<List<Photo>>>() {
+                new BiFunction<SubmitUiModel<List<PhotoEntity>>, SubmitUiModel<PersonEntity>, SubmitUiModel<List<PhotoWithAuthor>>>() {
                     @Override
-                    public SubmitUiModel<List<Photo>> apply(@NonNull SubmitUiModel<List<PhotoEntity>> publicPhotosModel,
-                                                            @NonNull SubmitUiModel<PersonEntity> userInfoModel) throws Exception {
+                    public SubmitUiModel<List<PhotoWithAuthor>> apply(@NonNull SubmitUiModel<List<PhotoEntity>> publicPhotosModel,
+                                                                      @NonNull SubmitUiModel<PersonEntity> userInfoModel) throws Exception {
                     if (publicPhotosModel.isInProgress() || userInfoModel.isInProgress()) {
                         return SubmitUiModel.inProgress();
                     }

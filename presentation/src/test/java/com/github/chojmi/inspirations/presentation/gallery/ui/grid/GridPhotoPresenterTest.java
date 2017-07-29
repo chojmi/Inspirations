@@ -1,7 +1,7 @@
 package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
 
 import com.github.chojmi.inspirations.domain.common.UseCase;
-import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
+import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
 
 import junit.framework.Assert;
 
@@ -26,7 +26,7 @@ public class GridPhotoPresenterTest {
     private static final String USER_ID = "123";
 
     @Mock private GridPhotoContract.View mockGalleryView;
-    @Mock private UseCase<String, List<Photo>> mockGetPhotosCompoundUseCase;
+    @Mock private UseCase<String, List<PhotoWithAuthor>> mockGetPhotosCompoundUseCase;
 
     private GridPhotoPresenter galleryPresenter;
 
