@@ -46,7 +46,7 @@ public class PeopleRepository implements PeopleDataSource {
     public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page) {
         return Observable.concat(peopleLocalDataSource.loadUserPublicPhotos(userId, page),
                 peopleRemoteDataSource.loadUserPublicPhotos(userId, page))
-                .filter(photos -> photos.size() > 0).firstElement()
+                .filter(photos -> photos != null).firstElement()
                 .toObservable();
     }
 }

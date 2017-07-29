@@ -4,9 +4,18 @@
              android:layout_height="match_parent"
              android:orientation="vertical">
 
-    <TextView
+    <include
+        android:id="@+id/user_profile"
+        layout="@layout/profile_user_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/not_implemented_yet"/>
+        android:text="Login"/>
 </FrameLayout>

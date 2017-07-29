@@ -1,5 +1,6 @@
 package com.github.chojmi.inspirations.data.source.remote.data_source;
 
+import com.github.chojmi.inspirations.data.entity.GalleryEntityImpl;
 import com.github.chojmi.inspirations.data.entity.photos.PhotoCommentsEntityImpl;
 import com.github.chojmi.inspirations.data.entity.photos.PhotoFavsEntityImpl;
 import com.github.chojmi.inspirations.data.source.remote.service.PhotosService;
@@ -12,7 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +26,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RemotePhotosDataSourceTest {
     private static final String FAKE_PHOTO_ID = "123";
+    private static final String FAKE_QUERY = "fake_query";
     private final Map<String, String> fakeQueryMap = new HashMap<>();
     @Mock private RemoteQueryProducer mockRemoteQueryProducer;
     @Mock private PhotosService mockPhotoService;
@@ -65,6 +67,19 @@ public class RemotePhotosDataSourceTest {
 
         testObserver.assertSubscribed();
         testObserver.assertResult(mockPhotoFavsEntity);
+        testObserver.assertComplete();
+    }
+
+    @Test
+    public void loadPhotoSearchHappyCase() {
+        final GalleryEntityImpl mockGalleryEntity = Mockito.mock(GalleryEntityImpl.class);
+        when(mockRemoteQueryProducer.produceLoadSearchPhoto(FAKE_QUERY)).thenReturn(fakeQueryMap);
+        when(mockPhotoService.loadSearchPhoto(fakeQueryMap)).thenReturn(Observable.just(mockGalleryEntity));
+
+        remotePhotosDataSource.loadSearchPhoto(FAKE_QUERY).subscribe(testObserver);
+
+        testObserver.assertSubscribed();
+        testObserver.assertResult(mockGalleryEntity);
         testObserver.assertComplete();
     }
 }

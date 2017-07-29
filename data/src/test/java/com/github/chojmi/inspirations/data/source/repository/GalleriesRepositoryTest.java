@@ -1,5 +1,6 @@
 package com.github.chojmi.inspirations.data.source.repository;
 
+import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.repository.GalleriesDataSource;
 
@@ -7,9 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -21,10 +21,12 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class GalleriesRepositoryTest {
     private static final String FAKE_GALLERY_ID = "123";
+    private static final String FAKE_USER_ID = "123";
 
     @Mock private GalleriesDataSource mockLocalDataSource;
     @Mock private GalleriesDataSource mockRemoteDataSource;
     @Mock private List<PhotoEntity> mockPhotoList;
+    @Mock private GalleryEntity mockGalleryEntity;
 
     private GalleriesDataSource galleriesDataSource;
 
@@ -34,28 +36,50 @@ public class GalleriesRepositoryTest {
     }
 
     @Test
-    public void testGetGalleryFromRemoteHappyCase() {
-        when(mockPhotoList.size()).thenReturn(1);
-        when(mockLocalDataSource.loadGallery(FAKE_GALLERY_ID, 1)).thenReturn(Observable.just(Collections.emptyList()));
-        when(mockRemoteDataSource.loadGallery(FAKE_GALLERY_ID, 1)).thenReturn(Observable.just(mockPhotoList));
+    public void testGetGalleryByGalleryIdFromRemoteHappyCase() {
+        when(mockLocalDataSource.loadGalleryByGalleryId(FAKE_GALLERY_ID, 1)).thenReturn(Observable.empty());
+        when(mockRemoteDataSource.loadGalleryByGalleryId(FAKE_GALLERY_ID, 1)).thenReturn(Observable.just(mockPhotoList));
 
-        galleriesDataSource.loadGallery(FAKE_GALLERY_ID).test().assertResult(mockPhotoList);
+        galleriesDataSource.loadGalleryByGalleryId(FAKE_GALLERY_ID).test().assertResult(mockPhotoList);
 
-        verify(mockLocalDataSource, times(1)).loadGallery(FAKE_GALLERY_ID, 1);
-        verify(mockRemoteDataSource, times(1)).loadGallery(FAKE_GALLERY_ID, 1);
+        verify(mockLocalDataSource, times(1)).loadGalleryByGalleryId(FAKE_GALLERY_ID, 1);
+        verify(mockRemoteDataSource, times(1)).loadGalleryByGalleryId(FAKE_GALLERY_ID, 1);
     }
 
     @Test
-    public void testGetGalleryFromLocalHappyCase() {
-        when(mockPhotoList.size()).thenReturn(1);
-        when(mockLocalDataSource.loadGallery(FAKE_GALLERY_ID, 1)).thenReturn(Observable.just(mockPhotoList));
-        when(mockRemoteDataSource.loadGallery(FAKE_GALLERY_ID, 1)).thenReturn(Observable.create(e -> {
+    public void testGetGalleryByGalleryIdFromLocalHappyCase() {
+        when(mockLocalDataSource.loadGalleryByGalleryId(FAKE_GALLERY_ID, 1)).thenReturn(Observable.just(mockPhotoList));
+        when(mockRemoteDataSource.loadGalleryByGalleryId(FAKE_GALLERY_ID, 1)).thenReturn(Observable.create(e -> {
             throw new IllegalStateException("Shouldn't be invoked");
         }));
 
-        galleriesDataSource.loadGallery(FAKE_GALLERY_ID).test().assertResult(mockPhotoList);
+        galleriesDataSource.loadGalleryByGalleryId(FAKE_GALLERY_ID).test().assertResult(mockPhotoList);
 
-        verify(mockLocalDataSource, times(1)).loadGallery(FAKE_GALLERY_ID, 1);
-        verify(mockRemoteDataSource, times(1)).loadGallery(FAKE_GALLERY_ID, 1);
+        verify(mockLocalDataSource, times(1)).loadGalleryByGalleryId(FAKE_GALLERY_ID, 1);
+        verify(mockRemoteDataSource, times(1)).loadGalleryByGalleryId(FAKE_GALLERY_ID, 1);
+    }
+
+    @Test
+    public void testGetGalleryByUserIdFromRemoteHappyCase() {
+        when(mockLocalDataSource.loadGalleryByUserId(FAKE_USER_ID, 1)).thenReturn(Observable.empty());
+        when(mockRemoteDataSource.loadGalleryByUserId(FAKE_USER_ID, 1)).thenReturn(Observable.just(mockGalleryEntity));
+
+        galleriesDataSource.loadGalleryByUserId(FAKE_GALLERY_ID).test().assertResult(mockGalleryEntity);
+
+        verify(mockLocalDataSource, times(1)).loadGalleryByUserId(FAKE_USER_ID, 1);
+        verify(mockRemoteDataSource, times(1)).loadGalleryByUserId(FAKE_USER_ID, 1);
+    }
+
+    @Test
+    public void testGetGalleryByUserIdFromLocalHappyCase() {
+        when(mockLocalDataSource.loadGalleryByUserId(FAKE_USER_ID, 1)).thenReturn(Observable.just(mockGalleryEntity));
+        when(mockRemoteDataSource.loadGalleryByUserId(FAKE_USER_ID, 1)).thenReturn(Observable.create(e -> {
+            throw new IllegalStateException("Shouldn't be invoked");
+        }));
+
+        galleriesDataSource.loadGalleryByUserId(FAKE_GALLERY_ID).test().assertResult(mockGalleryEntity);
+
+        verify(mockLocalDataSource, times(1)).loadGalleryByUserId(FAKE_USER_ID, 1);
+        verify(mockRemoteDataSource, times(1)).loadGalleryByUserId(FAKE_USER_ID, 1);
     }
 }

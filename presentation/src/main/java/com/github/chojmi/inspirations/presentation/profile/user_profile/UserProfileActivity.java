@@ -25,7 +25,7 @@ public class UserProfileActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
+        setContentView(R.layout.profile_my_activity);
         UserProfileComponent userProfileComponent = getInspirationsApp().createUserProfileComponent(getIntent().getStringExtra(ARG_USER_ID));
         userProfileComponent.inject(userProfileView);
         userProfileView.setUserProfileComponent(userProfileComponent);

@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.navigation;
+package com.github.chojmi.inspirations.presentation.main;
 
 import android.content.Context;
 import android.content.Intent;

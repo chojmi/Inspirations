@@ -5,14 +5,14 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 
 import com.github.chojmi.inspirations.presentation.R;
-import com.github.chojmi.inspirations.presentation.camera.CameraFragment;
 import com.github.chojmi.inspirations.presentation.gallery.ui.grid.GridFragment;
 import com.github.chojmi.inspirations.presentation.profile.my_profile.MyProfileFragment;
+import com.github.chojmi.inspirations.presentation.search.SearchFragment;
 
 enum MainScreenTab {
     GALLERY(GridFragment.newInstance(), R.string.gallery),
     MY_PROFILE(MyProfileFragment.newInstance(), R.string.my_profile),
-    CAMERA(CameraFragment.newInstance(), R.string.camera);
+    SEARCH(SearchFragment.newInstance(), R.string.search);
 
     private Fragment fragment;
     @StringRes private int titleRes;

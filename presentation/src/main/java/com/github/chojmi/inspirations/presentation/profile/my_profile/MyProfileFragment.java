@@ -42,7 +42,7 @@ public class MyProfileFragment extends BaseFragment<MainActivity> implements MyP
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_my_profile, container, false);
+        View v = inflater.inflate(R.layout.profile_user_fragment, container, false);
         ButterKnife.bind(this, v);
         return v;
     }

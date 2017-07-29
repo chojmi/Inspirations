@@ -5,11 +5,6 @@ import java.util.Map;
 
 public class FakeRemoteQueryProducerImpl implements RemoteQueryProducer {
     @Override
-    public Map<String, String> produceLoadGalleryQuery(String galleryId, int page) {
-        return new HashMap<>();
-    }
-
-    @Override
     public Map<String, String> produceLoadPersonInfoQuery(String userId) {
         return new HashMap<>();
     }
@@ -31,6 +26,21 @@ public class FakeRemoteQueryProducerImpl implements RemoteQueryProducer {
 
     @Override
     public Map<String, String> produceLoadLoginData() {
+        return new HashMap<>();
+    }
+
+    @Override
+    public Map<String, String> produceLoadGalleryByGalleryIdQuery(String galleryId, int page) {
+        return new HashMap<>();
+    }
+
+    @Override
+    public Map<String, String> produceLoadGalleryByUserIdQuery(String userId, int page) {
+        return new HashMap<>();
+    }
+
+    @Override
+    public Map<String, String> produceLoadSearchPhoto(String text) {
         return new HashMap<>();
     }
 }

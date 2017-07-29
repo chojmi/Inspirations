@@ -15,7 +15,6 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
@@ -33,7 +32,6 @@ public class RemotePeopleDataSource implements PeopleDataSource {
     @Override
     public Observable<PersonEntity> loadPersonInfo(String userId) {
         return peopleService.loadPersonInfo(remoteQueryProducer.produceLoadPersonInfoQuery(userId))
-                .subscribeOn(Schedulers.newThread())
                 .map(personEntity -> personEntity);
     }
 
@@ -45,7 +43,6 @@ public class RemotePeopleDataSource implements PeopleDataSource {
     @Override
     public Observable<List<PhotoEntity>> loadUserPublicPhotos(String userId, int page) {
         return peopleService.loadUserPublicPhotos(remoteQueryProducer.produceLoadUserPublicPhotosQuery(userId, page))
-                .subscribeOn(Schedulers.newThread())
                 .map((Function<GalleryEntityImpl, GalleryEntity>) galleryEntity -> galleryEntity)
                 .map(GalleryEntity::getPhoto);
     }

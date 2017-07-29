@@ -31,6 +31,7 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     @Inject GridPhotoAttrsContract.Presenter photoAttrsPresenter;
     private GridAdapter galleryAdapter;
     private CompositeDisposable disposables;
+
     public static GridFragment newInstance() {
         return new GridFragment();
     }
@@ -45,7 +46,7 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_gallery, container, false);
+        View v = inflater.inflate(R.layout.gallery_fragment, container, false);
         ButterKnife.bind(this, v);
         return v;
     }

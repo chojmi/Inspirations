@@ -15,6 +15,8 @@ import com.github.chojmi.inspirations.presentation.profile.my_profile.MyProfileC
 import com.github.chojmi.inspirations.presentation.profile.my_profile.MyProfileModule;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileComponent;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileModule;
+import com.github.chojmi.inspirations.presentation.search.SearchComponent;
+import com.github.chojmi.inspirations.presentation.search.SearchModule;
 
 import io.reactivex.annotations.NonNull;
 import timber.log.Timber;
@@ -27,6 +29,7 @@ public class InspirationsApp extends Application {
     private LoginWebViewComponent loginWebViewComponent;
     private MyProfileComponent myProfileComponent;
     private UserProfileComponent userProfileComponent;
+    private SearchComponent searchComponent;
 
     @Override
     public void onCreate() {
@@ -92,5 +95,14 @@ public class InspirationsApp extends Application {
 
     public void releaseUserProfileComponent() {
         userProfileComponent = null;
+    }
+
+    public SearchComponent createSearchComponent() {
+        searchComponent = applicationComponent.plus(new SearchModule());
+        return searchComponent;
+    }
+
+    public void releaseSearchComponent() {
+        searchComponent = null;
     }
 }

@@ -20,13 +20,15 @@ import com.github.chojmi.inspirations.presentation.gallery.ui.grid.GridComponent
 import com.github.chojmi.inspirations.presentation.gallery.ui.grid.GridModule;
 import com.github.chojmi.inspirations.presentation.gallery.ui.photo.PhotoViewComponent;
 import com.github.chojmi.inspirations.presentation.gallery.ui.photo.PhotoViewModule;
-import com.github.chojmi.inspirations.presentation.navigation.Navigator;
+import com.github.chojmi.inspirations.presentation.main.Navigator;
 import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewComponent;
 import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewModule;
 import com.github.chojmi.inspirations.presentation.profile.my_profile.MyProfileComponent;
 import com.github.chojmi.inspirations.presentation.profile.my_profile.MyProfileModule;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileComponent;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileModule;
+import com.github.chojmi.inspirations.presentation.search.SearchComponent;
+import com.github.chojmi.inspirations.presentation.search.SearchModule;
 
 import javax.inject.Singleton;
 
@@ -48,6 +50,8 @@ public interface ApplicationComponent {
     MyProfileComponent plus(MyProfileModule myProfileModule);
 
     UserProfileComponent plus(UserProfileModule userProfileModule);
+
+    SearchComponent plus(SearchModule searchModule);
 
     Context getContext();
 

@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment;
 import com.github.chojmi.inspirations.presentation.R;
 
 enum UserProfileTab {
-    PUBLIC_PHOTOS(R.string.public_photos, R.layout.view_user_profile_public_photos),
-    ALBUMS(R.string.albums, R.layout.view_user_profile_albums);
+    PUBLIC_PHOTOS(R.string.public_photos, R.layout.profile_user_public_photos_view),
+    ALBUMS(R.string.albums, R.layout.profile_user_albums_view);
     private Fragment fragment;
     @StringRes private int titleRes;
 

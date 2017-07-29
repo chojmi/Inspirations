@@ -29,7 +29,7 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
 
     @Override
     public GalleryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gallery_grid, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery_grid_item, parent, false);
         return new GalleryViewHolder(v, parent);
     }
 

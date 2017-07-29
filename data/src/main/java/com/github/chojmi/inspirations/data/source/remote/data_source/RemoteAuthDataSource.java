@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.annotations.Nullable;
-import io.reactivex.schedulers.Schedulers;
 
 import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
@@ -24,8 +23,7 @@ public class RemoteAuthDataSource implements AuthDataSource {
 
     @Override
     public Observable<OAuth1RequestToken> getRequestToken() {
-        return Observable.fromCallable(oAuthService::getRequestToken)
-                .subscribeOn(Schedulers.newThread());
+        return Observable.fromCallable(oAuthService::getRequestToken);
     }
 
     @Override
@@ -36,7 +34,6 @@ public class RemoteAuthDataSource implements AuthDataSource {
     @Override
     public Observable<String> getAuthorizationUrl(@NonNull OAuth1RequestToken requestToken) {
         return Observable.fromCallable(oAuthService::getRequestToken)
-                .subscribeOn(Schedulers.newThread())
                 .map(oAuth1RequestToken -> oAuthService.getAuthorizationUrl(requestToken));
     }
 
