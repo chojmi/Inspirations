@@ -15,9 +15,17 @@ public class RemoteQueryProducerImpl implements RemoteQueryProducer {
     }
 
     @Override
-    public Map<String, String> produceLoadGalleryQuery(String galleryId, int page) {
+    public Map<String, String> produceLoadGalleryByGalleryIdQuery(String galleryId, int page) {
         Map<String, String> args = getBaseArgs("flickr.galleries.getPhotos");
         args.put("gallery_id", galleryId);
+        args.put("page", String.valueOf(page));
+        return args;
+    }
+
+    @Override
+    public Map<String, String> produceLoadGalleryByUserIdQuery(String userId, int page) {
+        Map<String, String> args = getBaseArgs("flickr.galleries.getList");
+        args.put("user_id", userId);
         args.put("page", String.valueOf(page));
         return args;
     }

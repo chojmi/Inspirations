@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.profile.user_profile.public_photos;
+package com.github.chojmi.inspirations.presentation.profile.user_profile.albums;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -6,18 +6,16 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
-import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
-
-import java.util.List;
+import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
-public class UserPublicPhotosView extends FrameLayout implements UserPublicPhotosContract.View {
-    @Inject UserPublicPhotosContract.Presenter presenter;
+public class UserAlbumsView extends FrameLayout implements UserAlbumsContract.View {
+    @Inject UserAlbumsContract.Presenter presenter;
 
-    public UserPublicPhotosView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public UserAlbumsView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -42,6 +40,6 @@ public class UserPublicPhotosView extends FrameLayout implements UserPublicPhoto
     }
 
     @Override
-    public void renderView(List<PhotoEntity> photos) {
+    public void renderView(GalleryEntity gallery) {
     }
 }

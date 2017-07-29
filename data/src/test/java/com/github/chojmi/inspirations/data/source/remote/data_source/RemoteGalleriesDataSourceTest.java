@@ -48,11 +48,11 @@ public class RemoteGalleriesDataSourceTest {
     public void loadGalleryHappyCase() {
         List<PhotoEntityImpl> result = new ArrayList<>();
         GalleryEntityImpl mockGalleryEntityImpl = Mockito.mock(GalleryEntityImpl.class);
-        when(mockRemoteQueryProducer.produceLoadGalleryQuery(FAKE_GALLERY_ID, 1)).thenReturn(fakeQueryMap);
+        when(mockRemoteQueryProducer.produceLoadGalleryByGalleryIdQuery(FAKE_GALLERY_ID, 1)).thenReturn(fakeQueryMap);
         when(mockGalleryService.loadGallery(fakeQueryMap)).thenReturn(Observable.just(mockGalleryEntityImpl));
         when(mockGalleryEntityImpl.getPhoto()).thenReturn(result);
 
-        remoteGalleriesDataSource.loadGallery(FAKE_GALLERY_ID).subscribe(testObserver);
+        remoteGalleriesDataSource.loadGalleryByGalleryId(FAKE_GALLERY_ID).subscribe(testObserver);
 
         testObserver.assertSubscribed();
         testObserver.assertResult(result);

@@ -9,9 +9,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -37,8 +36,7 @@ public class PeopleRepositoryTest {
 
     @Test
     public void testGetPublicPhotosFromRemoteHappyCase() {
-        when(mockPhotoList.size()).thenReturn(1);
-        when(mockLocalDataSource.loadUserPublicPhotos(FAKE_USER_ID, 1)).thenReturn(Observable.just(Collections.emptyList()));
+        when(mockLocalDataSource.loadUserPublicPhotos(FAKE_USER_ID, 1)).thenReturn(Observable.empty());
         when(mockRemoteDataSource.loadUserPublicPhotos(FAKE_USER_ID, 1)).thenReturn(Observable.just(mockPhotoList));
 
         galleriesDataSource.loadUserPublicPhotos(FAKE_USER_ID).test().assertResult(mockPhotoList);
@@ -49,7 +47,6 @@ public class PeopleRepositoryTest {
 
     @Test
     public void testGetPublicPhotosFromLocalHappyCase() {
-        when(mockPhotoList.size()).thenReturn(1);
         when(mockLocalDataSource.loadUserPublicPhotos(FAKE_USER_ID, 1)).thenReturn(Observable.just(mockPhotoList));
         when(mockRemoteDataSource.loadUserPublicPhotos(FAKE_USER_ID, 1)).thenReturn(Observable.create(e -> {
             throw new IllegalStateException("Shouldn't be invoked");

@@ -10,7 +10,6 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.schedulers.Schedulers;
 
 import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
@@ -27,7 +26,6 @@ public class RemoteAuthTestDataSource implements AuthTestDataSource {
     @Override
     public Observable<UserEntity> getLoginData() {
         return testService.loadLoginData(remoteQueryProducer.produceLoadLoginData())
-                .subscribeOn(Schedulers.newThread())
                 .map(LoginDataEntityImpl::getUser);
     }
 }

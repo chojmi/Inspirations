@@ -1,10 +1,8 @@
-package com.github.chojmi.inspirations.presentation.profile.user_profile.public_photos;
+package com.github.chojmi.inspirations.presentation.profile.user_profile.albums;
 
 import com.github.chojmi.inspirations.domain.common.UseCase;
-import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
+import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 import com.github.chojmi.inspirations.domain.utils.Preconditions;
-
-import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
@@ -12,19 +10,19 @@ import timber.log.Timber;
 
 import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
-public class UserPublicPhotosPresenter implements UserPublicPhotosContract.Presenter {
-    private final UseCase<String, List<PhotoEntity>> getPhotosEntity;
+public class UserAlbumsPresenter implements UserAlbumsContract.Presenter {
+    private final UseCase<String, GalleryEntity> getGalleryEntity;
     private final String userId;
     private CompositeDisposable disposables;
-    private UserPublicPhotosContract.View view;
+    private UserAlbumsContract.View view;
 
-    public UserPublicPhotosPresenter(@NonNull UseCase<String, List<PhotoEntity>> getPhotosEntity, @NonNull String userId) {
-        this.getPhotosEntity = Preconditions.checkNotNull(getPhotosEntity);
+    public UserAlbumsPresenter(@NonNull UseCase<String, GalleryEntity> getGalleryEntity, @NonNull String userId) {
+        this.getGalleryEntity = Preconditions.checkNotNull(getGalleryEntity);
         this.userId = Preconditions.checkNotNull(userId);
     }
 
     @Override
-    public void setView(@NonNull UserPublicPhotosContract.View view) {
+    public void setView(@NonNull UserAlbumsContract.View view) {
         this.view = checkNotNull(view);
         this.disposables = new CompositeDisposable();
         fetchUserInfo();
@@ -37,7 +35,7 @@ public class UserPublicPhotosPresenter implements UserPublicPhotosContract.Prese
     }
 
     private void fetchUserInfo() {
-        disposables.add(getPhotosEntity.process(userId).subscribe(submitUiModel -> {
+        disposables.add(getGalleryEntity.process(userId).subscribe(submitUiModel -> {
             if (submitUiModel.isInProgress()) {
                 return;
             }

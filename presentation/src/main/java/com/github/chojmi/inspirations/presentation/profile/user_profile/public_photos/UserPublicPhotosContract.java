@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserPublicPhotosContract {
     interface View extends BaseView {
-        void renderProfile(List<PhotoEntity> photos);
+        void renderView(List<PhotoEntity> photos);
     }
 
     interface Presenter extends BasePresenter<UserPublicPhotosContract.View> {

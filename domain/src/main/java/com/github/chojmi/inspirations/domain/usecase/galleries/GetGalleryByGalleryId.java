@@ -15,17 +15,17 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 
-public class GetGallery implements UseCase<String, List<PhotoEntity>> {
+public class GetGalleryByGalleryId implements UseCase<String, List<PhotoEntity>> {
 
     private final UseCaseProcessor<String, List<PhotoEntity>> processor;
 
     @Inject
-    public GetGallery(@NonNull GalleriesDataSource galleriesDataSource, @NonNull ThreadExecutor threadExecutor,
-                      @NonNull PostExecutionThread postExecutionThread) {
+    public GetGalleryByGalleryId(@NonNull GalleriesDataSource galleriesDataSource, @NonNull ThreadExecutor threadExecutor,
+                                 @NonNull PostExecutionThread postExecutionThread) {
         this.processor = new UseCaseProcessor<String, List<PhotoEntity>>(threadExecutor, postExecutionThread) {
             @Override
             public Observable<List<PhotoEntity>> getUseCaseActionObservable(String galleryId) {
-                return galleriesDataSource.loadGallery(galleryId);
+                return galleriesDataSource.loadGalleryByGalleryId(galleryId);
             }
         };
     }

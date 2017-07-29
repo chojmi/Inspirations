@@ -14,7 +14,6 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
@@ -30,14 +29,24 @@ public class RemoteGalleriesDataSource implements GalleriesDataSource {
     }
 
     @Override
-    public Observable<List<PhotoEntity>> loadGallery(String galleryId) {
-        return loadGallery(galleryId, 1);
+    public Observable<List<PhotoEntity>> loadGalleryByGalleryId(String galleryId) {
+        return loadGalleryByGalleryId(galleryId, 1);
     }
 
     @Override
-    public Observable<List<PhotoEntity>> loadGallery(String galleryId, int page) {
-        return galleryService.loadGallery(remoteQueryProducer.produceLoadGalleryQuery(galleryId, page))
-                .subscribeOn(Schedulers.newThread())
+    public Observable<List<PhotoEntity>> loadGalleryByGalleryId(String galleryId, int page) {
+        return galleryService.loadGallery(remoteQueryProducer.produceLoadGalleryByGalleryIdQuery(galleryId, page))
                 .map((Function<GalleryEntityImpl, List<PhotoEntity>>) galleryEntity -> ((GalleryEntity) galleryEntity).getPhoto());
+    }
+
+    @Override
+    public Observable<GalleryEntity> loadGalleryByUserId(String userId) {
+        return loadGalleryByUserId(userId, 1);
+    }
+
+    @Override
+    public Observable<GalleryEntity> loadGalleryByUserId(String userId, int page) {
+        return galleryService.loadGallery(remoteQueryProducer.produceLoadGalleryByUserIdQuery(userId, page))
+                .map(galleryEntity -> galleryEntity);
     }
 }

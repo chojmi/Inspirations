@@ -2,6 +2,7 @@ package com.github.chojmi.inspirations.presentation.profile.user_profile;
 
 
 import com.github.chojmi.inspirations.presentation.profile.ProfileScope;
+import com.github.chojmi.inspirations.presentation.profile.user_profile.albums.UserAlbumsView;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.public_photos.UserPublicPhotosView;
 
 import dagger.Subcomponent;
@@ -12,4 +13,6 @@ public interface UserProfileComponent {
     void inject(UserProfileView target);
 
     void inject(UserPublicPhotosView target);
+
+    void inject(UserAlbumsView target);
 }
