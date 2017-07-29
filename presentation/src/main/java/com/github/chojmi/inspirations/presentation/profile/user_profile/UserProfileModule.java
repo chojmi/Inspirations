@@ -1,11 +1,9 @@
 package com.github.chojmi.inspirations.presentation.profile.user_profile;
 
-import com.github.chojmi.inspirations.domain.usecase.galleries.GetGalleryByUserId;
 import com.github.chojmi.inspirations.domain.usecase.people.GetUserInfo;
 import com.github.chojmi.inspirations.domain.usecase.people.GetUserPublicPhotos;
+import com.github.chojmi.inspirations.presentation.gallery.mapper.PhotoDataMapper;
 import com.github.chojmi.inspirations.presentation.profile.ProfileScope;
-import com.github.chojmi.inspirations.presentation.profile.user_profile.albums.UserAlbumsContract;
-import com.github.chojmi.inspirations.presentation.profile.user_profile.albums.UserAlbumsPresenter;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.public_photos.UserPublicPhotosContract;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.public_photos.UserPublicPhotosPresenter;
 
@@ -29,12 +27,7 @@ public class UserProfileModule {
     }
 
     @Provides
-    UserPublicPhotosContract.Presenter provideUserPublicPhotosPresenter(GetUserPublicPhotos getUserPublicPhotos) {
-        return new UserPublicPhotosPresenter(getUserPublicPhotos, userId);
-    }
-
-    @Provides
-    UserAlbumsContract.Presenter provideUserAlbumsPresenter(GetGalleryByUserId getGalleryByUserId) {
-        return new UserAlbumsPresenter(getGalleryByUserId, userId);
+    UserPublicPhotosContract.Presenter provideUserPublicPhotosPresenter(GetUserPublicPhotos getUserPublicPhotos, PhotoDataMapper photoDataMapper) {
+        return new UserPublicPhotosPresenter(getUserPublicPhotos, userId, photoDataMapper);
     }
 }

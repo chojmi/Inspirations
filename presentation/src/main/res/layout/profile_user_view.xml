@@ -27,16 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"/>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.design.widget.TabLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"/>
-
-        </android.support.v4.view.ViewPager>
+        <include
+            android:id="@+id/user_public_photos"
+            layout="@layout/profile_user_public_photos_view"/>
     </LinearLayout>
 </com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileView>

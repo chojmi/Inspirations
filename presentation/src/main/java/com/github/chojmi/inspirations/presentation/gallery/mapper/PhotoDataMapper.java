@@ -38,6 +38,15 @@ public class PhotoDataMapper {
         return result;
     }
 
+    public List<Photo> transform(List<PhotoEntity> photoEntities) {
+        List<Photo> result = new ArrayList<>();
+        Observable.fromIterable(photoEntities)
+                .map(this::transform)
+                .toList()
+                .subscribe(result::addAll, Timber::e);
+        return result;
+    }
+
     public List<Photo> transform(GalleryEntity<PhotoEntity> galleryEntity) {
         List<Photo> result = new ArrayList<>();
         Observable.fromIterable(galleryEntity.getPhoto())
