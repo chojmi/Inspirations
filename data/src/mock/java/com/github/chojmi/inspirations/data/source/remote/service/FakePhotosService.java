@@ -1,5 +1,6 @@
 package com.github.chojmi.inspirations.data.source.remote.service;
 
+import com.github.chojmi.inspirations.data.entity.GalleryEntityImpl;
 import com.github.chojmi.inspirations.data.entity.photos.PhotoCommentsEntityImpl;
 import com.github.chojmi.inspirations.data.entity.photos.PhotoFavsEntityImpl;
 
@@ -17,6 +18,11 @@ public class FakePhotosService implements PhotosService {
 
     @Override
     public Observable<PhotoCommentsEntityImpl> loadPhotoComments(@QueryMap Map<String, String> options) {
+        return Observable.empty();
+    }
+
+    @Override
+    public Observable<GalleryEntityImpl> loadSearchPhoto(@QueryMap Map<String, String> options) {
         return Observable.empty();
     }
 }

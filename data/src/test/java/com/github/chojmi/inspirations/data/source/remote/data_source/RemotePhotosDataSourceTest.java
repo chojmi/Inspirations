@@ -1,11 +1,11 @@
 package com.github.chojmi.inspirations.data.source.remote.data_source;
 
+import com.github.chojmi.inspirations.data.entity.GalleryEntityImpl;
 import com.github.chojmi.inspirations.data.entity.photos.PhotoCommentsEntityImpl;
 import com.github.chojmi.inspirations.data.entity.photos.PhotoFavsEntityImpl;
 import com.github.chojmi.inspirations.data.source.remote.service.PhotosService;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
 import com.github.chojmi.inspirations.data.source.utils.TestAndroidScheduler;
-import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -72,7 +72,7 @@ public class RemotePhotosDataSourceTest {
 
     @Test
     public void loadPhotoSearchHappyCase() {
-        final GalleryEntity mockGalleryEntity = Mockito.mock(GalleryEntity.class);
+        final GalleryEntityImpl mockGalleryEntity = Mockito.mock(GalleryEntityImpl.class);
         when(mockRemoteQueryProducer.produceLoadSearchPhoto(FAKE_QUERY)).thenReturn(fakeQueryMap);
         when(mockPhotoService.loadSearchPhoto(fakeQueryMap)).thenReturn(Observable.just(mockGalleryEntity));
 

@@ -31,6 +31,7 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     @Inject GridPhotoAttrsContract.Presenter photoAttrsPresenter;
     private GridAdapter galleryAdapter;
     private CompositeDisposable disposables;
+
     public static GridFragment newInstance() {
         return new GridFragment();
     }
