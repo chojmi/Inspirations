@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".gallery.ui.photo.PhotoViewActivity"/>
+        <activity android:name=".photo.item.PhotoViewActivity"/>
         <activity android:name=".profile.login.LoginWebViewActivity"/>
         <activity android:name=".profile.user_profile.UserProfileActivity"/>
     </application>

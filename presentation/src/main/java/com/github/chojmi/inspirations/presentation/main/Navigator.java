@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
-import com.github.chojmi.inspirations.presentation.gallery.ui.photo.PhotoViewActivity;
+import com.github.chojmi.inspirations.presentation.photo.item.PhotoViewActivity;
 import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewActivity;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileActivity;
 

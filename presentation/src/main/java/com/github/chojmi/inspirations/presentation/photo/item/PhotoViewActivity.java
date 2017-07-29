@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.gallery.ui.photo;
+package com.github.chojmi.inspirations.presentation.photo.item;
 
 import android.content.Context;
 import android.content.Intent;
@@ -31,7 +31,7 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getInspirationsApp().createPhotoViewComponent(getIntent().getParcelableExtra(ARG_PHOTO)).inject(this);
-        setContentView(R.layout.gallery_photo_activity);
+        setContentView(R.layout.photo_item_activity);
     }
 
     @Override
