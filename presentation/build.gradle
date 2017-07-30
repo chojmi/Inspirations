@@ -25,6 +25,10 @@ android {
         }
     }
 
+    defaultConfig {
+        vectorDrawables.useSupportLibrary = true
+    }
+
     productFlavors {
         mock {
 

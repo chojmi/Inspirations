@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.github.chojmi.inspirations.presentation.gallery.ui.grid.item.GridItemTopView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/material_component_grid_lists_padding_big">
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/photo"
+        style="@style/AppTheme.ClickableView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:id="@+id/user_profile"
+        style="@style/AppTheme.ClickableView.SelectableBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -20,9 +22,9 @@
         <ImageView
             android:id="@+id/person_icon"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/icon_standard_size"
             android:layout_gravity="center_vertical"
-            android:layout_margin="8dp"/>
+            android:layout_margin="@dimen/margin_sm"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,13 +37,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/material_component_grid_lists_header_footer_text_size"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                tools:text="Owner name"/>
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/material_component_grid_lists_header_footer_text_size"/>
+                android:textSize="@dimen/material_component_grid_lists_header_footer_text_size"
+                tools:text="Photo title"/>
         </LinearLayout>
     </LinearLayout>
 </com.github.chojmi.inspirations.presentation.gallery.ui.grid.item.GridItemTopView>

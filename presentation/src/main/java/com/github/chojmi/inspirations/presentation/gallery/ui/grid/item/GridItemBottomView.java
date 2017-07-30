@@ -32,7 +32,7 @@ public class GridItemBottomView extends LinearLayoutCompat {
             commentsCount.setText("");
             return;
         }
-        commentsCount.setText("Comments: " + photoComments.getComments().size());
+        commentsCount.setText(String.valueOf(photoComments.getComments().size()));
     }
 
     public void setFavs(@Nullable PhotoFavs photoFavs) {
@@ -40,7 +40,6 @@ public class GridItemBottomView extends LinearLayoutCompat {
             favsCount.setText("");
             return;
         }
-        favsCount.setText("Favs: " + photoFavs.getTotal());
-
+        favsCount.setText(String.valueOf(photoFavs.getTotal()));
     }
 }
