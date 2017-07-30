@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:state_selected="true"
+          app:srcCompat="@drawable/ic_fav"/>
+    <item android:state_selected="false"
+          app:srcCompat="@drawable/ic_fav_border"/>
+</selector>

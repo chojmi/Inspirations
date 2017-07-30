@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="AppTheme.Base">
+    <style name="AppTheme" parent="Base.V21.AppTheme"/>
+
+    <style name="Base.V21.AppTheme" parent="Base.V0.AppTheme">
         <item name="android:statusBarColor">@color/material_light_black</item>
     </style>
 </resources>

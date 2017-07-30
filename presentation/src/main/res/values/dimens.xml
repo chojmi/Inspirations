@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="zero">0dp</dimen>
+    <dimen name="margin_xs">4dp</dimen>
+    <dimen name="margin_sm">8dp</dimen>
+    <dimen name="margin_ms">12dp</dimen>
+    <dimen name="margin_md">16dp</dimen>
+    <dimen name="margin_xl">24dp</dimen>
+    <dimen name="margin_lg">32dp</dimen>
+    <dimen name="margin_xlg">48dp</dimen>
+
+    <!--Material design metrics-->
+    <dimen name="material_toolbar_height">56dp</dimen>
+    <dimen name="material_clickable_size">48dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
+    <dimen name="progress_bar_size">48dp</dimen>
+
+    <dimen name="lift_on_touch_height">8dp</dimen>
+
+    <dimen name="gallery_grid_item_top_text_size">16sp</dimen>
+    <dimen name="gallery_grid_item_bottom_text_size">20sp</dimen>
+
+</resources>
