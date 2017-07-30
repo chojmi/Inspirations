@@ -10,7 +10,8 @@
         android:id="@+id/photo"
         style="@style/AppTheme.ClickableView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:transitionName="photo"/>
 
     <LinearLayout
         android:id="@+id/user_profile"

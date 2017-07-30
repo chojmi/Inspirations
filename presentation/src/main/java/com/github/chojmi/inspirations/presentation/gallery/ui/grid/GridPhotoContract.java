@@ -1,5 +1,7 @@
 package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
 
+import android.widget.ImageView;
+
 import com.github.chojmi.inspirations.presentation.blueprints.BasePresenter;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseView;
 import com.github.chojmi.inspirations.presentation.gallery.model.Person;
@@ -12,7 +14,7 @@ interface GridPhotoContract {
     interface View extends BaseView {
         void showPhotos(List<PhotoWithAuthor> photos);
 
-        void openPhotoView(PhotoWithAuthor photo);
+        void openPhotoView(ImageView imageView, PhotoWithAuthor photo);
 
         void openUserProfile(Person person);
     }
@@ -20,7 +22,7 @@ interface GridPhotoContract {
     interface Presenter extends BasePresenter<View> {
         void refreshPhotos(String userId);
 
-        void photoSelected(PhotoWithAuthor photo);
+        void photoSelected(ImageView imageView, PhotoWithAuthor photo);
 
         void profileSelected(Person person);
     }

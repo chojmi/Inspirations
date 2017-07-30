@@ -1,8 +1,10 @@
 package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
 
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAdapter;
@@ -21,7 +23,7 @@ import io.reactivex.subjects.PublishSubject;
 class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder, GridAdapterUiModel> {
     private final Listener listener;
     private final PublishSubject<Integer> profileClicksSubject = PublishSubject.create();
-    private final PublishSubject<Integer> photoClicksSubject = PublishSubject.create();
+    private final PublishSubject<Pair<ImageView, Integer>> photoClicksSubject = PublishSubject.create();
 
     GridAdapter(Listener listener) {
         this.listener = listener;
@@ -66,8 +68,8 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
         return profileClicksSubject.map(integer -> getItem(integer).getPhoto());
     }
 
-    public Observable<PhotoWithAuthor> getPhotoClicksObservable() {
-        return photoClicksSubject.map(integer -> getItem(integer).getPhoto());
+    public Observable<Pair<ImageView, PhotoWithAuthor>> getPhotoClicksObservable() {
+        return photoClicksSubject.map(imageViewIntegerPair -> new Pair<>(imageViewIntegerPair.first, getItem(imageViewIntegerPair.second).getPhoto()));
     }
 
     interface Listener {
@@ -87,7 +89,7 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
 
             gridItemTopView.getPhotoClicksObservable()
                     .takeUntil(RxView.detaches(parent))
-                    .map(o -> getAdapterPosition())
+                    .map(o -> new Pair<>((ImageView) gridItemTopView.findViewById(R.id.photo), getAdapterPosition()))
                     .subscribe(photoClicksSubject);
         }
 

@@ -12,7 +12,7 @@ import android.util.AttributeSet;
 
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
-import com.github.chojmi.inspirations.presentation.photo.item.PhotoViewActivity;
+import com.github.chojmi.inspirations.presentation.main.Navigator;
 import com.github.chojmi.inspirations.presentation.photo.list.PhotoListAdapter;
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView;
 
@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 public class SearchPhotosView extends LinearLayoutCompat
         implements SearchPhotosContract.View {
     @Inject SearchPhotosContract.Presenter presenter;
+    @Inject Navigator navigator;
     @BindView(R.id.search_view) SearchView searchView;
     @BindView(R.id.rv_search) RecyclerView recyclerView;
 
@@ -55,7 +56,7 @@ public class SearchPhotosView extends LinearLayoutCompat
         photoListAdapter = new PhotoListAdapter();
         recyclerView.setAdapter(photoListAdapter);
         photoListAdapter.getPhotoClicksSubject()
-                .subscribe(photo -> getContext().startActivity(PhotoViewActivity.getCallingIntent(getContext(), photo)));
+                .subscribe(photo -> navigator.navigateToPhoto(getContext(), photo));
     }
 
 

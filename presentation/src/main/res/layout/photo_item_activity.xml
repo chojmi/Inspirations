@@ -8,5 +8,13 @@
         android:id="@+id/photo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:transitionName="photo"/>
+
+    <include
+        android:id="@+id/item_bottom"
+        layout="@layout/gallery_grid_bottom_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"/>
 </FrameLayout>

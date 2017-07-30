@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
@@ -78,7 +79,7 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         galleryAdapter = new GridAdapter(this);
-        disposables.add(galleryAdapter.getPhotoClicksObservable().subscribe(photo -> photoPresenter.photoSelected(photo)));
+        disposables.add(galleryAdapter.getPhotoClicksObservable().subscribe(pair -> photoPresenter.photoSelected(pair.first, pair.second)));
         disposables.add(galleryAdapter.getProfileClicksObservable().subscribe(photo -> photoPresenter.profileSelected(photo.getPerson())));
         recyclerView.setAdapter(galleryAdapter);
     }
@@ -89,8 +90,8 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     }
 
     @Override
-    public void openPhotoView(PhotoWithAuthor photo) {
-        getNavigator().navigateToPhoto(getContext(), photo);
+    public void openPhotoView(ImageView imageView, PhotoWithAuthor photo) {
+        getNavigator().navigateToPhoto(getActivity(), photo, imageView);
     }
 
     @Override
