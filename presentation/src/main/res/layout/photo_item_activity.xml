@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:orientation="vertical">
@@ -8,5 +10,68 @@
         android:id="@+id/photo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:transitionName="photo"/>
+
+    <LinearLayout
+        android:id="@+id/user_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/person_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/icon_standard_size"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/margin_sm"/>
+
+        <TextView
+            android:id="@+id/owner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/material_component_grid_lists_header_footer_text_size"
+            tools:text="Owner name"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/close"
+                android:layout_width="@dimen/icon_standard_size"
+                android:layout_height="@dimen/icon_standard_size"
+                android:layout_gravity="center_vertical|end"
+                android:layout_margin="@dimen/margin_ms"
+                app:srcCompat="@drawable/ic_clear"/>
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_md"
+            android:layout_marginLeft="@dimen/margin_md"
+            android:layout_marginRight="@dimen/margin_md"
+            android:layout_marginStart="@dimen/margin_md"
+            android:textSize="@dimen/material_component_grid_lists_header_footer_text_size"
+            tools:text="Photo title"/>
+
+        <include layout="@layout/divider"/>
+
+        <include
+            android:id="@+id/item_bottom"
+            layout="@layout/photo_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 </FrameLayout>

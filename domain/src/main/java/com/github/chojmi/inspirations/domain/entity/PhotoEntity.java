@@ -6,4 +6,6 @@ public interface PhotoEntity {
     String getUrl();
 
     String getTitle();
+
+    String getOwnerId();
 }

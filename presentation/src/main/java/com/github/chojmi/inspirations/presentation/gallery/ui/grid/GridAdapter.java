@@ -1,17 +1,18 @@
 package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
 
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAdapter;
+import com.github.chojmi.inspirations.presentation.common.PhotoDetailsView;
 import com.github.chojmi.inspirations.presentation.gallery.model.GridAdapterUiModel;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoComments;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoFavs;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
-import com.github.chojmi.inspirations.presentation.gallery.ui.grid.item.GridItemBottomView;
-import com.github.chojmi.inspirations.presentation.gallery.ui.grid.item.GridItemTopView;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import butterknife.BindView;
@@ -21,7 +22,7 @@ import io.reactivex.subjects.PublishSubject;
 class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder, GridAdapterUiModel> {
     private final Listener listener;
     private final PublishSubject<Integer> profileClicksSubject = PublishSubject.create();
-    private final PublishSubject<Integer> photoClicksSubject = PublishSubject.create();
+    private final PublishSubject<Pair<ImageView, Integer>> photoClicksSubject = PublishSubject.create();
 
     GridAdapter(Listener listener) {
         this.listener = listener;
@@ -66,8 +67,8 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
         return profileClicksSubject.map(integer -> getItem(integer).getPhoto());
     }
 
-    public Observable<PhotoWithAuthor> getPhotoClicksObservable() {
-        return photoClicksSubject.map(integer -> getItem(integer).getPhoto());
+    public Observable<Pair<ImageView, PhotoWithAuthor>> getPhotoClicksObservable() {
+        return photoClicksSubject.map(imageViewIntegerPair -> new Pair<>(imageViewIntegerPair.first, getItem(imageViewIntegerPair.second).getPhoto()));
     }
 
     interface Listener {
@@ -76,7 +77,7 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
 
     class GalleryViewHolder extends BaseRecyclerViewAdapter.ViewHolder<PhotoWithAuthor> {
         @BindView(R.id.item_top) GridItemTopView gridItemTopView;
-        @BindView(R.id.item_bottom) GridItemBottomView gridItemBottomView;
+        @BindView(R.id.item_bottom) PhotoDetailsView photoDetailsView;
 
         GalleryViewHolder(View itemView, ViewGroup parent) {
             super(itemView, parent);
@@ -87,14 +88,14 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
 
             gridItemTopView.getPhotoClicksObservable()
                     .takeUntil(RxView.detaches(parent))
-                    .map(o -> getAdapterPosition())
+                    .map(o -> new Pair<>((ImageView) gridItemTopView.findViewById(R.id.photo), getAdapterPosition()))
                     .subscribe(photoClicksSubject);
         }
 
         void setGridAdapterUiModel(GridAdapterUiModel gridAdapterUiModel) {
             gridItemTopView.setPhoto(gridAdapterUiModel.getPhoto());
-            gridItemBottomView.setFavs(gridAdapterUiModel.getFavs());
-            gridItemBottomView.setComments(gridAdapterUiModel.getComments());
+            photoDetailsView.setFavs(gridAdapterUiModel.getFavs());
+            photoDetailsView.setComments(gridAdapterUiModel.getComments());
         }
 
         void onViewRecycled() {

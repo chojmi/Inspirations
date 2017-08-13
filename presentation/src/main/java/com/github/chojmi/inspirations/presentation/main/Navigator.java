@@ -1,11 +1,15 @@
 package com.github.chojmi.inspirations.presentation.main;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.view.View;
 
+import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
-import com.github.chojmi.inspirations.presentation.photo.item.PhotoViewActivity;
+import com.github.chojmi.inspirations.presentation.photo.PhotoViewActivity;
 import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewActivity;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileActivity;
 
@@ -20,9 +24,18 @@ public class Navigator {
     public Navigator() {
     }
 
-    public void navigateToPhoto(Context context, PhotoWithAuthor photo) {
+    public void navigateToPhoto(Activity context, PhotoWithAuthor photo, View image) {
         if (context != null) {
             Intent intentToLaunch = PhotoViewActivity.getCallingIntent(context, photo.getPhoto());
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(context, image, "photo");
+            context.startActivity(intentToLaunch, options.toBundle());
+        }
+    }
+
+    public void navigateToPhoto(Context context, Photo photo) {
+        if (context != null) {
+            Intent intentToLaunch = PhotoViewActivity.getCallingIntent(context, photo);
             context.startActivity(intentToLaunch);
         }
     }

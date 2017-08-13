@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 data class PhotoEntityImpl(
         private val id: String,
-        val owner: String,
+        private val owner: String,
         val secret: String,
         val server: Int,
         val farm: Int,
@@ -16,6 +16,7 @@ data class PhotoEntityImpl(
         @SerializedName("isfamily") val isFamily: Int,
         @SerializedName("is_primary") val isPrimary: Int,
         @SerializedName("has_comment") val hasComment: Int) : PhotoEntity {
+
     override fun getId(): String {
         return id
     }
@@ -26,5 +27,9 @@ data class PhotoEntityImpl(
 
     override fun getUrl(): String {
         return ImageLinkProvider.provideLink(farm, server, id, secret)
+    }
+
+    override fun getOwnerId(): String {
+        return owner
     }
 }

@@ -1,9 +1,9 @@
-package com.github.chojmi.inspirations.presentation.search.photos;
+package com.github.chojmi.inspirations.presentation.search;
 
 import com.github.chojmi.inspirations.domain.common.UseCase;
 import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 import com.github.chojmi.inspirations.domain.utils.Preconditions;
-import com.github.chojmi.inspirations.presentation.gallery.mapper.PhotoDataMapper;
+import com.github.chojmi.inspirations.presentation.common.mapper.PhotoDataMapper;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;

@@ -8,7 +8,9 @@
         android:id="@+id/item_top"
         layout="@layout/gallery_grid_top_item"/>
 
+    <include layout="@layout/divider"/>
+
     <include
         android:id="@+id/item_bottom"
-        layout="@layout/gallery_grid_bottom_item"/>
+        layout="@layout/photo_details"/>
 </LinearLayout>

@@ -2,7 +2,7 @@ package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
 
 import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoComments;
 import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoFavs;
-import com.github.chojmi.inspirations.presentation.gallery.mapper.GalleryAttrsMapper;
+import com.github.chojmi.inspirations.presentation.common.mapper.PhotoDetailsMapper;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
 
 import io.reactivex.annotations.NonNull;
@@ -14,14 +14,15 @@ import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNot
 class GridPhotoAttrsPresenter implements GridPhotoAttrsContract.Presenter {
     private final GetPhotoFavs getPhotoFavs;
     private final GetPhotoComments getPhotoComments;
-    private final GalleryAttrsMapper galleryAttrsMapper;
+    private final PhotoDetailsMapper photoDetailsMapper;
     private GridPhotoAttrsContract.View view;
     private CompositeDisposable disposables;
 
-    GridPhotoAttrsPresenter(@NonNull GetPhotoFavs getPhotoFavs, @NonNull GetPhotoComments getPhotoComments, @NonNull GalleryAttrsMapper galleryAttrsMapper) {
+    GridPhotoAttrsPresenter(@NonNull GetPhotoFavs getPhotoFavs, @NonNull GetPhotoComments getPhotoComments,
+                            @NonNull PhotoDetailsMapper photoDetailsMapper) {
         this.getPhotoFavs = checkNotNull(getPhotoFavs);
         this.getPhotoComments = checkNotNull(getPhotoComments);
-        this.galleryAttrsMapper = checkNotNull(galleryAttrsMapper);
+        this.photoDetailsMapper = checkNotNull(photoDetailsMapper);
     }
 
     @Override
@@ -37,7 +38,7 @@ class GridPhotoAttrsPresenter implements GridPhotoAttrsContract.Presenter {
                 return;
             }
             if (submitUiModel.isSucceed()) {
-                view.showFavs(position, galleryAttrsMapper.transform(submitUiModel.getResult()));
+                view.showFavs(position, photoDetailsMapper.transform(submitUiModel.getResult()));
             }
         }, Timber::e));
     }
@@ -49,7 +50,7 @@ class GridPhotoAttrsPresenter implements GridPhotoAttrsContract.Presenter {
                 return;
             }
             if (submitUiModel.isSucceed()) {
-                view.showComments(position, galleryAttrsMapper.transform(submitUiModel.getResult()));
+                view.showComments(position, photoDetailsMapper.transform(submitUiModel.getResult()));
             }
         }, Timber::d));
     }

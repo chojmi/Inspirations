@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.gallery.ui.grid.item;
+package com.github.chojmi.inspirations.presentation.common;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -13,11 +13,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.annotations.Nullable;
 
-public class GridItemBottomView extends LinearLayoutCompat {
+public class PhotoDetailsView extends LinearLayoutCompat {
     @BindView(R.id.comments_count) TextView commentsCount;
     @BindView(R.id.favs_count) TextView favsCount;
 
-    public GridItemBottomView(Context context, AttributeSet attrs) {
+    public PhotoDetailsView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.gallery.ui.grid.item;
+package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutCompat;

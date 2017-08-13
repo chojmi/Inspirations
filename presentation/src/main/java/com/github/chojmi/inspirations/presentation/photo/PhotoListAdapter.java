@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.photo.list;
+package com.github.chojmi.inspirations.presentation.photo;
 
 import android.view.LayoutInflater;
 import android.view.View;

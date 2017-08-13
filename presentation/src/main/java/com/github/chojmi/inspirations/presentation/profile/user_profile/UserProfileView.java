@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.presentation.R;
-import com.github.chojmi.inspirations.presentation.profile.user_profile.public_photos.UserPublicPhotosView;
 
 import javax.inject.Inject;
 

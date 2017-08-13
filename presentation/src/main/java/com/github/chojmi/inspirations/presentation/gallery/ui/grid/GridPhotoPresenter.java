@@ -1,5 +1,7 @@
 package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
 
+import android.widget.ImageView;
+
 import com.github.chojmi.inspirations.domain.common.UseCase;
 import com.github.chojmi.inspirations.presentation.blueprints.exception.ViewNotFoundException;
 import com.github.chojmi.inspirations.presentation.gallery.model.Person;
@@ -45,8 +47,8 @@ class GridPhotoPresenter implements GridPhotoContract.Presenter {
     }
 
     @Override
-    public void photoSelected(PhotoWithAuthor photo) {
-        view.openPhotoView(photo);
+    public void photoSelected(ImageView imageView, PhotoWithAuthor photo) {
+        view.openPhotoView(imageView, photo);
     }
 
     @Override

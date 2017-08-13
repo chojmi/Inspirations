@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.photo.item;
+package com.github.chojmi.inspirations.presentation.photo;
 
 import com.github.chojmi.inspirations.presentation.gallery.ui.GalleryScope;
 
