@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.github.chojmi.inspirations.presentation.utils.ImageViewUtils;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.clearImageCache;
 import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.loadImage;
@@ -41,7 +43,7 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getInspirationsApp().createPhotoViewComponent(getIntent().getParcelableExtra(ARG_PHOTO)).inject(this);
+        getInspirationsApp().createPhotoViewComponent(getPhoto()).inject(this);
         setContentView(R.layout.photo_item_activity);
     }
 
@@ -83,5 +85,20 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
     public void showUserData(PhotoWithAuthor photoWithAuthor) {
         loadImage(personIcon, photoWithAuthor.getPerson().getIconUrl());
         ownerTextView.setText(photoWithAuthor.getPhoto().getTitle());
+    }
+
+    @OnClick({R.id.owner, R.id.person_icon})
+    public void onPhotoOwnerClick(View view) {
+        getNavigator().navigateToUserProfile(this, getPhoto().getOwnerId());
+    }
+
+
+    @OnClick(R.id.close)
+    public void onCloseClick(View view) {
+        onBackPressed();
+    }
+
+    private Photo getPhoto() {
+        return getIntent().getParcelableExtra(ARG_PHOTO);
     }
 }
