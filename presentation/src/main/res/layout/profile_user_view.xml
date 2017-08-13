@@ -1,29 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="This is user profile:"/>
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/profile_appbar_height">
 
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@color/theme_profile_background"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-    <TextView
-        android:id="@+id/user_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="@dimen/icon_standard_size"
+                android:layout_height="@dimen/icon_standard_size"
+                android:layout_margin="@dimen/margin_ms"
+                android:tint="@color/theme_profile_main"
+                app:layout_collapseMode="pin"
+                app:srcCompat="@drawable/ic_arrow_back"/>
 
-    <include
-        android:id="@+id/user_public_photos"
-        layout="@layout/profile_user_public_photos_view"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                app:layout_collapseMode="pin">
+
+                <ImageView
+                    android:id="@+id/person_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/icon_standard_size"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="@dimen/margin_sm"/>
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/theme_profile_main"
+                    android:textSize="@dimen/profile_title_size"
+                    tools:text="User name"/>
+            </LinearLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <include
+            android:id="@+id/user_public_photos"
+            layout="@layout/profile_user_public_photos_view"/>
+    </FrameLayout>
 </com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileView>

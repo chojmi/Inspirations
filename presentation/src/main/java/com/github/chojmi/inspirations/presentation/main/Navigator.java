@@ -33,10 +33,12 @@ public class Navigator {
         }
     }
 
-    public void navigateToPhoto(Context context, Photo photo) {
+    public void navigateToPhoto(Activity context, Photo photo, View image) {
         if (context != null) {
             Intent intentToLaunch = PhotoViewActivity.getCallingIntent(context, photo);
-            context.startActivity(intentToLaunch);
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(context, image, "photo");
+            context.startActivity(intentToLaunch, options.toBundle());
         }
     }
 

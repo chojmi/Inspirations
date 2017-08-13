@@ -1,9 +1,10 @@
 package com.github.chojmi.inspirations.presentation.profile.user_profile;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
@@ -56,10 +57,10 @@ public class UserPublicPhotosView extends FrameLayout implements UserPublicPhoto
 
     private void initRecyclerView() {
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         photoListAdapter = new PhotoListAdapter();
         recyclerView.setAdapter(photoListAdapter);
         photoListAdapter.getPhotoClicksSubject()
-                .subscribe(photo -> navigator.navigateToPhoto(getContext(), photo));
+                .subscribe(pair -> navigator.navigateToPhoto((Activity) getContext(), pair.second, pair.first));
     }
 }

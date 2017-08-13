@@ -1,5 +1,6 @@
 package com.github.chojmi.inspirations.presentation.photo;
 
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.c
 import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.loadImage;
 
 public class PhotoListAdapter extends BaseRecyclerViewAdapter<PhotoListAdapter.ViewHolder, Photo> {
-    private final PublishSubject<Integer> photoClicksSubject = PublishSubject.create();
+    private final PublishSubject<Pair<ImageView, Integer>> photoClicksSubject = PublishSubject.create();
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,8 +39,8 @@ public class PhotoListAdapter extends BaseRecyclerViewAdapter<PhotoListAdapter.V
         return super.onFailedToRecycleView(holder);
     }
 
-    public Observable<Photo> getPhotoClicksSubject() {
-        return photoClicksSubject.map(this::getItem);
+    public Observable<Pair<ImageView, Photo>> getPhotoClicksSubject() {
+        return photoClicksSubject.map(pair -> new Pair<>(pair.first, getItem(pair.second)));
     }
 
     class ViewHolder extends BaseRecyclerViewAdapter.ViewHolder<PhotoWithAuthor> {
@@ -49,7 +50,7 @@ public class PhotoListAdapter extends BaseRecyclerViewAdapter<PhotoListAdapter.V
             super(itemView, parent);
             RxView.clicks(imageView)
                     .takeUntil(RxView.detaches(parent))
-                    .map(o -> getAdapterPosition())
+                    .map(o -> new Pair<>(imageView, getAdapterPosition()))
                     .subscribe(photoClicksSubject);
         }
 
