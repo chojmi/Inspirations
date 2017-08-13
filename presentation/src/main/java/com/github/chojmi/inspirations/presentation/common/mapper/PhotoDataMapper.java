@@ -25,8 +25,12 @@ public class PhotoDataMapper {
         return new PhotoWithAuthor(transform(photo), new Person(person.getId(), person.getUsername(), person.getIconUrl()));
     }
 
+    public PhotoWithAuthor transform(Photo photo, PersonEntity person) {
+        return new PhotoWithAuthor(photo, new Person(person.getId(), person.getUsername(), person.getIconUrl()));
+    }
+
     private Photo transform(PhotoEntity photoEntity) {
-        return new Photo(photoEntity.getId(), photoEntity.getTitle(), photoEntity.getUrl());
+        return new Photo(photoEntity.getId(), photoEntity.getTitle(), photoEntity.getUrl(), photoEntity.getOwnerId());
     }
 
     public List<PhotoWithAuthor> transform(List<PhotoEntity> photos, PersonEntity person) {

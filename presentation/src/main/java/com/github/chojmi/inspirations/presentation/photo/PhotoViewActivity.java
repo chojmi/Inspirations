@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
@@ -12,11 +13,15 @@ import com.github.chojmi.inspirations.presentation.common.PhotoDetailsView;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoComments;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoFavs;
+import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
 import com.github.chojmi.inspirations.presentation.utils.ImageViewUtils;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+
+import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.clearImageCache;
+import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.loadImage;
 
 public class PhotoViewActivity extends BaseActivity implements PhotoViewContract.View {
 
@@ -24,6 +29,8 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
     @Inject PhotoViewContract.Presenter presenter;
     @BindView(R.id.photo) ImageView imageView;
     @BindView(R.id.item_bottom) PhotoDetailsView photoDetailsView;
+    @BindView(R.id.person_icon) ImageView personIcon;
+    @BindView(R.id.owner) TextView ownerTextView;
 
     public static Intent getCallingIntent(Context context, Photo photo) {
         Intent intent = new Intent(context, PhotoViewActivity.class);
@@ -53,6 +60,7 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        clearImageCache(personIcon);
         getInspirationsApp().releasePhotoViewComponent();
     }
 
@@ -69,5 +77,11 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
     @Override
     public void showComments(PhotoComments photoComments) {
         photoDetailsView.setComments(photoComments);
+    }
+
+    @Override
+    public void showUserData(PhotoWithAuthor photoWithAuthor) {
+        loadImage(personIcon, photoWithAuthor.getPerson().getIconUrl());
+        ownerTextView.setText(photoWithAuthor.getPhoto().getTitle());
     }
 }

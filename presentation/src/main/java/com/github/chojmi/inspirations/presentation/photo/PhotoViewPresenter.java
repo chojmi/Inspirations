@@ -1,8 +1,11 @@
 package com.github.chojmi.inspirations.presentation.photo;
 
 
-import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoComments;
-import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoFavs;
+import com.github.chojmi.inspirations.domain.common.UseCase;
+import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
+import com.github.chojmi.inspirations.presentation.common.mapper.PhotoDataMapper;
 import com.github.chojmi.inspirations.presentation.common.mapper.PhotoDetailsMapper;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 
@@ -14,17 +17,22 @@ import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNot
 
 class PhotoViewPresenter implements PhotoViewContract.Presenter {
     private final Photo photo;
-    private final GetPhotoFavs getPhotoFavs;
-    private final GetPhotoComments getPhotoComments;
+    private final UseCase<String, PhotoFavsEntity> getPhotoFavs;
+    private final UseCase<String, PhotoCommentsEntity> getPhotoComments;
+    private final UseCase<String, PersonEntity> getUserInfo;
+    private final PhotoDataMapper photoDataMapper;
     private final PhotoDetailsMapper photoDetailsMapper;
     private PhotoViewContract.View view;
     private CompositeDisposable disposables;
 
-    PhotoViewPresenter(Photo photo, @NonNull GetPhotoFavs getPhotoFavs,
-                       @NonNull GetPhotoComments getPhotoComments, @NonNull PhotoDetailsMapper photoDetailsMapper) {
+    PhotoViewPresenter(Photo photo, @NonNull UseCase<String, PhotoFavsEntity> getPhotoFavs,
+                       @NonNull UseCase<String, PhotoCommentsEntity> getPhotoComments, @NonNull UseCase<String, PersonEntity> getUserInfo,
+                       @NonNull PhotoDetailsMapper photoDetailsMapper, @NonNull PhotoDataMapper photoDataMapper) {
         this.photo = photo;
         this.getPhotoFavs = checkNotNull(getPhotoFavs);
         this.getPhotoComments = checkNotNull(getPhotoComments);
+        this.getUserInfo = checkNotNull(getUserInfo);
+        this.photoDataMapper = checkNotNull(photoDataMapper);
         this.photoDetailsMapper = checkNotNull(photoDetailsMapper);
     }
 
@@ -35,6 +43,7 @@ class PhotoViewPresenter implements PhotoViewContract.Presenter {
         view.showPhoto(photo);
         loadFavs(photo);
         loadComments(photo);
+        loadUserData(photo);
     }
 
     private void loadFavs(Photo photo) {
@@ -55,6 +64,17 @@ class PhotoViewPresenter implements PhotoViewContract.Presenter {
             }
             if (submitUiModel.isSucceed()) {
                 view.showComments(photoDetailsMapper.transform(submitUiModel.getResult()));
+            }
+        }, Timber::d));
+    }
+
+    private void loadUserData(Photo photo) {
+        disposables.add(getUserInfo.process(checkNotNull(photo).getOwnerId()).subscribe(submitUiModel -> {
+            if (submitUiModel.isInProgress()) {
+                return;
+            }
+            if (submitUiModel.isSucceed()) {
+                view.showUserData(photoDataMapper.transform(photo, submitUiModel.getResult()));
             }
         }, Timber::d));
     }
