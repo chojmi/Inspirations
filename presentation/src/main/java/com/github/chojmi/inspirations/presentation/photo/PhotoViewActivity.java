@@ -29,10 +29,11 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
 
     private static final String ARG_PHOTO = "ARG_PHOTO";
     @Inject PhotoViewContract.Presenter presenter;
-    @BindView(R.id.photo) ImageView imageView;
+    @BindView(R.id.photo) ImageView photoHolder;
     @BindView(R.id.item_bottom) PhotoDetailsView photoDetailsView;
     @BindView(R.id.person_icon) ImageView personIcon;
     @BindView(R.id.owner) TextView ownerTextView;
+    @BindView(R.id.title) TextView photoTitle;
 
     public static Intent getCallingIntent(Context context, Photo photo) {
         Intent intent = new Intent(context, PhotoViewActivity.class);
@@ -62,13 +63,15 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        clearImageCache(photoHolder);
         clearImageCache(personIcon);
         getInspirationsApp().releasePhotoViewComponent();
     }
 
     @Override
     public void showPhoto(Photo photo) {
-        ImageViewUtils.loadImage(imageView, photo.getUrl());
+        ImageViewUtils.loadImage(photoHolder, photo.getUrl());
+        photoTitle.setText(photo.getTitle());
     }
 
     @Override
@@ -91,7 +94,6 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
     public void onPhotoOwnerClick(View view) {
         getNavigator().navigateToUserProfile(this, getPhoto().getOwnerId());
     }
-
 
     @OnClick(R.id.close)
     public void onCloseClick(View view) {
