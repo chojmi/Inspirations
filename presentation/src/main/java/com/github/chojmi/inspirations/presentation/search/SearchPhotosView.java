@@ -1,5 +1,6 @@
 package com.github.chojmi.inspirations.presentation.search;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -56,7 +57,7 @@ public class SearchPhotosView extends LinearLayoutCompat
         photoListAdapter = new PhotoListAdapter();
         recyclerView.setAdapter(photoListAdapter);
         photoListAdapter.getPhotoClicksSubject()
-                .subscribe(photo -> navigator.navigateToPhoto(getContext(), photo));
+                .subscribe(pair -> navigator.navigateToPhoto((Activity) getContext(), pair.second, pair.first));
     }
 
 
