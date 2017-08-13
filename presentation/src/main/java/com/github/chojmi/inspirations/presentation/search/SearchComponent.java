@@ -1,7 +1,5 @@
 package com.github.chojmi.inspirations.presentation.search;
 
-import com.github.chojmi.inspirations.presentation.search.photos.SearchPhotosView;
-
 import dagger.Subcomponent;
 
 @SearchScope

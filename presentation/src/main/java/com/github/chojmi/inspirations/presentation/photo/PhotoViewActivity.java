@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.photo.item;
+package com.github.chojmi.inspirations.presentation.photo;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,10 @@ import android.widget.ImageView;
 
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
+import com.github.chojmi.inspirations.presentation.common.PhotoDetailsView;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
+import com.github.chojmi.inspirations.presentation.gallery.model.PhotoComments;
+import com.github.chojmi.inspirations.presentation.gallery.model.PhotoFavs;
 import com.github.chojmi.inspirations.presentation.utils.ImageViewUtils;
 
 import javax.inject.Inject;
@@ -20,6 +23,7 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
     private static final String ARG_PHOTO = "ARG_PHOTO";
     @Inject PhotoViewContract.Presenter presenter;
     @BindView(R.id.photo) ImageView imageView;
+    @BindView(R.id.item_bottom) PhotoDetailsView photoDetailsView;
 
     public static Intent getCallingIntent(Context context, Photo photo) {
         Intent intent = new Intent(context, PhotoViewActivity.class);
@@ -55,5 +59,15 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
     @Override
     public void showPhoto(Photo photo) {
         ImageViewUtils.loadImage(imageView, photo.getUrl());
+    }
+
+    @Override
+    public void showFavs(PhotoFavs photoFavs) {
+        photoDetailsView.setFavs(photoFavs);
+    }
+
+    @Override
+    public void showComments(PhotoComments photoComments) {
+        photoDetailsView.setComments(photoComments);
     }
 }

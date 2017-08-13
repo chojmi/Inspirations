@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.profile.user_profile.public_photos;
+package com.github.chojmi.inspirations.presentation.profile.user_profile;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,7 +11,7 @@ import android.widget.FrameLayout;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.main.Navigator;
-import com.github.chojmi.inspirations.presentation.photo.list.PhotoListAdapter;
+import com.github.chojmi.inspirations.presentation.photo.PhotoListAdapter;
 
 import java.util.List;
 

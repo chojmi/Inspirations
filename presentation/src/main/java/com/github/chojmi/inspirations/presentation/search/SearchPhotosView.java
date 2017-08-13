@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.search.photos;
+package com.github.chojmi.inspirations.presentation.search;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -13,7 +13,7 @@ import android.util.AttributeSet;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.main.Navigator;
-import com.github.chojmi.inspirations.presentation.photo.list.PhotoListAdapter;
+import com.github.chojmi.inspirations.presentation.photo.PhotoListAdapter;
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView;
 
 import java.util.List;

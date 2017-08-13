@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.gallery.mapper;
+package com.github.chojmi.inspirations.presentation.common.mapper;
 
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.presentation.gallery.model.Person;

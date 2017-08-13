@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.gallery.mapper;
+package com.github.chojmi.inspirations.presentation.common.mapper;
 
 import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 import com.github.chojmi.inspirations.domain.entity.PhotoEntity;

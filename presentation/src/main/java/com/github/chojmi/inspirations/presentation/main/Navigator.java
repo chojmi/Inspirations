@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
-import com.github.chojmi.inspirations.presentation.photo.item.PhotoViewActivity;
+import com.github.chojmi.inspirations.presentation.photo.PhotoViewActivity;
 import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewActivity;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileActivity;
 

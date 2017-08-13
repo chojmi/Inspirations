@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.profile.user_profile.public_photos;
+package com.github.chojmi.inspirations.presentation.search;
 
 import com.github.chojmi.inspirations.presentation.blueprints.BasePresenter;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseView;
@@ -6,11 +6,12 @@ import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 
 import java.util.List;
 
-public interface UserPublicPhotosContract {
+public interface SearchPhotosContract {
     interface View extends BaseView {
         void renderView(List<Photo> photos);
     }
 
-    interface Presenter extends BasePresenter<UserPublicPhotosContract.View> {
+    interface Presenter extends BasePresenter<SearchPhotosContract.View> {
+        void search(String text);
     }
 }

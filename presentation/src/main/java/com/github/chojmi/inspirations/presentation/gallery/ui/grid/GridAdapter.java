@@ -8,12 +8,11 @@ import android.widget.ImageView;
 
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAdapter;
+import com.github.chojmi.inspirations.presentation.common.PhotoDetailsView;
 import com.github.chojmi.inspirations.presentation.gallery.model.GridAdapterUiModel;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoComments;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoFavs;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
-import com.github.chojmi.inspirations.presentation.gallery.ui.grid.item.GridItemBottomView;
-import com.github.chojmi.inspirations.presentation.gallery.ui.grid.item.GridItemTopView;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import butterknife.BindView;
@@ -78,7 +77,7 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
 
     class GalleryViewHolder extends BaseRecyclerViewAdapter.ViewHolder<PhotoWithAuthor> {
         @BindView(R.id.item_top) GridItemTopView gridItemTopView;
-        @BindView(R.id.item_bottom) GridItemBottomView gridItemBottomView;
+        @BindView(R.id.item_bottom) PhotoDetailsView photoDetailsView;
 
         GalleryViewHolder(View itemView, ViewGroup parent) {
             super(itemView, parent);
@@ -95,8 +94,8 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
 
         void setGridAdapterUiModel(GridAdapterUiModel gridAdapterUiModel) {
             gridItemTopView.setPhoto(gridAdapterUiModel.getPhoto());
-            gridItemBottomView.setFavs(gridAdapterUiModel.getFavs());
-            gridItemBottomView.setComments(gridAdapterUiModel.getComments());
+            photoDetailsView.setFavs(gridAdapterUiModel.getFavs());
+            photoDetailsView.setComments(gridAdapterUiModel.getComments());
         }
 
         void onViewRecycled() {

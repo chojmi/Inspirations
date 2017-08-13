@@ -1,9 +1,10 @@
-package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
+package com.github.chojmi.inspirations.presentation.photo;
+
 
 import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoComments;
 import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoFavs;
 import com.github.chojmi.inspirations.presentation.common.mapper.PhotoDetailsMapper;
-import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
+import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
@@ -11,46 +12,49 @@ import timber.log.Timber;
 
 import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
-class GridPhotoAttrsPresenter implements GridPhotoAttrsContract.Presenter {
+class PhotoViewPresenter implements PhotoViewContract.Presenter {
+    private final Photo photo;
     private final GetPhotoFavs getPhotoFavs;
     private final GetPhotoComments getPhotoComments;
     private final PhotoDetailsMapper photoDetailsMapper;
-    private GridPhotoAttrsContract.View view;
+    private PhotoViewContract.View view;
     private CompositeDisposable disposables;
 
-    GridPhotoAttrsPresenter(@NonNull GetPhotoFavs getPhotoFavs, @NonNull GetPhotoComments getPhotoComments,
-                            @NonNull PhotoDetailsMapper photoDetailsMapper) {
+    PhotoViewPresenter(Photo photo, @NonNull GetPhotoFavs getPhotoFavs,
+                       @NonNull GetPhotoComments getPhotoComments, @NonNull PhotoDetailsMapper photoDetailsMapper) {
+        this.photo = photo;
         this.getPhotoFavs = checkNotNull(getPhotoFavs);
         this.getPhotoComments = checkNotNull(getPhotoComments);
         this.photoDetailsMapper = checkNotNull(photoDetailsMapper);
     }
 
     @Override
-    public void setView(@NonNull GridPhotoAttrsContract.View view) {
+    public void setView(@NonNull PhotoViewContract.View view) {
         this.view = checkNotNull(view);
         this.disposables = new CompositeDisposable();
+        view.showPhoto(photo);
+        loadFavs(photo);
+        loadComments(photo);
     }
 
-    @Override
-    public void loadFavs(int position, PhotoWithAuthor photo) {
-        disposables.add(getPhotoFavs.process(checkNotNull(photo).getPhoto().getId()).subscribe(submitUiModel -> {
+    private void loadFavs(Photo photo) {
+        disposables.add(getPhotoFavs.process(checkNotNull(photo).getId()).subscribe(submitUiModel -> {
             if (submitUiModel.isInProgress()) {
                 return;
             }
             if (submitUiModel.isSucceed()) {
-                view.showFavs(position, photoDetailsMapper.transform(submitUiModel.getResult()));
+                view.showFavs(photoDetailsMapper.transform(submitUiModel.getResult()));
             }
         }, Timber::e));
     }
 
-    @Override
-    public void loadComments(int position, PhotoWithAuthor photo) {
-        disposables.add(getPhotoComments.process(checkNotNull(photo).getPhoto().getId()).subscribe(submitUiModel -> {
+    private void loadComments(Photo photo) {
+        disposables.add(getPhotoComments.process(checkNotNull(photo).getId()).subscribe(submitUiModel -> {
             if (submitUiModel.isInProgress()) {
                 return;
             }
             if (submitUiModel.isSucceed()) {
-                view.showComments(position, photoDetailsMapper.transform(submitUiModel.getResult()));
+                view.showComments(photoDetailsMapper.transform(submitUiModel.getResult()));
             }
         }, Timber::d));
     }

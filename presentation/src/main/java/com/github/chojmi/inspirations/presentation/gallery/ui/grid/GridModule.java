@@ -4,9 +4,9 @@ import com.github.chojmi.inspirations.domain.usecase.people.GetUserInfo;
 import com.github.chojmi.inspirations.domain.usecase.people.GetUserPublicPhotos;
 import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoComments;
 import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoFavs;
-import com.github.chojmi.inspirations.presentation.gallery.compound_usecase.GetPhotosCompoundUseCase;
-import com.github.chojmi.inspirations.presentation.gallery.mapper.GalleryAttrsMapper;
-import com.github.chojmi.inspirations.presentation.gallery.mapper.PhotoDataMapper;
+import com.github.chojmi.inspirations.presentation.common.compound_usecase.GetPhotosCompoundUseCase;
+import com.github.chojmi.inspirations.presentation.common.mapper.PhotoDataMapper;
+import com.github.chojmi.inspirations.presentation.common.mapper.PhotoDetailsMapper;
 import com.github.chojmi.inspirations.presentation.gallery.ui.GalleryScope;
 
 import dagger.Module;
@@ -22,8 +22,8 @@ public class GridModule {
     }
 
     @Provides
-    GridPhotoAttrsContract.Presenter provideGridPhotoAttrsPresenter(GetPhotoFavs getPhotoFavs, GetPhotoComments getPhotoComments, GalleryAttrsMapper galleryAttrsMapper) {
-        return new GridPhotoAttrsPresenter(getPhotoFavs, getPhotoComments, galleryAttrsMapper);
+    GridPhotoAttrsContract.Presenter provideGridPhotoAttrsPresenter(GetPhotoFavs getPhotoFavs, GetPhotoComments getPhotoComments, PhotoDetailsMapper photoDetailsMapper) {
+        return new GridPhotoAttrsPresenter(getPhotoFavs, getPhotoComments, photoDetailsMapper);
     }
 
     @Provides

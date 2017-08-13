@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.gallery.mapper;
+package com.github.chojmi.inspirations.presentation.common.mapper;
 
 import com.github.chojmi.inspirations.domain.entity.photos.CommentEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
@@ -15,11 +15,11 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import timber.log.Timber;
 
-public class GalleryAttrsMapper {
+public class PhotoDetailsMapper {
     private final PersonDataMapper personDataMapper;
 
     @Inject
-    public GalleryAttrsMapper(PersonDataMapper personDataMapper) {
+    public PhotoDetailsMapper(PersonDataMapper personDataMapper) {
         this.personDataMapper = personDataMapper;
     }
 

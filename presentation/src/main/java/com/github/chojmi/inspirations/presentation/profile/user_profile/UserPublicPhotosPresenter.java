@@ -1,9 +1,9 @@
-package com.github.chojmi.inspirations.presentation.profile.user_profile.public_photos;
+package com.github.chojmi.inspirations.presentation.profile.user_profile;
 
 import com.github.chojmi.inspirations.domain.common.UseCase;
 import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.utils.Preconditions;
-import com.github.chojmi.inspirations.presentation.gallery.mapper.PhotoDataMapper;
+import com.github.chojmi.inspirations.presentation.common.mapper.PhotoDataMapper;
 
 import java.util.List;
 
