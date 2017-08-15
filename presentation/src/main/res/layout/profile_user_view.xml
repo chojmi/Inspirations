@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileView
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    tools:showIn="@layout/profile_my_activity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -52,13 +51,9 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
+    <com.github.chojmi.inspirations.presentation.profile.user_profile.UserPublicPhotosView
+        android:id="@+id/user_public_photos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <include
-            android:id="@+id/user_public_photos"
-            layout="@layout/profile_user_public_photos_view"/>
-    </FrameLayout>
-</com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileView>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+</merge>

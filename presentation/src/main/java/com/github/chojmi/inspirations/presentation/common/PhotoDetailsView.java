@@ -3,6 +3,7 @@ package com.github.chojmi.inspirations.presentation.common;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.widget.TextView;
 
 import com.github.chojmi.inspirations.presentation.R;
@@ -19,11 +20,7 @@ public class PhotoDetailsView extends LinearLayoutCompat {
 
     public PhotoDetailsView(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
+        LayoutInflater.from(context).inflate(R.layout.photo_details, this);
         ButterKnife.bind(this);
     }
 

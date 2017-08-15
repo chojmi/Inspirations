@@ -4,13 +4,15 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-    <include
+    <com.github.chojmi.inspirations.presentation.gallery.ui.grid.GridItemTopView
         android:id="@+id/item_top"
-        layout="@layout/gallery_grid_top_item"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <include layout="@layout/divider"/>
 
-    <include
+    <com.github.chojmi.inspirations.presentation.common.PhotoDetailsView
         android:id="@+id/item_bottom"
-        layout="@layout/photo_details"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

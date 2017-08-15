@@ -27,7 +27,7 @@ public class LoginWebViewActivity extends BaseActivity implements LoginWebViewCo
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getInspirationsApp().createLoginWebViewViewComponent().inject(this);
-        setContentView(R.layout.profile_login_webview_actvitiy);
+        setContentView(R.layout.profile_login_webview_activity);
         loginWebView.setInteractor(token -> {
             if (!token.isEmpty()) {
                 presenter.onVerifierTokenObtained(token);

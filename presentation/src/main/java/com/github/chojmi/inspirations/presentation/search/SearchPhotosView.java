@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
@@ -36,12 +37,14 @@ public class SearchPhotosView extends LinearLayoutCompat
 
     public SearchPhotosView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        setOrientation(VERTICAL);
+        LayoutInflater.from(context).inflate(R.layout.search_photos_view, this);
+        ButterKnife.bind(this);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.bind(this);
         RxSearchView.queryTextChanges(searchView)
                 .startWith("birds")
                 .filter(charSequence -> !TextUtils.isEmpty(charSequence))

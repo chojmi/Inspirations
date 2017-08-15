@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,11 +29,7 @@ public class UserProfileView extends CoordinatorLayout implements UserProfileCon
 
     public UserProfileView(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
+        LayoutInflater.from(context).inflate(R.layout.profile_user_view, this);
         ButterKnife.bind(this);
     }
 

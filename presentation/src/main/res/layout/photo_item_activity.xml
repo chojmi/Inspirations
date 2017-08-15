@@ -68,9 +68,8 @@
 
         <include layout="@layout/divider"/>
 
-        <include
+        <com.github.chojmi.inspirations.presentation.common.PhotoDetailsView
             android:id="@+id/item_bottom"
-            layout="@layout/photo_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>

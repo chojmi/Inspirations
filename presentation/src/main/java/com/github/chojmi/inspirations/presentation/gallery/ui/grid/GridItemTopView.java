@@ -3,6 +3,7 @@ package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,11 +28,8 @@ public class GridItemTopView extends LinearLayoutCompat {
 
     public GridItemTopView(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
+        setOrientation(VERTICAL);
+        LayoutInflater.from(context).inflate(R.layout.gallery_grid_top_item, this);
         ButterKnife.bind(this);
     }
 
