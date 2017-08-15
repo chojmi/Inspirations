@@ -23,7 +23,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.clearImageCache;
-import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.loadImageWithoutAnim;
+import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.loadImage;
 
 public class PhotoViewActivity extends BaseActivity implements PhotoViewContract.View {
 
@@ -87,7 +87,7 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
 
     @Override
     public void showUserData(PhotoWithAuthor photoWithAuthor) {
-        loadImageWithoutAnim(personIcon, photoWithAuthor.getPerson().getIconUrl());
+        loadImage(personIcon, photoWithAuthor.getPerson().getIconUrl());
         ownerTextView.setText(photoWithAuthor.getPhoto().getTitle());
     }
 

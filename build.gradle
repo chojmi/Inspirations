@@ -11,7 +11,7 @@ buildscript {
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
 
         multiDexVersion = '1.0.1'
-        kotlinVersion = '1.1.3-2'
+        kotlinVersion = '1.1.4'
         supportLibVersion = '25.3.1'
         daggerLibVersion = '2.10'
         retrofitLibVersion = '2.2.0'
@@ -24,7 +24,7 @@ buildscript {
         butterknifeLibVersion = '8.5.1'
         paperParcelLibVersion = '2.0.1'
         materialDesignDimensLibVersion = '1.4'
-        glideLibVersion = '3.7.0'
+        glideLibVersion = '4.0.0'
         timberLibVersion = '4.5.1'
         stethoLibVersion = '1.5.0'
 
