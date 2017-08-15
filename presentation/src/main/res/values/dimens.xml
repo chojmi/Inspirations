@@ -23,5 +23,5 @@
 
     <dimen name="profile_appbar_height">200dp</dimen>
     <dimen name="profile_title_size">30sp</dimen>
-
+    <dimen name="empty_icon_size">120dp</dimen>
 </resources>
