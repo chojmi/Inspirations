@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<com.github.chojmi.inspirations.presentation.search.SearchPhotosView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/search"
+    layout="@layout/search_photos_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <include
-        android:id="@+id/search"
-        layout="@layout/search_photos_view"/>
-</FrameLayout>
+    android:layout_height="match_parent"/>

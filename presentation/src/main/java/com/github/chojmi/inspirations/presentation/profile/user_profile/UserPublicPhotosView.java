@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 
 import com.github.chojmi.inspirations.presentation.R;
@@ -29,11 +30,7 @@ public class UserPublicPhotosView extends FrameLayout implements UserPublicPhoto
 
     public UserPublicPhotosView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
+        LayoutInflater.from(context).inflate(R.layout.profile_user_public_photos_view, this);
         ButterKnife.bind(this);
     }
 

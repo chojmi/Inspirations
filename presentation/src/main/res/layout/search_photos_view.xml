@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.github.chojmi.inspirations.presentation.search.SearchPhotosView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <android.support.v7.widget.SearchView
         android:id="@+id/search_view"
@@ -15,4 +11,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</com.github.chojmi.inspirations.presentation.search.SearchPhotosView>
+</merge>

@@ -1,58 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.github.chojmi.inspirations.presentation.common.PhotoDetailsView
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    tools:showIn="@layout/gallery_grid_item">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        style="@style/AppTheme.ClickableView.SelectableBackground"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_weight="1">
 
-        <LinearLayout
-            style="@style/AppTheme.ClickableView.SelectableBackground"
-            android:layout_width="0dp"
+        <ImageButton
+            android:layout_width="@dimen/icon_standard_size"
+            android:layout_height="@dimen/icon_standard_size"
+            android:layout_margin="@dimen/margin_ms"
+            app:srcCompat="@drawable/ic_fav_border"/>
+
+        <TextView
+            android:id="@+id/favs_count"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <ImageButton
-                android:layout_width="@dimen/icon_standard_size"
-                android:layout_height="@dimen/icon_standard_size"
-                android:layout_margin="@dimen/margin_ms"
-                app:srcCompat="@drawable/ic_fav_border"/>
-
-            <TextView
-                android:id="@+id/favs_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="@dimen/gallery_grid_item_bottom_text_size"
-                tools:text="999"/>
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/AppTheme.ClickableView.SelectableBackground"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <ImageButton
-                android:layout_width="@dimen/icon_standard_size"
-                android:layout_height="@dimen/icon_standard_size"
-                android:layout_margin="@dimen/margin_ms"
-                app:srcCompat="@drawable/ic_comment"/>
-
-            <TextView
-                android:id="@+id/comments_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="@dimen/gallery_grid_item_bottom_text_size"
-                tools:text="999"/>
-        </LinearLayout>
+            android:layout_gravity="center"
+            android:textSize="@dimen/gallery_grid_item_bottom_text_size"
+            tools:text="999"/>
     </LinearLayout>
 
-</com.github.chojmi.inspirations.presentation.common.PhotoDetailsView>
+    <LinearLayout
+        style="@style/AppTheme.ClickableView.SelectableBackground"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <ImageButton
+            android:layout_width="@dimen/icon_standard_size"
+            android:layout_height="@dimen/icon_standard_size"
+            android:layout_margin="@dimen/margin_ms"
+            app:srcCompat="@drawable/ic_comment"/>
+
+        <TextView
+            android:id="@+id/comments_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/gallery_grid_item_bottom_text_size"
+            tools:text="999"/>
+    </LinearLayout>
+</merge>

@@ -4,9 +4,8 @@
              android:layout_height="match_parent"
              android:orientation="vertical">
 
-    <include
+    <com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileView
         android:id="@+id/user_profile"
-        layout="@layout/profile_user_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
