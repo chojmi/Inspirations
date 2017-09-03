@@ -6,9 +6,10 @@
               android:orientation="vertical">
 
     <ImageView
-        android:layout_width="128dp"
-        android:layout_height="128dp"
+        android:layout_width="@dimen/login_icon_size"
+        android:layout_height="@dimen/login_icon_size"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/margin_xxl"
         app:srcCompat="@drawable/ic_person_add"/>
 
     <Button
