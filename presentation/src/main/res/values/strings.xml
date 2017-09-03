@@ -7,4 +7,5 @@
     <string name="albums">Albums</string>
     <string name="not_implemented_yet">Not implemented yet…</string>
     <string name="user_no_photos">This user has no photos</string>
+    <string name="login">Login</string>
 </resources>

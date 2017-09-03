@@ -9,6 +9,7 @@
         <item name="android:windowBackground">@color/theme_primary_background</item>
         <item name="android:windowContentTransitions">true</item>
 
-        <item name="imageButtonStyle">@style/Widget.AppCompat.ImageButton.Borderless</item>
+        <item name="imageButtonStyle">@style/AppTheme.ImageButton.Borderless</item>
+        <item name="android:buttonStyle">@style/AppTheme.ButtonPrimary</item>
     </style>
 </resources>

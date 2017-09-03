@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="theme_btn_primary_text">@color/material_light_white</color>
+    <color name="theme_btn_primary_text_selected">@color/colorPrimary</color>
+    <color name="theme_btn_primary_text_pressed">@color/colorPrimary</color>
+    <color name="theme_btn_primary_text_inactive">@color/material_light_black</color>
+    <color name="theme_btn_primary_bg">@color/colorPrimary</color>
+    <color name="theme_btn_primary_bg_pressed">@color/material_light_white</color>
+    <color name="theme_btn_primary_bg_selected">@color/material_light_white</color>
+    <color name="theme_btn_primary_border">@color/colorPrimaryDark</color>
+    <color name="theme_btn_primary_border_pressed">@color/colorPrimaryDark</color>
+    <color name="theme_btn_primary_border_selected">@color/colorPrimaryDark</color>
+    <color name="theme_btn_primary_ripple">@color/material_light_white</color>
+    <color name="theme_btn_primary_inactive">@color/black_transparent10</color>
+</resources>

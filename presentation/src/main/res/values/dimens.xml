@@ -25,4 +25,9 @@
     <dimen name="profile_appbar_height">200dp</dimen>
     <dimen name="profile_title_size">30sp</dimen>
     <dimen name="empty_icon_size">120dp</dimen>
+
+    <!--Button primary-->
+    <dimen name="btn_primary_border_width">1dp</dimen>
+    <dimen name="btn_primary_padding_vertical">@dimen/margin_sm</dimen>
+    <dimen name="btn_primary_padding_horizontal">@dimen/margin_md</dimen>
 </resources>
