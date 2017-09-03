@@ -6,24 +6,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/primary_background</item>
+        <item name="android:windowBackground">@color/theme_primary_background</item>
         <item name="android:windowContentTransitions">true</item>
 
-        <item name="imageButtonStyle">@style/Widget.AppCompat.ImageButton.Borderless</item>
-    </style>
-
-    <style name="Widget.AppCompat.ImageButton.Borderless" parent="Widget.AppCompat.ImageButton">
-        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
-    </style>
-
-    <style name="AppTheme.ClickableView">
-        <item name="android:clickable">true</item>
-        <item name="android:background">@color/primary_background</item>
-        <item name="android:stateListAnimator">@animator/lift_on_touch</item>
-        <item name="android:layout_margin">@dimen/margin_xs</item>
-    </style>
-
-    <style name="AppTheme.ClickableView.SelectableBackground" parent="AppTheme.ClickableView">
-        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+        <item name="imageButtonStyle">@style/AppTheme.ImageButton.Borderless</item>
+        <item name="android:buttonStyle">@style/AppTheme.ButtonPrimary</item>
     </style>
 </resources>

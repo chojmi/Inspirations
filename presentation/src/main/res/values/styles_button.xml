@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.ButtonPrimary" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/btn_primary</item>
+        <item name="android:textColor">@color/btn_primary_text</item>
+        <item name="android:paddingTop">@dimen/btn_primary_padding_vertical</item>
+        <item name="android:paddingBottom">@dimen/btn_primary_padding_vertical</item>
+        <item name="android:paddingLeft">@dimen/btn_primary_padding_horizontal</item>
+        <item name="android:paddingRight">@dimen/btn_primary_padding_horizontal</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+</resources>

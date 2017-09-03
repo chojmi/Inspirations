@@ -26,7 +26,7 @@ public class MyProfileFragment extends BaseFragment<MainActivity> implements MyP
     private static final int LOGIN_REQUEST_CODE = 1000;
     @Inject MyProfileContract.Presenter presenter;
     @BindView(R.id.user_profile) UserProfileView userProfileView;
-    @BindView(R.id.btn_login) Button loginAction;
+    @BindView(R.id.login_screen) ViewGroup loginView;
 
     public static MyProfileFragment newInstance() {
         return new MyProfileFragment();
@@ -88,6 +88,6 @@ public class MyProfileFragment extends BaseFragment<MainActivity> implements MyP
         userProfileComponent.inject(userProfileView);
         userProfileView.setUserProfileComponent(userProfileComponent);
         userProfileView.setVisibility(View.VISIBLE);
-        loginAction.setVisibility(View.GONE);
+        loginView.setVisibility(View.GONE);
     }
 }

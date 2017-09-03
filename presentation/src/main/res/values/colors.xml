@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Standard -->
-    <color name="black">#000000</color>
-    <color name="white">#ffffff</color>
-
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-
-    <color name="divider_color">#e0e0e0</color>
-    <color name="primary_background">#ffffff</color>
-    <color name="statusbar_background">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="white_transparent">#A0FFFFFF</color>
+    <color name="white_transparent10">#1AFFFFFF</color>
+    <color name="white_transparent20">#32FFFFFF</color>
+    <color name="black_transparent">#A0000000</color>
+    <color name="black_transparent10">#1A000000</color>
+    <color name="black_transparent20">#32000000</color>
 </resources>

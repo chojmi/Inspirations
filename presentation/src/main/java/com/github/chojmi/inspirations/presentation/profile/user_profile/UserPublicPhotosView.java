@@ -8,12 +8,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.main.Navigator;
 import com.github.chojmi.inspirations.presentation.photo.PhotoListAdapter;
+import com.github.chojmi.inspirations.presentation.utils.ViewUtils;
 
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class UserPublicPhotosView extends FrameLayout implements UserPublicPhoto
     @Inject UserPublicPhotosContract.Presenter presenter;
     @Inject Navigator navigator;
     @BindView(R.id.rv_user_photos) RecyclerView recyclerView;
+    @BindView(R.id.empty_list) ViewGroup emptyList;
     private PhotoListAdapter photoListAdapter;
 
     public UserPublicPhotosView(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -45,6 +48,8 @@ public class UserPublicPhotosView extends FrameLayout implements UserPublicPhoto
     @Override
     public void renderView(List<Photo> photos) {
         photoListAdapter.setData(photos);
+        ViewUtils.setVisibility(recyclerView, !photos.isEmpty());
+        ViewUtils.setVisibility(emptyList, photos.isEmpty());
     }
 
     public void refresh() {
