@@ -41,6 +41,7 @@ public class UserProfileView extends CoordinatorLayout implements UserProfileCon
     private void initAttrsValues(Context context, AttributeSet attrs) {
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.UserProfileView, 0, 0);
         ViewUtils.setVisibility(backBtn, a.getBoolean(R.styleable.UserProfileView_showBackBtn, false));
+        a.recycle();
     }
 
     @Override

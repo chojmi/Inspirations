@@ -26,5 +26,6 @@ public class EmptyListView extends LinearLayoutCompat {
     private void initAttrsValues(Context context, AttributeSet attrs) {
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.EmptyListView, 0, 0);
         emptyListText.setText(a.getString(R.styleable.EmptyListView_text));
+        a.recycle();
     }
 }
