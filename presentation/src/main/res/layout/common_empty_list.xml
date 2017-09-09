@@ -5,7 +5,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/empty_icon_size"
+        android:layout_height="@dimen/common_icon_standard_size"
         android:layout_gravity="center_horizontal"
         app:srcCompat="@drawable/ic_cancel"/>
 

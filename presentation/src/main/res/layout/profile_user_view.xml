@@ -18,8 +18,8 @@
 
             <ImageButton
                 android:id="@+id/back"
-                android:layout_width="@dimen/icon_standard_size"
-                android:layout_height="@dimen/icon_standard_size"
+                android:layout_width="@dimen/common_icon_standard_size"
+                android:layout_height="@dimen/common_icon_standard_size"
                 android:layout_margin="@dimen/margin_ms"
                 android:tint="@color/theme_profile_main"
                 app:layout_collapseMode="pin"
@@ -35,7 +35,7 @@
                 <ImageView
                     android:id="@+id/person_icon"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/icon_standard_size"
+                    android:layout_height="@dimen/common_icon_standard_size"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="@dimen/margin_sm"/>
 
