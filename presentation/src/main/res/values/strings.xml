@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">Inspirations</string>
-    <string name="gallery">Gallery</string>
-    <string name="my_profile">My profile</string>
-    <string name="search">Search</string>
-    <string name="public_photos">Public</string>
-    <string name="albums">Albums</string>
-    <string name="not_implemented_yet">Not implemented yet…</string>
-    <string name="user_no_photos">This user has no photos</string>
-    <string name="login">Login</string>
+
+    <string name="common_not_implemented_yet">Not implemented yet…</string>
+
+    <string name="main_gallery">Gallery</string>
+    <string name="main_my_profile">My profile</string>
+    <string name="main_search">Search</string>
+
+    <string name="profile_user_no_photos">This user has no photos</string>
+    <string name="profile_login">Login</string>
 </resources>

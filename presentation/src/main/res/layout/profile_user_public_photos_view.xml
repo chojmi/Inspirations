@@ -14,5 +14,5 @@
         android:layout_margin="@dimen/margin_md"
         android:paddingTop="@dimen/margin_xxl"
         android:visibility="gone"
-        app:text="@string/user_no_photos"/>
+        app:text="@string/profile_user_no_photos"/>
 </merge>

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:orientation="vertical">
+             android:layout_height="match_parent">
 
     <com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileView
         android:id="@+id/user_profile"
@@ -12,8 +11,8 @@
         android:visibility="gone"/>
 
     <include
-        layout="@layout/profile_login_view"
         android:id="@+id/login_screen"
+        layout="@layout/profile_login_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
