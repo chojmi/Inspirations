@@ -4,6 +4,6 @@
     <style name="AppTheme" parent="Base.V21.AppTheme"/>
 
     <style name="Base.V21.AppTheme" parent="Base.V0.AppTheme">
-        <item name="android:statusBarColor">@color/theme_statusbar_background</item>
+        <item name="android:statusBarColor">@color/theme_statusbar_bg</item>
     </style>
 </resources>
