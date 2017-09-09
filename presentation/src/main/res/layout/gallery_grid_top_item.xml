@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     tools:showIn="@layout/gallery_grid_item">
 
-    <ImageView
+    <com.github.chojmi.inspirations.presentation.utils.AspectRatioImageView
         android:id="@+id/photo"
         style="@style/AppTheme.ClickableView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:transitionName="photo"/>
+        android:transitionName="photo"
+        app:aspectRatio="0.75"
+        app:aspectRatioEnabled="true"/>
 
     <LinearLayout
         android:id="@+id/user_profile"
