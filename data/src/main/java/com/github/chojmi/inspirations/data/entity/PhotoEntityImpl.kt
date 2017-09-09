@@ -17,19 +17,11 @@ data class PhotoEntityImpl(
         @SerializedName("is_primary") val isPrimary: Int,
         @SerializedName("has_comment") val hasComment: Int) : PhotoEntity {
 
-    override fun getId(): String {
-        return id
-    }
+    override fun getId(): String = id
 
-    override fun getTitle(): String {
-        return title
-    }
+    override fun getTitle(): String = title
 
-    override fun getUrl(): String {
-        return ImageLinkProvider.provideLink(farm, server, id, secret)
-    }
+    override fun getUrl(): String = ImageLinkProvider.provideLink(farm, server, id, secret)
 
-    override fun getOwnerId(): String {
-        return owner
-    }
+    override fun getOwnerId(): String = owner
 }

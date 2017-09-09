@@ -5,13 +5,8 @@ import com.google.gson.annotations.SerializedName
 
 data class CommentEntityImpl(
         private val authorname: String,
-        @SerializedName("_content") private val content: String
-) : CommentEntity {
-    override fun getAuthorname(): String {
-        return authorname
-    }
+        @SerializedName("_content") private val content: String) : CommentEntity {
+    override fun getAuthorname(): String = authorname
 
-    override fun getContent(): String {
-        return content
-    }
+    override fun getContent(): String = content
 }

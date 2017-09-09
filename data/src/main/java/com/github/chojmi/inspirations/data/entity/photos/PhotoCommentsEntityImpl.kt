@@ -5,11 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class PhotoCommentsEntityImpl(private @SerializedName("comment") val comments: List<CommentEntityImpl>,
                                    private @SerializedName("photo_id") val photoId: String) : PhotoCommentsEntity<CommentEntityImpl> {
-    override fun getComments(): List<CommentEntityImpl> {
-        return comments
-    }
+    override fun getComments(): List<CommentEntityImpl> = comments
 
-    override fun getPhotoId(): String {
-        return photoId
-    }
+    override fun getPhotoId(): String = photoId
 }

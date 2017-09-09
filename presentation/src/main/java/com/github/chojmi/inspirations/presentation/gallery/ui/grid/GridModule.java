@@ -4,6 +4,7 @@ import com.github.chojmi.inspirations.domain.usecase.people.GetUserInfo;
 import com.github.chojmi.inspirations.domain.usecase.people.GetUserPublicPhotos;
 import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoComments;
 import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoFavs;
+import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoSizeList;
 import com.github.chojmi.inspirations.presentation.common.compound_usecase.GetPhotosCompoundUseCase;
 import com.github.chojmi.inspirations.presentation.common.mapper.PhotoDataMapper;
 import com.github.chojmi.inspirations.presentation.common.mapper.PhotoDetailsMapper;
@@ -22,8 +23,8 @@ public class GridModule {
     }
 
     @Provides
-    GridPhotoAttrsContract.Presenter provideGridPhotoAttrsPresenter(GetPhotoFavs getPhotoFavs, GetPhotoComments getPhotoComments, PhotoDetailsMapper photoDetailsMapper) {
-        return new GridPhotoAttrsPresenter(getPhotoFavs, getPhotoComments, photoDetailsMapper);
+    GridPhotoAttrsContract.Presenter provideGridPhotoAttrsPresenter(GetPhotoFavs getPhotoFavs, GetPhotoComments getPhotoComments, GetPhotoSizeList getPhotoSizeList, PhotoDetailsMapper photoDetailsMapper) {
+        return new GridPhotoAttrsPresenter(getPhotoFavs, getPhotoComments, getPhotoSizeList, photoDetailsMapper);
     }
 
     @Provides

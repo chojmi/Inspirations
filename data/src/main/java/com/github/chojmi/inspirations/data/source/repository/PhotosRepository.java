@@ -5,6 +5,7 @@ import com.github.chojmi.inspirations.data.source.Remote;
 import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoSizeListEntity;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
 import javax.inject.Inject;
@@ -41,6 +42,15 @@ public class PhotosRepository implements PhotosDataSource {
         return Observable.concat(photosLocalDataSource.loadPhotoComments(photoId),
                 photosRemoteDataSource.loadPhotoComments(photoId))
                 .filter(photoCommentsEntity -> photoCommentsEntity != null)
+                .firstElement()
+                .toObservable();
+    }
+
+    @Override
+    public Observable<PhotoSizeListEntity> loadPhotoSizes(String photoId) {
+        return Observable.concat(photosLocalDataSource.loadPhotoSizes(photoId),
+                photosRemoteDataSource.loadPhotoSizes(photoId))
+                .filter(photoSizeList -> photoSizeList != null)
                 .firstElement()
                 .toObservable();
     }

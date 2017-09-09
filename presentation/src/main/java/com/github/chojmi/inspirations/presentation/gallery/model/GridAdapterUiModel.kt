@@ -1,15 +1,17 @@
 package com.github.chojmi.inspirations.presentation.gallery.model
 
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoSizeEntity
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoSizeListEntity
 import io.reactivex.Observable
 import timber.log.Timber
 import java.util.*
 
-data class GridAdapterUiModel(val photo: PhotoWithAuthor, val favs: PhotoFavs?, val comments: PhotoComments?) {
+data class GridAdapterUiModel(val photo: PhotoWithAuthor, val favs: PhotoFavs?, val comments: PhotoComments?,
+                              val photoSizes: PhotoSizeListEntity<PhotoSizeEntity>?) {
 
     companion object {
-        fun create(photo: PhotoWithAuthor): GridAdapterUiModel {
-            return GridAdapterUiModel(photo, null, null)
-        }
+        fun create(photo: PhotoWithAuthor): GridAdapterUiModel =
+                GridAdapterUiModel(photo, null, null, null)
 
         fun create(photos: List<PhotoWithAuthor>): List<GridAdapterUiModel> {
             val uiModels = ArrayList<GridAdapterUiModel>()
@@ -20,12 +22,13 @@ data class GridAdapterUiModel(val photo: PhotoWithAuthor, val favs: PhotoFavs?, 
             return uiModels
         }
 
-        fun setFavs(model: GridAdapterUiModel, favs: PhotoFavs): GridAdapterUiModel {
-            return GridAdapterUiModel(model.photo, favs, model.comments)
-        }
+        fun setFavs(model: GridAdapterUiModel, favs: PhotoFavs): GridAdapterUiModel =
+                GridAdapterUiModel(model.photo, favs, model.comments, model.photoSizes)
 
-        fun setComments(model: GridAdapterUiModel, comments: PhotoComments): GridAdapterUiModel {
-            return GridAdapterUiModel(model.photo, model.favs, comments)
-        }
+        fun setComments(model: GridAdapterUiModel, comments: PhotoComments): GridAdapterUiModel =
+                GridAdapterUiModel(model.photo, model.favs, comments, model.photoSizes)
+
+        fun setPhotoSizes(model: GridAdapterUiModel, sizes: PhotoSizeListEntity<PhotoSizeEntity>) =
+                GridAdapterUiModel(model.photo, model.favs, model.comments, sizes)
     }
 }

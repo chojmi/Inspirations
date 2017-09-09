@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoSizeListEntity;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 import com.github.chojmi.inspirations.presentation.gallery.model.GridAdapterUiModel;
@@ -110,7 +111,13 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     }
 
     @Override
+    public void showPhotoSizes(int position, PhotoSizeListEntity sizeList) {
+        galleryAdapter.setPhotoSizes(position, sizeList);
+    }
+
+    @Override
     public void onNewItemBind(int position, PhotoWithAuthor photo) {
+        photoAttrsPresenter.loadPhotoSizes(position, photo);
         photoAttrsPresenter.loadComments(position, photo);
         photoAttrsPresenter.loadFavs(position, photo);
     }
