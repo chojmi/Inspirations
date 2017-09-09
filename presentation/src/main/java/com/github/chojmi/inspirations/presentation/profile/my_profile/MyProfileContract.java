@@ -7,6 +7,8 @@ import com.github.chojmi.inspirations.presentation.blueprints.BaseView;
 public interface MyProfileContract {
     interface View extends BaseView {
         void showProfile(UserEntity userEntity);
+
+        void toggleProgressBar(boolean isVisible);
     }
 
     interface Presenter extends BasePresenter<View> {

@@ -37,6 +37,7 @@ class GridPhotoPresenter implements GridPhotoContract.Presenter {
             throw new ViewNotFoundException();
         }
         disposables.add(getPhotosCompoundUseCase.process(userId).subscribe(submitUiModel -> {
+            view.toggleProgressBar(submitUiModel.isInProgress());
             if (submitUiModel.isInProgress()) {
                 return;
             }

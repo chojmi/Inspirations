@@ -9,6 +9,8 @@ import java.util.List;
 public interface SearchPhotosContract {
     interface View extends BaseView {
         void renderView(List<Photo> photos);
+
+        void toggleProgressBar(boolean isVisible);
     }
 
     interface Presenter extends BasePresenter<SearchPhotosContract.View> {

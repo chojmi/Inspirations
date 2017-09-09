@@ -10,6 +10,14 @@
         <item name="android:windowContentTransitions">true</item>
 
         <item name="imageButtonStyle">@style/AppTheme.ImageButton.Borderless</item>
+        <item name="android:progressBarStyle">@style/AppTheme.ProgressBar</item>
         <item name="android:buttonStyle">@style/AppTheme.ButtonPrimary</item>
+    </style>
+
+    <style name="AppTheme.ProgressBar" parent="Base.Widget.AppCompat.ProgressBar">
+        <item name="android:background">@color/theme_common_progressbar_mask</item>
+        <item name="android:padding">64dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:visibility">gone</item>
     </style>
 </resources>

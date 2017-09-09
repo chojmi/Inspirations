@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoSizeListEntity;
 import com.github.chojmi.inspirations.presentation.R;
@@ -29,6 +30,7 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class GridFragment extends BaseFragment<MainActivity> implements GridPhotoContract.View, GridPhotoAttrsContract.View, GridAdapter.Listener {
     @BindView(R.id.rv_gallery) RecyclerView recyclerView;
+    @BindView(R.id.progress_bar) ProgressBar progressBar;
     @Inject GridPhotoContract.Presenter photoPresenter;
     @Inject GridPhotoAttrsContract.Presenter photoAttrsPresenter;
     private GridAdapter galleryAdapter;
@@ -98,6 +100,11 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     @Override
     public void openUserProfile(Person person) {
         getNavigator().navigateToUserProfile(getContext(), person.getId());
+    }
+
+    @Override
+    public void toggleProgressBar(boolean isVisible) {
+        progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 
     @Override

@@ -16,7 +16,6 @@
 
     <dimen name="common_icon_standard_size">@dimen/material_clickable_size</dimen>
     <dimen name="common_divider_height">1dp</dimen>
-    <dimen name="common_progress_bar_size">48dp</dimen>
     <dimen name="common_lift_on_touch_height">8dp</dimen>
 
     <dimen name="gallery_grid_item_top_text_size">16sp</dimen>
