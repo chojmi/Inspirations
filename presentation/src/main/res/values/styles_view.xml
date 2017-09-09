@@ -3,7 +3,7 @@
 
     <style name="AppTheme.ClickableView">
         <item name="android:clickable">true</item>
-        <item name="android:background">@color/theme_primary_background</item>
+        <item name="android:background">@color/theme_primary_bg</item>
         <item name="android:stateListAnimator">@animator/common_lift_on_touch</item>
         <item name="android:layout_margin">@dimen/margin_xs</item>
     </style>

@@ -25,6 +25,11 @@ public class FakeRemoteQueryProducerImpl implements RemoteQueryProducer {
     }
 
     @Override
+    public Map<String, String> produceLoadPhotoSizes(String photoId) {
+        return new HashMap<>();
+    }
+
+    @Override
     public Map<String, String> produceLoadLoginData() {
         return new HashMap<>();
     }

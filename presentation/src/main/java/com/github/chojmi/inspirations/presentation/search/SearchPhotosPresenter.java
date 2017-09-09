@@ -38,6 +38,7 @@ public class SearchPhotosPresenter implements SearchPhotosContract.Presenter {
     @Override
     public void search(String text) {
         disposables.add(getGalleryEntity.process(text).subscribe(submitUiModel -> {
+            view.toggleProgressBar(submitUiModel.isInProgress());
             if (submitUiModel.isInProgress()) {
                 return;
             }

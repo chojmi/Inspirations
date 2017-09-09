@@ -5,11 +5,7 @@ import com.github.chojmi.inspirations.domain.entity.people.UserEntity
 
 data class UserEntityImpl(private val id: String,
                           private val username: ContentHolder) : UserEntity {
-    override fun getId(): String {
-        return id
-    }
+    override fun getId(): String = id
 
-    override fun getUsername(): String {
-        return username.content
-    }
+    override fun getUsername(): String = username.content
 }

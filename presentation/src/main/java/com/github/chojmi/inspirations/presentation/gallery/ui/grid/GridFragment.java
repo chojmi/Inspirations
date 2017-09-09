@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoSizeListEntity;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 import com.github.chojmi.inspirations.presentation.gallery.model.GridAdapterUiModel;
@@ -28,6 +30,7 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class GridFragment extends BaseFragment<MainActivity> implements GridPhotoContract.View, GridPhotoAttrsContract.View, GridAdapter.Listener {
     @BindView(R.id.rv_gallery) RecyclerView recyclerView;
+    @BindView(R.id.progress_bar) ProgressBar progressBar;
     @Inject GridPhotoContract.Presenter photoPresenter;
     @Inject GridPhotoAttrsContract.Presenter photoAttrsPresenter;
     private GridAdapter galleryAdapter;
@@ -100,6 +103,11 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     }
 
     @Override
+    public void toggleProgressBar(boolean isVisible) {
+        progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
     public void showFavs(int position, PhotoFavs photoFavs) {
         galleryAdapter.setFavs(position, photoFavs);
     }
@@ -110,7 +118,13 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     }
 
     @Override
+    public void showPhotoSizes(int position, PhotoSizeListEntity sizeList) {
+        galleryAdapter.setPhotoSizes(position, sizeList);
+    }
+
+    @Override
     public void onNewItemBind(int position, PhotoWithAuthor photo) {
+        photoAttrsPresenter.loadPhotoSizes(position, photo);
         photoAttrsPresenter.loadComments(position, photo);
         photoAttrsPresenter.loadFavs(position, photo);
     }

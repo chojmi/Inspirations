@@ -7,7 +7,5 @@ data class GalleryEntityImpl(val page: Int,
                              val perpage: Int,
                              val total: Int,
                              private val photo: List<PhotoEntityImpl>) : GalleryEntity<PhotoEntityImpl> {
-    override fun getPhoto(): List<PhotoEntityImpl> {
-        return photo
-    }
+    override fun getPhoto(): List<PhotoEntityImpl> = photo
 }

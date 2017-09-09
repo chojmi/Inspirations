@@ -12,19 +12,11 @@ data class PersonEntityImpl(private val id: String,
                             @SerializedName("iconfarm") val farm: Int,
                             private val username: ContentHolder,
                             private val description: ContentHolder) : PersonEntity {
-    fun getDescription(): String {
-        return description.content
-    }
+    fun getDescription(): String = description.content
 
-    override fun getId(): String {
-        return id
-    }
+    override fun getId(): String = id
 
-    override fun getUsername(): String {
-        return username.content
-    }
+    override fun getUsername(): String = username.content
 
-    override fun getIconUrl(): String {
-        return ImageLinkProvider.provideLink(farm, server, nsid)
-    }
+    override fun getIconUrl(): String = ImageLinkProvider.provideLink(farm, server, nsid)
 }

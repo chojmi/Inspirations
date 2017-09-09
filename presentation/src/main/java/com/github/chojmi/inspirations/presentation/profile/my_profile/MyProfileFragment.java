@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
 import com.github.chojmi.inspirations.presentation.R;
@@ -27,6 +27,7 @@ public class MyProfileFragment extends BaseFragment<MainActivity> implements MyP
     @Inject MyProfileContract.Presenter presenter;
     @BindView(R.id.user_profile) UserProfileView userProfileView;
     @BindView(R.id.login_screen) ViewGroup loginView;
+    @BindView(R.id.progress_bar) ProgressBar progressBar;
 
     public static MyProfileFragment newInstance() {
         return new MyProfileFragment();
@@ -89,5 +90,10 @@ public class MyProfileFragment extends BaseFragment<MainActivity> implements MyP
         userProfileView.setUserProfileComponent(userProfileComponent);
         userProfileView.setVisibility(View.VISIBLE);
         loginView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void toggleProgressBar(boolean isVisible) {
+        progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 }

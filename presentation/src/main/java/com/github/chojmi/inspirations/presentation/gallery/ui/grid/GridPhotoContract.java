@@ -17,6 +17,8 @@ interface GridPhotoContract {
         void openPhotoView(ImageView imageView, PhotoWithAuthor photo);
 
         void openUserProfile(Person person);
+
+        void toggleProgressBar(boolean isVisible);
     }
 
     interface Presenter extends BasePresenter<View> {

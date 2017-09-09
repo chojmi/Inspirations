@@ -11,6 +11,8 @@ import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
@@ -32,6 +34,7 @@ public class SearchPhotosView extends LinearLayoutCompat
     @Inject Navigator navigator;
     @BindView(R.id.search_view) SearchView searchView;
     @BindView(R.id.rv_search) RecyclerView recyclerView;
+    @BindView(R.id.progress_bar) ProgressBar progressBar;
 
     private PhotoListAdapter photoListAdapter;
 
@@ -83,5 +86,10 @@ public class SearchPhotosView extends LinearLayoutCompat
     @Override
     public void renderView(List<Photo> photos) {
         photoListAdapter.setData(photos);
+    }
+
+    @Override
+    public void toggleProgressBar(boolean isVisible) {
+        progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 }

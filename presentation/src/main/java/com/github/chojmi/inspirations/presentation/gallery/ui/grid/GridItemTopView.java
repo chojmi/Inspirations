@@ -8,8 +8,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoSizeListEntity;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
+import com.github.chojmi.inspirations.presentation.utils.AspectRatioImageView;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import butterknife.BindView;
@@ -20,7 +22,7 @@ import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.c
 import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.loadImage;
 
 public class GridItemTopView extends LinearLayoutCompat {
-    @BindView(R.id.photo) ImageView photoHolder;
+    @BindView(R.id.photo) AspectRatioImageView photoHolder;
     @BindView(R.id.person_icon) ImageView personIconHolder;
     @BindView(R.id.title) TextView titleTextView;
     @BindView(R.id.owner) TextView ownerTextView;
@@ -33,7 +35,10 @@ public class GridItemTopView extends LinearLayoutCompat {
         ButterKnife.bind(this);
     }
 
-    public void setPhoto(PhotoWithAuthor photo) {
+    public void setPhoto(PhotoWithAuthor photo, PhotoSizeListEntity photoSizeListEntity) {
+        if (photoSizeListEntity != null) {
+            photoHolder.setAspectRatio(photoSizeListEntity.getRatio());
+        }
         loadImage(photoHolder, photo.getPhoto().getUrl());
         loadImage(personIconHolder, photo.getPerson().getIconUrl());
         titleTextView.setText(photo.getPhoto().getTitle());

@@ -10,9 +10,9 @@ import com.github.chojmi.inspirations.presentation.profile.my_profile.MyProfileF
 import com.github.chojmi.inspirations.presentation.search.SearchFragment;
 
 enum MainScreenTab {
-    GALLERY(GridFragment.newInstance(), R.string.gallery),
-    MY_PROFILE(MyProfileFragment.newInstance(), R.string.my_profile),
-    SEARCH(SearchFragment.newInstance(), R.string.search);
+    GALLERY(GridFragment.newInstance(), R.string.main_gallery),
+    MY_PROFILE(MyProfileFragment.newInstance(), R.string.main_my_profile),
+    SEARCH(SearchFragment.newInstance(), R.string.main_search);
 
     private Fragment fragment;
     @StringRes private int titleRes;

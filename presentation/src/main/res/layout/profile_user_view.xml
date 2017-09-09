@@ -13,13 +13,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/theme_profile_background"
+            app:contentScrim="@color/theme_profile_bg"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageButton
                 android:id="@+id/back"
-                android:layout_width="@dimen/icon_standard_size"
-                android:layout_height="@dimen/icon_standard_size"
+                android:layout_width="@dimen/common_icon_standard_size"
+                android:layout_height="@dimen/common_icon_standard_size"
                 android:layout_margin="@dimen/margin_ms"
                 android:tint="@color/theme_profile_main"
                 app:layout_collapseMode="pin"
@@ -35,9 +35,10 @@
                 <ImageView
                     android:id="@+id/person_icon"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/icon_standard_size"
+                    android:layout_height="@dimen/common_icon_standard_size"
                     android:layout_gravity="center_horizontal"
-                    android:layout_margin="@dimen/margin_sm"/>
+                    android:layout_margin="@dimen/margin_sm"
+                    android:adjustViewBounds="true"/>
 
                 <TextView
                     android:id="@+id/user_name"

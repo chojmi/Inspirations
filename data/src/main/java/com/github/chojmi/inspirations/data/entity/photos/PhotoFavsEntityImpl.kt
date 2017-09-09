@@ -7,19 +7,11 @@ data class PhotoFavsEntityImpl(private @SerializedName("person") val people: Lis
                                private val page: Int,
                                private @SerializedName("id") val photoId: String,
                                private val total: Int) : PhotoFavsEntity<PersonEntityImpl> {
-    override fun getPeople(): List<PersonEntityImpl> {
-        return people
-    }
+    override fun getPeople(): List<PersonEntityImpl> = people
 
-    override fun getPage(): Int {
-        return page
-    }
+    override fun getPage(): Int = page
 
-    override fun getPhotoId(): String {
-        return photoId
-    }
+    override fun getPhotoId(): String = photoId
 
-    override fun getTotal(): Int {
-        return total
-    }
+    override fun getTotal(): Int = total
 }

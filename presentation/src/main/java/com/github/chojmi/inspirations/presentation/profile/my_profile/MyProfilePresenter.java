@@ -41,6 +41,7 @@ public class MyProfilePresenter implements MyProfileContract.Presenter {
 
     private void fetchProfile() {
         disposables.add(getLoginData.process(null).subscribe(uiModel -> {
+            view.toggleProgressBar(uiModel.isInProgress());
             if (uiModel.isInProgress()) {
                 return;
             }
@@ -52,6 +53,7 @@ public class MyProfilePresenter implements MyProfileContract.Presenter {
 
     private void fetchToken() {
         disposables.add(getToken.process(null).subscribe(uiModel -> {
+            view.toggleProgressBar(uiModel.isInProgress());
             if (uiModel.isInProgress()) {
                 return;
             }

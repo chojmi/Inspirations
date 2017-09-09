@@ -5,6 +5,7 @@ import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProd
 import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoSizeListEntity;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
 import javax.inject.Inject;
@@ -35,6 +36,12 @@ public class RemotePhotosDataSource implements PhotosDataSource {
     public Observable<PhotoCommentsEntity> loadPhotoComments(String photoId) {
         return photosService.loadPhotoComments(remoteQueryProducer.produceLoadPhotoComments(photoId))
                 .map(photoCommentsEntity -> photoCommentsEntity);
+    }
+
+    @Override
+    public Observable<PhotoSizeListEntity> loadPhotoSizes(String photoId) {
+        return photosService.loadPhotoSizes(remoteQueryProducer.produceLoadPhotoSizes(photoId))
+                .map(photoSizeList -> photoSizeList);
     }
 
     @Override

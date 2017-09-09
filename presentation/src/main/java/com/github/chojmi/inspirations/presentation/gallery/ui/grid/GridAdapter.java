@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoSizeListEntity;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAdapter;
 import com.github.chojmi.inspirations.presentation.common.PhotoDetailsView;
@@ -63,11 +64,15 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
         replace(position, GridAdapterUiModel.Companion.setComments(getItem(position), photoComments));
     }
 
-    public Observable<PhotoWithAuthor> getProfileClicksObservable() {
+    void setPhotoSizes(int position, PhotoSizeListEntity sizeList) {
+        replace(position, GridAdapterUiModel.Companion.setPhotoSizes(getItem(position), sizeList));
+    }
+
+    Observable<PhotoWithAuthor> getProfileClicksObservable() {
         return profileClicksSubject.map(integer -> getItem(integer).getPhoto());
     }
 
-    public Observable<Pair<ImageView, PhotoWithAuthor>> getPhotoClicksObservable() {
+    Observable<Pair<ImageView, PhotoWithAuthor>> getPhotoClicksObservable() {
         return photoClicksSubject.map(imageViewIntegerPair -> new Pair<>(imageViewIntegerPair.first, getItem(imageViewIntegerPair.second).getPhoto()));
     }
 
@@ -93,7 +98,7 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
         }
 
         void setGridAdapterUiModel(GridAdapterUiModel gridAdapterUiModel) {
-            gridItemTopView.setPhoto(gridAdapterUiModel.getPhoto());
+            gridItemTopView.setPhoto(gridAdapterUiModel.getPhoto(), gridAdapterUiModel.getPhotoSizes());
             photoDetailsView.setFavs(gridAdapterUiModel.getFavs());
             photoDetailsView.setComments(gridAdapterUiModel.getComments());
         }
