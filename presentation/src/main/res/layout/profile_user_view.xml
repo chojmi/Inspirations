@@ -37,7 +37,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/common_icon_standard_size"
                     android:layout_gravity="center_horizontal"
-                    android:layout_margin="@dimen/margin_sm"/>
+                    android:layout_margin="@dimen/margin_sm"
+                    android:adjustViewBounds="true"/>
 
                 <TextView
                     android:id="@+id/user_name"
