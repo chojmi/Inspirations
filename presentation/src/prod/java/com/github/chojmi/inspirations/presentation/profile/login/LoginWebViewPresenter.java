@@ -14,7 +14,6 @@ public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
     private final GetAccessToken getToken;
     private CompositeDisposable disposables;
     private LoginWebViewContract.View view;
-    private String currentFrob = "";
 
     public LoginWebViewPresenter(@NonNull GetAuthorizationUrl getAuthorizationUrl, @NonNull GetAccessToken getToken) {
         this.getAuthorizationUrl = checkNotNull(getAuthorizationUrl);
@@ -30,6 +29,7 @@ public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
 
     private void openLoginPage() {
         disposables.add(getAuthorizationUrl.process().subscribe(submitUiModel -> {
+            view.toggleProgressBar(submitUiModel.isInProgress());
             if (submitUiModel.isInProgress()) {
                 return;
             }
@@ -46,6 +46,8 @@ public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
 
     private void fetchAccessToken(String verifier) {
         disposables.add(getToken.process(verifier).subscribe(submitUiModel -> {
+            view.toggleProgressBar(submitUiModel.isInProgress());
+
             if (submitUiModel.isInProgress()) {
                 return;
             }
@@ -59,21 +61,5 @@ public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
     public void destroyView() {
         this.disposables.dispose();
         this.view = null;
-    }
-
-    @Override
-    public void pageLoaded(String url) {
-        if (isLogged(url)) {
-            fetchAccessToken(currentFrob);
-        }
-    }
-
-    private boolean isLogged(String url) {
-        return "https://www.flickr.com/services/auth/".equals(url);
-    }
-
-    @Override
-    public boolean isPermittedUrl(String url) {
-        return true;
     }
 }

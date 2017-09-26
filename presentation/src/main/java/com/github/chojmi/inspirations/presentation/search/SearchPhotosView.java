@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -12,6 +11,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.github.chojmi.inspirations.presentation.R;
@@ -28,7 +28,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SearchPhotosView extends LinearLayoutCompat
+public class SearchPhotosView extends FrameLayout
         implements SearchPhotosContract.View {
     @Inject SearchPhotosContract.Presenter presenter;
     @Inject Navigator navigator;
@@ -40,7 +40,6 @@ public class SearchPhotosView extends LinearLayoutCompat
 
     public SearchPhotosView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        setOrientation(VERTICAL);
         LayoutInflater.from(context).inflate(R.layout.search_photos_view, this);
         ButterKnife.bind(this);
     }
