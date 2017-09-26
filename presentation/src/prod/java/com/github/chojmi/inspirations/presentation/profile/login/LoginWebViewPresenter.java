@@ -28,7 +28,9 @@ public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
     }
 
     private void openLoginPage() {
-        disposables.add(getAuthorizationUrl.process().subscribe(submitUiModel -> {
+        disposables.add(getAuthorizationUrl.process()
+                .doOnComplete(() -> view.toggleProgressBar(false))
+                .subscribe(submitUiModel -> {
             view.toggleProgressBar(submitUiModel.isInProgress());
             if (submitUiModel.isInProgress()) {
                 return;
@@ -45,7 +47,9 @@ public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
     }
 
     private void fetchAccessToken(String verifier) {
-        disposables.add(getToken.process(verifier).subscribe(submitUiModel -> {
+        disposables.add(getToken.process(verifier)
+                .doOnComplete(() -> view.toggleProgressBar(false))
+                .subscribe(submitUiModel -> {
             view.toggleProgressBar(submitUiModel.isInProgress());
 
             if (submitUiModel.isInProgress()) {
