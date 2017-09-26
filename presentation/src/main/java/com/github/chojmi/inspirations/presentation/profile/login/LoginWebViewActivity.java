@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
@@ -17,6 +19,7 @@ import io.reactivex.annotations.Nullable;
 public class LoginWebViewActivity extends BaseActivity implements LoginWebViewContract.View {
     @Inject LoginWebViewContract.Presenter presenter;
     @BindView(R.id.login_webview) LoginWebView loginWebView;
+    @BindView(R.id.progress_bar) ProgressBar progressBar;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, LoginWebViewActivity.class);
@@ -63,5 +66,10 @@ public class LoginWebViewActivity extends BaseActivity implements LoginWebViewCo
         Intent result = new Intent();
         setResult(RESULT_OK, result);
         finish();
+    }
+
+    @Override
+    public void toggleProgressBar(boolean isVisible) {
+        progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 }

@@ -22,14 +22,4 @@ public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
     public void onVerifierTokenObtained(String verifier) {
 
     }
-
-    @Override
-    public void pageLoaded(String url) {
-
-    }
-
-    @Override
-    public boolean isPermittedUrl(String url) {
-        return false;
-    }
 }

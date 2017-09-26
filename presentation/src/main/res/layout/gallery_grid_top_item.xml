@@ -3,53 +3,63 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     tools:showIn="@layout/gallery_grid_item">
 
-    <com.github.chojmi.inspirations.presentation.utils.AspectRatioImageView
-        android:id="@+id/photo"
-        style="@style/AppTheme.ClickableView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:transitionName="photo"
-        app:aspectRatioEnabled="true"/>
-
     <LinearLayout
-        android:id="@+id/user_profile"
-        style="@style/AppTheme.ClickableView.SelectableBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/person_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/common_icon_standard_size"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="@dimen/margin_sm"
-            android:adjustViewBounds="true"/>
-
-        <LinearLayout
+        <com.github.chojmi.inspirations.presentation.utils.AspectRatioImageView
+            android:id="@+id/photo"
+            style="@style/AppTheme.ClickableView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical">
+            android:adjustViewBounds="true"
+            android:transitionName="photo"
+            app:aspectRatioEnabled="true"/>
 
-            <TextView
-                android:id="@+id/owner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/material_component_grid_lists_header_footer_text_size"
-                android:textStyle="bold"
-                tools:text="Owner name"/>
+        <LinearLayout
+            android:id="@+id/user_profile"
+            style="@style/AppTheme.ClickableView.SelectableBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/title"
+            <ImageView
+                android:id="@+id/person_icon"
                 android:layout_width="wrap_content"
+                android:layout_height="@dimen/common_icon_standard_size"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/margin_sm"
+                android:adjustViewBounds="true"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/material_component_grid_lists_header_footer_text_size"
-                tools:text="Photo title"/>
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/owner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/material_component_grid_lists_header_footer_text_size"
+                    android:textStyle="bold"
+                    tools:text="Owner name"/>
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/material_component_grid_lists_header_footer_text_size"
+                    tools:text="Photo title"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </merge>

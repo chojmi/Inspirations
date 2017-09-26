@@ -1,5 +1,8 @@
 package com.github.chojmi.inspirations.data.source.local;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.github.chojmi.inspirations.domain.repository.AuthDataSource;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
@@ -12,11 +15,16 @@ import io.reactivex.annotations.Nullable;
 
 @Singleton
 public class LocalAuthDataSource implements AuthDataSource, AccessTokenHolder {
+    private static final String NAME_SHARED_PREF = LocalAuthDataSource.class.getName();
+    private static final String ARG_TOKEN = "com.github.chojmi.inspirations.data.source.local.LocalAuthDataSource.TOKEN";
+    private static final String ARG_TOKEN_SECRET = "com.github.chojmi.inspirations.data.source.local.LocalAuthDataSource.TOKEN_SECRET";
+    private final SharedPreferences sharedPreferences;
     private OAuth1RequestToken requestToken;
     private OAuth1AccessToken accessToken;
 
     @Inject
-    public LocalAuthDataSource() {
+    public LocalAuthDataSource(Context context) {
+        sharedPreferences = context.getSharedPreferences(NAME_SHARED_PREF, Context.MODE_PRIVATE);
     }
 
     @Override
@@ -52,15 +60,26 @@ public class LocalAuthDataSource implements AuthDataSource, AccessTokenHolder {
     @Override
     public void saveAccessToken(@Nullable OAuth1AccessToken accessToken) {
         this.accessToken = accessToken;
+        if (accessToken != null) {
+            sharedPreferences.edit().putString(ARG_TOKEN, accessToken.getToken()).putString(ARG_TOKEN_SECRET, accessToken.getTokenSecret()).apply();
+        }
     }
 
     @Override
     public OAuth1AccessToken getAccessToken() {
+        if (accessToken == null && containsAccessTokenInCache()) {
+            accessToken = new OAuth1AccessToken(sharedPreferences.getString(ARG_TOKEN, ""),
+                    sharedPreferences.getString(ARG_TOKEN_SECRET, ""));
+        }
         return accessToken;
     }
 
     @Override
     public boolean containsAccessToken() {
-        return accessToken != null;
+        return accessToken != null || containsAccessTokenInCache();
+    }
+
+    private boolean containsAccessTokenInCache() {
+        return sharedPreferences.contains(ARG_TOKEN) && sharedPreferences.contains(ARG_TOKEN_SECRET);
     }
 }
