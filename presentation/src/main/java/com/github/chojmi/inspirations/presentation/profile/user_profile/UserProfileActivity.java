@@ -9,11 +9,17 @@ import com.github.chojmi.inspirations.domain.utils.Preconditions;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
+import dagger.android.AndroidInjection;
 import io.reactivex.annotations.NonNull;
 
 public class UserProfileActivity extends BaseActivity {
     private static final String ARG_USER_ID = "ARG_USER_ID";
+    @Inject UserProfileContract.Presenter userProfilePresenter;
+    @Inject UserPublicPhotosContract.Presenter userPublicPhotosPresenter;
+    @BindView(R.id.user_public_photos) UserPublicPhotosView userPublicPhotosView;
     @BindView(R.id.user_profile_view) UserProfileView userProfileView;
 
     public static Intent getCallingIntent(Context context, @NonNull String userId) {
@@ -24,16 +30,16 @@ public class UserProfileActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_my_activity);
-        UserProfileComponent userProfileComponent = getInspirationsApp().createUserProfileComponent(getIntent().getStringExtra(ARG_USER_ID));
-        userProfileComponent.inject(userProfileView);
-        userProfileView.setUserProfileComponent(userProfileComponent);
+        userProfilePresenter.setView(userProfileView);
+        userPublicPhotosPresenter.setView(userPublicPhotosView);
+        userPublicPhotosView.getPhotoClicksObservable()
+                .subscribe(pair -> getNavigator().navigateToPhoto(this, pair.second, pair.first));
     }
 
-    @Override
-    protected void onDestroy() {
-        getInspirationsApp().releaseUserProfileComponent();
-        super.onDestroy();
+    public String getArgUserId() {
+        return getIntent().getStringExtra(ARG_USER_ID);
     }
 }

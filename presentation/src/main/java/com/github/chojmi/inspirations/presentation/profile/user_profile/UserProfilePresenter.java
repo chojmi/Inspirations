@@ -1,10 +1,11 @@
 package com.github.chojmi.inspirations.presentation.profile.user_profile;
 
+import android.support.annotation.NonNull;
+
 import com.github.chojmi.inspirations.domain.common.UseCase;
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.utils.Preconditions;
 
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
@@ -13,18 +14,18 @@ import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNot
 public class UserProfilePresenter implements UserProfileContract.Presenter {
     private final UseCase<String, PersonEntity> getUserInfo;
     private final String userId;
-    private CompositeDisposable disposables;
+    private final CompositeDisposable disposables;
     private UserProfileContract.View view;
 
     public UserProfilePresenter(@NonNull UseCase<String, PersonEntity> getUserInfo, @NonNull String userId) {
         this.getUserInfo = Preconditions.checkNotNull(getUserInfo);
         this.userId = Preconditions.checkNotNull(userId);
+        this.disposables = new CompositeDisposable();
     }
 
     @Override
     public void setView(@NonNull UserProfileContract.View view) {
         this.view = checkNotNull(view);
-        this.disposables = new CompositeDisposable();
         fetchUserInfo();
     }
 
@@ -35,6 +36,9 @@ public class UserProfilePresenter implements UserProfileContract.Presenter {
     }
 
     private void fetchUserInfo() {
+        if (userId == null || userId.isEmpty()) {
+            throw new IllegalArgumentException("User Id cannot be null");
+        }
         disposables.add(getUserInfo.process(userId).subscribe(submitUiModel -> {
             if (submitUiModel.isInProgress()) {
                 return;

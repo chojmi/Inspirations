@@ -3,7 +3,6 @@ plugins {
 }
 apply plugin: 'java'
 apply plugin: 'idea'
-apply plugin: 'me.tatarka.retrolambda'
 
 configurations {
     provided
@@ -16,15 +15,12 @@ sourceSets {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxJavaLibVersion}"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxJavaLibVersion}"
     compile "com.github.scribejava:scribejava-apis:${rootProject.ext.scribeJavaLibVersion}"
-    compile "com.google.dagger:dagger:${rootProject.ext.daggerLibVersion}"
+    implementation "com.google.dagger:dagger:${rootProject.ext.daggerLibVersion}"
     apt "com.google.dagger:dagger-compiler:${rootProject.ext.daggerLibVersion}"
 
-    testCompile "junit:junit:$rootProject.ext.junitVersion"
-    testCompile "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
+    testImplementation "junit:junit:$rootProject.ext.junitVersion"
+    testImplementation "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
 }
-
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8

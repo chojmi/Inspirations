@@ -1,7 +1,5 @@
 package com.github.chojmi.inspirations.data.source.module;
 
-import android.content.Context;
-
 import com.github.chojmi.inspirations.data.source.Remote;
 import com.github.chojmi.inspirations.data.source.remote.service.AuthTestService;
 import com.github.chojmi.inspirations.data.source.remote.service.FakeAuthTestService;
@@ -24,9 +22,6 @@ import dagger.Provides;
 @Remote
 @Module
 public class RestClientModule {
-    public RestClientModule(Context context) {
-    }
-
     @Provides
     GalleriesService provideGalleryService() {
         return new FakeGalleriesService();

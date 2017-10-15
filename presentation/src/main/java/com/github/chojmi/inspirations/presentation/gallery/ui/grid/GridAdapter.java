@@ -17,7 +17,9 @@ import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor
 import com.jakewharton.rxbinding2.view.RxView;
 
 import butterknife.BindView;
+import dagger.internal.Preconditions;
 import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.subjects.PublishSubject;
 
 class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder, GridAdapterUiModel> {
@@ -25,8 +27,8 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
     private final PublishSubject<Integer> profileClicksSubject = PublishSubject.create();
     private final PublishSubject<Pair<ImageView, Integer>> photoClicksSubject = PublishSubject.create();
 
-    GridAdapter(Listener listener) {
-        this.listener = listener;
+    GridAdapter(@NonNull Listener listener) {
+        this.listener = Preconditions.checkNotNull(listener);
     }
 
     @Override

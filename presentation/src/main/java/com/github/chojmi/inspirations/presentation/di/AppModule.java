@@ -1,44 +1,36 @@
-package com.github.chojmi.inspirations.presentation;
+package com.github.chojmi.inspirations.presentation.di;
 
+import android.app.Application;
 import android.content.Context;
 
 import com.github.chojmi.inspirations.data.executor.JobExecutor;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.executor.ThreadExecutor;
-import com.github.chojmi.inspirations.presentation.main.Navigator;
+import com.github.chojmi.inspirations.presentation.UIThread;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 
-@Singleton
 @Module
-class ApplicationModule {
+public class AppModule {
 
-    private final Context context;
-
-    ApplicationModule(Context context) {
-        this.context = context;
+    @Provides
+    @Singleton
+    Context provideContext(Application application) {
+        return application;
     }
 
     @Provides
-    Context provideContext() {
-        return context;
-    }
-
-    @Provides
+    @Singleton
     ThreadExecutor provideThreadExecutor(JobExecutor jobExecutor) {
         return jobExecutor;
     }
 
     @Provides
+    @Singleton
     PostExecutionThread providePostExecutionThread(UIThread uiThread) {
         return uiThread;
-    }
-
-    @Provides
-    Navigator provideNavigator() {
-        return new Navigator();
     }
 }

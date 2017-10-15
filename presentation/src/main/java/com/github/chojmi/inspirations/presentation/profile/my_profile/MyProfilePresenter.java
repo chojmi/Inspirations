@@ -1,7 +1,7 @@
 package com.github.chojmi.inspirations.presentation.profile.my_profile;
 
 import com.github.chojmi.inspirations.domain.common.UseCase;
-import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
+import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 
 import io.reactivex.annotations.NonNull;
@@ -12,19 +12,20 @@ import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNot
 
 public class MyProfilePresenter implements MyProfileContract.Presenter {
     private final UseCase<String, OAuth1AccessToken> getToken;
-    private final UseCase<Void, UserEntity> getLoginData;
-    private CompositeDisposable disposables;
+    private final UseCase<Void, PersonEntity> getLoginData;
+    private final CompositeDisposable disposables;
     private MyProfileContract.View view;
 
-    public MyProfilePresenter(@NonNull UseCase<Void, UserEntity> getLoginData, @NonNull UseCase<String, OAuth1AccessToken> getToken) {
+    public MyProfilePresenter(@NonNull UseCase<Void, PersonEntity> getLoginData,
+                              @NonNull UseCase<String, OAuth1AccessToken> getToken) {
         this.getLoginData = checkNotNull(getLoginData);
         this.getToken = checkNotNull(getToken);
+        this.disposables = new CompositeDisposable();
     }
 
     @Override
     public void setView(@NonNull MyProfileContract.View view) {
         this.view = checkNotNull(view);
-        this.disposables = new CompositeDisposable();
         fetchToken();
     }
 

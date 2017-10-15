@@ -1,5 +1,6 @@
 package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +27,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.support.AndroidSupportInjection;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class GridFragment extends BaseFragment<MainActivity> implements GridPhotoContract.View, GridPhotoAttrsContract.View, GridAdapter.Listener {
@@ -41,9 +43,9 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getInspirationsApp().createGridComponent().inject(this);
+    public void onAttach(Context context) {
+        AndroidSupportInjection.inject(this);
+        super.onAttach(context);
     }
 
     @Nullable
@@ -70,12 +72,6 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
         photoPresenter.destroyView();
         photoAttrsPresenter.destroyView();
         disposables.dispose();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        getInspirationsApp().releaseGridComponent();
     }
 
     private void initRecyclerView() {

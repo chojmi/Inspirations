@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
@@ -29,12 +28,19 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    flavorDimensions "api"
+
     productFlavors {
         mock {
-
+            dimension "api"
         }
         prod {
-
+            dimension "api"
         }
     }
 
@@ -45,61 +51,47 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.code.findbugs'
     })
-
-    mockCompile project(path: ':data', configuration: 'mockDebug')
-    prodCompile project(path: ':data', configuration: 'prodDebug')
-    compile project(":domain")
-    compile "com.android.support:multidex:${rootProject.ext.multiDexVersion}"
-    compile "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    compile "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}"
-    compile "com.android.support:design:${rootProject.ext.supportLibVersion}"
-    compile "com.android.support:support-v13:${rootProject.ext.supportLibVersion}"
-
-    mockCompile "org.jetbrains.kotlin:kotlin-stdlib-jre7:${rootProject.ext.kotlinVersion}"
-    prodCompile "org.jetbrains.kotlin:kotlin-stdlib-jre7:${rootProject.ext.kotlinVersion}"
-
-    compile "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxAndroidLibVersion}"
-    compile "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxJavaLibVersion}"
-
-    compile "com.jakewharton.rxbinding2:rxbinding:${rootProject.ext.rxBindingsVersion}"
-    compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:${rootProject.ext.rxBindingsVersion}"
-
-    compile "com.google.dagger:dagger:${rootProject.ext.daggerLibVersion}"
+    implementation project(':data')
+    implementation project(':domain')
+    implementation "com.android.support:multidex:${rootProject.ext.multiDexVersion}"
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    implementation "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}"
+    implementation "com.android.support:design:${rootProject.ext.supportLibVersion}"
+    implementation "com.android.support:support-v13:${rootProject.ext.supportLibVersion}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:${rootProject.ext.kotlinVersion}"
+    implementation "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxAndroidLibVersion}"
+    implementation "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxJavaLibVersion}"
+    implementation "com.jakewharton.rxbinding2:rxbinding:${rootProject.ext.rxBindingsVersion}"
+    implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:${rootProject.ext.rxBindingsVersion}"
+    implementation "com.google.dagger:dagger:${rootProject.ext.daggerLibVersion}"
+    implementation "com.google.dagger:dagger-android-support:${rootProject.ext.daggerLibVersion}"
     kapt "com.google.dagger:dagger-compiler:${rootProject.ext.daggerLibVersion}"
-
-    compile "nz.bradcampbell:paperparcel:${rootProject.ext.paperParcelLibVersion}"
-    compile "nz.bradcampbell:paperparcel-kotlin:${rootProject.ext.paperParcelLibVersion}"
+    kapt "com.google.dagger:dagger-android-processor:${rootProject.ext.daggerLibVersion}"
+    implementation "nz.bradcampbell:paperparcel:${rootProject.ext.paperParcelLibVersion}"
+    implementation "nz.bradcampbell:paperparcel-kotlin:${rootProject.ext.paperParcelLibVersion}"
     kapt "nz.bradcampbell:paperparcel-compiler:${rootProject.ext.paperParcelLibVersion}"
 
     // ButterKnife
-    compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeLibVersion"
+    implementation "com.jakewharton:butterknife:$rootProject.ext.butterknifeLibVersion"
     kapt "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeLibVersion"
-
-    compile "com.dmitrymalkovich.android:material-design-dimens:$rootProject.ext.materialDesignDimensLibVersion"
+    implementation "com.dmitrymalkovich.android:material-design-dimens:$rootProject.ext.materialDesignDimensLibVersion"
 
     // Glide
-    compile "com.github.bumptech.glide:glide:$rootProject.ext.glideLibVersion"
+    implementation "com.github.bumptech.glide:glide:$rootProject.ext.glideLibVersion"
 
     //Event logging
-    compile "com.jakewharton.timber:timber:$rootProject.ext.timberLibVersion"
-
-    compile "com.facebook.stetho:stetho:$rootProject.ext.stethoLibVersion"
-
-    testCompile "junit:junit:$rootProject.ext.junitVersion"
-    testCompile "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
+    implementation "com.jakewharton.timber:timber:$rootProject.ext.timberLibVersion"
+    testImplementation "junit:junit:$rootProject.ext.junitVersion"
+    testImplementation "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
 }

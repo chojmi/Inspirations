@@ -24,7 +24,7 @@ public class PersonDataMapper {
     public List<Person> transform(List<PersonEntity> people) {
         List<Person> result = new ArrayList<>();
         Observable.fromIterable(people)
-                .map(person -> transform(person))
+                .map(this::transform)
                 .toList()
                 .subscribe(result::addAll, Timber::e);
         return result;

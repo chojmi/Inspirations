@@ -5,6 +5,5 @@ import com.github.chojmi.inspirations.presentation.main.Navigator;
 
 interface IBaseUI {
     Navigator getNavigator();
-
     InspirationsApp getInspirationsApp();
 }

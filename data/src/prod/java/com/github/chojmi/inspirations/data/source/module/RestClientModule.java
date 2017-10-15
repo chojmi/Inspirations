@@ -1,9 +1,7 @@
 package com.github.chojmi.inspirations.data.source.module;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
-import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.github.chojmi.inspirations.data.source.Local;
 import com.github.chojmi.inspirations.data.source.Remote;
 import com.github.chojmi.inspirations.data.source.local.AccessTokenHolder;
@@ -36,19 +34,11 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
-
 @Remote
 @Module
 public class RestClientModule {
 
     private static final HttpLoggingInterceptor.Level LOG_LEVEL = HttpLoggingInterceptor.Level.BASIC;
-
-    private final Context context;
-
-    public RestClientModule(@NonNull Context context) {
-        this.context = checkNotNull(context);
-    }
 
     @Singleton
     @Provides
@@ -104,7 +94,6 @@ public class RestClientModule {
     OkHttpClient provideOkHttpClient(OAuthService wrapper) {
         return new OkHttpClient.Builder()
                 .addInterceptor(new SigningInterceptor(wrapper))
-                .addNetworkInterceptor(new StethoInterceptor())
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(LOG_LEVEL))
                 .addInterceptor(new ParsingInterceptor())
                 .followSslRedirects(true)
@@ -119,7 +108,7 @@ public class RestClientModule {
     }
 
     @Provides
-    String provideServiceAddress() {
+    String provideServiceAddress(Context context) {
         return context.getString(R.string.api_url);
     }
 }
