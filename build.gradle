@@ -3,16 +3,15 @@
 buildscript {
     ext {
         minSdkVersion = 21
-        targetSdkVersion = 25
-        compileSdkVersion = 25
+        targetSdkVersion = 26
+        compileSdkVersion = 26
         buildToolsVersion = '26.0.2'
         versionCode = 1
         versionName = "0.0.1"
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
 
-        multiDexVersion = '1.0.1'
         kotlinVersion = '1.1.51'
-        supportLibVersion = '25.3.1'
+        supportLibVersion = '26.1.0'
         daggerLibVersion = '2.11'
         retrofitLibVersion = '2.2.0'
         scribeJavaLibVersion = '4.1.1'
