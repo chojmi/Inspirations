@@ -21,6 +21,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import dagger.android.AndroidInjection;
 
 import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.clearImageCache;
 import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.loadImage;
@@ -43,8 +44,8 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-        getInspirationsApp().createPhotoViewComponent(getPhoto()).inject(this);
         setContentView(R.layout.photo_item_activity);
     }
 
@@ -65,7 +66,6 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
         super.onDestroy();
         clearImageCache(photoHolder);
         clearImageCache(personIcon);
-        getInspirationsApp().releasePhotoViewComponent();
     }
 
     @Override
@@ -101,7 +101,7 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
         onBackPressed();
     }
 
-    private Photo getPhoto() {
+    public Photo getPhoto() {
         return getIntent().getParcelableExtra(ARG_PHOTO);
     }
 }

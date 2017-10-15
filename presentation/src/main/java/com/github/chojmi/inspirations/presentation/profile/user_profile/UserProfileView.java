@@ -16,8 +16,6 @@ import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.utils.ImageViewUtils;
 import com.github.chojmi.inspirations.presentation.utils.ViewUtils;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -25,11 +23,9 @@ import butterknife.OnClick;
 import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.clearImageCache;
 
 public class UserProfileView extends CoordinatorLayout implements UserProfileContract.View {
-    @Inject UserProfileContract.Presenter presenter;
     @BindView(R.id.back) ImageButton backBtn;
     @BindView(R.id.user_name) TextView userName;
     @BindView(R.id.person_icon) ImageView personIcon;
-    @BindView(R.id.user_public_photos) UserPublicPhotosView userPublicPhotosView;
 
     public UserProfileView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -48,22 +44,12 @@ public class UserProfileView extends CoordinatorLayout implements UserProfileCon
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         clearImageCache(personIcon);
-        if (presenter != null) {
-            presenter.destroyView();
-        }
     }
 
     @Override
     public void renderProfile(PersonEntity personEntity) {
         userName.setText(personEntity.getUsername());
         ImageViewUtils.loadImage(personIcon, personEntity.getIconUrl());
-    }
-
-    public void setUserProfileComponent(UserProfileComponent userProfileComponent) {
-        userProfileComponent.inject(userPublicPhotosView);
-        userProfileComponent.inject(this);
-        presenter.setView(this);
-        userPublicPhotosView.refresh();
     }
 
     @OnClick(R.id.back)

@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'kotlin-android'
 
 android {
@@ -23,11 +22,19 @@ android {
         }
     }
 
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+
+    flavorDimensions "api"
+
     productFlavors {
         mock {
-
+            dimension "api"
         }
         prod {
+            dimension "api"
             buildConfigField "String", "API_KEY", "\"" + getApiKey() + "\""
             buildConfigField "String", "API_SECRET_KEY", "\"" + getApiSecretKey() + "\""
         }
@@ -38,11 +45,6 @@ android {
                 && variant.getFlavors().get(0).name.equals('mock')) {
             variant.setIgnore(true);
         }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -59,32 +61,30 @@ def getApiSecretKey() {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(":domain")
-    compile "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(":domain")
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:${rootProject.ext.kotlinVersion}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:${rootProject.ext.kotlinVersion}"
 
-    compile "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxAndroidLibVersion}"
-    compile "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxJavaLibVersion}"
+    implementation "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxAndroidLibVersion}"
+    implementation "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxJavaLibVersion}"
 
-    compile "com.google.dagger:dagger:${rootProject.ext.daggerLibVersion}"
-    annotationProcessor "com.google.dagger:dagger-compiler:${rootProject.ext.daggerLibVersion}"
+    implementation "com.google.dagger:dagger:${rootProject.ext.daggerLibVersion}"
+    kapt "com.google.dagger:dagger-compiler:${rootProject.ext.daggerLibVersion}"
 
-    compile "com.squareup.okhttp3:logging-interceptor:${rootProject.ext.loggingInterceptorLibVersion}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${rootProject.ext.loggingInterceptorLibVersion}"
     compile "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofitLibVersion}"
     compile "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofitLibVersion}"
     compile "com.squareup.retrofit2:adapter-rxjava2:${rootProject.ext.retrofitLibVersion}"
 
-    compile "com.google.code.gson:gson:${rootProject.ext.gsonLibVersion}"
+    implementation "com.google.code.gson:gson:${rootProject.ext.gsonLibVersion}"
 
-    compile "com.jakewharton.timber:timber:$rootProject.ext.timberLibVersion"
+    implementation "com.jakewharton.timber:timber:$rootProject.ext.timberLibVersion"
 
-    compile "com.facebook.stetho:stetho-okhttp3:$rootProject.ext.stethoLibVersion"
-
-    androidTestCompile("com.android.support.test.espresso:espresso-core:${rootProject.ext.espressoVersion}", {
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:${rootProject.ext.espressoVersion}", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile "junit:junit:$rootProject.ext.junitVersion"
-    testCompile "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
+    testImplementation "junit:junit:$rootProject.ext.junitVersion"
+    testImplementation "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
 }

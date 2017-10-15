@@ -1,6 +1,6 @@
 package com.github.chojmi.inspirations.data.source.local;
 
-import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
+import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.repository.AuthTestDataSource;
 
 import javax.inject.Inject;
@@ -13,7 +13,7 @@ public class LocalAuthTestDataSource implements AuthTestDataSource {
     }
 
     @Override
-    public Observable<UserEntity> getLoginData() {
+    public Observable<PersonEntity> getLoginData() {
         return Observable.empty();
     }
 }

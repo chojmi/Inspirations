@@ -2,7 +2,7 @@ package com.github.chojmi.inspirations.data.source.repository;
 
 import com.github.chojmi.inspirations.data.source.Local;
 import com.github.chojmi.inspirations.data.source.Remote;
-import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
+import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.repository.AuthTestDataSource;
 
 import javax.inject.Inject;
@@ -26,7 +26,7 @@ public class AuthTestRepository implements AuthTestDataSource {
     }
 
     @Override
-    public Observable<UserEntity> getLoginData() {
+    public Observable<PersonEntity> getLoginData() {
         return Observable.concat(localAuthTestDataSource.getLoginData(), remoteAuthTestDataSource.getLoginData())
                 .firstElement().toObservable();
     }

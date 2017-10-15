@@ -13,6 +13,7 @@ import com.github.chojmi.inspirations.presentation.photo.PhotoViewActivity;
 import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewActivity;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileActivity;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
@@ -21,6 +22,7 @@ import javax.inject.Singleton;
 @Singleton
 public class Navigator {
 
+    @Inject
     public Navigator() {
     }
 

@@ -1,6 +1,7 @@
 package com.github.chojmi.inspirations.presentation.profile.my_profile;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,11 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
+import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 import com.github.chojmi.inspirations.presentation.main.MainActivity;
-import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileComponent;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileView;
 
 import javax.inject.Inject;
@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.android.support.AndroidSupportInjection;
 
 public class MyProfileFragment extends BaseFragment<MainActivity> implements MyProfileContract.View {
     private static final int LOGIN_REQUEST_CODE = 1000;
@@ -34,9 +35,9 @@ public class MyProfileFragment extends BaseFragment<MainActivity> implements MyP
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getInspirationsApp().createMyProfileComponent().inject(this);
+    public void onAttach(Context context) {
+        AndroidSupportInjection.inject(this);
+        super.onAttach(context);
     }
 
     @Nullable
@@ -61,13 +62,6 @@ public class MyProfileFragment extends BaseFragment<MainActivity> implements MyP
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        getInspirationsApp().releaseMyProfileComponent();
-        getInspirationsApp().releaseUserProfileComponent();
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode != LOGIN_REQUEST_CODE) {
@@ -84,10 +78,8 @@ public class MyProfileFragment extends BaseFragment<MainActivity> implements MyP
     }
 
     @Override
-    public void showProfile(UserEntity userEntity) {
-        UserProfileComponent userProfileComponent = getInspirationsApp().createUserProfileComponent(userEntity.getId());
-        userProfileComponent.inject(userProfileView);
-        userProfileView.setUserProfileComponent(userProfileComponent);
+    public void showProfile(PersonEntity personEntity) {
+        userProfileView.renderProfile(personEntity);
         userProfileView.setVisibility(View.VISIBLE);
         loginView.setVisibility(View.GONE);
     }

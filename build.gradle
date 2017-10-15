@@ -3,17 +3,16 @@
 buildscript {
     ext {
         minSdkVersion = 21
-        targetSdkVersion = 25
-        compileSdkVersion = 25
-        buildToolsVersion = '25.0.2'
+        targetSdkVersion = 26
+        compileSdkVersion = 26
+        buildToolsVersion = '26.0.2'
         versionCode = 1
         versionName = "0.0.1"
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
 
-        multiDexVersion = '1.0.1'
-        kotlinVersion = '1.1.4'
-        supportLibVersion = '25.3.1'
-        daggerLibVersion = '2.10'
+        kotlinVersion = '1.1.51'
+        supportLibVersion = '26.1.0'
+        daggerLibVersion = '2.11'
         retrofitLibVersion = '2.2.0'
         scribeJavaLibVersion = '4.1.1'
         rxAndroidLibVersion = '2.0.1'
@@ -21,12 +20,11 @@ buildscript {
         rxBindingsVersion = '2.0.0'
         loggingInterceptorLibVersion = '3.6.0'
         gsonLibVersion = '2.8.0'
-        butterknifeLibVersion = '8.5.1'
+        butterknifeLibVersion = '8.8.1'
         paperParcelLibVersion = '2.0.1'
         materialDesignDimensLibVersion = '1.4'
         glideLibVersion = '4.0.0'
         timberLibVersion = '4.5.1'
-        stethoLibVersion = '1.5.0'
 
         junitVersion = '4.12'
         mockitoVersion = '2.8.47'
@@ -35,10 +33,10 @@ buildscript {
     }
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
-        classpath 'me.tatarka:gradle-retrolambda:3.6.0'
+        classpath 'com.android.tools.build:gradle:3.0.0-rc1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }
@@ -46,6 +44,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        google()
     }
 }
 

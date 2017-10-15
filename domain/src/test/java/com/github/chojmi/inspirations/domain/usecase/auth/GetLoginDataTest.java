@@ -1,7 +1,7 @@
 package com.github.chojmi.inspirations.domain.usecase.auth;
 
 import com.github.chojmi.inspirations.domain.common.SubmitUiModel;
-import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
+import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.repository.AuthTestDataSource;
 
@@ -20,8 +20,8 @@ import io.reactivex.schedulers.TestScheduler;
 public class GetLoginDataTest {
     @Mock private AuthTestDataSource mockAuthTestDataSource;
     @Mock private PostExecutionThread mockPostExecutionThread;
-    @Mock private UserEntity mockUserEntity;
-    private TestObserver<SubmitUiModel<UserEntity>> testObserver;
+    @Mock private PersonEntity mockUserEntity;
+    private TestObserver<SubmitUiModel<PersonEntity>> testObserver;
     private TestScheduler testScheduler;
 
     private GetLoginData getLoginData;

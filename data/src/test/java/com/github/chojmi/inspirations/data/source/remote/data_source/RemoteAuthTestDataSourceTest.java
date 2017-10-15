@@ -1,11 +1,11 @@
 package com.github.chojmi.inspirations.data.source.remote.data_source;
 
 import com.github.chojmi.inspirations.data.entity.auth.LoginDataEntityImpl;
-import com.github.chojmi.inspirations.data.entity.people.UserEntityImpl;
+import com.github.chojmi.inspirations.data.entity.people.PersonEntityImpl;
 import com.github.chojmi.inspirations.data.source.remote.service.AuthTestService;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
 import com.github.chojmi.inspirations.data.source.utils.TestAndroidScheduler;
-import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
+import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -28,7 +28,7 @@ public class RemoteAuthTestDataSourceTest {
     private final Map<String, String> fakeQueryMap = new HashMap<>();
     @Mock private RemoteQueryProducer mockRemoteQueryProducer;
     @Mock private AuthTestService mockAuthTestService;
-    private TestObserver<UserEntity> testObserver;
+    private TestObserver<PersonEntity> testObserver;
 
     private RemoteAuthTestDataSource remoteAuthTestDataSource;
 
@@ -45,7 +45,7 @@ public class RemoteAuthTestDataSourceTest {
 
     @Test
     public void loadLoginDataHappyCase() {
-        UserEntityImpl result = Mockito.mock(UserEntityImpl.class);
+        PersonEntityImpl result = Mockito.mock(PersonEntityImpl.class);
         LoginDataEntityImpl loginDataEntity = Mockito.mock(LoginDataEntityImpl.class);
         when(mockRemoteQueryProducer.produceLoadLoginData()).thenReturn(fakeQueryMap);
         when(mockAuthTestService.loadLoginData(fakeQueryMap)).thenReturn(Observable.just(loginDataEntity));

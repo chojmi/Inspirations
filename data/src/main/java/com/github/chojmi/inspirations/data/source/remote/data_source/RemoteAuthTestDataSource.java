@@ -3,7 +3,7 @@ package com.github.chojmi.inspirations.data.source.remote.data_source;
 import com.github.chojmi.inspirations.data.entity.auth.LoginDataEntityImpl;
 import com.github.chojmi.inspirations.data.source.remote.service.AuthTestService;
 import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProducer;
-import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
+import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.repository.AuthTestDataSource;
 
 import javax.inject.Inject;
@@ -24,7 +24,7 @@ public class RemoteAuthTestDataSource implements AuthTestDataSource {
     }
 
     @Override
-    public Observable<UserEntity> getLoginData() {
+    public Observable<PersonEntity> getLoginData() {
         return testService.loadLoginData(remoteQueryProducer.produceLoadLoginData())
                 .map(LoginDataEntityImpl::getUser);
     }

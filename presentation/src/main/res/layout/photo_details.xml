@@ -3,19 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
-    tools:showIn="@layout/gallery_grid_item">
+    android:orientation="horizontal">
 
     <LinearLayout
         style="@style/AppTheme.ClickableView.SelectableBackground"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:padding="@dimen/margin_sm">
 
         <ImageButton
-            android:layout_width="@dimen/common_icon_standard_size"
-            android:layout_height="@dimen/common_icon_standard_size"
-            android:layout_margin="@dimen/margin_ms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_sm"
             app:srcCompat="@drawable/ic_fav_border"/>
 
         <TextView
@@ -31,12 +31,13 @@
         style="@style/AppTheme.ClickableView.SelectableBackground"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:padding="@dimen/margin_sm">
 
         <ImageButton
-            android:layout_width="@dimen/common_icon_standard_size"
-            android:layout_height="@dimen/common_icon_standard_size"
-            android:layout_margin="@dimen/margin_ms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_sm"
             app:srcCompat="@drawable/ic_comment"/>
 
         <TextView

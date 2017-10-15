@@ -1,5 +1,7 @@
 package com.github.chojmi.inspirations.presentation.profile.user_profile;
 
+import android.support.annotation.NonNull;
+
 import com.github.chojmi.inspirations.domain.common.UseCase;
 import com.github.chojmi.inspirations.domain.entity.PhotoEntity;
 import com.github.chojmi.inspirations.domain.utils.Preconditions;
@@ -7,7 +9,6 @@ import com.github.chojmi.inspirations.presentation.common.mapper.PhotoDataMapper
 
 import java.util.List;
 
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
@@ -15,22 +16,22 @@ import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNot
 
 public class UserPublicPhotosPresenter implements UserPublicPhotosContract.Presenter {
     private final UseCase<String, List<PhotoEntity>> getPhotosEntity;
-    private final String userId;
     private final PhotoDataMapper photoDataMapper;
-    private CompositeDisposable disposables;
+    private final String userId;
+    private final CompositeDisposable disposables;
     private UserPublicPhotosContract.View view;
 
     public UserPublicPhotosPresenter(@NonNull UseCase<String, List<PhotoEntity>> getPhotosEntity,
-                                     @NonNull String userId, @NonNull PhotoDataMapper photoDataMapper) {
+                                     @NonNull PhotoDataMapper photoDataMapper, @NonNull String userId) {
         this.getPhotosEntity = Preconditions.checkNotNull(getPhotosEntity);
-        this.userId = Preconditions.checkNotNull(userId);
         this.photoDataMapper = Preconditions.checkNotNull(photoDataMapper);
+        this.userId = Preconditions.checkNotNull(userId);
+        this.disposables = new CompositeDisposable();
     }
 
     @Override
     public void setView(@NonNull UserPublicPhotosContract.View view) {
         this.view = checkNotNull(view);
-        this.disposables = new CompositeDisposable();
         fetchUserInfo();
     }
 
@@ -41,6 +42,9 @@ public class UserPublicPhotosPresenter implements UserPublicPhotosContract.Prese
     }
 
     private void fetchUserInfo() {
+        if (userId == null || userId.isEmpty()) {
+            throw new IllegalArgumentException("User Id cannot be null");
+        }
         disposables.add(getPhotosEntity.process(userId).subscribe(submitUiModel -> {
             if (submitUiModel.isInProgress()) {
                 return;

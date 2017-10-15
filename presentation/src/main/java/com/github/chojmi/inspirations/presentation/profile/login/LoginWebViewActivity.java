@@ -14,6 +14,7 @@ import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import dagger.android.AndroidInjection;
 import io.reactivex.annotations.Nullable;
 
 public class LoginWebViewActivity extends BaseActivity implements LoginWebViewContract.View {
@@ -28,8 +29,8 @@ public class LoginWebViewActivity extends BaseActivity implements LoginWebViewCo
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-        getInspirationsApp().createLoginWebViewViewComponent().inject(this);
         setContentView(R.layout.profile_login_webview_activity);
         loginWebView.setInteractor(token -> {
             if (!token.isEmpty()) {
@@ -48,12 +49,6 @@ public class LoginWebViewActivity extends BaseActivity implements LoginWebViewCo
     protected void onPause() {
         super.onPause();
         presenter.destroyView();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        getInspirationsApp().releaseLoginWebViewViewComponent();
     }
 
     @Override
