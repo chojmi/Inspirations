@@ -3,6 +3,7 @@ package com.github.chojmi.inspirations.data.source.local;
 import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoInfoEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoSizeListEntity;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
@@ -14,6 +15,11 @@ public class LocalPhotosDataSource implements PhotosDataSource {
 
     @Inject
     public LocalPhotosDataSource() {
+    }
+
+    @Override
+    public Observable<PhotoInfoEntity> loadPhotoInfo(String photoId) {
+        return Observable.empty();
     }
 
     @Override

@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoInfoEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoSizeListEntity;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 import com.github.chojmi.inspirations.presentation.gallery.model.GridAdapterUiModel;
 import com.github.chojmi.inspirations.presentation.gallery.model.Person;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
-import com.github.chojmi.inspirations.presentation.gallery.model.PhotoComments;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoFavs;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
 import com.github.chojmi.inspirations.presentation.main.MainActivity;
@@ -134,8 +134,8 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     }
 
     @Override
-    public void showComments(int position, PhotoComments photoComments) {
-        galleryAdapter.setComments(position, photoComments);
+    public void showPhotoInfo(int position, PhotoInfoEntity photoInfo) {
+        galleryAdapter.showPhotoInfo(position, photoInfo);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     @Override
     public void onNewItemBind(int position, PhotoWithAuthor photo) {
         photoAttrsPresenter.loadPhotoSizes(position, photo);
-        photoAttrsPresenter.loadComments(position, photo);
+        photoAttrsPresenter.loadPhotoInfo(position, photo);
         photoAttrsPresenter.loadFavs(position, photo);
     }
 }

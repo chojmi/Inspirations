@@ -5,6 +5,7 @@ import com.github.chojmi.inspirations.data.source.remote.service.RemoteQueryProd
 import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoInfoEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoSizeListEntity;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
@@ -24,6 +25,12 @@ public class RemotePhotosDataSource implements PhotosDataSource {
     RemotePhotosDataSource(@NonNull PhotosService photosService, @NonNull RemoteQueryProducer remoteQueryProducer) {
         this.photosService = checkNotNull(photosService);
         this.remoteQueryProducer = checkNotNull(remoteQueryProducer);
+    }
+
+    @Override
+    public Observable<PhotoInfoEntity> loadPhotoInfo(String photoId) {
+        return photosService.loadPhotoInfo(remoteQueryProducer.produceLoadPhotoInfo(photoId))
+                .map(photoInfoEntity -> photoInfoEntity);
     }
 
     @Override

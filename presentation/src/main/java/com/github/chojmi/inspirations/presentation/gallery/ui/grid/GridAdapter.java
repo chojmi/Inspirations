@@ -6,12 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoInfoEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoSizeListEntity;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAdapter;
 import com.github.chojmi.inspirations.presentation.common.PhotoDetailsView;
 import com.github.chojmi.inspirations.presentation.gallery.model.GridAdapterUiModel;
-import com.github.chojmi.inspirations.presentation.gallery.model.PhotoComments;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoFavs;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -44,8 +44,8 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
     @Override
     public void onBindViewHolder(GalleryViewHolder holder, int position) {
         GridAdapterUiModel uiModel = getItem(position);
-        holder.setGridAdapterUiModel(uiModel);
-        if (uiModel.getComments() == null && uiModel.getFavs() == null) {
+        holder.renderView(uiModel);
+        if (uiModel.getPhotoInfo() == null && uiModel.getFavs() == null) {
             listener.onNewItemBind(position, uiModel.getPhoto());
         }
     }
@@ -66,8 +66,8 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
         replace(position, GridAdapterUiModel.Companion.setFavs(getItem(position), photoFavs));
     }
 
-    void setComments(int position, PhotoComments photoComments) {
-        replace(position, GridAdapterUiModel.Companion.setComments(getItem(position), photoComments));
+    void showPhotoInfo(int position, PhotoInfoEntity photoInfo) {
+        replace(position, GridAdapterUiModel.Companion.setPhotoInfo(getItem(position), photoInfo));
     }
 
     void setPhotoSizes(int position, PhotoSizeListEntity sizeList) {
@@ -139,10 +139,10 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
                     .subscribe(favsClicksSubject);
         }
 
-        void setGridAdapterUiModel(GridAdapterUiModel gridAdapterUiModel) {
+        void renderView(GridAdapterUiModel gridAdapterUiModel) {
             gridItemTopView.setPhoto(gridAdapterUiModel.getPhoto(), gridAdapterUiModel.getPhotoSizes());
             photoDetailsView.setFavs(gridAdapterUiModel.getFavs());
-            photoDetailsView.setComments(gridAdapterUiModel.getComments());
+            photoDetailsView.setPhotoInfo(gridAdapterUiModel.getPhotoInfo());
         }
 
         void onViewRecycled() {

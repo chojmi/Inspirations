@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoInfoEntity;
 import com.github.chojmi.inspirations.presentation.R;
-import com.github.chojmi.inspirations.presentation.gallery.model.PhotoComments;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoFavs;
 import com.jakewharton.rxbinding2.view.RxView;
 
@@ -31,12 +31,12 @@ public class PhotoDetailsView extends LinearLayoutCompat {
         ButterKnife.bind(this);
     }
 
-    public void setComments(@Nullable PhotoComments photoComments) {
-        if (photoComments == null) {
+    public void setPhotoInfo(@Nullable PhotoInfoEntity photoInfo) {
+        if (photoInfo == null) {
             commentsCount.setText("");
             return;
         }
-        commentsCount.setText(String.valueOf(photoComments.getComments().size()));
+        commentsCount.setText(String.valueOf(photoInfo.getCommentsCount()));
     }
 
     public void setFavs(@Nullable PhotoFavs photoFavs) {

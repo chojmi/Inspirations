@@ -8,11 +8,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoInfoEntity;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
 import com.github.chojmi.inspirations.presentation.common.PhotoDetailsView;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
-import com.github.chojmi.inspirations.presentation.gallery.model.PhotoComments;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoFavs;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
 import com.github.chojmi.inspirations.presentation.utils.ImageViewUtils;
@@ -81,8 +81,8 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
     }
 
     @Override
-    public void showComments(PhotoComments photoComments) {
-        photoDetailsView.setComments(photoComments);
+    public void showPhotoInfo(PhotoInfoEntity photoInfo) {
+        photoDetailsView.setPhotoInfo(photoInfo);
     }
 
     @Override
