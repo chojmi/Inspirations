@@ -28,7 +28,12 @@ public class FakeOAuthService implements OAuthService {
     }
 
     @Override
-    public String signRequest(String url) {
+    public String signGetRequest(String url) {
+        return null;
+    }
+
+    @Override
+    public String signPostRequest(String url) {
         return null;
     }
 }

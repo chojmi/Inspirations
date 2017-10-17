@@ -30,7 +30,22 @@ public class FakeRemoteQueryProducerImpl implements RemoteQueryProducer {
     }
 
     @Override
+    public Map<String, String> produceLoadPhotoInfo(String photoId) {
+        return new HashMap<>();
+    }
+
+    @Override
     public Map<String, String> produceLoadLoginData() {
+        return new HashMap<>();
+    }
+
+    @Override
+    public Map<String, String> produceAddToFavs(String photoId) {
+        return new HashMap<>();
+    }
+
+    @Override
+    public Map<String, String> produceRemoveFromFavs(String photoId) {
         return new HashMap<>();
     }
 
