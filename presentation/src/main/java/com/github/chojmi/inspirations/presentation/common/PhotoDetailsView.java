@@ -49,19 +49,19 @@ public class PhotoDetailsView extends LinearLayoutCompat {
         favsCount.setText(String.valueOf(photoFavs.getTotal()));
     }
 
-    public Observable<Object> getFavsRootClicks() {
-        return RxView.clicks(favsRoot);
+    public Observable<View> getFavsRootClicks() {
+        return RxView.clicks(favsRoot).map(o -> favsRoot);
     }
 
-    public Observable<Object> getCommentsRootClicks() {
-        return RxView.clicks(commentsRoot);
+    public Observable<View> getCommentsRootClicks() {
+        return RxView.clicks(commentsRoot).map(o -> commentsRoot);
     }
 
-    public Observable<Object> getFavsIconClicks() {
-        return RxView.clicks(favsIcon);
+    public Observable<View> getFavsIconClicks() {
+        return RxView.clicks(favsIcon).map(o -> favsIcon);
     }
 
-    public Observable<Object> getCommentsIconClicks() {
-        return RxView.clicks(commentsIcon);
+    public Observable<View> getCommentsIconClicks() {
+        return RxView.clicks(commentsIcon).map(o -> commentsIcon);
     }
 }

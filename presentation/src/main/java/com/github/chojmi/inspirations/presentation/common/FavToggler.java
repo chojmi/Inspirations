@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
+package com.github.chojmi.inspirations.presentation.common;
 
 import com.github.chojmi.inspirations.domain.usecase.favorites.AddToFavorites;
 import com.github.chojmi.inspirations.domain.usecase.favorites.RemoveFromFavorites;
@@ -12,7 +12,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.subjects.PublishSubject;
 import timber.log.Timber;
 
-class FavToggler {
+public class FavToggler {
     private final AddToFavorites addToFavorites;
     private final RemoveFromFavorites removeFromFavorites;
     private final CompositeDisposable disposables;
@@ -24,7 +24,7 @@ class FavToggler {
         this.disposables = new CompositeDisposable();
     }
 
-    Observable<Boolean> toggleFav(boolean isFav, @NonNull String photoId) {
+    public Observable<Boolean> toggleFav(boolean isFav, @NonNull String photoId) {
         PublishSubject<Boolean> favState = PublishSubject.create();
         if (isFav) {
             disposables.remove(removeFromFavorites.process(photoId).subscribe(submitUiModel -> {
@@ -55,7 +55,7 @@ class FavToggler {
         return favState;
     }
 
-    void onDestroy() {
+    public void onDestroy() {
         this.disposables.clear();
     }
 }

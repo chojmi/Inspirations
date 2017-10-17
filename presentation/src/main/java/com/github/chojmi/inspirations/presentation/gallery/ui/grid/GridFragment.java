@@ -107,7 +107,7 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     }
 
     @Override
-    public void showFavs(Photo photo) {
+    public void goToFavs(Photo photo) {
         getNavigator().navigateToPhotoFavsList(getContext(), photo.getId());
     }
 

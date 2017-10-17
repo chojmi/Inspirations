@@ -5,6 +5,7 @@ import com.github.chojmi.inspirations.domain.usecase.people.GetUserPublicPhotos;
 import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoFavs;
 import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoInfo;
 import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoSizeList;
+import com.github.chojmi.inspirations.presentation.common.FavToggler;
 import com.github.chojmi.inspirations.presentation.common.compound_usecase.GetPhotosCompoundUseCase;
 import com.github.chojmi.inspirations.presentation.common.mapper.PhotoDataMapper;
 import com.github.chojmi.inspirations.presentation.common.mapper.PhotoDetailsMapper;

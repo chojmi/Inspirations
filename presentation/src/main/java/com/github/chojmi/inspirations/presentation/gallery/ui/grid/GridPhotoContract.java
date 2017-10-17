@@ -22,7 +22,7 @@ interface GridPhotoContract {
 
         void openUserProfile(Person person);
 
-        void showFavs(Photo photo);
+        void goToFavs(Photo photo);
 
         void showComments(PhotoWithAuthor photo);
 

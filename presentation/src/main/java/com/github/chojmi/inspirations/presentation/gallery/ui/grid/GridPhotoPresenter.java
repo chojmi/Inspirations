@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import com.github.chojmi.inspirations.domain.common.UseCase;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoInfoEntity;
 import com.github.chojmi.inspirations.presentation.blueprints.exception.ViewNotFoundException;
+import com.github.chojmi.inspirations.presentation.common.FavToggler;
 import com.github.chojmi.inspirations.presentation.gallery.model.Person;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
 
@@ -65,7 +66,7 @@ class GridPhotoPresenter implements GridPhotoContract.Presenter {
 
     @Override
     public void favsSelected(PhotoWithAuthor photo) {
-        view.showFavs(photo.getPhoto());
+        view.goToFavs(photo.getPhoto());
     }
 
     @Override
