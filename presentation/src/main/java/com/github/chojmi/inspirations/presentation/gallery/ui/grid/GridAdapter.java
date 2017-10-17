@@ -26,6 +26,10 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
     private final Listener listener;
     private final PublishSubject<Integer> profileClicksSubject = PublishSubject.create();
     private final PublishSubject<Pair<ImageView, Integer>> photoClicksSubject = PublishSubject.create();
+    private final PublishSubject<Integer> favsClicksSubject = PublishSubject.create();
+    private final PublishSubject<Integer> favsIconClicksSubject = PublishSubject.create();
+    private final PublishSubject<Integer> commentsClicksSubject = PublishSubject.create();
+    private final PublishSubject<Integer> commentsIconClicksSubject = PublishSubject.create();
 
     GridAdapter(@NonNull Listener listener) {
         this.listener = Preconditions.checkNotNull(listener);
@@ -78,6 +82,22 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
         return photoClicksSubject.map(imageViewIntegerPair -> new Pair<>(imageViewIntegerPair.first, getItem(imageViewIntegerPair.second).getPhoto()));
     }
 
+    Observable<PhotoWithAuthor> getCommentsClicksObservable() {
+        return commentsClicksSubject.map(integer -> getItem(integer).getPhoto());
+    }
+
+    Observable<PhotoWithAuthor> getCommentsIconClicksObservable() {
+        return commentsIconClicksSubject.map(integer -> getItem(integer).getPhoto());
+    }
+
+    Observable<PhotoWithAuthor> getFavsClicksObservable() {
+        return favsClicksSubject.map(integer -> getItem(integer).getPhoto());
+    }
+
+    Observable<PhotoWithAuthor> getFavsIconClicksObservable() {
+        return favsIconClicksSubject.map(integer -> getItem(integer).getPhoto());
+    }
+
     interface Listener {
         void onNewItemBind(int position, PhotoWithAuthor photo);
     }
@@ -97,6 +117,26 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
                     .takeUntil(RxView.detaches(parent))
                     .map(o -> new Pair<>((ImageView) gridItemTopView.findViewById(R.id.photo), getAdapterPosition()))
                     .subscribe(photoClicksSubject);
+
+            photoDetailsView.getCommentsRootClicks()
+                    .takeUntil(RxView.detaches(parent))
+                    .map(o -> getAdapterPosition())
+                    .subscribe(commentsClicksSubject);
+
+            photoDetailsView.getCommentsIconClicks()
+                    .takeUntil(RxView.detaches(parent))
+                    .map(o -> getAdapterPosition())
+                    .subscribe(commentsIconClicksSubject);
+
+            photoDetailsView.getFavsIconClicks()
+                    .takeUntil(RxView.detaches(parent))
+                    .map(o -> getAdapterPosition())
+                    .subscribe(favsIconClicksSubject);
+
+            photoDetailsView.getFavsRootClicks()
+                    .takeUntil(RxView.detaches(parent))
+                    .map(o -> getAdapterPosition())
+                    .subscribe(favsClicksSubject);
         }
 
         void setGridAdapterUiModel(GridAdapterUiModel gridAdapterUiModel) {

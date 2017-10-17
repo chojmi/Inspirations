@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
+import com.github.chojmi.inspirations.presentation.gallery.ui.fav_list.FavListActivity;
 import com.github.chojmi.inspirations.presentation.photo.PhotoViewActivity;
 import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewActivity;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileActivity;
@@ -54,6 +55,13 @@ public class Navigator {
     public void navigateToUserProfile(Context context, String userId) {
         if (context != null) {
             Intent intentToLaunch = UserProfileActivity.getCallingIntent(context, userId);
+            context.startActivity(intentToLaunch);
+        }
+    }
+
+    public void navigateToPhotoFavsList(Context context, String photoId) {
+        if (context != null) {
+            Intent intentToLaunch = FavListActivity.getCallingIntent(context, photoId);
             context.startActivity(intentToLaunch);
         }
     }

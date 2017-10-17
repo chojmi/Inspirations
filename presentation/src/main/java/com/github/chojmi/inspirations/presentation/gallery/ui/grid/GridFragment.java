@@ -16,6 +16,7 @@ import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 import com.github.chojmi.inspirations.presentation.gallery.model.GridAdapterUiModel;
 import com.github.chojmi.inspirations.presentation.gallery.model.Person;
+import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoComments;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoFavs;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
@@ -80,6 +81,10 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
         galleryAdapter = new GridAdapter(this);
         disposables.add(galleryAdapter.getPhotoClicksObservable().subscribe(pair -> photoPresenter.photoSelected(pair.first, pair.second)));
         disposables.add(galleryAdapter.getProfileClicksObservable().subscribe(photo -> photoPresenter.profileSelected(photo.getPerson())));
+        disposables.add(galleryAdapter.getCommentsClicksObservable().subscribe(photo -> photoPresenter.commentsSelected(photo)));
+        disposables.add(galleryAdapter.getCommentsIconClicksObservable().subscribe(photo -> photoPresenter.commentIconSelected(photo)));
+        disposables.add(galleryAdapter.getFavsClicksObservable().subscribe(photo -> photoPresenter.favsSelected(photo)));
+        disposables.add(galleryAdapter.getFavsIconClicksObservable().subscribe(photo -> photoPresenter.favIconSelected(photo)));
         recyclerView.setAdapter(galleryAdapter);
     }
 
@@ -96,6 +101,26 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     @Override
     public void openUserProfile(Person person) {
         getNavigator().navigateToUserProfile(getContext(), person.getId());
+    }
+
+    @Override
+    public void showFavs(Photo photo) {
+        getNavigator().navigateToPhotoFavsList(getContext(), photo.getId());
+    }
+
+    @Override
+    public void showComments(PhotoWithAuthor photo) {
+
+    }
+
+    @Override
+    public void toggleFav(PhotoWithAuthor photo) {
+
+    }
+
+    @Override
+    public void addComment(PhotoWithAuthor photo) {
+
     }
 
     @Override

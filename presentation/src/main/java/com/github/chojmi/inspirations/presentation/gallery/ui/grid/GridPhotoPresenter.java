@@ -60,6 +60,26 @@ class GridPhotoPresenter implements GridPhotoContract.Presenter {
     }
 
     @Override
+    public void favsSelected(PhotoWithAuthor photo) {
+        view.showFavs(photo.getPhoto());
+    }
+
+    @Override
+    public void commentsSelected(PhotoWithAuthor photo) {
+        view.showComments(photo);
+    }
+
+    @Override
+    public void favIconSelected(PhotoWithAuthor photo) {
+        view.toggleFav(photo);
+    }
+
+    @Override
+    public void commentIconSelected(PhotoWithAuthor photo) {
+        view.addComment(photo);
+    }
+
+    @Override
     public void destroyView() {
         this.disposables.clear();
         this.view = null;
