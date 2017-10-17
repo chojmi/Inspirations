@@ -75,7 +75,7 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
     }
 
     Observable<PhotoWithAuthor> getProfileClicksObservable() {
-        return profileClicksSubject.map(integer -> getItem(integer).getPhoto());
+        return profileClicksSubject.map(position -> getItem(position).getPhoto());
     }
 
     Observable<Pair<ImageView, PhotoWithAuthor>> getPhotoClicksObservable() {
@@ -83,19 +83,19 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
     }
 
     Observable<PhotoWithAuthor> getCommentsClicksObservable() {
-        return commentsClicksSubject.map(integer -> getItem(integer).getPhoto());
+        return commentsClicksSubject.map(position -> getItem(position).getPhoto());
     }
 
     Observable<PhotoWithAuthor> getCommentsIconClicksObservable() {
-        return commentsIconClicksSubject.map(integer -> getItem(integer).getPhoto());
+        return commentsIconClicksSubject.map(position -> getItem(position).getPhoto());
     }
 
     Observable<PhotoWithAuthor> getFavsClicksObservable() {
-        return favsClicksSubject.map(integer -> getItem(integer).getPhoto());
+        return favsClicksSubject.map(position -> getItem(position).getPhoto());
     }
 
-    Observable<PhotoWithAuthor> getFavsIconClicksObservable() {
-        return favsIconClicksSubject.map(integer -> getItem(integer).getPhoto());
+    Observable<Integer> getFavsIconClicksObservable() {
+        return favsIconClicksSubject;
     }
 
     interface Listener {

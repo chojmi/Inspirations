@@ -2,6 +2,7 @@ package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
 
 import android.widget.ImageView;
 
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoInfoEntity;
 import com.github.chojmi.inspirations.presentation.blueprints.BasePresenter;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseView;
 import com.github.chojmi.inspirations.presentation.gallery.model.Person;
@@ -9,6 +10,8 @@ import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
 
 import java.util.List;
+
+import io.reactivex.Observable;
 
 interface GridPhotoContract {
 
@@ -23,11 +26,11 @@ interface GridPhotoContract {
 
         void showComments(PhotoWithAuthor photo);
 
-        void toggleFav(PhotoWithAuthor photo);
-
         void addComment(PhotoWithAuthor photo);
 
         void toggleProgressBar(boolean isVisible);
+
+        void refreshFavSelection(int position, Observable<Boolean> isFav);
     }
 
     interface Presenter extends BasePresenter<View> {
@@ -41,7 +44,7 @@ interface GridPhotoContract {
 
         void commentsSelected(PhotoWithAuthor photo);
 
-        void favIconSelected(PhotoWithAuthor photo);
+        void favIconSelected(int position, PhotoInfoEntity photo);
 
         void commentIconSelected(PhotoWithAuthor photo);
     }

@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.github.chojmi.inspirations.data.source.module.AuthRepositoryModule;
 import com.github.chojmi.inspirations.data.source.module.AuthTestRepositoryModule;
+import com.github.chojmi.inspirations.data.source.module.FavoritesRepositoryModule;
 import com.github.chojmi.inspirations.data.source.module.GalleriesRepositoryModule;
 import com.github.chojmi.inspirations.data.source.module.PeopleRepositoryModule;
 import com.github.chojmi.inspirations.data.source.module.PhotosRepositoryModule;
@@ -27,6 +28,7 @@ import dagger.android.AndroidInjectionModule;
         PhotosRepositoryModule.class,
         AuthRepositoryModule.class,
         AuthTestRepositoryModule.class,
+        FavoritesRepositoryModule.class,
         RestClientModule.class})
 public interface AppComponent {
 

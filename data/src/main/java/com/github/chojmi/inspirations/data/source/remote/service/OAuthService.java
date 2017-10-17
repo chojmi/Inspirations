@@ -15,5 +15,7 @@ public interface OAuthService {
 
     boolean containsAccessToken();
 
-    String signRequest(String url);
+    String signGetRequest(String url);
+
+    String signPostRequest(String url);
 }

@@ -18,8 +18,8 @@ import dagger.Provides;
 public class GridModule {
 
     @Provides
-    GridPhotoContract.Presenter provideGridPhotoPresenter(GetPhotosCompoundUseCase getPhotosCompoundUseCase) {
-        return new GridPhotoPresenter(getPhotosCompoundUseCase);
+    GridPhotoContract.Presenter provideGridPhotoPresenter(GetPhotosCompoundUseCase getPhotosCompoundUseCase, FavToggler favToggler) {
+        return new GridPhotoPresenter(getPhotosCompoundUseCase, favToggler);
     }
 
     @Provides

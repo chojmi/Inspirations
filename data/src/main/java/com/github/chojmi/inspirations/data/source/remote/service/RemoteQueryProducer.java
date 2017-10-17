@@ -22,4 +22,8 @@ public interface RemoteQueryProducer {
     Map<String, String> produceLoadSearchPhoto(String text);
 
     Map<String, String> produceLoadLoginData();
+
+    Map<String, String> produceAddToFavs(String photoId);
+
+    Map<String, String> produceRemoveFromFavs(String photoId);
 }

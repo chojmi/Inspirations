@@ -34,8 +34,10 @@ public class PhotoDetailsView extends LinearLayoutCompat {
     public void setPhotoInfo(@Nullable PhotoInfoEntity photoInfo) {
         if (photoInfo == null) {
             commentsCount.setText("");
+            favsIcon.setSelected(false);
             return;
         }
+        favsIcon.setSelected(photoInfo.isFav());
         commentsCount.setText(String.valueOf(photoInfo.getCommentsCount()));
     }
 

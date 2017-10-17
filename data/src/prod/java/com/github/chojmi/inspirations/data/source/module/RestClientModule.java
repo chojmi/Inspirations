@@ -8,6 +8,7 @@ import com.github.chojmi.inspirations.data.source.local.AccessTokenHolder;
 import com.github.chojmi.inspirations.data.source.remote.interceptors.ParsingInterceptor;
 import com.github.chojmi.inspirations.data.source.remote.interceptors.SigningInterceptor;
 import com.github.chojmi.inspirations.data.source.remote.service.AuthTestService;
+import com.github.chojmi.inspirations.data.source.remote.service.FavoritesService;
 import com.github.chojmi.inspirations.data.source.remote.service.GalleriesService;
 import com.github.chojmi.inspirations.data.source.remote.service.OAuthService;
 import com.github.chojmi.inspirations.data.source.remote.service.OAuthServiceImpl;
@@ -72,6 +73,11 @@ public class RestClientModule {
     @Provides
     AuthTestService provideAuthService(Retrofit retrofit) {
         return retrofit.create(AuthTestService.class);
+    }
+
+    @Provides
+    FavoritesService provideFavoritesService(Retrofit retrofit) {
+        return retrofit.create(FavoritesService.class);
     }
 
     @Provides

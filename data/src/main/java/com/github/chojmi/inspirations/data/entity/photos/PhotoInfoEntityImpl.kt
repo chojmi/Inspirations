@@ -8,7 +8,12 @@ class PhotoInfoEntityImpl(
         private val id: String,
         private val owner: PersonEntityImpl,
         private val title: ContentHolder,
-        @SerializedName("comments") val commentsCount: ContentHolder) : PhotoInfoEntity {
+        @SerializedName("comments") private val commentsCount: ContentHolder,
+        private val isfavorite: Int) : PhotoInfoEntity {
+
+    override fun isFav(): Boolean {
+        return isfavorite == 1
+    }
 
     override fun getCommentsCount(): Int = Integer.valueOf(commentsCount.content)
 

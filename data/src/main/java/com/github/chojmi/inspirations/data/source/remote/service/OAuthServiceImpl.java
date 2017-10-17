@@ -45,9 +45,18 @@ public class OAuthServiceImpl implements OAuthService {
     }
 
     @Override
-    public String signRequest(String url) {
+    public String signGetRequest(String url) {
+        return signRequest(url, Verb.GET);
+    }
+
+    @Override
+    public String signPostRequest(String url) {
+        return signRequest(url, Verb.POST);
+    }
+
+    private String signRequest(String url, Verb verb) {
         final StringBuilder builder = new StringBuilder(url);
-        OAuthRequest request = new OAuthRequest(Verb.GET, url);
+        OAuthRequest request = new OAuthRequest(verb, url);
         oAuthService.signRequest(accessTokenHolder.getAccessToken(), request);
         request.getOauthParameters().forEach((s, s2) -> builder.append("&").append(s).append("=").append(s2));
         return builder.toString();

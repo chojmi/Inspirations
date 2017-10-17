@@ -22,7 +22,17 @@ public class SigningInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         if (oAuthService.containsAccessToken()) {
-            String signedUrl = oAuthService.signRequest(request.url().toString());
+            String signedUrl;
+            switch (chain.request().method()) {
+                case "GET":
+                    signedUrl = oAuthService.signGetRequest(request.url().toString());
+                    break;
+                case "POST":
+                    signedUrl = oAuthService.signPostRequest(request.url().toString());
+                    break;
+                default:
+                    return chain.proceed(request);
+            }
             return chain.proceed(request.newBuilder().url(signedUrl).build());
         }
         return chain.proceed(request);

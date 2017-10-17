@@ -29,7 +29,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
+import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
+import timber.log.Timber;
 
 public class GridFragment extends BaseFragment<MainActivity> implements GridPhotoContract.View, GridPhotoAttrsContract.View, GridAdapter.Listener {
     @BindView(R.id.rv_gallery) RecyclerView recyclerView;
@@ -84,7 +86,8 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
         disposables.add(galleryAdapter.getCommentsClicksObservable().subscribe(photo -> photoPresenter.commentsSelected(photo)));
         disposables.add(galleryAdapter.getCommentsIconClicksObservable().subscribe(photo -> photoPresenter.commentIconSelected(photo)));
         disposables.add(galleryAdapter.getFavsClicksObservable().subscribe(photo -> photoPresenter.favsSelected(photo)));
-        disposables.add(galleryAdapter.getFavsIconClicksObservable().subscribe(photo -> photoPresenter.favIconSelected(photo)));
+        disposables.add(galleryAdapter.getFavsIconClicksObservable().subscribe(position ->
+                photoPresenter.favIconSelected(position, galleryAdapter.getItem(position).getPhotoInfo())));
         recyclerView.setAdapter(galleryAdapter);
     }
 
@@ -114,11 +117,6 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     }
 
     @Override
-    public void toggleFav(PhotoWithAuthor photo) {
-
-    }
-
-    @Override
     public void addComment(PhotoWithAuthor photo) {
 
     }
@@ -126,6 +124,13 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     @Override
     public void toggleProgressBar(boolean isVisible) {
         progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void refreshFavSelection(int position, Observable<Boolean> isFav) {
+        disposables.add(isFav.subscribe(result ->
+                        photoAttrsPresenter.loadPhotoInfo(position, galleryAdapter.getItem(position).getPhoto()),
+                Timber::e));
     }
 
     @Override
