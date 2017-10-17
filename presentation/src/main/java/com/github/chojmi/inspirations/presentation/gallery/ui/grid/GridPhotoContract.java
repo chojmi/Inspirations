@@ -18,7 +18,7 @@ interface GridPhotoContract {
     interface View extends BaseView {
         void showPhotos(List<PhotoWithAuthor> photos);
 
-        void openPhotoView(ImageView imageView, PhotoWithAuthor photo);
+        void openPhotoView(int position, ImageView imageView);
 
         void openUserProfile(Person person);
 
@@ -36,7 +36,7 @@ interface GridPhotoContract {
     interface Presenter extends BasePresenter<View> {
         void refreshPhotos(String userId);
 
-        void photoSelected(ImageView imageView, PhotoWithAuthor photo);
+        void photoSelected(int position, ImageView imageView);
 
         void profileSelected(Person person);
 

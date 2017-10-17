@@ -34,6 +34,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
 public class GridFragment extends BaseFragment<MainActivity> implements GridPhotoContract.View, GridPhotoAttrsContract.View, GridAdapter.Listener {
+    private static final String ARG_ITEM_TO_REFRESH = "ARG_ITEM_TO_REFRESH";
     @BindView(R.id.rv_gallery) RecyclerView recyclerView;
     @BindView(R.id.progress_bar) ProgressBar progressBar;
     @Inject GridPhotoContract.Presenter photoPresenter;
@@ -42,7 +43,9 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     private CompositeDisposable disposables;
 
     public static GridFragment newInstance() {
-        return new GridFragment();
+        GridFragment gridFragment = new GridFragment();
+        gridFragment.setArguments(new Bundle());
+        return gridFragment;
     }
 
     @Override
@@ -67,6 +70,24 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
         initRecyclerView();
         photoPresenter.setView(this);
         photoAttrsPresenter.setView(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initialActions();
+    }
+
+    private void initialActions() {
+        int itemToRefresh = getArguments().getInt(ARG_ITEM_TO_REFRESH, -1);
+        getArguments().remove(ARG_ITEM_TO_REFRESH);
+        if (galleryAdapter.getItemCount() > itemToRefresh && itemToRefresh != -1) {
+            refreshPhotoInfo(itemToRefresh);
+        }
+    }
+
+    private void refreshPhotoInfo(int position) {
+        photoAttrsPresenter.loadPhotoInfo(position, galleryAdapter.getItem(position).getPhoto());
     }
 
     @Override
@@ -97,8 +118,9 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
     }
 
     @Override
-    public void openPhotoView(ImageView imageView, PhotoWithAuthor photo) {
-        getNavigator().navigateToPhoto(getActivity(), photo, imageView);
+    public void openPhotoView(int position, ImageView imageView) {
+        getArguments().putInt(ARG_ITEM_TO_REFRESH, position);
+        getNavigator().navigateToPhoto(getActivity(), galleryAdapter.getItem(position).getPhoto(), imageView);
     }
 
     @Override
@@ -128,9 +150,7 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
 
     @Override
     public void refreshFavSelection(int position, Observable<Boolean> isFav) {
-        disposables.add(isFav.subscribe(result ->
-                        photoAttrsPresenter.loadPhotoInfo(position, galleryAdapter.getItem(position).getPhoto()),
-                Timber::e));
+        disposables.add(isFav.subscribe(result -> refreshPhotoInfo(position), Timber::e));
     }
 
     @Override

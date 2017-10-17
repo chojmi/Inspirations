@@ -25,7 +25,7 @@ import io.reactivex.subjects.PublishSubject;
 class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder, GridAdapterUiModel> {
     private final Listener listener;
     private final PublishSubject<Integer> profileClicksSubject = PublishSubject.create();
-    private final PublishSubject<Pair<ImageView, Integer>> photoClicksSubject = PublishSubject.create();
+    private final PublishSubject<Pair<Integer, ImageView>> photoClicksSubject = PublishSubject.create();
     private final PublishSubject<Integer> favsClicksSubject = PublishSubject.create();
     private final PublishSubject<Integer> favsIconClicksSubject = PublishSubject.create();
     private final PublishSubject<Integer> commentsClicksSubject = PublishSubject.create();
@@ -78,8 +78,8 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
         return profileClicksSubject.map(position -> getItem(position).getPhoto());
     }
 
-    Observable<Pair<ImageView, PhotoWithAuthor>> getPhotoClicksObservable() {
-        return photoClicksSubject.map(imageViewIntegerPair -> new Pair<>(imageViewIntegerPair.first, getItem(imageViewIntegerPair.second).getPhoto()));
+    Observable<Pair<Integer, ImageView>> getPhotoClicksObservable() {
+        return photoClicksSubject;
     }
 
     Observable<PhotoWithAuthor> getCommentsClicksObservable() {
@@ -115,7 +115,7 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
 
             gridItemTopView.getPhotoClicksObservable()
                     .takeUntil(RxView.detaches(parent))
-                    .map(o -> new Pair<>((ImageView) gridItemTopView.findViewById(R.id.photo), getAdapterPosition()))
+                    .map(o -> new Pair<>(getAdapterPosition(), (ImageView) gridItemTopView.findViewById(R.id.photo)))
                     .subscribe(photoClicksSubject);
 
             photoDetailsView.getCommentsRootClicks()

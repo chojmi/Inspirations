@@ -55,8 +55,8 @@ class GridPhotoPresenter implements GridPhotoContract.Presenter {
     }
 
     @Override
-    public void photoSelected(ImageView imageView, PhotoWithAuthor photo) {
-        view.openPhotoView(imageView, photo);
+    public void photoSelected(int position, ImageView imageView) {
+        view.openPhotoView(position, imageView);
     }
 
     @Override
