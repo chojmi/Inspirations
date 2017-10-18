@@ -24,7 +24,7 @@ public class FavsAdapter extends BaseRecyclerViewAdapter<FavsAdapter.ViewHolder,
     }
 
     class ViewHolder extends BaseRecyclerViewAdapter.ViewHolder<PersonEntity> {
-        @BindView(R.id.fav_list_item) FavsItemView favsItemView;
+        @BindView(R.id.favs_item) FavsItemView favsItemView;
 
         ViewHolder(View itemView, ViewGroup parent) {
             super(itemView, parent);

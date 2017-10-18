@@ -3,7 +3,6 @@ package com.github.chojmi.inspirations.presentation.gallery.ui.comments;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.github.chojmi.inspirations.domain.entity.photos.CommentEntity;
 import com.github.chojmi.inspirations.presentation.R;
@@ -25,14 +24,14 @@ public class CommentsAdapter extends BaseRecyclerViewAdapter<CommentsAdapter.Vie
     }
 
     class ViewHolder extends BaseRecyclerViewAdapter.ViewHolder<CommentEntity> {
-        @BindView(R.id.text) TextView favsItemView;
+        @BindView(R.id.comments_item) CommentsItemView commentsItemView;
 
         ViewHolder(View itemView, ViewGroup parent) {
             super(itemView, parent);
         }
 
         public void renderView(CommentEntity commentEntity) {
-            favsItemView.setText(commentEntity.getContent());
+            commentsItemView.renderView(commentEntity);
         }
     }
 }
