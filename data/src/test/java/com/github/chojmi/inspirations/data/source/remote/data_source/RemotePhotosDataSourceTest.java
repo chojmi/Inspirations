@@ -26,6 +26,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RemotePhotosDataSourceTest {
     private static final String FAKE_PHOTO_ID = "123";
+    private static final int FAKE_PAGE = 0;
     private static final String FAKE_QUERY = "fake_query";
     private final Map<String, String> fakeQueryMap = new HashMap<>();
     @Mock private RemoteQueryProducer mockRemoteQueryProducer;
@@ -60,10 +61,9 @@ public class RemotePhotosDataSourceTest {
     @Test
     public void loadPhotoFavsHappyCase() {
         final PhotoFavsEntityImpl mockPhotoFavsEntity = Mockito.mock(PhotoFavsEntityImpl.class);
-        when(mockRemoteQueryProducer.produceLoadPhotoFavsQuery(FAKE_PHOTO_ID)).thenReturn(fakeQueryMap);
         when(mockPhotoService.loadPhotoFavs(fakeQueryMap)).thenReturn(Observable.just(mockPhotoFavsEntity));
 
-        remotePhotosDataSource.loadPhotoFavs(FAKE_PHOTO_ID).subscribe(testObserver);
+        remotePhotosDataSource.loadPhotoFavs(FAKE_PHOTO_ID, FAKE_PAGE).subscribe(testObserver);
 
         testObserver.assertSubscribed();
         testObserver.assertResult(mockPhotoFavsEntity);
