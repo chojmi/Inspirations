@@ -23,6 +23,7 @@ public abstract class UseCaseProcessor<Input, Output> implements UseCase<Input, 
     @Override
     public Observable<SubmitUiModel<Output>> process(Input input) {
         return getUseCaseActionObservable(input)
+                .retryWhen(errors -> errors.zipWith(Observable.range(1, 3), (n, i) -> i))
                 .subscribeOn(Schedulers.from(threadExecutor))
                 .map(SubmitUiModel::success)
                 .startWith(SubmitUiModel.inProgress())
