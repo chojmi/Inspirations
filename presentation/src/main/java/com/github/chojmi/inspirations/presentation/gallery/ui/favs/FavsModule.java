@@ -15,12 +15,12 @@ import dagger.Provides;
 public class FavsModule {
 
     @Provides
-    FavsContract.Presenter provideGridPhotoPresenter(FavsActivity favsActivity, GetPhotoFavs getPhotoFavs) {
+    FavsContract.Presenter provideFavsPresenter(FavsActivity favsActivity, GetPhotoFavs getPhotoFavs) {
         return new FavsPresenter(favsActivity.getArgPhotoId(), getPhotoFavs);
     }
 
     @Provides
-    @Named("fav_list_adapter")
+    @Named("favs_adapter")
     BaseRecyclerViewAdapter<?, PersonEntity> provideFavListAdapter() {
         return new FavsAdapter();
     }

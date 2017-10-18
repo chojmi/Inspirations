@@ -36,7 +36,7 @@ public class FavsActivity extends BaseActivity implements FavsContract.View {
     @BindView(R.id.title) TextView titleView;
     @BindView(R.id.progress_bar) ProgressBar progressBar;
     @Inject FavsContract.Presenter favListPresenter;
-    @Inject @Named("fav_list_adapter") BaseRecyclerViewAdapter<?, PersonEntity> adapter;
+    @Inject @Named("favs_adapter") BaseRecyclerViewAdapter<?, PersonEntity> adapter;
 
     public static Intent getCallingIntent(Context context, @NonNull String photoId) {
         Intent intent = new Intent(context, FavsActivity.class);
