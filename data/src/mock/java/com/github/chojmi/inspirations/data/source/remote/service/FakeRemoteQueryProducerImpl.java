@@ -15,7 +15,7 @@ public class FakeRemoteQueryProducerImpl implements RemoteQueryProducer {
     }
 
     @Override
-    public Map<String, String> produceLoadPhotoFavsQuery(String photoId) {
+    public Map<String, String> produceLoadPhotoFavsQuery(String photoId, int page) {
         return new HashMap<>();
     }
 

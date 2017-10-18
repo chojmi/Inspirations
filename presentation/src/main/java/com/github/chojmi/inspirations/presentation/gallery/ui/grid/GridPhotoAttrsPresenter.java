@@ -36,7 +36,8 @@ class GridPhotoAttrsPresenter implements GridPhotoAttrsContract.Presenter {
 
     @Override
     public void loadFavs(int position, PhotoWithAuthor photo) {
-        disposables.add(getPhotoFavs.process(checkNotNull(photo).getPhoto().getId()).subscribe(submitUiModel -> {
+        disposables.add(getPhotoFavs.process(GetPhotoFavs.Args.create(checkNotNull(photo).getPhoto().getId()))
+                .subscribe(submitUiModel -> {
             if (submitUiModel.isInProgress()) {
                 return;
             }

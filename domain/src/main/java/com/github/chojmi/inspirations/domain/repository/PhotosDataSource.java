@@ -11,7 +11,7 @@ import io.reactivex.Observable;
 public interface PhotosDataSource {
     Observable<PhotoInfoEntity> loadPhotoInfo(String photoId);
 
-    Observable<PhotoFavsEntity> loadPhotoFavs(String photoId);
+    Observable<PhotoFavsEntity> loadPhotoFavs(String photoId, int page);
 
     Observable<PhotoCommentsEntity> loadPhotoComments(String photoId);
 

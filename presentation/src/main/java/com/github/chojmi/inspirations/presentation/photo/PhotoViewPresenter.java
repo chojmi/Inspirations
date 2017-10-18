@@ -4,6 +4,7 @@ import com.github.chojmi.inspirations.domain.common.UseCase;
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoInfoEntity;
+import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoFavs;
 import com.github.chojmi.inspirations.presentation.common.FavToggler;
 import com.github.chojmi.inspirations.presentation.common.mapper.PhotoDataMapper;
 import com.github.chojmi.inspirations.presentation.common.mapper.PhotoDetailsMapper;
@@ -17,7 +18,7 @@ import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNot
 
 class PhotoViewPresenter implements PhotoViewContract.Presenter {
     private final Photo photo;
-    private final UseCase<String, PhotoFavsEntity> getPhotoFavs;
+    private final UseCase<GetPhotoFavs.Args, PhotoFavsEntity> getPhotoFavs;
     private final UseCase<String, PhotoInfoEntity> getPhotoInfo;
     private final UseCase<String, PersonEntity> getUserInfo;
     private final FavToggler favToggler;
@@ -26,7 +27,7 @@ class PhotoViewPresenter implements PhotoViewContract.Presenter {
     private final CompositeDisposable disposables;
     private PhotoViewContract.View view;
 
-    PhotoViewPresenter(Photo photo, @NonNull UseCase<String, PhotoFavsEntity> getPhotoFavs,
+    PhotoViewPresenter(Photo photo, @NonNull UseCase<GetPhotoFavs.Args, PhotoFavsEntity> getPhotoFavs,
                        @NonNull UseCase<String, PhotoInfoEntity> getPhotoInfo, @NonNull UseCase<String, PersonEntity> getUserInfo,
                        @NonNull FavToggler favToggler, @NonNull PhotoDetailsMapper photoDetailsMapper, @NonNull PhotoDataMapper photoDataMapper) {
         this.photo = photo;
@@ -54,7 +55,7 @@ class PhotoViewPresenter implements PhotoViewContract.Presenter {
     }
 
     private void loadFavs(Photo photo) {
-        disposables.add(getPhotoFavs.process(checkNotNull(photo).getId()).subscribe(submitUiModel -> {
+        disposables.add(getPhotoFavs.process(GetPhotoFavs.Args.create(checkNotNull(photo).getId())).subscribe(submitUiModel -> {
             if (submitUiModel.isInProgress()) {
                 return;
             }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
@@ -16,6 +17,7 @@ import com.github.chojmi.inspirations.domain.utils.Preconditions;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAdapter;
+import com.github.chojmi.inspirations.presentation.utils.EndlessRecyclerViewScrollListener;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import javax.inject.Inject;
@@ -25,6 +27,7 @@ import butterknife.BindView;
 import dagger.android.AndroidInjection;
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
+import timber.log.Timber;
 
 public class FavListActivity extends BaseActivity implements FavListContract.View {
     private static final String ARG_PHOTO_ID = "ARG_PHOTO_ID";
@@ -47,6 +50,14 @@ public class FavListActivity extends BaseActivity implements FavListContract.Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gallery_fav_list_activity);
         recyclerView.setAdapter(adapter);
+        recyclerView.addOnScrollListener(
+                new EndlessRecyclerViewScrollListener((LinearLayoutManager) recyclerView.getLayoutManager()) {
+                    @Override
+                    public void onLoadMore(int page, int totalItemsCount) {
+                        Timber.i("Load page: " + page);
+                        favListPresenter.loadPage(page);
+                    }
+                });
         favListPresenter.setView(this);
     }
 
@@ -83,5 +94,10 @@ public class FavListActivity extends BaseActivity implements FavListContract.Vie
     @Override
     public void closeView() {
         finish();
+    }
+
+    @Override
+    public void addItems(PhotoFavsEntity result) {
+        adapter.addData(result.getPeople());
     }
 }

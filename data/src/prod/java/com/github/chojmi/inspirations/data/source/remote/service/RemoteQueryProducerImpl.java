@@ -46,9 +46,11 @@ public class RemoteQueryProducerImpl implements RemoteQueryProducer {
     }
 
     @Override
-    public Map<String, String> produceLoadPhotoFavsQuery(String photoId) {
+    public Map<String, String> produceLoadPhotoFavsQuery(String photoId, int page) {
         Map<String, String> args = getBaseArgs("flickr.photos.getFavorites");
         args.put("photo_id", photoId);
+        args.put("page", String.valueOf(page));
+        args.put("per_page", "50");
         return args;
     }
 

@@ -34,8 +34,8 @@ public class RemotePhotosDataSource implements PhotosDataSource {
     }
 
     @Override
-    public Observable<PhotoFavsEntity> loadPhotoFavs(String photoId) {
-        return photosService.loadPhotoFavs(remoteQueryProducer.produceLoadPhotoFavsQuery(photoId))
+    public Observable<PhotoFavsEntity> loadPhotoFavs(String photoId, int page) {
+        return photosService.loadPhotoFavs(remoteQueryProducer.produceLoadPhotoFavsQuery(photoId, page + 1))
                 .map(photoFavsEntity -> photoFavsEntity);
     }
 

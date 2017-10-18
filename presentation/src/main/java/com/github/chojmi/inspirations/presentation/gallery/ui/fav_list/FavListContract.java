@@ -20,9 +20,12 @@ public interface FavListContract {
         Observable<android.view.View> getBackBtnClicksObservable();
 
         void closeView();
+
+        void addItems(PhotoFavsEntity result);
     }
 
     interface Presenter extends BasePresenter<View> {
 
+        void loadPage(int page);
     }
 }

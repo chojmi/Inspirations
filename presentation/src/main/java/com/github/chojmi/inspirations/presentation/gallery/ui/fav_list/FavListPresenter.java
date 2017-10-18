@@ -35,7 +35,7 @@ public class FavListPresenter implements FavListContract.Presenter {
     }
 
     private void fetchFavList() {
-        getPhotoFavs.process(photoId).subscribe(submitUiModel -> {
+        getPhotoFavs.process(GetPhotoFavs.Args.create(photoId)).subscribe(submitUiModel -> {
             view.toggleProgressBar(submitUiModel.isInProgress());
             if (submitUiModel.isInProgress()) {
                 return;
@@ -50,5 +50,17 @@ public class FavListPresenter implements FavListContract.Presenter {
     public void destroyView() {
         this.disposables.clear();
         this.view = null;
+    }
+
+    @Override
+    public void loadPage(int page) {
+        getPhotoFavs.process(GetPhotoFavs.Args.create(photoId, page)).subscribe(submitUiModel -> {
+            if (submitUiModel.isInProgress()) {
+                return;
+            }
+            if (submitUiModel.isSucceed()) {
+                view.addItems(submitUiModel.getResult());
+            }
+        });
     }
 }

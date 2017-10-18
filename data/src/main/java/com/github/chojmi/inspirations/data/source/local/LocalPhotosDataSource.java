@@ -23,7 +23,7 @@ public class LocalPhotosDataSource implements PhotosDataSource {
     }
 
     @Override
-    public Observable<PhotoFavsEntity> loadPhotoFavs(String photoId) {
+    public Observable<PhotoFavsEntity> loadPhotoFavs(String photoId, int page) {
         return Observable.empty();
     }
 

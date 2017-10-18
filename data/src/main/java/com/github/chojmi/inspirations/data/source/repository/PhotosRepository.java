@@ -39,9 +39,9 @@ public class PhotosRepository implements PhotosDataSource {
     }
 
     @Override
-    public Observable<PhotoFavsEntity> loadPhotoFavs(String photoId) {
-        return Observable.concat(photosLocalDataSource.loadPhotoFavs(photoId),
-                photosRemoteDataSource.loadPhotoFavs(photoId))
+    public Observable<PhotoFavsEntity> loadPhotoFavs(String photoId, int page) {
+        return Observable.concat(photosLocalDataSource.loadPhotoFavs(photoId, page),
+                photosRemoteDataSource.loadPhotoFavs(photoId, page))
                 .filter(photoFavsEntity -> photoFavsEntity != null)
                 .firstElement()
                 .toObservable();

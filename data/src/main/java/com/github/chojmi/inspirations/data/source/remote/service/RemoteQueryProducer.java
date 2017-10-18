@@ -11,7 +11,7 @@ public interface RemoteQueryProducer {
 
     Map<String, String> produceLoadUserPublicPhotosQuery(String userId, int page);
 
-    Map<String, String> produceLoadPhotoFavsQuery(String photoId);
+    Map<String, String> produceLoadPhotoFavsQuery(String photoId, int page);
 
     Map<String, String> produceLoadPhotoComments(String photoId);
 
