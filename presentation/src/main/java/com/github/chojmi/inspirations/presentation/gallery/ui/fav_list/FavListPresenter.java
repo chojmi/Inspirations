@@ -8,6 +8,7 @@ import com.github.chojmi.inspirations.domain.utils.Preconditions;
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
+import timber.log.Timber;
 
 import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
@@ -29,6 +30,8 @@ public class FavListPresenter implements FavListContract.Presenter {
     public void setView(FavListContract.View view) {
         this.view = checkNotNull(view);
         fetchFavList();
+        disposables.add(view.getOnPersonSelectedObservable().subscribe(view::showPerson, Timber::e));
+        disposables.add(view.getBackBtnClicksObservable().subscribe(v -> view.closeView(), Timber::e));
     }
 
     private void fetchFavList() {

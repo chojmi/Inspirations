@@ -68,6 +68,7 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.android.support:design:${rootProject.ext.supportLibVersion}"
     implementation "com.android.support:support-v13:${rootProject.ext.supportLibVersion}"
+    implementation "com.android.support.constraint:constraint-layout:${rootProject.ext.constrainLayoutLibVersion}"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:${rootProject.ext.kotlinVersion}"
     implementation "io.reactivex.rxjava2:rxandroid:${rootProject.ext.rxAndroidLibVersion}"
     implementation "io.reactivex.rxjava2:rxjava:${rootProject.ext.rxJavaLibVersion}"
