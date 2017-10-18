@@ -29,12 +29,12 @@ public class FavsPresenter implements FavsContract.Presenter {
     @Override
     public void setView(FavsContract.View view) {
         this.view = checkNotNull(view);
-        fetchFavList();
+        fetchFavs();
         disposables.add(view.getOnPersonSelectedObservable().subscribe(view::showPerson, Timber::e));
         disposables.add(view.getBackBtnClicksObservable().subscribe(v -> view.closeView(), Timber::e));
     }
 
-    private void fetchFavList() {
+    private void fetchFavs() {
         getPhotoFavs.process(GetPhotoFavs.Args.create(photoId)).subscribe(submitUiModel -> {
             view.toggleProgressBar(submitUiModel.isInProgress());
             if (submitUiModel.isInProgress()) {

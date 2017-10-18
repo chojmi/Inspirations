@@ -5,6 +5,7 @@ import com.github.chojmi.inspirations.domain.utils.Preconditions;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
+import timber.log.Timber;
 
 public class CommentsPresenter implements CommentsContract.Presenter {
     private final String photoId;
@@ -21,16 +22,25 @@ public class CommentsPresenter implements CommentsContract.Presenter {
     @Override
     public void setView(CommentsContract.View view) {
         this.view = Preconditions.checkNotNull(view);
+        disposables.add(view.getBackBtnClicksObservable().subscribe(v -> view.closeView(), Timber::e));
+        fetchComments();
+    }
+
+    private void fetchComments() {
+        getPhotoComments.process(photoId).subscribe(submitUiModel -> {
+            view.toggleProgressBar(submitUiModel.isInProgress());
+            if (submitUiModel.isInProgress()) {
+                return;
+            }
+            if (submitUiModel.isSucceed()) {
+                view.renderView(submitUiModel.getResult());
+            }
+        });
     }
 
     @Override
     public void destroyView() {
         this.disposables.clear();
         this.view = null;
-    }
-
-    @Override
-    public void loadPage(int page) {
-
     }
 }
