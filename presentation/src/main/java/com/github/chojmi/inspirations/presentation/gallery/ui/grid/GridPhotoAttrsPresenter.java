@@ -1,7 +1,7 @@
 package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
 
-import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoComments;
 import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoFavs;
+import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoInfo;
 import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoSizeList;
 import com.github.chojmi.inspirations.presentation.common.mapper.PhotoDetailsMapper;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
@@ -14,29 +14,30 @@ import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNot
 
 class GridPhotoAttrsPresenter implements GridPhotoAttrsContract.Presenter {
     private final GetPhotoFavs getPhotoFavs;
-    private final GetPhotoComments getPhotoComments;
+    private final GetPhotoInfo getPhotoInfo;
     private final GetPhotoSizeList getPhotoSizeList;
     private final PhotoDetailsMapper photoDetailsMapper;
+    private final CompositeDisposable disposables;
     private GridPhotoAttrsContract.View view;
-    private CompositeDisposable disposables;
 
-    GridPhotoAttrsPresenter(@NonNull GetPhotoFavs getPhotoFavs, @NonNull GetPhotoComments getPhotoComments,
+    GridPhotoAttrsPresenter(@NonNull GetPhotoFavs getPhotoFavs, @NonNull GetPhotoInfo getPhotoInfo,
                             @NonNull GetPhotoSizeList getPhotoSizeList, @NonNull PhotoDetailsMapper photoDetailsMapper) {
         this.getPhotoFavs = checkNotNull(getPhotoFavs);
-        this.getPhotoComments = checkNotNull(getPhotoComments);
+        this.getPhotoInfo = checkNotNull(getPhotoInfo);
         this.getPhotoSizeList = checkNotNull(getPhotoSizeList);
         this.photoDetailsMapper = checkNotNull(photoDetailsMapper);
+        this.disposables = new CompositeDisposable();
     }
 
     @Override
     public void setView(@NonNull GridPhotoAttrsContract.View view) {
         this.view = checkNotNull(view);
-        this.disposables = new CompositeDisposable();
     }
 
     @Override
     public void loadFavs(int position, PhotoWithAuthor photo) {
-        disposables.add(getPhotoFavs.process(checkNotNull(photo).getPhoto().getId()).subscribe(submitUiModel -> {
+        disposables.add(getPhotoFavs.process(GetPhotoFavs.Args.create(checkNotNull(photo).getPhoto().getId()))
+                .subscribe(submitUiModel -> {
             if (submitUiModel.isInProgress()) {
                 return;
             }
@@ -47,13 +48,13 @@ class GridPhotoAttrsPresenter implements GridPhotoAttrsContract.Presenter {
     }
 
     @Override
-    public void loadComments(int position, PhotoWithAuthor photo) {
-        disposables.add(getPhotoComments.process(checkNotNull(photo).getPhoto().getId()).subscribe(submitUiModel -> {
+    public void loadPhotoInfo(int position, PhotoWithAuthor photo) {
+        disposables.add(getPhotoInfo.process(checkNotNull(photo).getPhoto().getId()).subscribe(submitUiModel -> {
             if (submitUiModel.isInProgress()) {
                 return;
             }
             if (submitUiModel.isSucceed()) {
-                view.showComments(position, photoDetailsMapper.transform(submitUiModel.getResult()));
+                view.showPhotoInfo(position, submitUiModel.getResult());
             }
         }, Timber::d));
     }

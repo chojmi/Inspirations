@@ -6,12 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoInfoEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoSizeListEntity;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAdapter;
 import com.github.chojmi.inspirations.presentation.common.PhotoDetailsView;
 import com.github.chojmi.inspirations.presentation.gallery.model.GridAdapterUiModel;
-import com.github.chojmi.inspirations.presentation.gallery.model.PhotoComments;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoFavs;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -25,7 +25,11 @@ import io.reactivex.subjects.PublishSubject;
 class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder, GridAdapterUiModel> {
     private final Listener listener;
     private final PublishSubject<Integer> profileClicksSubject = PublishSubject.create();
-    private final PublishSubject<Pair<ImageView, Integer>> photoClicksSubject = PublishSubject.create();
+    private final PublishSubject<Pair<Integer, ImageView>> photoClicksSubject = PublishSubject.create();
+    private final PublishSubject<Integer> favsClicksSubject = PublishSubject.create();
+    private final PublishSubject<Integer> favsIconClicksSubject = PublishSubject.create();
+    private final PublishSubject<Integer> commentsClicksSubject = PublishSubject.create();
+    private final PublishSubject<Integer> commentsIconClicksSubject = PublishSubject.create();
 
     GridAdapter(@NonNull Listener listener) {
         this.listener = Preconditions.checkNotNull(listener);
@@ -40,8 +44,8 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
     @Override
     public void onBindViewHolder(GalleryViewHolder holder, int position) {
         GridAdapterUiModel uiModel = getItem(position);
-        holder.setGridAdapterUiModel(uiModel);
-        if (uiModel.getComments() == null && uiModel.getFavs() == null) {
+        holder.renderView(uiModel);
+        if (uiModel.getPhotoInfo() == null && uiModel.getFavs() == null) {
             listener.onNewItemBind(position, uiModel.getPhoto());
         }
     }
@@ -62,8 +66,8 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
         replace(position, GridAdapterUiModel.Companion.setFavs(getItem(position), photoFavs));
     }
 
-    void setComments(int position, PhotoComments photoComments) {
-        replace(position, GridAdapterUiModel.Companion.setComments(getItem(position), photoComments));
+    void showPhotoInfo(int position, PhotoInfoEntity photoInfo) {
+        replace(position, GridAdapterUiModel.Companion.setPhotoInfo(getItem(position), photoInfo));
     }
 
     void setPhotoSizes(int position, PhotoSizeListEntity sizeList) {
@@ -71,11 +75,27 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
     }
 
     Observable<PhotoWithAuthor> getProfileClicksObservable() {
-        return profileClicksSubject.map(integer -> getItem(integer).getPhoto());
+        return profileClicksSubject.map(position -> getItem(position).getPhoto());
     }
 
-    Observable<Pair<ImageView, PhotoWithAuthor>> getPhotoClicksObservable() {
-        return photoClicksSubject.map(imageViewIntegerPair -> new Pair<>(imageViewIntegerPair.first, getItem(imageViewIntegerPair.second).getPhoto()));
+    Observable<Pair<Integer, ImageView>> getPhotoClicksObservable() {
+        return photoClicksSubject;
+    }
+
+    Observable<PhotoWithAuthor> getCommentsClicksObservable() {
+        return commentsClicksSubject.map(position -> getItem(position).getPhoto());
+    }
+
+    Observable<PhotoWithAuthor> getCommentsIconClicksObservable() {
+        return commentsIconClicksSubject.map(position -> getItem(position).getPhoto());
+    }
+
+    Observable<PhotoWithAuthor> getFavsClicksObservable() {
+        return favsClicksSubject.map(position -> getItem(position).getPhoto());
+    }
+
+    Observable<Integer> getFavsIconClicksObservable() {
+        return favsIconClicksSubject;
     }
 
     interface Listener {
@@ -95,14 +115,34 @@ class GridAdapter extends BaseRecyclerViewAdapter<GridAdapter.GalleryViewHolder,
 
             gridItemTopView.getPhotoClicksObservable()
                     .takeUntil(RxView.detaches(parent))
-                    .map(o -> new Pair<>((ImageView) gridItemTopView.findViewById(R.id.photo), getAdapterPosition()))
+                    .map(o -> new Pair<>(getAdapterPosition(), (ImageView) gridItemTopView.findViewById(R.id.photo)))
                     .subscribe(photoClicksSubject);
+
+            photoDetailsView.getCommentsRootClicks()
+                    .takeUntil(RxView.detaches(parent))
+                    .map(o -> getAdapterPosition())
+                    .subscribe(commentsClicksSubject);
+
+            photoDetailsView.getCommentsIconClicks()
+                    .takeUntil(RxView.detaches(parent))
+                    .map(o -> getAdapterPosition())
+                    .subscribe(commentsIconClicksSubject);
+
+            photoDetailsView.getFavsIconClicks()
+                    .takeUntil(RxView.detaches(parent))
+                    .map(o -> getAdapterPosition())
+                    .subscribe(favsIconClicksSubject);
+
+            photoDetailsView.getFavsRootClicks()
+                    .takeUntil(RxView.detaches(parent))
+                    .map(o -> getAdapterPosition())
+                    .subscribe(favsClicksSubject);
         }
 
-        void setGridAdapterUiModel(GridAdapterUiModel gridAdapterUiModel) {
+        void renderView(GridAdapterUiModel gridAdapterUiModel) {
             gridItemTopView.setPhoto(gridAdapterUiModel.getPhoto(), gridAdapterUiModel.getPhotoSizes());
             photoDetailsView.setFavs(gridAdapterUiModel.getFavs());
-            photoDetailsView.setComments(gridAdapterUiModel.getComments());
+            photoDetailsView.setPhotoInfo(gridAdapterUiModel.getPhotoInfo());
         }
 
         void onViewRecycled() {

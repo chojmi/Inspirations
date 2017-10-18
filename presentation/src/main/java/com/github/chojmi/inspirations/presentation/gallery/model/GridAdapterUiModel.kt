@@ -1,12 +1,13 @@
 package com.github.chojmi.inspirations.presentation.gallery.model
 
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoInfoEntity
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoSizeEntity
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoSizeListEntity
 import io.reactivex.Observable
 import timber.log.Timber
 import java.util.*
 
-data class GridAdapterUiModel(val photo: PhotoWithAuthor, val favs: PhotoFavs?, val comments: PhotoComments?,
+data class GridAdapterUiModel(val photo: PhotoWithAuthor, val favs: PhotoFavs?, val photoInfo: PhotoInfoEntity?,
                               val photoSizes: PhotoSizeListEntity<PhotoSizeEntity>?) {
 
     companion object {
@@ -23,12 +24,12 @@ data class GridAdapterUiModel(val photo: PhotoWithAuthor, val favs: PhotoFavs?, 
         }
 
         fun setFavs(model: GridAdapterUiModel, favs: PhotoFavs): GridAdapterUiModel =
-                GridAdapterUiModel(model.photo, favs, model.comments, model.photoSizes)
+                GridAdapterUiModel(model.photo, favs, model.photoInfo, model.photoSizes)
 
-        fun setComments(model: GridAdapterUiModel, comments: PhotoComments): GridAdapterUiModel =
-                GridAdapterUiModel(model.photo, model.favs, comments, model.photoSizes)
+        fun setPhotoInfo(model: GridAdapterUiModel, photoInfo: PhotoInfoEntity): GridAdapterUiModel =
+                GridAdapterUiModel(model.photo, model.favs, photoInfo, model.photoSizes)
 
         fun setPhotoSizes(model: GridAdapterUiModel, sizes: PhotoSizeListEntity<PhotoSizeEntity>) =
-                GridAdapterUiModel(model.photo, model.favs, model.comments, sizes)
+                GridAdapterUiModel(model.photo, model.favs, model.photoInfo, sizes)
     }
 }

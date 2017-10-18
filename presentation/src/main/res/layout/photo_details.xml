@@ -6,6 +6,7 @@
     android:orientation="horizontal">
 
     <LinearLayout
+        android:id="@+id/favs_root"
         style="@style/AppTheme.ClickableView.SelectableBackground"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -13,10 +14,11 @@
         android:padding="@dimen/margin_sm">
 
         <ImageButton
+            android:id="@+id/favs_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_sm"
-            app:srcCompat="@drawable/ic_fav_border"/>
+            android:src="@drawable/ic_fav_selector"/>
 
         <TextView
             android:id="@+id/favs_count"
@@ -28,6 +30,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/comments_root"
         style="@style/AppTheme.ClickableView.SelectableBackground"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -35,6 +38,7 @@
         android:padding="@dimen/margin_sm">
 
         <ImageButton
+            android:id="@+id/comments_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_sm"

@@ -46,9 +46,11 @@ public class RemoteQueryProducerImpl implements RemoteQueryProducer {
     }
 
     @Override
-    public Map<String, String> produceLoadPhotoFavsQuery(String photoId) {
+    public Map<String, String> produceLoadPhotoFavsQuery(String photoId, int page) {
         Map<String, String> args = getBaseArgs("flickr.photos.getFavorites");
         args.put("photo_id", photoId);
+        args.put("page", String.valueOf(page));
+        args.put("per_page", "50");
         return args;
     }
 
@@ -67,6 +69,13 @@ public class RemoteQueryProducerImpl implements RemoteQueryProducer {
     }
 
     @Override
+    public Map<String, String> produceLoadPhotoInfo(String photoId) {
+        Map<String, String> args = getBaseArgs("flickr.photos.getInfo");
+        args.put("photo_id", photoId);
+        return args;
+    }
+
+    @Override
     public Map<String, String> produceLoadSearchPhoto(String text) {
         Map<String, String> args = getBaseArgs("flickr.photos.search");
         args.put("text", text);
@@ -76,6 +85,22 @@ public class RemoteQueryProducerImpl implements RemoteQueryProducer {
     @Override
     public Map<String, String> produceLoadLoginData() {
         Map<String, String> args = getBaseArgs("flickr.test.login");
+        args.put("nojsoncallback", "1");
+        return args;
+    }
+
+    @Override
+    public Map<String, String> produceAddToFavs(String photoId) {
+        Map<String, String> args = getBaseArgs("flickr.favorites.add");
+        args.put("photo_id", photoId);
+        args.put("nojsoncallback", "1");
+        return args;
+    }
+
+    @Override
+    public Map<String, String> produceRemoveFromFavs(String photoId) {
+        Map<String, String> args = getBaseArgs("flickr.favorites.remove");
+        args.put("photo_id", photoId);
         args.put("nojsoncallback", "1");
         return args;
     }

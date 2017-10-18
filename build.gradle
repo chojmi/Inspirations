@@ -12,6 +12,7 @@ buildscript {
 
         kotlinVersion = '1.1.51'
         supportLibVersion = '26.1.0'
+        constrainLayoutLibVersion = '1.0.2'
         daggerLibVersion = '2.11'
         retrofitLibVersion = '2.2.0'
         scribeJavaLibVersion = '4.1.1'

@@ -27,10 +27,13 @@ public abstract class BaseRecyclerViewAdapter<VH extends RecyclerView.ViewHolder
 
     public void setData(List<O> dataset) {
         this.dataset.clear();
+        addData(dataset);
+    }
+
+    public void addData(List<O> dataset) {
         if (dataset != null) {
             this.dataset.addAll(dataset);
         }
-
         notifyDataSetChanged();
     }
 

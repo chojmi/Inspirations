@@ -8,11 +8,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoInfoEntity;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
 import com.github.chojmi.inspirations.presentation.common.PhotoDetailsView;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
-import com.github.chojmi.inspirations.presentation.gallery.model.PhotoComments;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoFavs;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
 import com.github.chojmi.inspirations.presentation.utils.ImageViewUtils;
@@ -22,6 +22,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import dagger.android.AndroidInjection;
+import io.reactivex.disposables.CompositeDisposable;
+import timber.log.Timber;
 
 import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.clearImageCache;
 import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.loadImage;
@@ -29,6 +31,7 @@ import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.l
 public class PhotoViewActivity extends BaseActivity implements PhotoViewContract.View {
 
     private static final String ARG_PHOTO = "ARG_PHOTO";
+    private final CompositeDisposable disposables = new CompositeDisposable();
     @Inject PhotoViewContract.Presenter presenter;
     @BindView(R.id.photo) ImageView photoHolder;
     @BindView(R.id.item_bottom) PhotoDetailsView photoDetailsView;
@@ -47,6 +50,9 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photo_item_activity);
+        disposables.add(photoDetailsView.getFavsIconClicks().subscribe(v -> {
+            presenter.favIconSelected(v.isSelected());
+        }, Timber::e));
     }
 
     @Override
@@ -81,8 +87,8 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
     }
 
     @Override
-    public void showComments(PhotoComments photoComments) {
-        photoDetailsView.setComments(photoComments);
+    public void showPhotoInfo(PhotoInfoEntity photoInfo) {
+        photoDetailsView.setPhotoInfo(photoInfo);
     }
 
     @Override
@@ -96,9 +102,19 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
         getNavigator().navigateToUserProfile(this, getPhoto().getOwnerId());
     }
 
+    @Override
+    public void goToFavs(Photo photo) {
+        getNavigator().navigateToPhotoFavsList(this, photo.getId());
+    }
+
     @OnClick(R.id.close)
     public void onCloseClick(View view) {
         onBackPressed();
+    }
+
+    @OnClick(R.id.favs_root)
+    public void onFavsRootClick(View view) {
+        presenter.favsSelected();
     }
 
     public Photo getPhoto() {

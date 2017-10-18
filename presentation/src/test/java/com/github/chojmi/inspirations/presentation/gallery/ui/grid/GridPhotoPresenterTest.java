@@ -1,6 +1,7 @@
 package com.github.chojmi.inspirations.presentation.gallery.ui.grid;
 
 import com.github.chojmi.inspirations.domain.common.UseCase;
+import com.github.chojmi.inspirations.presentation.common.FavToggler;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
 
 import junit.framework.Assert;
@@ -11,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class GridPhotoPresenterTest {
     private static final String USER_ID = "123";
 
     @Mock private GridPhotoContract.View mockGalleryView;
+    @Mock private FavToggler mockFavToggler;
     @Mock private UseCase<String, List<PhotoWithAuthor>> mockGetPhotosCompoundUseCase;
 
     private GridPhotoPresenter galleryPresenter;
@@ -33,7 +35,7 @@ public class GridPhotoPresenterTest {
     @Before
     public void setUp() {
         Mockito.when(mockGetPhotosCompoundUseCase.process(any())).thenReturn(Observable.empty());
-        galleryPresenter = new GridPhotoPresenter(mockGetPhotosCompoundUseCase);
+        galleryPresenter = new GridPhotoPresenter(mockGetPhotosCompoundUseCase, mockFavToggler);
         galleryPresenter.setView(mockGalleryView);
     }
 

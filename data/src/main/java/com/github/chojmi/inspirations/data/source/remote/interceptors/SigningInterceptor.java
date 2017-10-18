@@ -21,10 +21,25 @@ public class SigningInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        if (oAuthService.containsAccessToken()) {
-            String signedUrl = oAuthService.signRequest(request.url().toString());
-            return chain.proceed(request.newBuilder().url(signedUrl).build());
+        String signedUrl;
+        switch (request.method()) {
+            case "GET":
+                if (oAuthService.containsAccessToken()) {
+                    signedUrl = oAuthService.signGetRequest(request.url().toString());
+                } else {
+                    return chain.proceed(request);
+                }
+                break;
+            case "POST":
+                if (oAuthService.containsAccessToken()) {
+                    signedUrl = oAuthService.signPostRequest(request.url().toString());
+                } else {
+                    throw new IOException("POST request not siqned");
+                }
+                break;
+            default:
+                return chain.proceed(request);
         }
-        return chain.proceed(request);
+        return chain.proceed(request.newBuilder().url(signedUrl).build());
     }
 }

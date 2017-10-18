@@ -1,7 +1,6 @@
 package com.github.chojmi.inspirations.domain.usecase.photos;
 
 import com.github.chojmi.inspirations.domain.common.SubmitUiModel;
-import com.github.chojmi.inspirations.domain.entity.people.UserEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
 import com.github.chojmi.inspirations.domain.executor.PostExecutionThread;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
@@ -22,7 +21,6 @@ public class GetPhotoCommentsTest {
     private static final String FAKE_PHOTO_ID = "fake_photo_id";
     @Mock private PhotosDataSource mockPhotosDataSource;
     @Mock private PostExecutionThread mockPostExecutionThread;
-    @Mock private UserEntity mockUserEntity;
     private TestObserver<SubmitUiModel<PhotoCommentsEntity>> testObserver;
     private TestScheduler testScheduler;
 

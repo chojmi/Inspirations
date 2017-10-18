@@ -5,6 +5,7 @@ import com.github.chojmi.inspirations.data.source.Remote;
 import com.github.chojmi.inspirations.domain.entity.GalleryEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoInfoEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoSizeListEntity;
 import com.github.chojmi.inspirations.domain.repository.PhotosDataSource;
 
@@ -29,9 +30,18 @@ public class PhotosRepository implements PhotosDataSource {
     }
 
     @Override
-    public Observable<PhotoFavsEntity> loadPhotoFavs(String photoId) {
-        return Observable.concat(photosLocalDataSource.loadPhotoFavs(photoId),
-                photosRemoteDataSource.loadPhotoFavs(photoId))
+    public Observable<PhotoInfoEntity> loadPhotoInfo(String photoId) {
+        return Observable.concat(photosLocalDataSource.loadPhotoInfo(photoId),
+                photosRemoteDataSource.loadPhotoInfo(photoId))
+                .filter(photoInfoEntity -> photoInfoEntity != null)
+                .firstElement()
+                .toObservable();
+    }
+
+    @Override
+    public Observable<PhotoFavsEntity> loadPhotoFavs(String photoId, int page) {
+        return Observable.concat(photosLocalDataSource.loadPhotoFavs(photoId, page),
+                photosRemoteDataSource.loadPhotoFavs(photoId, page))
                 .filter(photoFavsEntity -> photoFavsEntity != null)
                 .firstElement()
                 .toObservable();

@@ -4,18 +4,25 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoInfoEntity;
 import com.github.chojmi.inspirations.presentation.R;
-import com.github.chojmi.inspirations.presentation.gallery.model.PhotoComments;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoFavs;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
 import io.reactivex.annotations.Nullable;
 
 public class PhotoDetailsView extends LinearLayoutCompat {
+    @BindView(R.id.comments_root) View commentsRoot;
+    @BindView(R.id.comments_icon) View commentsIcon;
     @BindView(R.id.comments_count) TextView commentsCount;
+    @BindView(R.id.favs_root) View favsRoot;
+    @BindView(R.id.favs_icon) View favsIcon;
     @BindView(R.id.favs_count) TextView favsCount;
 
     public PhotoDetailsView(Context context, AttributeSet attrs) {
@@ -24,12 +31,14 @@ public class PhotoDetailsView extends LinearLayoutCompat {
         ButterKnife.bind(this);
     }
 
-    public void setComments(@Nullable PhotoComments photoComments) {
-        if (photoComments == null) {
+    public void setPhotoInfo(@Nullable PhotoInfoEntity photoInfo) {
+        if (photoInfo == null) {
             commentsCount.setText("");
+            favsIcon.setSelected(false);
             return;
         }
-        commentsCount.setText(String.valueOf(photoComments.getComments().size()));
+        favsIcon.setSelected(photoInfo.isFav());
+        commentsCount.setText(String.valueOf(photoInfo.getCommentsCount()));
     }
 
     public void setFavs(@Nullable PhotoFavs photoFavs) {
@@ -38,5 +47,21 @@ public class PhotoDetailsView extends LinearLayoutCompat {
             return;
         }
         favsCount.setText(String.valueOf(photoFavs.getTotal()));
+    }
+
+    public Observable<View> getFavsRootClicks() {
+        return RxView.clicks(favsRoot).map(o -> favsRoot);
+    }
+
+    public Observable<View> getCommentsRootClicks() {
+        return RxView.clicks(commentsRoot).map(o -> commentsRoot);
+    }
+
+    public Observable<View> getFavsIconClicks() {
+        return RxView.clicks(favsIcon).map(o -> favsIcon);
+    }
+
+    public Observable<View> getCommentsIconClicks() {
+        return RxView.clicks(commentsIcon).map(o -> commentsIcon);
     }
 }
