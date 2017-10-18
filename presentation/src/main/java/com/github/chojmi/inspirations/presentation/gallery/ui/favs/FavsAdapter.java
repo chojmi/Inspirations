@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.gallery.ui.fav_list;
+package com.github.chojmi.inspirations.presentation.gallery.ui.favs;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +10,11 @@ import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAd
 
 import butterknife.BindView;
 
-public class FavListAdapter extends BaseRecyclerViewAdapter<FavListAdapter.ViewHolder, PersonEntity> {
+public class FavsAdapter extends BaseRecyclerViewAdapter<FavsAdapter.ViewHolder, PersonEntity> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery_fav_list_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery_favs_item, parent, false);
         return new ViewHolder(v, parent);
     }
 
@@ -24,14 +24,14 @@ public class FavListAdapter extends BaseRecyclerViewAdapter<FavListAdapter.ViewH
     }
 
     class ViewHolder extends BaseRecyclerViewAdapter.ViewHolder<PersonEntity> {
-        @BindView(R.id.fav_list_item) FavListItemView favListItemView;
+        @BindView(R.id.fav_list_item) FavsItemView favsItemView;
 
         ViewHolder(View itemView, ViewGroup parent) {
             super(itemView, parent);
         }
 
         public void renderView(PersonEntity personEntity) {
-            favListItemView.renderView(personEntity);
+            favsItemView.renderView(personEntity);
         }
     }
 }

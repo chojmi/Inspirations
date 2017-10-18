@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.github.chojmi.inspirations.presentation.gallery.ui.fav_list.FavListItemView
+<com.github.chojmi.inspirations.presentation.gallery.ui.favs.FavsItemView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fav_list_item"
     android:layout_width="match_parent"

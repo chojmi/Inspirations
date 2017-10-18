@@ -19,7 +19,6 @@ import io.reactivex.annotations.Nullable;
 
 public class PhotoDetailsView extends LinearLayoutCompat {
     @BindView(R.id.comments_root) View commentsRoot;
-    @BindView(R.id.comments_icon) View commentsIcon;
     @BindView(R.id.comments_count) TextView commentsCount;
     @BindView(R.id.favs_root) View favsRoot;
     @BindView(R.id.favs_icon) View favsIcon;
@@ -59,9 +58,5 @@ public class PhotoDetailsView extends LinearLayoutCompat {
 
     public Observable<View> getFavsIconClicks() {
         return RxView.clicks(favsIcon).map(o -> favsIcon);
-    }
-
-    public Observable<View> getCommentsIconClicks() {
-        return RxView.clicks(commentsIcon).map(o -> commentsIcon);
     }
 }

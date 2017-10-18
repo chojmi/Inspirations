@@ -1,7 +1,9 @@
 package com.github.chojmi.inspirations.presentation.di;
 
-import com.github.chojmi.inspirations.presentation.gallery.ui.fav_list.FavListActivity;
-import com.github.chojmi.inspirations.presentation.gallery.ui.fav_list.FavListModule;
+import com.github.chojmi.inspirations.presentation.gallery.ui.comments.CommentsActivity;
+import com.github.chojmi.inspirations.presentation.gallery.ui.comments.CommentsModule;
+import com.github.chojmi.inspirations.presentation.gallery.ui.favs.FavsActivity;
+import com.github.chojmi.inspirations.presentation.gallery.ui.favs.FavsModule;
 import com.github.chojmi.inspirations.presentation.main.MainActivity;
 import com.github.chojmi.inspirations.presentation.main.MainActivityFragmentProvider;
 import com.github.chojmi.inspirations.presentation.photo.PhotoViewActivity;
@@ -28,6 +30,9 @@ public abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = UserProfileModule.class)
     abstract UserProfileActivity bindUserProfileActivity();
 
-    @ContributesAndroidInjector(modules = FavListModule.class)
-    abstract FavListActivity bindFavListActivity();
+    @ContributesAndroidInjector(modules = FavsModule.class)
+    abstract FavsActivity bindFavsActivity();
+
+    @ContributesAndroidInjector(modules = CommentsModule.class)
+    abstract CommentsActivity bindCommentsActivity();
 }
