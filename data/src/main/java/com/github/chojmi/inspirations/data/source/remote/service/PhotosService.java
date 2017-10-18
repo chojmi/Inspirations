@@ -10,6 +10,7 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 
 public interface PhotosService {
@@ -27,4 +28,7 @@ public interface PhotosService {
 
     @GET("services/rest")
     Observable<GalleryEntityImpl> loadSearchPhoto(@QueryMap Map<String, String> options);
+
+    @POST("services/rest")
+    Observable<Void> addComment(@QueryMap Map<String, String> options);
 }

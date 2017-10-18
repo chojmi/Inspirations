@@ -56,4 +56,9 @@ public class RemotePhotosDataSource implements PhotosDataSource {
         return photosService.loadSearchPhoto(remoteQueryProducer.produceLoadSearchPhoto(text))
                 .map(gallery -> gallery);
     }
+
+    @Override
+    public Observable<Void> addComment(String photoId, String commentText) {
+        return photosService.addComment(remoteQueryProducer.produceAddComment(photoId, commentText));
+    }
 }

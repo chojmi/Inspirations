@@ -1,6 +1,8 @@
 package com.github.chojmi.inspirations.presentation.gallery.ui.comments;
 
-import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoComments;
+import com.github.chojmi.inspirations.domain.common.UseCase;
+import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
+import com.github.chojmi.inspirations.domain.usecase.photos.AddComment;
 import com.github.chojmi.inspirations.domain.utils.Preconditions;
 
 import io.reactivex.annotations.NonNull;
@@ -9,13 +11,16 @@ import timber.log.Timber;
 
 public class CommentsPresenter implements CommentsContract.Presenter {
     private final String photoId;
-    private final GetPhotoComments getPhotoComments;
+    private final UseCase<String, PhotoCommentsEntity> getPhotoComments;
+    private final UseCase<AddComment.Args, Void> addComment;
     private final CompositeDisposable disposables;
     private CommentsContract.View view;
 
-    public CommentsPresenter(@NonNull String photoId, @NonNull GetPhotoComments getPhotoComments) {
+    public CommentsPresenter(@NonNull String photoId, @NonNull UseCase<String, PhotoCommentsEntity> getPhotoComments,
+                             @NonNull UseCase<AddComment.Args, Void> addComment) {
         this.photoId = Preconditions.checkNotNull(photoId);
         this.getPhotoComments = Preconditions.checkNotNull(getPhotoComments);
+        this.addComment = Preconditions.checkNotNull(addComment);
         this.disposables = new CompositeDisposable();
     }
 
@@ -27,7 +32,7 @@ public class CommentsPresenter implements CommentsContract.Presenter {
     }
 
     private void fetchComments() {
-        getPhotoComments.process(photoId).subscribe(submitUiModel -> {
+        disposables.add(getPhotoComments.process(photoId).subscribe(submitUiModel -> {
             view.toggleProgressBar(submitUiModel.isInProgress());
             if (submitUiModel.isInProgress()) {
                 return;
@@ -35,7 +40,24 @@ public class CommentsPresenter implements CommentsContract.Presenter {
             if (submitUiModel.isSucceed()) {
                 view.renderView(submitUiModel.getResult());
             }
-        });
+        }, Timber::e));
+    }
+
+    @Override
+    public void addComment(String commentText) {
+        if (commentText.isEmpty()) {
+            return;
+        }
+        disposables.add(addComment.process(AddComment.Args.create(photoId, commentText))
+                .subscribe(submitUiModel -> {
+                    if (submitUiModel.isInProgress()) {
+                        return;
+                    }
+                    if (submitUiModel.isSucceed()) {
+                        fetchComments();
+                        view.clearComment();
+                    }
+                }, Timber::e));
     }
 
     @Override

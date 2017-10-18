@@ -15,8 +15,11 @@ public interface CommentsContract {
         void closeView();
 
         Observable<android.view.View> getBackBtnClicksObservable();
+
+        void clearComment();
     }
 
     interface Presenter extends BasePresenter<View> {
+        void addComment(String commentText);
     }
 }

@@ -35,7 +35,7 @@ public class FavsPresenter implements FavsContract.Presenter {
     }
 
     private void fetchFavs() {
-        getPhotoFavs.process(GetPhotoFavs.Args.create(photoId)).subscribe(submitUiModel -> {
+        disposables.add(getPhotoFavs.process(GetPhotoFavs.Args.create(photoId)).subscribe(submitUiModel -> {
             view.toggleProgressBar(submitUiModel.isInProgress());
             if (submitUiModel.isInProgress()) {
                 return;
@@ -43,7 +43,7 @@ public class FavsPresenter implements FavsContract.Presenter {
             if (submitUiModel.isSucceed()) {
                 view.renderView(submitUiModel.getResult());
             }
-        });
+        }, Timber::e));
     }
 
     @Override

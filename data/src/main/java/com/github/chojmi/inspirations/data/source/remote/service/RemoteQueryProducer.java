@@ -26,4 +26,6 @@ public interface RemoteQueryProducer {
     Map<String, String> produceAddToFavs(String photoId);
 
     Map<String, String> produceRemoveFromFavs(String photoId);
+
+    Map<String, String> produceAddComment(String photoId, String commentText);
 }

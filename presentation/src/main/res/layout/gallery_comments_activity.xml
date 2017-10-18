@@ -68,6 +68,7 @@
         android:id="@+id/post_coment"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:onClick="onPostCommentClick"
         android:text="@string/gallery_comments_post"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

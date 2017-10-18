@@ -37,4 +37,9 @@ public class FakePhotosService implements PhotosService {
     public Observable<GalleryEntityImpl> loadSearchPhoto(@QueryMap Map<String, String> options) {
         return Observable.empty();
     }
+
+    @Override
+    public Observable<Void> addComment(Map<String, String> options) {
+        return Observable.empty();
+    }
 }

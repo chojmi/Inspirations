@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -33,8 +32,7 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     @BindView(R.id.back) ImageButton backBtn;
     @BindView(R.id.title) TextView titleView;
-    @BindView(R.id.comment_text) EditText commentTextView;
-    @BindView(R.id.post_coment) Button postComment;
+    @BindView(R.id.comment_text) EditText commentView;
     @BindView(R.id.progress_bar) ProgressBar progressBar;
     @Inject CommentsContract.Presenter presenter;
     @Inject @Named("comments_adapter") BaseRecyclerViewAdapter<?, CommentEntity> adapter;
@@ -65,13 +63,26 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
 
     @Override
     public void renderView(PhotoCommentsEntity photoComments) {
-        titleView.setText(getString(R.string.gallery_comments_title, photoComments.getComments().size()));
+        final int commentCount = photoComments.getComments().size();
+        titleView.setText(getString(R.string.gallery_comments_title, commentCount));
         adapter.setData(photoComments.getComments());
+        if (commentCount > 0) {
+            recyclerView.scrollToPosition(commentCount - 1);
+        }
     }
 
     @Override
     public Observable<View> getBackBtnClicksObservable() {
         return RxView.clicks(backBtn).map(o -> backBtn);
+    }
+
+    @Override
+    public void clearComment() {
+        commentView.setText("");
+    }
+
+    public void onPostCommentClick(View view) {
+        presenter.addComment(commentView.getText().toString());
     }
 
     @Override
