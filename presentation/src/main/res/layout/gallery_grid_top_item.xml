@@ -2,7 +2,10 @@
 <merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:layout_height="match_parent"
+    tools:layout_width="match_parent"
+    tools:parentTag="android.widget.FrameLayout">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,14 +45,14 @@
 
                 <TextView
                     android:id="@+id/owner"
+                    style="@style/AppTheme.List.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/material_component_grid_lists_header_footer_text_size"
-                    android:textStyle="bold"
                     tools:text="Owner name"/>
 
                 <TextView
                     android:id="@+id/title"
+                    style="@style/AppTheme.List.Content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/material_component_grid_lists_header_footer_text_size"
