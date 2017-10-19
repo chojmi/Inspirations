@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.TopBar.BackBtn">
+        <item name="android:layout_width">@dimen/common_icon_standard_size</item>
+        <item name="android:layout_height">@dimen/common_icon_standard_size</item>
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:tint">@color/theme_statusbar_items</item>
+        <item name="srcCompat">@drawable/ic_arrow_back</item>
+    </style>
+</resources>

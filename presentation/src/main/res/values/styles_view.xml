@@ -8,7 +8,15 @@
         <item name="android:layout_margin">@dimen/margin_xs</item>
     </style>
 
-    <style name="AppTheme.ClickableView.SelectableBackground" parent="AppTheme.ClickableView">
+    <style name="AppTheme.ClickableView.SelectableBackground">
         <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="AppTheme.TopBar">
+        <item name="android:elevation">@dimen/material_toolbar_height</item>
+    </style>
+
+    <style name="AppTheme.TopBar.Bkg">
+        <item name="android:background">@color/theme_statusbar_bg</item>
     </style>
 </resources>
