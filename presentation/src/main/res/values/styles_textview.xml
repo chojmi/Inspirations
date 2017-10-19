@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.TopBar.Title">
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+        <item name="android:textColor">@color/theme_statusbar_items</item>
+        <item name="android:layout_margin">@dimen/margin_sm</item>
+        <item name="android:gravity">start</item>
+    </style>
+
+    <style name="AppTheme.List" parent="@android:style/Widget.TextView"/>
+
+    <style name="AppTheme.List.Title">
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.List.Content">
+        <item name="android:textAppearance">?android:attr/textAppearance</item>
+    </style>
+</resources>

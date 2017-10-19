@@ -61,7 +61,8 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
     @Override
     public void renderView(PhotoCommentsEntity photoComments) {
         final int commentCount = photoComments.getComments().size();
-        titleView.setText(getString(R.string.gallery_comments_title, commentCount));
+        titleView.setText(getResources().getQuantityString(R.plurals.gallery_comments_title, commentCount,
+                commentCount));
         adapter.setData(photoComments.getComments());
         if (commentCount > 0) {
             recyclerView.scrollToPosition(commentCount - 1);

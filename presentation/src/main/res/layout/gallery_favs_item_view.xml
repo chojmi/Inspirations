@@ -8,18 +8,17 @@
 
     <ImageView
         android:id="@+id/user_icon"
-        android:layout_width="@dimen/material_clickable_size"
-        android:layout_height="@dimen/material_clickable_size"
+        android:layout_width="@dimen/common_icon_standard_size"
+        android:layout_height="@dimen/common_icon_standard_size"
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="@dimen/margin_md"
         tools:src="@mipmap/ic_launcher_round"/>
 
     <TextView
         android:id="@+id/user_name"
+        style="@style/AppTheme.List.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textStyle="bold"
         tools:text="User name"/>
 </merge>

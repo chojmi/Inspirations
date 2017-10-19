@@ -9,7 +9,10 @@
     <color name="theme_divider_color">@color/material_grey_300</color>
     <color name="theme_primary_bg">@color/material_light_white</color>
     <color name="theme_statusbar_bg">@color/material_light_black</color>
+    <color name="theme_statusbar_items">@color/material_light_white</color>
 
     <color name="theme_common_progressbar_mask">@color/black_transparent20</color>
     <color name="theme_picture_view_bg">@color/material_light_white</color>
+    <color name="theme_gallery_comments_post_bkg">@color/black_transparent20</color>
+
 </resources>
