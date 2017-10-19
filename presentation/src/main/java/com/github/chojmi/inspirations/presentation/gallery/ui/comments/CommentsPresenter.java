@@ -28,6 +28,7 @@ public class CommentsPresenter implements CommentsContract.Presenter {
     public void setView(CommentsContract.View view) {
         this.view = Preconditions.checkNotNull(view);
         disposables.add(view.getBackBtnClicksObservable().subscribe(v -> view.closeView(), Timber::e));
+        disposables.add(view.getUserClicksObservable().subscribe(view::showUser, Timber::e));
         fetchComments();
     }
 

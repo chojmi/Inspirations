@@ -1,12 +1,8 @@
 package com.github.chojmi.inspirations.presentation.gallery.ui.comments;
 
-import com.github.chojmi.inspirations.domain.entity.photos.CommentEntity;
 import com.github.chojmi.inspirations.domain.usecase.photos.AddComment;
 import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoComments;
-import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAdapter;
 import com.github.chojmi.inspirations.presentation.gallery.ui.GalleryScope;
-
-import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
@@ -21,8 +17,7 @@ public class CommentsModule {
     }
 
     @Provides
-    @Named("comments_adapter")
-    BaseRecyclerViewAdapter<?, CommentEntity> provideCommentsAdapter() {
+    CommentsAdapter provideCommentsAdapter() {
         return new CommentsAdapter();
     }
 }

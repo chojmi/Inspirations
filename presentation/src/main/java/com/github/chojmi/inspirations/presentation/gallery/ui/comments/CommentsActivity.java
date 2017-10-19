@@ -11,16 +11,13 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.github.chojmi.inspirations.domain.entity.photos.CommentEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
 import com.github.chojmi.inspirations.domain.utils.Preconditions;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
-import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAdapter;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import butterknife.BindView;
 import dagger.android.AndroidInjection;
@@ -35,7 +32,7 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
     @BindView(R.id.comment_text) EditText commentView;
     @BindView(R.id.progress_bar) ProgressBar progressBar;
     @Inject CommentsContract.Presenter presenter;
-    @Inject @Named("comments_adapter") BaseRecyclerViewAdapter<?, CommentEntity> adapter;
+    @Inject CommentsAdapter adapter;
 
     public static Intent getCallingIntent(Context context, @NonNull String photoId) {
         Intent intent = new Intent(context, CommentsActivity.class);
@@ -79,6 +76,16 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
     @Override
     public void clearComment() {
         commentView.setText("");
+    }
+
+    @Override
+    public Observable<String> getUserClicksObservable() {
+        return adapter.getUserClicksObservable();
+    }
+
+    @Override
+    public void showUser(String userId) {
+        getNavigator().navigateToUserProfile(this, userId);
     }
 
     public void onPostCommentClick(View view) {
