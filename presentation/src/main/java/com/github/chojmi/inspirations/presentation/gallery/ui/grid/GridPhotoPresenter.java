@@ -80,11 +80,6 @@ class GridPhotoPresenter implements GridPhotoContract.Presenter {
     }
 
     @Override
-    public void commentIconSelected(PhotoWithAuthor photo) {
-        view.addComment(photo);
-    }
-
-    @Override
     public void destroyView() {
         this.favToggler.onDestroy();
         this.disposables.clear();

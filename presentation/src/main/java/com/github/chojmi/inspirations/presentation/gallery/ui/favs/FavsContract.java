@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.gallery.ui.fav_list;
+package com.github.chojmi.inspirations.presentation.gallery.ui.favs;
 
 import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
@@ -7,7 +7,7 @@ import com.github.chojmi.inspirations.presentation.blueprints.BaseView;
 
 import io.reactivex.Observable;
 
-public interface FavListContract {
+public interface FavsContract {
     interface View extends BaseView {
         void toggleProgressBar(boolean isVisible);
 

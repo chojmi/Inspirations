@@ -104,7 +104,7 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
 
     @Override
     public void goToFavs(Photo photo) {
-        getNavigator().navigateToPhotoFavsList(this, photo.getId());
+        getNavigator().navigateToPhotoFavs(this, photo.getId());
     }
 
     @OnClick(R.id.close)

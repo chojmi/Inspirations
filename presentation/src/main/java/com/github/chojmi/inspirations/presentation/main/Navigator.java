@@ -9,7 +9,8 @@ import android.view.View;
 
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.gallery.model.PhotoWithAuthor;
-import com.github.chojmi.inspirations.presentation.gallery.ui.fav_list.FavListActivity;
+import com.github.chojmi.inspirations.presentation.gallery.ui.comments.CommentsActivity;
+import com.github.chojmi.inspirations.presentation.gallery.ui.favs.FavsActivity;
 import com.github.chojmi.inspirations.presentation.photo.PhotoViewActivity;
 import com.github.chojmi.inspirations.presentation.profile.login.LoginWebViewActivity;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileActivity;
@@ -59,9 +60,16 @@ public class Navigator {
         }
     }
 
-    public void navigateToPhotoFavsList(Context context, String photoId) {
+    public void navigateToPhotoFavs(Context context, String photoId) {
         if (context != null) {
-            Intent intentToLaunch = FavListActivity.getCallingIntent(context, photoId);
+            Intent intentToLaunch = FavsActivity.getCallingIntent(context, photoId);
+            context.startActivity(intentToLaunch);
+        }
+    }
+
+    public void navigateToComments(Context context, String photoId) {
+        if (context != null) {
+            Intent intentToLaunch = CommentsActivity.getCallingIntent(context, photoId);
             context.startActivity(intentToLaunch);
         }
     }

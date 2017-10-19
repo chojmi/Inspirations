@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.gallery.ui.fav_list;
+package com.github.chojmi.inspirations.presentation.gallery.ui.favs;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -18,13 +18,13 @@ import butterknife.ButterKnife;
 
 import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.clearImageCache;
 
-public class FavListItemView extends LinearLayoutCompat {
+public class FavsItemView extends LinearLayoutCompat {
     @BindView(R.id.user_icon) ImageView userIconView;
     @BindView(R.id.user_name) TextView userNameView;
 
-    public FavListItemView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public FavsItemView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        LayoutInflater.from(context).inflate(R.layout.gallery_fav_list_item_view, this);
+        LayoutInflater.from(context).inflate(R.layout.gallery_favs_item_view, this);
         setOrientation(HORIZONTAL);
         ButterKnife.bind(this);
     }

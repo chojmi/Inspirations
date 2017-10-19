@@ -9,5 +9,8 @@
 
     <string name="profile_user_no_photos">This user has no photos</string>
     <string name="profile_login">Login</string>
-    <string name="gallery_fav_list_title">%d likes</string>
+    <string name="gallery_favs_title">%d likes</string>
+    <string name="gallery_comments_title">%d comments</string>
+    <string name="gallery_comments_post">Post</string>
+
 </resources>

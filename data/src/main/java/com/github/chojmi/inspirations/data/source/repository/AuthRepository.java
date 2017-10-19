@@ -9,10 +9,8 @@ import com.github.scribejava.core.model.OAuth1RequestToken;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.annotations.Nullable;
-import io.reactivex.functions.Function;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
@@ -40,12 +38,7 @@ public class AuthRepository implements AuthDataSource {
     @Override
     public Observable<String> getAuthorizationUrl() {
         return getRequestToken()
-                .flatMap(new Function<OAuth1RequestToken, ObservableSource<String>>() {
-                    @Override
-                    public ObservableSource<String> apply(@NonNull OAuth1RequestToken requestToken) throws Exception {
-                        return getAuthorizationUrl(requestToken);
-                    }
-                });
+                .flatMap(requestToken -> getAuthorizationUrl(requestToken));
     }
 
     @Override

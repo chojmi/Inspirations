@@ -21,6 +21,8 @@
         <activity android:name=".photo.PhotoViewActivity"/>
         <activity android:name=".profile.login.LoginWebViewActivity"/>
         <activity android:name=".profile.user_profile.UserProfileActivity"/>
-        <activity android:name=".gallery.ui.fav_list.FavListActivity"/>
+        <activity android:name=".gallery.ui.favs.FavsActivity"/>
+        <activity android:name=".gallery.ui.comments.CommentsActivity"/>
+
     </application>
 </manifest>

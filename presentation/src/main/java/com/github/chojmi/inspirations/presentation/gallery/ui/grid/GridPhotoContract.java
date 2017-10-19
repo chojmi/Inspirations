@@ -26,8 +26,6 @@ interface GridPhotoContract {
 
         void showComments(PhotoWithAuthor photo);
 
-        void addComment(PhotoWithAuthor photo);
-
         void toggleProgressBar(boolean isVisible);
 
         void refreshFavSelection(int position, Observable<Boolean> isFav);
@@ -45,7 +43,5 @@ interface GridPhotoContract {
         void commentsSelected(PhotoWithAuthor photo);
 
         void favIconSelected(int position, PhotoInfoEntity photo);
-
-        void commentIconSelected(PhotoWithAuthor photo);
     }
 }

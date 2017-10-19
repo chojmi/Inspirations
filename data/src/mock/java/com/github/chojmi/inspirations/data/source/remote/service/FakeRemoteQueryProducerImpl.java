@@ -50,6 +50,11 @@ public class FakeRemoteQueryProducerImpl implements RemoteQueryProducer {
     }
 
     @Override
+    public Map<String, String> produceAddComment(String photoId, String commentText) {
+        return new HashMap<>();
+    }
+
+    @Override
     public Map<String, String> produceLoadGalleryByGalleryIdQuery(String galleryId, int page) {
         return new HashMap<>();
     }

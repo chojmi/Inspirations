@@ -73,4 +73,9 @@ public class PhotosRepository implements PhotosDataSource {
                 .firstElement()
                 .toObservable();
     }
+
+    @Override
+    public Observable<Void> addComment(String photoId, String commentText) {
+        return photosRemoteDataSource.addComment(photoId, commentText);
+    }
 }

@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.gallery.ui.fav_list;
+package com.github.chojmi.inspirations.presentation.gallery.ui.favs;
 
 import android.support.annotation.NonNull;
 
@@ -12,30 +12,30 @@ import timber.log.Timber;
 
 import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNotNull;
 
-public class FavListPresenter implements FavListContract.Presenter {
+public class FavsPresenter implements FavsContract.Presenter {
 
     private final String photoId;
     private final GetPhotoFavs getPhotoFavs;
     private final CompositeDisposable disposables;
-    private FavListContract.View view;
+    private FavsContract.View view;
 
     @Inject
-    public FavListPresenter(@NonNull String photoId, GetPhotoFavs getPhotoFavs) {
+    public FavsPresenter(@NonNull String photoId, GetPhotoFavs getPhotoFavs) {
         this.photoId = Preconditions.checkNotNull(photoId);
         this.getPhotoFavs = Preconditions.checkNotNull(getPhotoFavs);
         this.disposables = new CompositeDisposable();
     }
 
     @Override
-    public void setView(FavListContract.View view) {
+    public void setView(FavsContract.View view) {
         this.view = checkNotNull(view);
-        fetchFavList();
+        fetchFavs();
         disposables.add(view.getOnPersonSelectedObservable().subscribe(view::showPerson, Timber::e));
         disposables.add(view.getBackBtnClicksObservable().subscribe(v -> view.closeView(), Timber::e));
     }
 
-    private void fetchFavList() {
-        getPhotoFavs.process(GetPhotoFavs.Args.create(photoId)).subscribe(submitUiModel -> {
+    private void fetchFavs() {
+        disposables.add(getPhotoFavs.process(GetPhotoFavs.Args.create(photoId)).subscribe(submitUiModel -> {
             view.toggleProgressBar(submitUiModel.isInProgress());
             if (submitUiModel.isInProgress()) {
                 return;
@@ -43,7 +43,7 @@ public class FavListPresenter implements FavListContract.Presenter {
             if (submitUiModel.isSucceed()) {
                 view.renderView(submitUiModel.getResult());
             }
-        });
+        }, Timber::e));
     }
 
     @Override

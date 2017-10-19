@@ -105,7 +105,6 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
         disposables.add(galleryAdapter.getPhotoClicksObservable().subscribe(pair -> photoPresenter.photoSelected(pair.first, pair.second)));
         disposables.add(galleryAdapter.getProfileClicksObservable().subscribe(photo -> photoPresenter.profileSelected(photo.getPerson())));
         disposables.add(galleryAdapter.getCommentsClicksObservable().subscribe(photo -> photoPresenter.commentsSelected(photo)));
-        disposables.add(galleryAdapter.getCommentsIconClicksObservable().subscribe(photo -> photoPresenter.commentIconSelected(photo)));
         disposables.add(galleryAdapter.getFavsClicksObservable().subscribe(photo -> photoPresenter.favsSelected(photo)));
         disposables.add(galleryAdapter.getFavsIconClicksObservable().subscribe(position ->
                 photoPresenter.favIconSelected(position, galleryAdapter.getItem(position).getPhotoInfo())));
@@ -130,17 +129,12 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
 
     @Override
     public void goToFavs(Photo photo) {
-        getNavigator().navigateToPhotoFavsList(getContext(), photo.getId());
+        getNavigator().navigateToPhotoFavs(getContext(), photo.getId());
     }
 
     @Override
     public void showComments(PhotoWithAuthor photo) {
-
-    }
-
-    @Override
-    public void addComment(PhotoWithAuthor photo) {
-
+        getNavigator().navigateToComments(getContext(), photo.getPhoto().getId());
     }
 
     @Override

@@ -41,4 +41,9 @@ public class LocalPhotosDataSource implements PhotosDataSource {
     public Observable<GalleryEntity> loadSearchPhoto(String text) {
         return Observable.empty();
     }
+
+    @Override
+    public Observable<Void> addComment(String photoId, String commentText) {
+        return Observable.error(new Throwable("Adding comments by local data source is not possible"));
+    }
 }

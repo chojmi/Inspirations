@@ -1,4 +1,4 @@
-package com.github.chojmi.inspirations.presentation.gallery.ui.fav_list;
+package com.github.chojmi.inspirations.presentation.gallery.ui.favs;
 
 import android.content.Context;
 import android.content.Intent;
@@ -29,17 +29,17 @@ import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import timber.log.Timber;
 
-public class FavListActivity extends BaseActivity implements FavListContract.View {
+public class FavsActivity extends BaseActivity implements FavsContract.View {
     private static final String ARG_PHOTO_ID = "ARG_PHOTO_ID";
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     @BindView(R.id.back) ImageButton backBtn;
     @BindView(R.id.title) TextView titleView;
     @BindView(R.id.progress_bar) ProgressBar progressBar;
-    @Inject FavListContract.Presenter favListPresenter;
-    @Inject @Named("fav_list_adapter") BaseRecyclerViewAdapter<?, PersonEntity> adapter;
+    @Inject FavsContract.Presenter favListPresenter;
+    @Inject @Named("favs_adapter") BaseRecyclerViewAdapter<?, PersonEntity> adapter;
 
     public static Intent getCallingIntent(Context context, @NonNull String photoId) {
-        Intent intent = new Intent(context, FavListActivity.class);
+        Intent intent = new Intent(context, FavsActivity.class);
         intent.putExtra(ARG_PHOTO_ID, Preconditions.checkNotNull(photoId));
         return intent;
     }
@@ -48,7 +48,7 @@ public class FavListActivity extends BaseActivity implements FavListContract.Vie
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gallery_fav_list_activity);
+        setContentView(R.layout.gallery_favs_activity);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(
                 new EndlessRecyclerViewScrollListener((LinearLayoutManager) recyclerView.getLayoutManager()) {
@@ -72,7 +72,7 @@ public class FavListActivity extends BaseActivity implements FavListContract.Vie
 
     @Override
     public void renderView(PhotoFavsEntity photoFavs) {
-        titleView.setText(getString(R.string.gallery_fav_list_title, photoFavs.getTotal()));
+        titleView.setText(getString(R.string.gallery_favs_title, photoFavs.getTotal()));
         adapter.setData(photoFavs.getPeople());
     }
 

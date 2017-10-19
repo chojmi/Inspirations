@@ -18,4 +18,6 @@ public interface PhotosDataSource {
     Observable<PhotoSizeListEntity> loadPhotoSizes(String photoId);
 
     Observable<GalleryEntity> loadSearchPhoto(String text);
+
+    Observable<Void> addComment(String photoId, String commentText);
 }
