@@ -2,6 +2,8 @@ package com.github.chojmi.inspirations.presentation.gallery.ui.comments;
 
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
@@ -31,7 +33,8 @@ public class CommentsItemView extends ConstraintLayout {
     public void renderView(CommentEntity commentEntity) {
         this.commentEntity = commentEntity;
         ImageViewUtils.loadImage(userIconView, commentEntity.getAuthorIcon());
-        commentView.setText(commentEntity.getContent());
+        commentView.setMovementMethod(LinkMovementMethod.getInstance());
+        commentView.setText(Html.fromHtml(commentEntity.getContent()));
         userNameView.setText(commentEntity.getAuthorname());
     }
 
