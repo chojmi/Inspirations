@@ -60,6 +60,7 @@
         android:id="@+id/comment_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:foreground="@color/black_transparent20"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/post_coment"
         app:layout_constraintStart_toStartOf="parent"/>

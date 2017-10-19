@@ -4,16 +4,23 @@ import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.chojmi.inspirations.domain.entity.photos.CommentEntity;
 import com.github.chojmi.inspirations.presentation.R;
+import com.github.chojmi.inspirations.presentation.utils.ImageViewUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.github.chojmi.inspirations.presentation.utils.ImageViewUtils.clearImageCache;
+
 public class CommentsItemView extends ConstraintLayout {
+    @BindView(R.id.user_icon) ImageView userIconView;
+    @BindView(R.id.user_name) TextView userNameView;
     @BindView(R.id.comment) TextView commentView;
+    private CommentEntity commentEntity;
 
     public CommentsItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -22,6 +29,15 @@ public class CommentsItemView extends ConstraintLayout {
     }
 
     public void renderView(CommentEntity commentEntity) {
+        this.commentEntity = commentEntity;
+        ImageViewUtils.loadImage(userIconView, commentEntity.getAuthorIcon());
         commentView.setText(commentEntity.getContent());
+        userNameView.setText(commentEntity.getAuthorname());
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        clearImageCache(userIconView);
     }
 }
