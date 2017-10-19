@@ -72,7 +72,8 @@ public class FavsActivity extends BaseActivity implements FavsContract.View {
 
     @Override
     public void renderView(PhotoFavsEntity photoFavs) {
-        titleView.setText(getString(R.string.gallery_favs_title, photoFavs.getTotal()));
+        titleView.setText(getResources().getQuantityString(R.plurals.gallery_favs_title,
+                photoFavs.getTotal(), photoFavs.getTotal()));
         adapter.setData(photoFavs.getPeople());
     }
 

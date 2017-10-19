@@ -1,16 +1,19 @@
 <resources>
     <string name="app_name">Inspirations</string>
 
-    <string name="common_not_implemented_yet">Not implemented yet…</string>
-
     <string name="main_gallery">Gallery</string>
     <string name="main_my_profile">My profile</string>
     <string name="main_search">Search</string>
 
     <string name="profile_user_no_photos">This user has no photos</string>
     <string name="profile_login">Login</string>
-    <string name="gallery_favs_title">%d likes</string>
-    <string name="gallery_comments_title">%d comments</string>
+    <plurals name="gallery_favs_title">
+        <item quantity="one">%d like</item>
+        <item quantity="other">%d likes</item>
+    </plurals>
+    <plurals name="gallery_comments_title">
+        <item quantity="one">%d comment</item>
+        <item quantity="other">%d comments</item>
+    </plurals>
     <string name="gallery_comments_post">Post</string>
-
 </resources>
