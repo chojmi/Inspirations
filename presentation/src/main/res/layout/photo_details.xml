@@ -3,7 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal">
+    tools:layout_height="match_parent"
+    tools:layout_width="match_parent"
+    tools:orientation="horizontal"
+    tools:parentTag="android.widget.LinearLayout">
 
     <LinearLayout
         android:id="@+id/favs_root"
@@ -25,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="@dimen/gallery_grid_item_bottom_text_size"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             tools:text="999"/>
     </LinearLayout>
 
@@ -48,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="@dimen/gallery_grid_item_bottom_text_size"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             tools:text="999"/>
     </LinearLayout>
 </merge>

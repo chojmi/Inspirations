@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:textSize="@dimen/material_component_grid_lists_header_footer_text_size"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             tools:text="Owner name"/>
 
         <FrameLayout
@@ -62,11 +62,8 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_md"
-            android:layout_marginLeft="@dimen/margin_md"
-            android:layout_marginRight="@dimen/margin_md"
-            android:layout_marginStart="@dimen/margin_md"
-            android:textSize="@dimen/material_component_grid_lists_header_footer_text_size"
+            android:layout_margin="@dimen/margin_md"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             tools:text="Photo title"/>
 
         <include layout="@layout/common_divider"/>
