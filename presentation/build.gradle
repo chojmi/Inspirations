@@ -58,10 +58,6 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude group: 'com.google.code.findbugs'
-    })
     implementation project(':data')
     implementation project(':domain')
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
@@ -94,4 +90,10 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$rootProject.ext.timberLibVersion"
     testImplementation "junit:junit:$rootProject.ext.junitVersion"
     testImplementation "org.mockito:mockito-core:$rootProject.ext.mockitoVersion"
+
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.code.findbugs'
+    })
+    androidTestImplementation "org.mockito:mockito-android:$rootProject.ext.mockitoVersion"
 }

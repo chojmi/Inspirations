@@ -2,6 +2,7 @@ package com.github.chojmi.inspirations.presentation;
 
 import android.app.Activity;
 import android.app.Application;
+import android.support.annotation.VisibleForTesting;
 
 import com.github.chojmi.inspirations.presentation.di.DaggerAppComponent;
 import com.github.chojmi.inspirations.presentation.main.Navigator;
@@ -15,10 +16,9 @@ import timber.log.Timber;
 
 public class InspirationsApp extends Application implements HasActivityInjector {
 
-    @Inject
-    DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
-    @Inject
-    Navigator navigator;
+    @Inject DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
+    @Inject Navigator navigator;
+    private AndroidInjector<Activity> testAndroidInjector;
 
     @Override
     public void onCreate() {
@@ -31,10 +31,24 @@ public class InspirationsApp extends Application implements HasActivityInjector 
 
     @Override
     public AndroidInjector<Activity> activityInjector() {
-        return activityDispatchingAndroidInjector;
+        if (testAndroidInjector != null) {
+            return testAndroidInjector;
+        } else {
+            return activityDispatchingAndroidInjector;
+        }
     }
 
     public Navigator getNavigator() {
         return navigator;
+    }
+
+    @VisibleForTesting
+    public void setNavigator(Navigator navigator) {
+        this.navigator = navigator;
+    }
+
+    @VisibleForTesting
+    public void setActivityInjector(AndroidInjector<Activity> injector) {
+        this.testAndroidInjector = injector;
     }
 }
