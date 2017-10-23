@@ -15,6 +15,8 @@ import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 import com.github.chojmi.inspirations.presentation.main.MainActivity;
 import com.github.chojmi.inspirations.presentation.profile.user_profile.UserProfileView;
+import com.github.chojmi.inspirations.presentation.profile.user_profile.UserPublicPhotosContract;
+import com.github.chojmi.inspirations.presentation.profile.user_profile.UserPublicPhotosView;
 
 import javax.inject.Inject;
 
@@ -26,9 +28,11 @@ import dagger.android.support.AndroidSupportInjection;
 public class MyProfileFragment extends BaseFragment<MainActivity> implements MyProfileContract.View {
     private static final int LOGIN_REQUEST_CODE = 1000;
     @Inject MyProfileContract.Presenter presenter;
+    @Inject UserPublicPhotosContract.Presenter userUserPublicPhotosPresenter;
     @BindView(R.id.user_profile) UserProfileView userProfileView;
     @BindView(R.id.login_screen) ViewGroup loginView;
     @BindView(R.id.progress_bar) ProgressBar progressBar;
+    @BindView(R.id.user_public_photos) UserPublicPhotosView userPublicPhotosView;
 
     public static MyProfileFragment newInstance() {
         return new MyProfileFragment();
@@ -79,6 +83,8 @@ public class MyProfileFragment extends BaseFragment<MainActivity> implements MyP
 
     @Override
     public void showProfile(PersonEntity personEntity) {
+        userUserPublicPhotosPresenter.setUserId(personEntity.getId());
+        userUserPublicPhotosPresenter.setView(userPublicPhotosView);
         userProfileView.renderProfile(personEntity);
         userProfileView.setVisibility(View.VISIBLE);
         loginView.setVisibility(View.GONE);

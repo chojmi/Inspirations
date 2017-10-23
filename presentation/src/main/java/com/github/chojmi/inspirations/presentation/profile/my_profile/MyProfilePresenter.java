@@ -51,7 +51,7 @@ public class MyProfilePresenter implements MyProfileContract.Presenter {
             if (uiModel.isSucceed()) {
                 view.showProfile(uiModel.getResult());
             }
-        }, Timber::d));
+                }, Timber::e));
     }
 
     private void fetchToken() {
