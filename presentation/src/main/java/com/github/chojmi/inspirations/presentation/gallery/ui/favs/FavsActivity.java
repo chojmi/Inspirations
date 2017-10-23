@@ -17,7 +17,9 @@ import com.github.chojmi.inspirations.domain.utils.Preconditions;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseRecyclerViewAdapter;
+import com.github.chojmi.inspirations.presentation.common.EmptyListView;
 import com.github.chojmi.inspirations.presentation.utils.EndlessRecyclerViewScrollListener;
+import com.github.chojmi.inspirations.presentation.utils.ViewUtils;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import javax.inject.Inject;
@@ -35,6 +37,7 @@ public class FavsActivity extends BaseActivity implements FavsContract.View {
     @BindView(R.id.back) ImageButton backBtn;
     @BindView(R.id.title) TextView titleView;
     @BindView(R.id.progress_bar) ProgressBar progressBar;
+    @BindView(R.id.empty_list) EmptyListView emptyListView;
     @Inject FavsContract.Presenter favListPresenter;
     @Inject @Named("favs_adapter") BaseRecyclerViewAdapter<?, PersonEntity> adapter;
 
@@ -75,6 +78,7 @@ public class FavsActivity extends BaseActivity implements FavsContract.View {
         titleView.setText(getResources().getQuantityString(R.plurals.gallery_favs_title,
                 photoFavs.getTotal(), photoFavs.getTotal()));
         adapter.setData(photoFavs.getPeople());
+        ViewUtils.setVisibility(emptyListView, photoFavs.getTotal() == 0);
     }
 
     @Override

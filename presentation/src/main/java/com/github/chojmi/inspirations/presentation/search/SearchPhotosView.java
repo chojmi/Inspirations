@@ -15,8 +15,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.github.chojmi.inspirations.presentation.R;
+import com.github.chojmi.inspirations.presentation.common.EmptyListView;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
 import com.github.chojmi.inspirations.presentation.photo.PhotoListAdapter;
+import com.github.chojmi.inspirations.presentation.utils.ViewUtils;
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView;
 
 import java.util.List;
@@ -28,6 +30,7 @@ import io.reactivex.Observable;
 public class SearchPhotosView extends FrameLayout implements SearchPhotosContract.View {
     @BindView(R.id.search_view) SearchView searchView;
     @BindView(R.id.rv_search) RecyclerView recyclerView;
+    @BindView(R.id.empty_list) EmptyListView emptyListView;
     @BindView(R.id.progress_bar) ProgressBar progressBar;
 
     private PhotoListAdapter photoListAdapter;
@@ -64,6 +67,7 @@ public class SearchPhotosView extends FrameLayout implements SearchPhotosContrac
     @Override
     public void renderView(List<Photo> photos) {
         photoListAdapter.setData(photos);
+        ViewUtils.setVisibility(emptyListView, photos.size() == 0);
     }
 
     @Override

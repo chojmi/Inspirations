@@ -11,9 +11,13 @@
         <item quantity="one">%d like</item>
         <item quantity="other">%d likes</item>
     </plurals>
+    <string name="gallery_favs_title_empty">This photo has no favs yet</string>
     <plurals name="gallery_comments_title">
         <item quantity="one">%d comment</item>
         <item quantity="other">%d comments</item>
     </plurals>
+    <string name="gallery_comments_empty">This photo has no comments yet</string>
     <string name="gallery_comments_post">Post</string>
+
+    <string name="search_empty">No results for this query</string>
 </resources>

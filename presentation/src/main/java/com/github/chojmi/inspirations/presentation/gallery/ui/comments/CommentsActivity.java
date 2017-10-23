@@ -15,6 +15,8 @@ import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
 import com.github.chojmi.inspirations.domain.utils.Preconditions;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseActivity;
+import com.github.chojmi.inspirations.presentation.common.EmptyListView;
+import com.github.chojmi.inspirations.presentation.utils.ViewUtils;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import javax.inject.Inject;
@@ -30,6 +32,7 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
     @BindView(R.id.back) ImageButton backBtn;
     @BindView(R.id.title) TextView titleView;
     @BindView(R.id.comment_text) EditText commentView;
+    @BindView(R.id.empty_list) EmptyListView emptyListView;
     @BindView(R.id.progress_bar) ProgressBar progressBar;
     @Inject CommentsContract.Presenter presenter;
     @Inject CommentsAdapter adapter;
@@ -60,13 +63,14 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
 
     @Override
     public void renderView(PhotoCommentsEntity photoComments) {
-        final int commentCount = photoComments.getComments().size();
+        final int commentCount = photoComments.getComments() != null ? photoComments.getComments().size() : 0;
         titleView.setText(getResources().getQuantityString(R.plurals.gallery_comments_title, commentCount,
                 commentCount));
         adapter.setData(photoComments.getComments());
         if (commentCount > 0) {
             recyclerView.scrollToPosition(commentCount - 1);
         }
+        ViewUtils.setVisibility(emptyListView, commentCount == 0);
     }
 
     @Override
