@@ -88,6 +88,7 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
 
     private void refreshPhotoInfo(int position) {
         photoAttrsPresenter.loadPhotoInfo(position, galleryAdapter.getItem(position).getPhoto());
+        photoAttrsPresenter.loadFavs(position, galleryAdapter.getItem(position).getPhoto());
     }
 
     @Override

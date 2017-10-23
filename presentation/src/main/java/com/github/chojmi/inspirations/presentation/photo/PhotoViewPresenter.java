@@ -51,7 +51,10 @@ class PhotoViewPresenter implements PhotoViewContract.Presenter {
 
     @Override
     public void favIconSelected(boolean isFav) {
-        disposables.add(favToggler.toggleFav(isFav, photo.getId()).subscribe(result -> loadPhotoInfo(photo), Timber::e));
+        disposables.add(favToggler.toggleFav(isFav, photo.getId()).subscribe(result -> {
+            loadPhotoInfo(photo);
+            loadFavs(photo);
+        }, Timber::e));
     }
 
     private void loadFavs(Photo photo) {
