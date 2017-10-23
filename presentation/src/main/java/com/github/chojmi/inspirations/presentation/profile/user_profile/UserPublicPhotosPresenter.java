@@ -18,7 +18,7 @@ public class UserPublicPhotosPresenter implements UserPublicPhotosContract.Prese
     private final UseCase<String, List<PhotoEntity>> getPhotosEntity;
     private final PhotoDataMapper photoDataMapper;
     private final String userId;
-    private final CompositeDisposable disposables;
+    private CompositeDisposable disposables;
     private UserPublicPhotosContract.View view;
 
     public UserPublicPhotosPresenter(@NonNull UseCase<String, List<PhotoEntity>> getPhotosEntity,
@@ -26,11 +26,11 @@ public class UserPublicPhotosPresenter implements UserPublicPhotosContract.Prese
         this.getPhotosEntity = Preconditions.checkNotNull(getPhotosEntity);
         this.photoDataMapper = Preconditions.checkNotNull(photoDataMapper);
         this.userId = Preconditions.checkNotNull(userId);
-        this.disposables = new CompositeDisposable();
     }
 
     @Override
     public void setView(@NonNull UserPublicPhotosContract.View view) {
+        this.disposables = new CompositeDisposable();
         this.view = checkNotNull(view);
         fetchUserInfo();
     }

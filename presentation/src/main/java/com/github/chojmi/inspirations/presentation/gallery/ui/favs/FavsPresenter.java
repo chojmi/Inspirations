@@ -16,18 +16,18 @@ public class FavsPresenter implements FavsContract.Presenter {
 
     private final String photoId;
     private final GetPhotoFavs getPhotoFavs;
-    private final CompositeDisposable disposables;
+    private CompositeDisposable disposables;
     private FavsContract.View view;
 
     @Inject
     public FavsPresenter(@NonNull String photoId, GetPhotoFavs getPhotoFavs) {
         this.photoId = Preconditions.checkNotNull(photoId);
         this.getPhotoFavs = Preconditions.checkNotNull(getPhotoFavs);
-        this.disposables = new CompositeDisposable();
     }
 
     @Override
     public void setView(FavsContract.View view) {
+        this.disposables = new CompositeDisposable();
         this.view = checkNotNull(view);
         fetchFavs();
         disposables.add(view.getOnPersonSelectedObservable().subscribe(view::showPerson, Timber::e));

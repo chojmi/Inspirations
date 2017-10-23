@@ -35,7 +35,7 @@ public class GridPhotoPresenterTest {
     @Before
     public void setUp() {
         Mockito.when(mockGetPhotosCompoundUseCase.process(any())).thenReturn(Observable.empty());
-        galleryPresenter = new GridPhotoPresenter(mockGetPhotosCompoundUseCase, mockFavToggler);
+        galleryPresenter = new GridPhotoPresenter(mockGetPhotosCompoundUseCase, mockFavToggler, USER_ID);
         galleryPresenter.setView(mockGalleryView);
     }
 

@@ -41,21 +41,20 @@ android {
     }
 
     android.variantFilter { variant ->
-        if (variant.buildType.name.equals('release')
-                && variant.getFlavors().get(0).name.equals('mock')) {
-            variant.setIgnore(true);
+        if (variant.buildType.name == 'release' && variant.getFlavors().get(0).name == 'mock') {
+            variant.setIgnore(true)
         }
     }
 }
 
 def getApiKey() {
-    def Properties props = new Properties()
+    Properties props = new Properties()
     props.load(new FileInputStream(new File('secrets.properties')))
     return props['API_KEY']
 }
 
 def getApiSecretKey() {
-    def Properties props = new Properties()
+    Properties props = new Properties()
     props.load(new FileInputStream(new File('secrets.properties')))
     return props['API_SECRET_KEY']
 }

@@ -39,7 +39,6 @@ public class AddComment implements UseCase<AddComment.Args, Void> {
         private Args(@NonNull String photoId, @NonNull String commentText) {
             this.photoId = Preconditions.checkNotNull(photoId);
             this.commentText = Preconditions.checkNotNull(commentText);
-            ;
         }
 
         public static AddComment.Args create(@NonNull String photoId, @NonNull String commentText) {

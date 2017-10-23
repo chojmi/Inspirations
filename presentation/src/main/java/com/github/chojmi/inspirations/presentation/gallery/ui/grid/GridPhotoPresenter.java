@@ -20,20 +20,22 @@ import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNot
 class GridPhotoPresenter implements GridPhotoContract.Presenter {
     private final UseCase<String, List<PhotoWithAuthor>> getPhotosCompoundUseCase;
     private final FavToggler favToggler;
+    private final String mainUserId;
     private CompositeDisposable disposables;
     private GridPhotoContract.View view;
 
     GridPhotoPresenter(@NonNull UseCase<String, List<PhotoWithAuthor>> getPhotosCompoundUseCase,
-                       @NonNull FavToggler favToggler) {
+                       @NonNull FavToggler favToggler, @NonNull String mainUserId) {
         this.getPhotosCompoundUseCase = checkNotNull(getPhotosCompoundUseCase);
         this.favToggler = checkNotNull(favToggler);
+        this.mainUserId = checkNotNull(mainUserId);
     }
 
     @Override
     public void setView(@NonNull GridPhotoContract.View view) {
-        this.view = checkNotNull(view);
         this.disposables = new CompositeDisposable();
-        refreshPhotos("66956608@N06");
+        this.view = checkNotNull(view);
+        refreshPhotos(mainUserId);
     }
 
     @Override

@@ -50,9 +50,8 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photo_item_activity);
-        disposables.add(photoDetailsView.getFavsIconClicks().subscribe(v -> {
-            presenter.favIconSelected(v.isSelected());
-        }, Timber::e));
+        disposables.add(photoDetailsView.getFavsIconClicks().subscribe(v -> presenter.favIconSelected(v.isSelected()), Timber::e));
+        disposables.add(photoDetailsView.getCommentsRootClicks().subscribe(v -> presenter.commentsSelected(), Timber::e));
     }
 
     @Override
@@ -105,6 +104,11 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
     @Override
     public void goToFavs(Photo photo) {
         getNavigator().navigateToPhotoFavs(this, photo.getId());
+    }
+
+    @Override
+    public void showComments(Photo photo) {
+        getNavigator().navigateToComments(this, photo.getId());
     }
 
     @OnClick(R.id.close)

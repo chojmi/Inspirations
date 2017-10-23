@@ -8,6 +8,7 @@ import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth10aService;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import io.reactivex.annotations.NonNull;
@@ -58,7 +59,9 @@ public class OAuthServiceImpl implements OAuthService {
         final StringBuilder builder = new StringBuilder(url);
         OAuthRequest request = new OAuthRequest(verb, url);
         oAuthService.signRequest(accessTokenHolder.getAccessToken(), request);
-        request.getOauthParameters().forEach((s, s2) -> builder.append("&").append(s).append("=").append(s2));
+        for (Map.Entry<String, String> pair : request.getOauthParameters().entrySet()) {
+            builder.append("&").append(pair.getKey()).append("=").append(pair.getValue());
+        }
         return builder.toString();
     }
 }

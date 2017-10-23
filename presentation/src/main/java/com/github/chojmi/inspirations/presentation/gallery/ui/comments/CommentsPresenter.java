@@ -13,7 +13,7 @@ public class CommentsPresenter implements CommentsContract.Presenter {
     private final String photoId;
     private final UseCase<String, PhotoCommentsEntity> getPhotoComments;
     private final UseCase<AddComment.Args, Void> addComment;
-    private final CompositeDisposable disposables;
+    private CompositeDisposable disposables;
     private CommentsContract.View view;
 
     public CommentsPresenter(@NonNull String photoId, @NonNull UseCase<String, PhotoCommentsEntity> getPhotoComments,
@@ -21,11 +21,11 @@ public class CommentsPresenter implements CommentsContract.Presenter {
         this.photoId = Preconditions.checkNotNull(photoId);
         this.getPhotoComments = Preconditions.checkNotNull(getPhotoComments);
         this.addComment = Preconditions.checkNotNull(addComment);
-        this.disposables = new CompositeDisposable();
     }
 
     @Override
     public void setView(CommentsContract.View view) {
+        this.disposables = new CompositeDisposable();
         this.view = Preconditions.checkNotNull(view);
         disposables.add(view.getBackBtnClicksObservable().subscribe(v -> view.closeView(), Timber::e));
         disposables.add(view.getUserClicksObservable().subscribe(view::showUser, Timber::e));
