@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoInfoEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoSizeListEntity;
+import com.github.chojmi.inspirations.domain.utils.RequestNotAllowedException;
 import com.github.chojmi.inspirations.presentation.R;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseFragment;
 import com.github.chojmi.inspirations.presentation.gallery.model.GridAdapterUiModel;
@@ -144,7 +146,12 @@ public class GridFragment extends BaseFragment<MainActivity> implements GridPhot
 
     @Override
     public void refreshFavSelection(int position, Observable<Boolean> isFav) {
-        disposables.add(isFav.subscribe(result -> refreshPhotoInfo(position), Timber::e));
+        disposables.add(isFav.subscribe(result -> refreshPhotoInfo(position), e -> {
+            if (e instanceof RequestNotAllowedException) {
+                Toast.makeText(getContext(), R.string.common_need_to_log, Toast.LENGTH_LONG).show();
+            }
+            Timber.e(e);
+        }));
     }
 
     @Override

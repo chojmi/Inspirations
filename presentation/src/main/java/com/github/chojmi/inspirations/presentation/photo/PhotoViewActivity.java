@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoInfoEntity;
 import com.github.chojmi.inspirations.presentation.R;
@@ -109,6 +110,11 @@ public class PhotoViewActivity extends BaseActivity implements PhotoViewContract
     @Override
     public void showComments(Photo photo) {
         getNavigator().navigateToComments(this, photo.getId());
+    }
+
+    @Override
+    public void showLoginInfo() {
+        Toast.makeText(this, R.string.common_need_to_log, Toast.LENGTH_LONG).show();
     }
 
     @OnClick(R.id.close)

@@ -4,6 +4,7 @@ import com.github.chojmi.inspirations.domain.common.UseCase;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
 import com.github.chojmi.inspirations.domain.usecase.photos.AddComment;
 import com.github.chojmi.inspirations.domain.utils.Preconditions;
+import com.github.chojmi.inspirations.domain.utils.RequestNotAllowedException;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
@@ -54,9 +55,15 @@ public class CommentsPresenter implements CommentsContract.Presenter {
                     if (submitUiModel.isInProgress()) {
                         return;
                     }
+
                     if (submitUiModel.isSucceed()) {
                         fetchComments();
                         view.clearComment();
+                        return;
+                    }
+
+                    if (submitUiModel.getError() instanceof RequestNotAllowedException) {
+                        view.showLoginInfo();
                     }
                 }, Timber::e));
     }

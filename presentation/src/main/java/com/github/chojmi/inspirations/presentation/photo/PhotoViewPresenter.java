@@ -5,6 +5,7 @@ import com.github.chojmi.inspirations.domain.entity.people.PersonEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoFavsEntity;
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoInfoEntity;
 import com.github.chojmi.inspirations.domain.usecase.photos.GetPhotoFavs;
+import com.github.chojmi.inspirations.domain.utils.RequestNotAllowedException;
 import com.github.chojmi.inspirations.presentation.common.FavToggler;
 import com.github.chojmi.inspirations.presentation.common.mapper.PhotoDataMapper;
 import com.github.chojmi.inspirations.presentation.common.mapper.PhotoDetailsMapper;
@@ -54,7 +55,12 @@ class PhotoViewPresenter implements PhotoViewContract.Presenter {
         disposables.add(favToggler.toggleFav(isFav, photo.getId()).subscribe(result -> {
             loadPhotoInfo(photo);
             loadFavs(photo);
-        }, Timber::e));
+        }, e -> {
+            if (e instanceof RequestNotAllowedException) {
+                view.showLoginInfo();
+            }
+            Timber.e(e);
+        }));
     }
 
     private void loadFavs(Photo photo) {
