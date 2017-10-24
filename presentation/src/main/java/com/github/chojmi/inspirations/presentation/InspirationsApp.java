@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.support.annotation.VisibleForTesting;
 
+import com.crashlytics.android.Crashlytics;
 import com.github.chojmi.inspirations.presentation.di.DaggerAppComponent;
 import com.github.chojmi.inspirations.presentation.main.Navigator;
 
@@ -12,6 +13,7 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
+import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 public class InspirationsApp extends Application implements HasActivityInjector {
@@ -25,6 +27,8 @@ public class InspirationsApp extends Application implements HasActivityInjector 
         super.onCreate();
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
+        } else {
+            Fabric.with(this, new Crashlytics());
         }
         DaggerAppComponent.builder().application(this).build().inject(this);
     }
