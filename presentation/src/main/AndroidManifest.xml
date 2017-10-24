@@ -24,5 +24,8 @@
         <activity android:name=".gallery.ui.favs.FavsActivity"/>
         <activity android:name=".gallery.ui.comments.CommentsActivity"/>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="3f7f55d07880be86f190a69fd5f12a9e33f9cb31"/>
     </application>
 </manifest>
