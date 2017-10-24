@@ -21,6 +21,8 @@ public interface CommentsContract {
         Observable<String> getUserClicksObservable();
 
         void showUser(String userId);
+
+        void showLoginInfo();
     }
 
     interface Presenter extends BasePresenter<View> {

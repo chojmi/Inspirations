@@ -5,6 +5,7 @@
     <string name="main_my_profile">My profile</string>
     <string name="main_search">Search</string>
 
+    <string name="common_need_to_log">You need to login to perform this action</string>
     <string name="profile_user_no_photos">This user has no photos</string>
     <string name="profile_login">Login</string>
     <plurals name="gallery_favs_title">

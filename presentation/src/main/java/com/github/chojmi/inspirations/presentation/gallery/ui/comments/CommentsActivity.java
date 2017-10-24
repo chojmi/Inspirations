@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.chojmi.inspirations.domain.entity.photos.PhotoCommentsEntity;
 import com.github.chojmi.inspirations.domain.utils.Preconditions;
@@ -91,6 +92,11 @@ public class CommentsActivity extends BaseActivity implements CommentsContract.V
     @Override
     public void showUser(String userId) {
         getNavigator().navigateToUserProfile(this, userId);
+    }
+
+    @Override
+    public void showLoginInfo() {
+        Toast.makeText(this, R.string.common_need_to_log, Toast.LENGTH_LONG).show();
     }
 
     public void onPostCommentClick(View view) {

@@ -1,6 +1,7 @@
 package com.github.chojmi.inspirations.data.source.remote.interceptors;
 
 import com.github.chojmi.inspirations.data.source.remote.service.OAuthService;
+import com.github.chojmi.inspirations.domain.utils.RequestNotAllowedException;
 
 import java.io.IOException;
 
@@ -34,7 +35,7 @@ public class SigningInterceptor implements Interceptor {
                 if (oAuthService.containsAccessToken()) {
                     signedUrl = oAuthService.signPostRequest(request.url().toString());
                 } else {
-                    throw new IOException("POST request not siqned");
+                    throw new RequestNotAllowedException();
                 }
                 break;
             default:

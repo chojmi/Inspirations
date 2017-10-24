@@ -20,6 +20,8 @@ interface PhotoViewContract {
         void goToFavs(Photo photo);
 
         void showComments(Photo photo);
+
+        void showLoginInfo();
     }
 
     interface Presenter extends BasePresenter<View> {
