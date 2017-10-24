@@ -14,17 +14,17 @@ import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNot
 public class UserProfilePresenter implements UserProfileContract.Presenter {
     private final UseCase<String, PersonEntity> getUserInfo;
     private final String userId;
-    private final CompositeDisposable disposables;
+    private CompositeDisposable disposables;
     private UserProfileContract.View view;
 
     public UserProfilePresenter(@NonNull UseCase<String, PersonEntity> getUserInfo, @NonNull String userId) {
         this.getUserInfo = Preconditions.checkNotNull(getUserInfo);
         this.userId = Preconditions.checkNotNull(userId);
-        this.disposables = new CompositeDisposable();
     }
 
     @Override
     public void setView(@NonNull UserProfileContract.View view) {
+        this.disposables = new CompositeDisposable();
         this.view = checkNotNull(view);
         fetchUserInfo();
     }

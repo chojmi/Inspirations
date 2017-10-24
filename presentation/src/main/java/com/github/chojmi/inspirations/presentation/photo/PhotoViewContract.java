@@ -18,11 +18,15 @@ interface PhotoViewContract {
         void showUserData(PhotoWithAuthor photoWithAuthor);
 
         void goToFavs(Photo photo);
+
+        void showComments(Photo photo);
     }
 
     interface Presenter extends BasePresenter<View> {
         void favIconSelected(boolean isFav);
 
         void favsSelected();
+
+        void commentsSelected();
     }
 }

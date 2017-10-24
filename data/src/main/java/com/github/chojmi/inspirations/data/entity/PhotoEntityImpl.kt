@@ -2,14 +2,14 @@ package com.github.chojmi.inspirations.data.entity
 
 import com.github.chojmi.inspirations.data.entity.helpers.ImageLinkProvider
 import com.github.chojmi.inspirations.domain.entity.PhotoEntity
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.SerializedName
 
 data class PhotoEntityImpl(
         private val id: String,
         private val owner: String,
-        val secret: String,
-        val server: Int,
-        val farm: Int,
+        private val secret: String,
+        private val server: Int,
+        private val farm: Int,
         private val title: String,
         @SerializedName("ispublic") val isPublic: Int,
         @SerializedName("isfriend") val isFriend: Int,

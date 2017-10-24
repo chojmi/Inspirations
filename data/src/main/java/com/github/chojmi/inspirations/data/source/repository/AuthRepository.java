@@ -37,8 +37,7 @@ public class AuthRepository implements AuthDataSource {
 
     @Override
     public Observable<String> getAuthorizationUrl() {
-        return getRequestToken()
-                .flatMap(requestToken -> getAuthorizationUrl(requestToken));
+        return getRequestToken().flatMap(this::getAuthorizationUrl);
     }
 
     @Override

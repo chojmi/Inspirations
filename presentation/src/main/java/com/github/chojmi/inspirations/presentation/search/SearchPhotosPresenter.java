@@ -18,22 +18,24 @@ import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNot
 public class SearchPhotosPresenter implements SearchPhotosContract.Presenter {
     private final UseCase<String, GalleryEntity> getGalleryEntity;
     private final PhotoDataMapper photoDataMapper;
-    private final CompositeDisposable disposables;
+    private final String initialSearchQuery;
     private SearchPhotosContract.View view;
+    private CompositeDisposable disposables;
 
     public SearchPhotosPresenter(@NonNull UseCase<String, GalleryEntity> getGalleryEntity,
-                                 @NonNull PhotoDataMapper photoDataMapper) {
+                                 @NonNull PhotoDataMapper photoDataMapper, @NonNull String initialSearchQuery) {
         this.getGalleryEntity = Preconditions.checkNotNull(getGalleryEntity);
         this.photoDataMapper = Preconditions.checkNotNull(photoDataMapper);
-        this.disposables = new CompositeDisposable();
+        this.initialSearchQuery = Preconditions.checkNotNull(initialSearchQuery);
     }
 
     @Override
     public void setView(@NonNull SearchPhotosContract.View view) {
+        this.disposables = new CompositeDisposable();
         this.view = checkNotNull(view);
-        view.getSearchObservable().startWith("birds")
+        view.getSearchObservable().startWith(initialSearchQuery)
                 .filter(charSequence -> !TextUtils.isEmpty(charSequence))
-                .throttleLast(200, TimeUnit.DAYS.MILLISECONDS)
+                .throttleLast(200, TimeUnit.MILLISECONDS)
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .subscribe(charSequence -> search(charSequence.toString()));
     }

@@ -17,20 +17,30 @@ import static com.github.chojmi.inspirations.domain.utils.Preconditions.checkNot
 public class UserPublicPhotosPresenter implements UserPublicPhotosContract.Presenter {
     private final UseCase<String, List<PhotoEntity>> getPhotosEntity;
     private final PhotoDataMapper photoDataMapper;
-    private final String userId;
-    private final CompositeDisposable disposables;
+    private String userId;
+    private CompositeDisposable disposables;
     private UserPublicPhotosContract.View view;
 
     public UserPublicPhotosPresenter(@NonNull UseCase<String, List<PhotoEntity>> getPhotosEntity,
-                                     @NonNull PhotoDataMapper photoDataMapper, @NonNull String userId) {
+                                     @NonNull PhotoDataMapper photoDataMapper) {
         this.getPhotosEntity = Preconditions.checkNotNull(getPhotosEntity);
         this.photoDataMapper = Preconditions.checkNotNull(photoDataMapper);
+    }
+
+    public UserPublicPhotosPresenter(@NonNull UseCase<String, List<PhotoEntity>> getPhotosEntity,
+                                     @NonNull PhotoDataMapper photoDataMapper, @NonNull String userId) {
+        this(getPhotosEntity, photoDataMapper);
         this.userId = Preconditions.checkNotNull(userId);
-        this.disposables = new CompositeDisposable();
+    }
+
+    @Override
+    public void setUserId(@NonNull String userId) {
+        this.userId = Preconditions.checkNotNull(userId);
     }
 
     @Override
     public void setView(@NonNull UserPublicPhotosContract.View view) {
+        this.disposables = new CompositeDisposable();
         this.view = checkNotNull(view);
         fetchUserInfo();
     }

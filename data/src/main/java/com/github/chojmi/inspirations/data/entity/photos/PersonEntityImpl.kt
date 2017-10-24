@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName
 
 data class PersonEntityImpl(private val username: String,
                             private val nsid: String,
-                            @SerializedName("iconserver") val server: Int,
-                            @SerializedName("iconfarm") val farm: Int) : PersonEntity {
+                            @SerializedName("iconserver") private val server: Int,
+                            @SerializedName("iconfarm") private val farm: Int) : PersonEntity {
 
     override fun getId(): String = nsid
 

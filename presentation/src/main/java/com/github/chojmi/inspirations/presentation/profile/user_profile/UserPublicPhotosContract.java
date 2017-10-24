@@ -1,5 +1,7 @@
 package com.github.chojmi.inspirations.presentation.profile.user_profile;
 
+import android.support.annotation.NonNull;
+
 import com.github.chojmi.inspirations.presentation.blueprints.BasePresenter;
 import com.github.chojmi.inspirations.presentation.blueprints.BaseView;
 import com.github.chojmi.inspirations.presentation.gallery.model.Photo;
@@ -12,5 +14,6 @@ public interface UserPublicPhotosContract {
     }
 
     interface Presenter extends BasePresenter<UserPublicPhotosContract.View> {
+        void setUserId(@NonNull String userId);
     }
 }

@@ -17,7 +17,7 @@ class GridPhotoAttrsPresenter implements GridPhotoAttrsContract.Presenter {
     private final GetPhotoInfo getPhotoInfo;
     private final GetPhotoSizeList getPhotoSizeList;
     private final PhotoDetailsMapper photoDetailsMapper;
-    private final CompositeDisposable disposables;
+    private CompositeDisposable disposables;
     private GridPhotoAttrsContract.View view;
 
     GridPhotoAttrsPresenter(@NonNull GetPhotoFavs getPhotoFavs, @NonNull GetPhotoInfo getPhotoInfo,
@@ -26,11 +26,11 @@ class GridPhotoAttrsPresenter implements GridPhotoAttrsContract.Presenter {
         this.getPhotoInfo = checkNotNull(getPhotoInfo);
         this.getPhotoSizeList = checkNotNull(getPhotoSizeList);
         this.photoDetailsMapper = checkNotNull(photoDetailsMapper);
-        this.disposables = new CompositeDisposable();
     }
 
     @Override
     public void setView(@NonNull GridPhotoAttrsContract.View view) {
+        this.disposables = new CompositeDisposable();
         this.view = checkNotNull(view);
     }
 

@@ -24,7 +24,7 @@ class PhotoViewPresenter implements PhotoViewContract.Presenter {
     private final FavToggler favToggler;
     private final PhotoDataMapper photoDataMapper;
     private final PhotoDetailsMapper photoDetailsMapper;
-    private final CompositeDisposable disposables;
+    private CompositeDisposable disposables;
     private PhotoViewContract.View view;
 
     PhotoViewPresenter(Photo photo, @NonNull UseCase<GetPhotoFavs.Args, PhotoFavsEntity> getPhotoFavs,
@@ -37,11 +37,11 @@ class PhotoViewPresenter implements PhotoViewContract.Presenter {
         this.favToggler = checkNotNull(favToggler);
         this.photoDataMapper = checkNotNull(photoDataMapper);
         this.photoDetailsMapper = checkNotNull(photoDetailsMapper);
-        this.disposables = new CompositeDisposable();
     }
 
     @Override
     public void setView(@NonNull PhotoViewContract.View view) {
+        this.disposables = new CompositeDisposable();
         this.view = checkNotNull(view);
         view.showPhoto(photo);
         loadFavs(photo);
@@ -51,7 +51,10 @@ class PhotoViewPresenter implements PhotoViewContract.Presenter {
 
     @Override
     public void favIconSelected(boolean isFav) {
-        disposables.add(favToggler.toggleFav(isFav, photo.getId()).subscribe(result -> loadPhotoInfo(photo), Timber::e));
+        disposables.add(favToggler.toggleFav(isFav, photo.getId()).subscribe(result -> {
+            loadPhotoInfo(photo);
+            loadFavs(photo);
+        }, Timber::e));
     }
 
     private void loadFavs(Photo photo) {
@@ -90,6 +93,11 @@ class PhotoViewPresenter implements PhotoViewContract.Presenter {
     @Override
     public void favsSelected() {
         view.goToFavs(photo);
+    }
+
+    @Override
+    public void commentsSelected() {
+        view.showComments(photo);
     }
 
     @Override

@@ -22,8 +22,8 @@ public class LoginWebViewPresenter implements LoginWebViewContract.Presenter {
 
     @Override
     public void setView(@NonNull LoginWebViewContract.View view) {
-        this.view = checkNotNull(view);
         this.disposables = new CompositeDisposable();
+        this.view = checkNotNull(view);
         openLoginPage();
     }
 
