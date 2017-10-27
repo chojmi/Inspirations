@@ -1,4 +1,6 @@
 # Inspirations
+![](https://circleci.com/gh/kix3000/Inspirations.svg?style=shield&circle-token=:circle-token)
+
 Inspirations is an app which uses Flickr API for browsing pictures. It enables basic actions like commenting pictures, adding and removing from favourites or searching pictures by typed query.
 
 ## Google Play
