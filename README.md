@@ -15,7 +15,6 @@ During implementation of the app I was inspired by clean architecture described 
  - Cover more code with tests
  - Add feature of sharing pictures with the app
  - Implements groups, albums
- -
 
 ## Other remarks
 Main purpose to write this app was my education. I wanted to expand my knowledge of unit and instrumental tests, RxJava, Dagger, MVP pattern and other things which I used during implementation. 
