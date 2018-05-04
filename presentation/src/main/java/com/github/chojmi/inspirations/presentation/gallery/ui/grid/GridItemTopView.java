@@ -36,6 +36,7 @@ public class GridItemTopView extends FrameLayout {
     @BindView(R.id.title) TextView titleTextView;
     @BindView(R.id.owner) TextView ownerTextView;
     @BindView(R.id.user_profile) LinearLayout profileLayout;
+    private PhotoWithAuthor photo;
 
     public GridItemTopView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -44,6 +45,10 @@ public class GridItemTopView extends FrameLayout {
     }
 
     public void setPhoto(PhotoWithAuthor photo, PhotoSizeListEntity photoSizeListEntity) {
+        if (photo != null && photo.equals(this.photo)) {
+            return;
+        }
+        this.photo = photo;
         if (photoSizeListEntity != null) {
             photoHolder.setAspectRatio(photoSizeListEntity.getRatio());
         }
@@ -67,6 +72,7 @@ public class GridItemTopView extends FrameLayout {
     }
 
     public void onViewRecycled() {
+        this.photo = null;
         clearImageCache(photoHolder);
         clearImageCache(personIconHolder);
     }
