@@ -17,5 +17,7 @@
 
     <style name="AppTheme.List.Content">
         <item name="android:textAppearance">?android:attr/textAppearance</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
     </style>
 </resources>
