@@ -42,7 +42,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
+            android:ellipsize="end"
             android:gravity="start"
+            android:maxLines="5"
             android:textAppearance="?android:attr/textAppearanceMedium"
             tools:text="Owner name"/>
 
@@ -76,6 +78,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_md"
+            android:ellipsize="end"
+            android:maxLines="5"
             android:textAppearance="?android:attr/textAppearanceMedium"
             tools:text="Photo title"/>
 
