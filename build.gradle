@@ -5,12 +5,12 @@ buildscript {
         minSdkVersion = 21
         targetSdkVersion = 26
         compileSdkVersion = 26
-        buildToolsVersion = '26.0.2'
+        buildToolsVersion = '27.0.3'
         versionCode = 2
         versionName = "1.0.1"
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
 
-        kotlinVersion = '1.1.51'
+        kotlinVersion = '1.2.41'
         supportLibVersion = '26.1.0'
         constrainLayoutLibVersion = '1.0.2'
         daggerLibVersion = '2.11'
@@ -38,9 +38,9 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'com.android.tools.build:gradle:3.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'io.fabric.tools:gradle:1.25.3'
     }
 }
 
